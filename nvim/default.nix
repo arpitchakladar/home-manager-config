@@ -1,37 +1,43 @@
 { pkgs, config, ... }:
 
 {
-	programs.neovim =
-	let
-		toLua = str: "lua << EOF\n${str}\nEOF\n";
-		toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
-	in {
-		enable = true;
-		viAlias = true;
-		vimAlias = true;
-		vimdiffAlias = true;
+	programs.neovim.enable = true;
+	programs.neovim.viAlias = true;
+	programs.neovim.vimAlias = true;
+	programs.neovim.vimdiffAlias = true;
 
-		extraLuaConfig = ''
-${import ./colorscheme.nix config}
+	programs.neovim.extraLuaConfig =
+''
 ${builtins.readFile ./options.lua}
 ${builtins.readFile ./keybindings.lua}
 '';
-		plugins = with pkgs.vimPlugins; [
-			{
-				plugin = comment-nvim;
-				config = toLuaFile ./plugins/comment.lua;
-			}
 
-			{
-				plugin = lualine-nvim;
-				config = toLua (import ./plugins/lualine/default.nix config);
-			}
+	programs.neovim.plugins =
+	with pkgs.vimPlugins;
+	let
+		toLua = str: "lua << EOF\n${str}\nEOF\n";
+		toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
+	in [
+		{
+			plugin = comment-nvim;
+			config = toLuaFile ./plugins/comment.lua;
+		}
 
-			nvim-web-devicons
-			{
-				plugin = nvim-tree-lua;
-				config = toLuaFile ./plugins/nvim-tree.lua;
-			}
-		];
-	};
+		{
+			plugin = lualine-nvim;
+			config = toLuaFile ./plugins/lualine.lua;
+		}
+
+		{
+			plugin = base16-nvim;
+			config = toLua (import ./plugins/base16.nix config);
+		}
+
+		nvim-web-devicons
+
+		{
+			plugin = nvim-tree-lua;
+			config = toLuaFile ./plugins/nvim-tree.lua;
+		}
+	];
 }

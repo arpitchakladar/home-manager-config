@@ -8,6 +8,6 @@ require("nvim-tree").setup {
 		},
 		root_folder_label = function(path)
 			return vim.fn.fnamemodify(path, ":t")
-		end
-	}
-}
+		end,
+	},
+};

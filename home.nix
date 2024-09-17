@@ -31,7 +31,6 @@
 
 	home.packages = with pkgs; [
 		git
-		neovim
 		alacritty
 		sxhkd
 		bspwm

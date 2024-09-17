@@ -1,10 +1,8 @@
 { ... }:
 
 {
-	programs.lf = {
-		enable = true;
-		settings = {
-			hidden = true;
-		};
+	programs.lf.enable = true;
+	programs.lf.settings = {
+		hidden = true;
 	};
 }
