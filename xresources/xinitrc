@@ -1,0 +1,4 @@
+#!/bin/sh
+polybar main &
+sxhkd &
+exec bspwm

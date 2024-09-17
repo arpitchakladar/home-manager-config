@@ -1,0 +1,4 @@
+PROMPT='%F{red}%B┌[%b%F{green}%m%F{red}%B@%b%F{cyan}%n %F{blue}%~%F{red}%B]
+%F{red}└>%b%f '
+
+autoload -U colors && colors
