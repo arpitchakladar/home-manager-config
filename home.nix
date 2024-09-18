@@ -14,6 +14,7 @@
 		./nvim/default.nix
 		./lf/default.nix
 		./rofi/default.nix
+		./htop/default.nix
 	];
 	# Home Manager needs a bit of information about you and the paths it should
 	# manage.
@@ -30,14 +31,6 @@
 	home.stateVersion = "23.11"; # Please read the comment before changing.
 
 	home.packages = with pkgs; [
-		git
-		alacritty
-		sxhkd
-		bspwm
-		polybar
-		zsh
-		lf
-		rofi
 		(nerdfonts.override { fonts = [ "FiraCode" ]; })
 	];
 
