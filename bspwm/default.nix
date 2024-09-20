@@ -1,9 +1,9 @@
-{ ... }:
+{ config, ... }:
 
 {
 	xsession.windowManager.bspwm.enable = true;
 
-	xsession.windowManager.bspwm.settings = {
+	xsession.windowManager.bspwm.settings = with config.lib.stylix.colors.withHashtag; {
 		window_gap = 5;
 		split_ratio = 0.5;
 		single_monocle = true;
@@ -16,6 +16,9 @@
 		pointer_action1 = "resize_side";
 		pointer_action2 = "move";
 		pointer_action3 = "resize_corner";
+		normal_border_color = base02;
+		active_border_color = base02;
+		focused_border_color = base03;
 	};
 
 	xsession.windowManager.bspwm.rules = {

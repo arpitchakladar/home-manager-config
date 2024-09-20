@@ -3,16 +3,20 @@
 {
 	services.sxhkd.enable = true;
 
+	xdg.configFile."sxhkd/scripts/show-keybindings.sh" = {
+		source = ./scripts/show-keybindings.sh;
+		executable = true;
+	};
+
 	services.sxhkd.keybindings =
 	let
 		modKey = "alt";
 		createKeybinding = keybinding: description: "# ${description}\n${modKey} + ${keybinding}";
 	in {
-		# TODO: Currently not working properly
 		${(createKeybinding
-			"i"
+			"s"
 			"Show keybindings.")}
-				= ''awk '/^#/{desc=substr($0, 3)} /^[a-z]/ { cmd=$0; print cmd " : " desc }' ~/.config/sxhkd/sxhkdrc | rofi -dmenu -i -p "Keybindings"'';
+				= "$HOME/.config/sxhkd/scripts/show-keybindings.sh";
 
 		${(createKeybinding
 			"r"
