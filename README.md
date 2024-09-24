@@ -13,4 +13,4 @@ My personal home manager configurations.
 | zsh       | Shell                      |
 | lf        | Terminal file manager      |
 | rofi      | Application launcher       |
-| nerdfonts | Font with glphs            |
+| nerdfonts | Font with glyphs           |

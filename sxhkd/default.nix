@@ -1,12 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
 	services.sxhkd.enable = true;
-
-	xdg.configFile."sxhkd/scripts/show-keybindings.sh" = {
-		source = ./scripts/show-keybindings.sh;
-		executable = true;
-	};
 
 	services.sxhkd.keybindings =
 	let
@@ -16,7 +11,9 @@
 		${(createKeybinding
 			"s"
 			"Show keybindings.")}
-				= "$HOME/.config/sxhkd/scripts/show-keybindings.sh";
+				= pkgs.writeShellScript
+					"show-keybindings.sh"
+					(builtins.readFile ./scripts/show-keybindings.sh);
 
 		${(createKeybinding
 			"r"

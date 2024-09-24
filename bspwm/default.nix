@@ -3,7 +3,7 @@
 {
 	xsession.windowManager.bspwm.enable = true;
 
-	xsession.windowManager.bspwm.settings = with config.lib.stylix.colors.withHashtag; {
+	xsession.windowManager.bspwm.settings = with config.scheme.withHashtag; {
 		window_gap = 5;
 		split_ratio = 0.5;
 		single_monocle = true;
@@ -11,7 +11,7 @@
 		gapless_monocle = false;
 		focus_follows_pointer = true;
 		pointer_follows_focus = false;
-		pointer_motion_interval = 60;
+		pointer_motion_interval = 40;
 		pointer_modifier = "mod1"; # alt key
 		pointer_action1 = "resize_side";
 		pointer_action2 = "move";

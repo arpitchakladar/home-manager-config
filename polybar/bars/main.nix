@@ -1,6 +1,6 @@
 config:
 
-with config.lib.stylix.colors.withHashtag;
+with config.scheme.withHashtag;
 {
 	width = "100%";
 	height = 30;

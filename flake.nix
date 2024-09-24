@@ -7,10 +7,10 @@
 			url = "github:nix-community/home-manager";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-		stylix.url = "github:danth/stylix";
+		base16.url = "github:SenchoPens/base16.nix";
 	};
 
-	outputs = { nixpkgs, home-manager, stylix, ... }:
+	outputs = { nixpkgs, home-manager, base16, ... }:
 		let
 			system = "x86_64-linux";
 			pkgs = nixpkgs.legacyPackages.${system};
@@ -19,7 +19,7 @@
 				inherit pkgs;
 				modules = [
 					./home.nix
-					stylix.homeManagerModules.stylix
+					base16.homeManagerModule
 				];
 			};
 		};

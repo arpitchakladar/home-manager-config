@@ -5,39 +5,33 @@
 	programs.neovim.viAlias = true;
 	programs.neovim.vimAlias = true;
 	programs.neovim.vimdiffAlias = true;
+	programs.neovim.defaultEditor = true;
+
+	programs.neovim.extraPackages = with pkgs; [
+		gcc # Required for treesitter
+	];
 
 	programs.neovim.extraLuaConfig =
 ''
 ${builtins.readFile ./options.lua}
 ${builtins.readFile ./keybindings.lua}
+
+-- Plugins configuration
+${builtins.readFile ./plugins/comment.lua}
+${builtins.readFile ./plugins/lualine.lua}
+${import ./plugins/treesitter.nix config}
+${builtins.readFile ./plugins/base16.lua}
+${builtins.readFile ./plugins/nvim-tree.lua}
 '';
 
-	programs.neovim.plugins =
-	with pkgs.vimPlugins;
-	let
-		toLua = str: "lua << EOF\n${str}\nEOF\n";
-		toLuaFile = file: "lua << EOF\n${builtins.readFile file}\nEOF\n";
-	in [
-		{
-			plugin = comment-nvim;
-			config = toLuaFile ./plugins/comment.lua;
-		}
-
-		{
-			plugin = lualine-nvim;
-			config = toLuaFile ./plugins/lualine.lua;
-		}
-
-		{
-			plugin = base16-nvim;
-			config = toLua (import ./plugins/base16.nix config);
-		}
-
+	programs.neovim.plugins = with pkgs.vimPlugins; [
+		comment-nvim
+		lualine-nvim
+		nvim-treesitter
 		nvim-web-devicons
-
-		{
-			plugin = nvim-tree-lua;
-			config = toLuaFile ./plugins/nvim-tree.lua;
-		}
+		nvim-tree-lua
+		(base16-vim.overrideAttrs (old: {
+			patchPhase = "ln -s ${config.scheme base16-vim} colors/base16-scheme.vim";
+		}))
 	];
 }

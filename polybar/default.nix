@@ -4,7 +4,7 @@
 	services.polybar.enable = true;
 	services.polybar.script = "polybar main &";
 
-	services.polybar.config = with config.lib.stylix.colors.withHashtag; {
+	services.polybar.config = {
 		"bar/main" = import ./bars/main.nix config;
 		"module/xwindow" = import ./modules/xwindow.nix config;
 		"module/bspwm" = import ./modules/bspwm.nix config;

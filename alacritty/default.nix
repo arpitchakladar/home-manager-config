@@ -28,7 +28,7 @@
 			size = 16.0;
 		};
 
-		colors = with config.lib.stylix.colors; {
+		colors = with config.scheme; {
 			primary = {
 				background = "0x${base00}";
 				foreground = "0x${base05}";
