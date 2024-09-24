@@ -1,14 +1,14 @@
 { pkgs, lib, config, ... }:
 
 {
-	options = {
-		lsd.enable = lib.mkEnableOption "Enables lsd.";
+	options.tools.file-manager.lsd = {
+		enable = lib.mkEnableOption "Enables lsd.";
 	};
 
-	config = lib.mkIf config.lsd.enable {
+	config = lib.mkIf config.tools.file-manager.lsd.enable {
 		programs.lsd.enable = true;
 		programs.lsd.enableAliases = true;
-		programs.bash.shellAliases."tree" = "${pkgs.lsd}/bin/lsd -a --tree";
+		shell.alias."tree" = "${pkgs.lsd}/bin/lsd -a --tree";
 
 		programs.lsd.settings = {
 			icons.separator = "  ";

@@ -1,12 +1,13 @@
 { pkgs, config, lib, ... }:
 
 {
-	options = {
-		alacritty.enable = lib.mkEnableOption "Enables alacritty.";
+	options.desktop.terminal.alacritty = {
+		enable = lib.mkEnableOption "Enables alacritty.";
 	};
 
-	config = lib.mkIf config.alacritty.enable {
+	config = lib.mkIf config.desktop.terminal.alacritty.enable {
 		programs.alacritty.enable = true;
+		desktop.terminal.default = "${pkgs.alacritty}/bin/alacritty";
 
 		programs.alacritty.settings = {
 			window = {
@@ -71,7 +72,7 @@
 			};
 
 			shell = {
-				program = "${pkgs.zsh}/bin/zsh";
+				program = config.shell.default;
 			};
 		};
 	};

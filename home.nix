@@ -1,33 +1,29 @@
 { pkgs, ... }:
 
 {
-	imports = [
-		./base16
-	];
-
 	home.username = "arpit";
 	home.homeDirectory = "/home/arpit";
 	home.stateVersion = "23.11";
 
 	# Desktop
-	rofi.enable = true;
-	polybar.enable = true;
-	alacritty.enable = true;
-	bspwm.enable = true;
-	sxhkd.enable = true;
-	xinit.enable = true;
+	desktop.popup-manager.rofi.enable = true;
+	desktop.status-bar.polybar.enable = true;
+	desktop.terminal.alacritty.enable = true;
+	desktop.window-manager.bspwm.enable = true;
+	desktop.window-manager.sxhkd.enable = true;
+	desktop.display-server.x11.xinit.enable = true;
 
 	# Shell
-	bash.enable = true;
-	zsh.enable = true;
+	shell.bash.enable = true;
+	shell.zsh.enable = true;
 
 	# Tools
-	neovim.enable = true;
-	lf.enable = true;
-	lsd.enable = true;
-	git.enable = true;
-	htop.enable = true;
-	bat.enable = true;
+	tools.editor.neovim.enable = true;
+	tools.file-manager.lf.enable = true;
+	tools.file-manager.lsd.enable = true;
+	tools.git.enable = true;
+	tools.system-monitor.htop.enable = true;
+	tools.viewer.bat.enable = true;
 
 	home.packages = with pkgs; [
 		(nerdfonts.override { fonts = [ "FiraCode" ]; })

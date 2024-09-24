@@ -1,15 +1,16 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
-	options = {
-		zsh.enable = lib.mkEnableOption "Enables zsh.";
+	options.shell.zsh = {
+		enable = lib.mkEnableOption "Enables zsh.";
 	};
 
-	config = lib.mkIf config.zsh.enable {
+	config = lib.mkIf config.shell.zsh.enable {
 		programs.zsh.enable = true;
 		programs.zsh.dotDir = ".config/zsh";
 		programs.zsh.history.path = "${config.xdg.cacheHome}/zsh/history";
 		programs.zsh.initExtra = builtins.readFile ./zshrc;
-		programs.zsh.shellAliases = config.programs.bash.shellAliases;
+		programs.zsh.shellAliases = config.shell.alias;
+		shell.default = "${pkgs.zsh}/bin/zsh";
 	};
 }

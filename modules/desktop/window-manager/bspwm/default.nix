@@ -1,11 +1,11 @@
 { config, lib, ... }:
 
 {
-	options = {
-		bspwm.enable = lib.mkEnableOption "Enables bspwm.";
+	options.desktop.window-manager.bspwm = {
+		enable = lib.mkEnableOption "Enables bspwm.";
 	};
 
-	config = lib.mkIf config.bspwm.enable {
+	config = lib.mkIf config.desktop.window-manager.bspwm.enable {
 		xsession.windowManager.bspwm.enable = true;
 
 		xsession.windowManager.bspwm.settings = with config.scheme.withHashtag; {

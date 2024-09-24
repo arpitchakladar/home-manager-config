@@ -1,11 +1,11 @@
 { lib, config, ... }:
 
 {
-	options = {
-		git.enable = lib.mkEnableOption "Enables git.";
+	options.tools.git = {
+		enable = lib.mkEnableOption "Enables git.";
 	};
 
-	config = lib.mkIf config.git.enable {
+	config = lib.mkIf config.tools.git.enable {
 		programs.git.enable = true;
 		programs.git.userEmail = "54011232+arpitchakladar@users.noreply.github.com";
 		programs.git.userName = "Arpit Chakladar";

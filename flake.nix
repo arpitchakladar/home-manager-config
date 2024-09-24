@@ -21,6 +21,9 @@
 					./home.nix
 					./modules
 					base16.homeManagerModule
+					{
+						scheme = "${pkgs.base16-schemes}/share/themes/classic-dark.yaml";
+					}
 				];
 			};
 		};

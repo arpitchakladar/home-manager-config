@@ -1,11 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
-	options = {
-		lf.enable = lib.mkEnableOption "Enables lf.";
+	options.tools.file-manager.lf = {
+		enable = lib.mkEnableOption "Enables lf.";
 	};
 
-	config = lib.mkIf config.lf.enable {
+	config = lib.mkIf config.tools.file-manager.lf.enable {
 		programs.lf.enable = true;
 		programs.lf.settings = {
 			hidden = true;

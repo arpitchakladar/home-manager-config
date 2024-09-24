@@ -1,11 +1,11 @@
 { pkgs, config, lib, ... }:
 
 {
-	options = {
-		sxhkd.enable = lib.mkEnableOption "Enables sxhkd.";
+	options.desktop.window-manager.sxhkd = {
+		enable = lib.mkEnableOption "Enables sxhkd.";
 	};
 
-	config = lib.mkIf config.sxhkd.enable {
+	config = lib.mkIf config.desktop.window-manager.sxhkd.enable {
 		services.sxhkd.enable = true;
 
 		services.sxhkd.keybindings =
@@ -28,12 +28,12 @@
 			${(createKeybinding
 				"t"
 				"Launch terminal.")}
-					= "alacritty";
+					= config.desktop.terminal.default;
 
 			${(createKeybinding
 				"f"
 				"Launch File Explorer.")}
-					= "alacritty -t 'File Explorer' --class 'popup' -e lf";
+					= "${config.desktop.terminal.default} -t 'File Explorer' --class 'popup' -e lf";
 
 			${(createKeybinding
 				"q"

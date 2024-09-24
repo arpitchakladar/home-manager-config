@@ -1,11 +1,11 @@
 { pkgs, config, lib, ... }:
 
 {
-	options = {
-		neovim.enable = lib.mkEnableOption "Enables neovim.";
+	options.tools.editor.neovim = {
+		enable = lib.mkEnableOption "Enables neovim.";
 	};
 
-	config = lib.mkIf config.neovim.enable {
+	config = lib.mkIf config.tools.editor.neovim.enable {
 		programs.neovim.enable = true;
 		programs.neovim.viAlias = true;
 		programs.neovim.vimAlias = true;
