@@ -19,6 +19,7 @@
 				inherit pkgs;
 				modules = [
 					./home.nix
+					./modules
 					base16.homeManagerModule
 				];
 			};
