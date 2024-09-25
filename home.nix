@@ -6,12 +6,12 @@
 	home.stateVersion = "23.11";
 
 	# Desktop
+	desktop.display-server.x11.xinit.enable = true;
 	desktop.popup-manager.rofi.enable = true;
 	desktop.status-bar.polybar.enable = true;
 	desktop.terminal.alacritty.enable = true;
 	desktop.window-manager.bspwm.enable = true;
 	desktop.window-manager.sxhkd.enable = true;
-	desktop.display-server.x11.xinit.enable = true;
 
 	# Shell
 	shell.bash.enable = true;

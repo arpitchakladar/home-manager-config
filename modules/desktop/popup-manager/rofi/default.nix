@@ -10,7 +10,7 @@
 		programs.rofi.enable = true;
 		programs.rofi.font = "FiraCode Nerd Font 16";
 		programs.rofi.theme = config.scheme {
-			template = builtins.readFile ./theme.rasi.mustache;
+			template = builtins.readFile ./theme.mustache.rasi;
 		};
 	};
 }

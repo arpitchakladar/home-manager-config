@@ -10,7 +10,7 @@
 		xsession.windowManager.bspwm.enable = true;
 
 		xsession.windowManager.bspwm.settings = with config.scheme.withHashtag; {
-			window_gap = 5;
+			window_gap = config.desktop.window-manager.gap;
 			split_ratio = 0.5;
 			single_monocle = true;
 			borderless_monocle = false;
@@ -31,6 +31,9 @@
 			"popup" = {
 				state = "floating";
 				sticky = true;
+				rectangle = "1000x600+0+0";
+				center = true;
+				follow = true;
 			};
 		};
 

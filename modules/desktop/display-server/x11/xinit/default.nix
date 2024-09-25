@@ -11,7 +11,9 @@
 			source = pkgs.writeText ".xinitrc"
 ''
 #!/bin/sh
-${if config.desktop.status-bar.polybar.enable then "polybar main &" else ""}
+${if config.desktop.status-bar.polybar.enable then
+	config.desktop.status-bar.polybar.command
+else ""}
 ${if config.desktop.window-manager.sxhkd.enable then "sxhkd &" else ""}
 exec ${config.desktop.window-manager.default}
 '';

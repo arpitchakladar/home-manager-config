@@ -74,7 +74,24 @@
       "inputs": {
         "base16": "base16",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "tt-schemes": "tt-schemes"
+      }
+    },
+    "tt-schemes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1725746347,
+        "narHash": "sha256-qfuu/o1pi4pImwMq+sQ85wy1g7ngPr9tFi5WfkoVGr4=",
+        "owner": "tinted-theming",
+        "repo": "schemes",
+        "rev": "e43188f3bba5fb31d199cc82b542b13579977cb6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tinted-theming",
+        "repo": "schemes",
+        "type": "github"
       }
     }
   },

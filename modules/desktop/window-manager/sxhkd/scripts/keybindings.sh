@@ -1,4 +1,5 @@
 #!/bin/sh
+
 awk '
 	/^#/ {
 		desc = substr($0, 3)
