@@ -19,7 +19,8 @@
 
 	# Tools
 	tools.editor.neovim.enable = true;
-	tools.file-manager.lf.enable = true;
+	# tools.file-manager.lf.enable = true;
+	tools.file-manager.nnn.enable = true;
 	tools.file-manager.lsd.enable = true;
 	tools.git.enable = true;
 	tools.system-monitor.htop.enable = true;

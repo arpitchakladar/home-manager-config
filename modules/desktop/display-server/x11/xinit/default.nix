@@ -1,14 +1,20 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 {
-	options = {
-		desktop.display-server.x11.xinit.enable = lib.mkEnableOption "Enables xinit.";
+	options.desktop.display-server.x11.xinit = {
+		enable = lib.mkEnableOption "Enables xinit.";
 	};
 
 	config = lib.mkIf config.desktop.display-server.x11.xinit.enable {
 		home.file.".xinitrc" = {
-			source = ./xinitrc;
 			executable = true;
+			source = pkgs.writeText ".xinitrc"
+''
+#!/bin/sh
+${if config.desktop.status-bar.polybar.enable then "polybar main &" else ""}
+${if config.desktop.window-manager.sxhkd.enable then "sxhkd &" else ""}
+exec ${config.desktop.window-manager.default}
+'';
 		};
 	};
 }

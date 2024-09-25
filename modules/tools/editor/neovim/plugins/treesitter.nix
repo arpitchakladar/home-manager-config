@@ -1,4 +1,4 @@
-config:
+{ config }:
 
 ''
 require("nvim-treesitter.configs").setup {

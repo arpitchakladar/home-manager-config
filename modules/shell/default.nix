@@ -8,7 +8,7 @@
 
 	options.shell = {
 		default = lib.mkOption {
-			type = lib.types.string;
+			type = lib.types.str;
 			description = "Path to the default shell program.";
 		};
 		alias = lib.mkOption {

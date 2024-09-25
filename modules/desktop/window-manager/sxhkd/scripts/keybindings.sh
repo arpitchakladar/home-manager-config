@@ -1,6 +1,4 @@
 #!/bin/sh
-SXHKD_CONFIG="$HOME/.config/sxhkd/sxhkdrc"
-
 awk '
 	/^#/ {
 		desc = substr($0, 3)
@@ -10,4 +8,4 @@ awk '
 		getline
 		print cmd " : " desc
 	}
-' "$SXHKD_CONFIG" | rofi -dmenu -i -p "Keybindings"
+' "$HOME/.config/sxhkd/sxhkdrc" | rofi -dmenu -i -p "Keybindings"

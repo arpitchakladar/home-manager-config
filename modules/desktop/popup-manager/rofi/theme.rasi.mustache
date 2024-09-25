@@ -27,12 +27,18 @@ configuration {
 	padding: 0;
 	spacing: 0;
 
+	bg: #{{base00-hex}};
+	bg-alt: #{{base01-hex}};
+	fg: #{{base07-hex}};
+	fg-alt: #{{base03-hex}};
+
 	background-color: @bg;
 	text-color: @fg;
 }
 
 window {
 	transparency: "real";
+	border-color: #{{base03-hex}};
 }
 
 mainbox {

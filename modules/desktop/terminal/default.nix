@@ -5,9 +5,9 @@
 		./alacritty
 	];
 
-	options = {
-		desktop.terminal.default = lib.mkOption {
-			type = lib.types.string;
+	options.desktop.terminal = {
+		default = lib.mkOption {
+			type = lib.types.str;
 			description = "Path to the default terminal program.";
 		};
 	};

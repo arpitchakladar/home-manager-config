@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
 	options.desktop.window-manager.bspwm = {
@@ -6,6 +6,7 @@
 	};
 
 	config = lib.mkIf config.desktop.window-manager.bspwm.enable {
+		desktop.window-manager.default = "${pkgs.bspwm}/bin/bspwm";
 		xsession.windowManager.bspwm.enable = true;
 
 		xsession.windowManager.bspwm.settings = with config.scheme.withHashtag; {

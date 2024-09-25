@@ -1,4 +1,4 @@
-config:
+{ config }:
 
 with config.scheme.withHashtag;
 {

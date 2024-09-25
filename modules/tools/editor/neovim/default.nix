@@ -18,15 +18,8 @@
 
 		programs.neovim.extraLuaConfig =
 	''
-	${builtins.readFile ./options.lua}
-	${builtins.readFile ./keybindings.lua}
-
-	-- Plugins configuration
-	${builtins.readFile ./plugins/comment.lua}
-	${builtins.readFile ./plugins/lualine.lua}
-	${import ./plugins/treesitter.nix config}
-	${builtins.readFile ./plugins/base16.lua}
-	${builtins.readFile ./plugins/nvim-tree.lua}
+${import ./config}
+${import ./plugins { inherit config; }}
 	'';
 
 		programs.neovim.plugins = with pkgs.vimPlugins; [
