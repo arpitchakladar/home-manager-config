@@ -29,7 +29,7 @@
 				${(createKeybinding
 					"r"
 					"Application launcher.")}
-						= config.desktop.popup-manager.application-launcher.default;
+						= config.desktop.popup-manager.application-launcher.command;
 
 				${(createKeybinding
 					"t"
@@ -39,7 +39,7 @@
 				${(createKeybinding
 					"f"
 					"Launch File Manager.")}
-						= "${config.desktop.terminal.default} -t 'File Manager' --class popup -e ${config.tools.file-manager.default}";
+						= "${config.desktop.terminal.default} --title 'File Manager' --class popup -e ${config.tools.file-manager.default}";
 			}
 		];
 	};

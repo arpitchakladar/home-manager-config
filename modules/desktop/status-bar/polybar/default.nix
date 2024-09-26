@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 {
 	options.desktop.status-bar.polybar = {
@@ -7,11 +7,13 @@
 			type = lib.types.str;
 			description = "Command to run polybar.";
 			# This command calculates the width of the polybar to create those gaps
-			default = ''
-MONITOR_WIDTH=$(xrandr | grep '*' | awk '{print $1}' | cut -d'x' -f1 | head -n1); \
-OFFSET=${toString config.desktop.window-manager.gap}; \
+			default = toString (pkgs.writeShellScript "polybar-run.sh" ''
+#!/bin/sh
+
+MONITOR_WIDTH=$(xrandr | grep '*' | awk '{print $1}' | cut -d'x' -f1 | head -n1)
+OFFSET=${toString config.desktop.window-manager.gap}
 POLYBAR_WIDTH=$((MONITOR_WIDTH - 2 * OFFSET)) POLYBAR_OFFSET=$OFFSET polybar main &
-'';
+'');
 		};
 	};
 

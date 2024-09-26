@@ -3,6 +3,7 @@
 {
 	imports = [
 		./alacritty
+		./kitty
 	];
 
 	options.desktop.terminal = {

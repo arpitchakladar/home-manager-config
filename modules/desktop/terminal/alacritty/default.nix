@@ -7,7 +7,7 @@
 
 	config = lib.mkIf config.desktop.terminal.alacritty.enable {
 		programs.alacritty.enable = true;
-		desktop.terminal.default = "${pkgs.alacritty}/bin/alacritty";
+		desktop.terminal.default = lib.mkDefault "${pkgs.alacritty}/bin/alacritty";
 
 		programs.alacritty.settings = {
 			window = {
@@ -21,17 +21,17 @@
 
 			font = {
 				normal = {
-					family = "Fira Code Nerd Font";
+					family = config.fonts.normal;
 					style = "Retina";
 				};
 				bold = {
-					family = "Fira Code Nerd Font";
+					family = config.fonts.bold;
 					style = "Bold";
 				};
 				italic = {
-					family = "Fira Code Nerd Font";
+					family = config.fonts.italic;
 				};
-				size = 16.0;
+				size = config.fonts.size;
 			};
 
 			colors = with config.scheme; {

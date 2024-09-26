@@ -6,9 +6,9 @@
 	};
 
 	config = lib.mkIf config.desktop.popup-manager.rofi.enable {
-		desktop.popup-manager.application-launcher.default = "${pkgs.rofi}/bin/rofi -show run";
+		desktop.popup-manager.application-launcher.command = "${pkgs.rofi}/bin/rofi -show run";
 		programs.rofi.enable = true;
-		programs.rofi.font = "FiraCode Nerd Font 16";
+		programs.rofi.font = "${config.fonts.normal} ${toString config.fonts.size}";
 		programs.rofi.theme = config.scheme {
 			template = builtins.readFile ./theme.mustache.rasi;
 		};
