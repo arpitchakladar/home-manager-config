@@ -1,7 +1,9 @@
 { config }:
 
 with config.scheme.withHashtag;
-{
+let
+	largerFontSize = toString (builtins.ceil (config.fonts.size * 9.0 / 8.0));
+in {
 	width = "\${env:POLYBAR_WIDTH}";
 	fixed-center = false;
 	height = 35;
@@ -21,20 +23,22 @@ with config.scheme.withHashtag;
 	padding-left = 1;
 	padding-right = 1;
 
-	separator = "%{F${base03}}│%{F-}";
+	module-margin-left = 1;
+	module-margin-right = 1;
 
-	module-margin-left = 2;
-	module-margin-right = 2;
+	separator = "%{F${base03}}%{T3}│%{T-}%{F-}";
 
 	offset-x = "\${env:POLYBAR_OFFSET}";
 	offset-y = "\${env:POLYBAR_OFFSET}";
 
 	font-0 = "${config.fonts.normal}:pixelsize=${toString config.fonts.size};3";
+	font-1 = "${config.fonts.normal}:weight=Bold:pixelsize=${largerFontSize};3";
+	font-2 = "${config.fonts.normal}:style=Light:pixelsize=${largerFontSize};2";
 
 	modules-left =
 		if config.desktop.window-manager.bspwm.enable then
-			"bspwm"
+			"bspwm separator"
 		else null;
 	modules-center = "xwindow";
-	modules-right = "memory cpu battery time date kernel-version";
+	modules-right = "separator memory cpu battery time date kernel-version";
 }

@@ -4,6 +4,6 @@ with config.scheme.withHashtag;
 {
 	type = "internal/cpu";
 	interval = 2;
-	format-prefix = "%{F${base09}}  %{F-}";
+	format-prefix = "%{T2}%{F${base07}}  %{F-}%{T-}";
 	label = "%percentage%%";
 }

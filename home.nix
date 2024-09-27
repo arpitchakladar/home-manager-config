@@ -16,7 +16,7 @@
 	desktop.xdg-portal.enable = true;
 
 	# Fonts
-	fonts.nerdfont.enable = true;
+	fonts.nerdfont.fira-code.enable = true;
 
 	# Shell
 	shell.bash.enable = true;

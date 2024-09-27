@@ -23,6 +23,7 @@ POLYBAR_WIDTH=$((MONITOR_WIDTH - 2 * OFFSET)) POLYBAR_OFFSET=$OFFSET polybar mai
 
 		services.polybar.config = {
 			"bar/main" = import ./bar/main.nix { inherit config; };
+			"module/separator" = import ./module/separator.nix { inherit config; };
 			"module/xwindow" = import ./module/xwindow.nix { inherit config; };
 			"module/bspwm" =
 				if config.desktop.window-manager.bspwm.enable then

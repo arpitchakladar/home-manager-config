@@ -4,6 +4,6 @@ with config.scheme.withHashtag;
 {
 	type = "internal/memory";
 	interval = 2;
-	format-prefix = "%{F${base0A}}  %{F-}";
+	format-prefix = "%{T2}%{F${base07}}  %{F-}%{T-}";
 	label = "%percentage_used%%";
 }

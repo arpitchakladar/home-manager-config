@@ -6,31 +6,31 @@ with config.scheme.withHashtag;
 	battery = "BAT0";
 	adapter = "ADP1";
 
-	format-charging = "<animation-charging> <label-charging>";
-	format-discharging = "<ramp-capacity> <label-discharging>";
-	format-full-prefix = "%{F${base0B}}󰁹%{F-}";
+	format-charging = "%{T2}%{F${base07}}<animation-charging>%{F-}%{T-} <label-charging>";
+	format-discharging = "%{T2}%{F${base07}}<ramp-capacity>%{F-}%{T-} <label-discharging>";
+	format-full-prefix = "󰁹";
 
-	ramp-capacity-0 = "%{F${base0C}}󰁺%{F-}";
-	ramp-capacity-1 = "%{F${base0C}}󰁻%{F-}";
-	ramp-capacity-2 = "%{F${base0C}}󰁼%{F-}";
-	ramp-capacity-3 = "%{F${base0C}}󰁽%{F-}";
-	ramp-capacity-4 = "%{F${base0C}}󰁾%{F-}";
-	ramp-capacity-5 = "%{F${base0C}}󰁿%{F-}";
-	ramp-capacity-6 = "%{F${base0C}}󰂀%{F-}";
-	ramp-capacity-7 = "%{F${base0C}}󰂁%{F-}";
-	ramp-capacity-8 = "%{F${base0C}}󰂂%{F-}";
-	ramp-capacity-9 = "%{F${base0C}}󰁹%{F-}";
+	ramp-capacity-0 = "󰁺";
+	ramp-capacity-1 = "󰁻";
+	ramp-capacity-2 = "󰁼";
+	ramp-capacity-3 = "󰁽";
+	ramp-capacity-4 = "󰁾";
+	ramp-capacity-5 = "󰁿";
+	ramp-capacity-6 = "󰂀";
+	ramp-capacity-7 = "󰂁";
+	ramp-capacity-8 = "󰂂";
+	ramp-capacity-9 = "󰁹";
 
-	animation-charging-0 = "%{F${base0C}}󰁺%{F-}";
-	animation-charging-1 = "%{F${base0C}}󰁻%{F-}";
-	animation-charging-2 = "%{F${base0C}}󰁼%{F-}";
-	animation-charging-3 = "%{F${base0C}}󰁽%{F-}";
-	animation-charging-4 = "%{F${base0C}}󰁾%{F-}";
-	animation-charging-5 = "%{F${base0C}}󰁿%{F-}";
-	animation-charging-6 = "%{F${base0C}}󰂀%{F-}";
-	animation-charging-7 = "%{F${base0C}}󰂁%{F-}";
-	animation-charging-8 = "%{F${base0C}}󰂂%{F-}";
-	animation-charging-9 = "%{F${base0C}}󰁹%{F-}";
+	animation-charging-0 = "󰁺";
+	animation-charging-1 = "󰁻";
+	animation-charging-2 = "󰁼";
+	animation-charging-3 = "󰁽";
+	animation-charging-4 = "󰁾";
+	animation-charging-5 = "󰁿";
+	animation-charging-6 = "󰂀";
+	animation-charging-7 = "󰂁";
+	animation-charging-8 = "󰂂";
+	animation-charging-9 = "󰁹";
 
 	animation-charging-framerate = 750;
 }

@@ -11,7 +11,7 @@ with config.scheme.withHashtag;
 	label-occupied = "%index%";
 	label-occupied-padding = 2;
 
-	label-urgent = "%index%!";
+	label-urgent = "%index%";
 	label-urgent-underline = "${base08}";
 	label-urgent-padding = 2;
 
