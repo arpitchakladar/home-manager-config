@@ -7,9 +7,17 @@
 	];
 
 	options.desktop.terminal = {
-		default = lib.mkOption {
+		command = lib.mkOption {
 			type = lib.types.str;
-			description = "Path to the default terminal program.";
+			description = "Command for the terminal.";
+		};
+
+		default = lib.mkOption {
+			type = lib.types.enum [
+				"kitty"
+				"alacritty"
+			];
+			description = "Default terminal.";
 		};
 	};
 }

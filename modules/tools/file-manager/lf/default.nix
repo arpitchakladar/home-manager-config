@@ -6,7 +6,12 @@
 	};
 
 	config = lib.mkIf config.tools.file-manager.lf.enable {
-		tools.file-manager.default = "${pkgs.nnn}/bin/lf";
+		tools.file-manager.default = lib.mkDefault "lf";
+		tools.file-manager.command =
+			if config.tools.file-manager.default == "lf" then
+				lib.mkForce "${pkgs.lf}/bin/lf"
+			else "";
+
 		programs.lf.enable = true;
 		programs.lf.settings = {
 			hidden = true;

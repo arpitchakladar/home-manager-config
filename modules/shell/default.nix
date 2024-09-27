@@ -8,17 +8,21 @@
 
 	options.shell = {
 		default = lib.mkOption {
-			type = lib.types.str;
-			description = "Path to the default shell program.";
+			type = lib.types.enum [
+				"bash"
+				"zsh"
+			];
+			description = "Default shell.";
 		};
+
+		command = lib.mkOption {
+			type = lib.types.str;
+			description = "Command for the default shell.";
+		};
+
 		alias = lib.mkOption {
 			type = lib.types.attrs;
 			description = "Shell aliases.";
 		};
-	};
-
-	config = {
-		shell.default = lib.mkDefault "${pkgs.bash}/bin/bash"; # Set bash as default shell
-		shell.bash.enable = lib.mkDefault true; # Enable bash by default
 	};
 }

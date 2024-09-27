@@ -34,12 +34,12 @@
 				${(createKeybinding
 					"t"
 					"Launch terminal.")}
-						= config.desktop.terminal.default;
+						= config.desktop.terminal.command;
 
 				${(createKeybinding
 					"f"
 					"Launch File Manager.")}
-						= "${config.desktop.terminal.default} --title 'File Manager' --class popup -e ${config.tools.file-manager.default}";
+						= "${config.desktop.terminal.command} --title 'File Manager' --class popup -e ${config.tools.file-manager.command}";
 			}
 		];
 	};

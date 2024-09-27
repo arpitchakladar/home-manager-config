@@ -13,7 +13,11 @@
 			}
 		];
 		programs.kitty.enable = true;
-		desktop.terminal.default = lib.mkDefault "${pkgs.kitty}/bin/kitty";
+		desktop.terminal.default = lib.mkDefault "kitty";
+		desktop.terminal.command =
+			if config.desktop.terminal.default == "kitty" then
+				lib.mkForce "${pkgs.kitty}/bin/kitty"
+			else "";
 
 		programs.kitty.settings = with config.scheme.withHashtag; {
 			window_padding_width = config.desktop.window-manager.gap;
@@ -42,7 +46,7 @@
 			selection_background = base03;
 			selection_foreground = base00;
 
-			shell = config.shell.default;
+			shell = config.shell.command;
 		};
 	};
 }

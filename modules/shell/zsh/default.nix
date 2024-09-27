@@ -6,7 +6,11 @@
 	};
 
 	config = lib.mkIf config.shell.zsh.enable {
-		shell.default = "${pkgs.zsh}/bin/zsh";
+		shell.default = lib.mkDefault "zsh";
+		shell.command =
+			if config.shell.default == "zsh" then
+				lib.mkForce "${pkgs.zsh}/bin/zsh"
+			else "";
 
 		programs.zsh.enable = true;
 		programs.zsh.dotDir = ".config/zsh";

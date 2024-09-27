@@ -7,7 +7,11 @@
 
 	config = lib.mkIf config.desktop.terminal.alacritty.enable {
 		programs.alacritty.enable = true;
-		desktop.terminal.default = lib.mkDefault "${pkgs.alacritty}/bin/alacritty";
+		desktop.terminal.default = lib.mkDefault "alacritty";
+		desktop.terminal.command =
+			if config.desktop.terminal.default == "alacritty" then
+				lib.mkForce "${pkgs.kitty}/bin/alacritty"
+			else "";
 
 		programs.alacritty.settings = {
 			window = {
@@ -72,7 +76,7 @@
 			};
 
 			shell = {
-				program = config.shell.default;
+				program = config.shell.command;
 			};
 		};
 	};
