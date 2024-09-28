@@ -8,8 +8,15 @@
 
 	options.desktop.window-manager = {
 		default = lib.mkOption {
+			type = lib.types.enum [
+				"bspwm"
+			];
+			description = "Default window manager.";
+		};
+
+		command = lib.mkOption {
 			type = lib.types.str;
-			description = "Path to the default window manager program.";
+			description = "Command window manager program.";
 		};
 
 		gap = lib.mkOption {

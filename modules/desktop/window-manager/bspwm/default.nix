@@ -6,7 +6,12 @@
 	};
 
 	config = lib.mkIf config.desktop.window-manager.bspwm.enable {
-		desktop.window-manager.default = "${pkgs.bspwm}/bin/bspwm";
+		desktop.window-manager.default = lib.mkDefault "bspwm";
+		desktop.window-manager.command =
+			if config.desktop.window-manager.default == "bspwm" then
+				"${pkgs.bspwm}/bin/bspwm"
+			else lib.mkDefault "";
+
 		xsession.windowManager.bspwm.enable = true;
 
 		xsession.windowManager.bspwm.settings = with config.scheme.withHashtag; {
