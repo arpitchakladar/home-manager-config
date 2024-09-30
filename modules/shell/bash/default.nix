@@ -19,6 +19,10 @@
 		programs.bash.enable = true;
 		programs.bash.historyFile = "${config.xdg.cacheHome}/bash/history";
 		programs.bash.shellAliases = config.shell.alias;
-		home.file."${config.xdg.cacheHome}/bash/histroy".text = ""; # Create the cache directory and histroy file
+
+		home.activation.createBashCacheDirectory
+			= lib.hm.dag.entryAfter
+				[ "writeBoundary" ]
+				"mkdir -p ${config.xdg.cacheHome}/bash";
 	};
 }

@@ -11,8 +11,8 @@
 			tabs = "4";
 			theme = "custom-theme";
 		};
-		shell.alias."bc" = "${pkgs.bat}/bin/bat -pp";
-		shell.alias."bp" = "${pkgs.bat}/bin/bat --paging always";
+		shell.alias."cat" = "${pkgs.bat}/bin/bat -pp";
+		shell.alias."less" = "${pkgs.bat}/bin/bat --paging always";
 		home.sessionVariables."PAGER" = "${pkgs.bat}/bin/bat --paging always";
 		xdg.configFile."bat/themes/custom-theme.tmTheme".source
 			= config.scheme {

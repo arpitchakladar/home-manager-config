@@ -19,3 +19,23 @@ vim.o.expandtab = false;
 vim.o.updatetime = 300;
 
 vim.o.mouse = "a";
+
+-- Force all filetypes to use tabs
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "*",
+	callback = function()
+		vim.bo.expandtab = false;
+		vim.bo.tabstop = 2;
+		vim.bo.shiftwidth = 2;
+	end,
+});
+
+-- Exception that use spaces
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = {},
+	callback = function()
+		vim.bo.expandtab = true;
+		vim.bo.tabstop = 2;
+		vim.bo.shiftwidth = 2;
+	end,
+});

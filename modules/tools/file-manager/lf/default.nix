@@ -22,7 +22,7 @@
 #!/bin/sh
 unset COLORTERM
 ${if config.tools.viewer.bat.enable then
-	"bat -pp --line-range=:500 --color=always '$1'"
+	"bat -pp --line-range=:500 --color=always $1"
 else "cat"}
 			'';
 		programs.lf.extraConfig = "set icons";

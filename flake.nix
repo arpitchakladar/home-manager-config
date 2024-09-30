@@ -1,5 +1,5 @@
 {
-	description = "Home Manager configuration of arpit";
+	description = "Home Manager configuration of arpit.";
 
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
