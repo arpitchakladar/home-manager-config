@@ -26,6 +26,7 @@
 
 	# Tools
 	tools.editor.neovim.enable = true;
+	tools.editor.neovim.configuration = "full";
 	tools.file-manager.lf.enable = true;
 	tools.file-manager.nnn.enable = true;
 	tools.file-manager.default = "nnn";

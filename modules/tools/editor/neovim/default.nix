@@ -3,34 +3,34 @@
 {
 	options.tools.editor.neovim = {
 		enable = lib.mkEnableOption "Enables neovim.";
+		configuration = lib.mkOption {
+			type = lib.types.enum [
+				"minimal"
+				"full"
+			];
+			default = "minimal";
+			description = "The configuration for neovim to use.";
+		};
 	};
 
-	config = lib.mkIf config.tools.editor.neovim.enable {
+	config =
+	let
+		plugins = import ./plugins { inherit config pkgs lib; };
+	in lib.mkIf config.tools.editor.neovim.enable {
 		programs.neovim.enable = true;
 		programs.neovim.viAlias = true;
 		programs.neovim.vimAlias = true;
 		programs.neovim.vimdiffAlias = true;
 		programs.neovim.defaultEditor = true;
 
-		programs.neovim.extraPackages = with pkgs; [
-			gcc # Required for treesitter
-		];
+		home.packages = plugins.requirements;
 
 		programs.neovim.extraLuaConfig =
 	''
 ${import ./config}
-${import ./plugins { inherit config; }}
+${plugins.configuration}
 	'';
 
-		programs.neovim.plugins = with pkgs.vimPlugins; [
-			comment-nvim
-			lualine-nvim
-			nvim-treesitter
-			nvim-web-devicons
-			nvim-tree-lua
-			(base16-vim.overrideAttrs (old: {
-				patchPhase = "ln -s ${config.scheme base16-vim} colors/base16-scheme.vim";
-			}))
-		];
+		programs.neovim.plugins = plugins.list;
 	};
 }

@@ -1,11 +1,27 @@
-{ config }:
+{ config, pkgs, lib }:
 
-''
-${builtins.readFile ./comment.lua}
-${builtins.readFile ./lualine.lua}
-${import ./treesitter.nix { inherit config; }}
-${builtins.readFile (config.scheme {
-	template = builtins.readFile ./base16.mustache.lua;
-})}
-${builtins.readFile ./nvim-tree.lua}
-''
+{
+	configuration = import ./config { inherit config; };
+
+	list = with pkgs.vimPlugins; lib.mkMerge [
+		[
+			comment-nvim
+			lualine-nvim
+			nvim-treesitter
+			nvim-web-devicons
+			nvim-tree-lua
+			(base16-vim.overrideAttrs (old: {
+				patchPhase = "ln -s ${config.scheme base16-vim} colors/base16-scheme.vim";
+			}))
+		]
+		(if config.tools.editor.neovim.configuration == "full" then
+			[
+				nvim-lspconfig
+			]
+		else null)
+	];
+
+	requirements = with pkgs; [
+		gcc # for treesitter
+	];
+}
