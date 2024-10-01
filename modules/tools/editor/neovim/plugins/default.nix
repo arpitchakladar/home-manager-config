@@ -16,6 +16,7 @@
 		]
 		(if config.tools.editor.neovim.configuration == "full" then
 			[
+				noice-nvim
 				nvim-lspconfig
 			]
 		else null)

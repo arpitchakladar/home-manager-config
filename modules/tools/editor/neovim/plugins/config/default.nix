@@ -4,6 +4,9 @@ let
 	extra = if config.tools.editor.neovim.configuration == "full" then
 ''
 ${builtins.readFile ./lsp-config.lua}
+${builtins.readFile (config.scheme {
+	template = builtins.readFile ./noice.mustache.lua;
+})}
 ''
 	else "";
 in
