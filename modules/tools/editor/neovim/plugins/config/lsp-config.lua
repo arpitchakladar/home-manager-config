@@ -45,19 +45,13 @@ local lsp_setup_done = {};
 -- Function to setup LSP based on filetype
 local function setup_lsp(filetype)
 	local lsp = filetype_to_lsp[filetype];
-	if lsp and not lsp_setup_done[lsp.server] then
+	if lsp ~= nil and not lsp_setup_done[lsp.server] then
 		lsp_setup_done[lsp.server] = true;
-		if vim.fn.executable(lsp.executable) then
+		if vim.fn.executable(lsp.executable) == 1 then
 			lspconfig[lsp.server].setup({});
-			vim.lsp.start();
 		end
 	end
 end
-
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true });
-vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { noremap = true, silent = true });
-vim.keymap.set("n", "gr", vim.lsp.buf.references, { noremap = true, silent = true });
-vim.keymap.set("n", "gk", vim.lsp.buf.hover, { noremap = true, silent = true });
 
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*", -- Match all file types
@@ -65,3 +59,10 @@ vim.api.nvim_create_autocmd("FileType", {
 		setup_lsp(vim.bo.filetype); -- Call the setup_lsp function only if the filetype is in the mapping
 	end,
 });
+
+local lsp_keymap_opts = { noremap = true, silent = true };
+
+vim.keymap.set("n", "<leader>d", vim.lsp.buf.definition, lsp_keymap_opts);
+vim.keymap.set("n", "<leader>i", vim.lsp.buf.implementation, lsp_keymap_opts);
+vim.keymap.set("n", "<leader>r", vim.lsp.buf.references, lsp_keymap_opts);
+vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover, lsp_keymap_opts);

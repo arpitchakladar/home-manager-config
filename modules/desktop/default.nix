@@ -2,8 +2,8 @@
 
 {
 	imports = [
+		./application-launcher
 		./display-server
-		./popup-manager
 		./status-bar
 		./terminal
 		./window-manager

@@ -33,7 +33,7 @@
 		};
 
 		xsession.windowManager.bspwm.rules = {
-			"popup" = {
+			"floating-termial" = {
 				state = "floating";
 				sticky = true;
 				rectangle = "1000x600+0+0";

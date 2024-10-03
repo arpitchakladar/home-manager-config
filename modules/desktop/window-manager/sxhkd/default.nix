@@ -29,7 +29,7 @@
 				${(createKeybinding
 					"r"
 					"Application launcher.")}
-						= config.desktop.popup-manager.application-launcher.command;
+						= config.desktop.application-launcher.command;
 
 				${(createKeybinding
 					"t"
@@ -39,7 +39,7 @@
 				${(createKeybinding
 					"f"
 					"Launch File Manager.")}
-						= "${config.desktop.terminal.command} --title 'File Manager' --class popup -e ${config.tools.file-manager.command}";
+						= "${config.desktop.terminal.command} --title 'File Manager' --class floating-termial -e ${config.tools.file-manager.command}";
 			}
 		];
 	};
