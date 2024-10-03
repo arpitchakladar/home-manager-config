@@ -1,6 +1,6 @@
 #!/bin/sh
 
-selected_executable=$(find -L $(echo $PATH | tr ':' ' ') -maxdepth 1 -executable -type f 2>/dev/null | xargs -n 1 basename | sort -u | fzf --height=100% --layout=reverse --prompt "  ")
+selected_executable=$(for dir in $(echo "$PATH" | tr ':' ' '); do [ -d "$dir" ] && ls "$dir" 2>/dev/null | awk -F/ '{print $NF}'; done | sort -u | fzf --height=100% --border=none --layout=reverse --prompt "  ")
 
 if [[ -n "$selected_executable" ]]; then
 	setsid "$selected_executable" >/dev/null 2>&1 &
