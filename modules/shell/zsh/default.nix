@@ -17,7 +17,7 @@
 		programs.zsh.history.path = "${config.xdg.cacheHome}/zsh/history";
 		programs.zsh.shellAliases = config.shell.alias;
 		programs.zsh.initExtra = ''
-${if config.tools.fzf.enable then
+${if config.tools.utils.fzf.enable then
 	"eval \"$(fzf --zsh)\""
 else ""}
 ${builtins.readFile ./zshrc}

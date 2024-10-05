@@ -8,8 +8,8 @@
 	config = lib.mkIf config.desktop.application-launcher.fzf.enable {
 		assertions = [
 			{
-				assertion = config.tools.fzf.enable;
-				message ="Module desktop.application-launcher.fzf requires tools.fzf module to be enabled.";
+				assertion = config.tools.utils.fzf.enable;
+				message ="Module desktop.application-launcher.fzf requires tools.utils.fzf module to be enabled.";
 			}
 		];
 

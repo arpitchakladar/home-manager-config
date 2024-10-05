@@ -20,7 +20,7 @@
 		programs.bash.historyFile = "${config.xdg.cacheHome}/bash/history";
 		programs.bash.shellAliases = config.shell.alias;
 		programs.bash.bashrcExtra = ''
-${if config.tools.fzf.enable then
+${if config.tools.utils.fzf.enable then
 	"eval \"$(fzf --bash)\""
 else ""}
 		'';

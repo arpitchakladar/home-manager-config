@@ -33,11 +33,11 @@
 	tools.file-manager.nnn.enable = true;
 	tools.file-manager.default = "nnn";
 	tools.file-manager.lsd.enable = true;
-	tools.fzf.enable = true;
 	tools.git.enable = true;
 	tools.git.username = "Arpit Chakladar";
 	tools.git.email = "54011232+arpitchakladar@users.noreply.github.com";
 	tools.system-monitor.htop.enable = true;
+	tools.utils.fzf.enable = true;
 	tools.viewer.bat.enable = true;
 
 	programs.home-manager.enable = true;

@@ -1,11 +1,11 @@
 { config, lib,... }:
 
 {
-	options.tools.fzf = {
+	options.tools.utils.fzf = {
 		enable = lib.mkEnableOption "Enables fzf.";
 	};
 
-	config = lib.mkIf config.tools.fzf.enable {
+	config = lib.mkIf config.tools.utils.fzf.enable {
 		programs.fzf.enable = true;
 		programs.fzf.defaultOptions = [
 			"--height 100%"
