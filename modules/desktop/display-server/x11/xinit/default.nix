@@ -16,7 +16,7 @@ ${if config.desktop.display-server.compositor.picom.enable then
 	"picom &"
 else ""}
 ${if config.tools.viewer.feh.enable then
-	"feh --bg-scale ${../../../../../assets/background.png}"
+	"feh --bg-scale ${../../../../../assets/skeleton-mage.png}"
 else ""}
 ${if config.desktop.status-bar.polybar.enable then
 	config.desktop.status-bar.polybar.command

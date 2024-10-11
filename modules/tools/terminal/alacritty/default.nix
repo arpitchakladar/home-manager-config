@@ -10,7 +10,7 @@
 		tools.terminal.default = lib.mkDefault "alacritty";
 		tools.terminal.command =
 			if config.tools.terminal.default == "alacritty" then
-				lib.mkForce "${pkgs.kitty}/bin/alacritty"
+				lib.mkForce "${pkgs.alacritty}/bin/alacritty"
 			else "";
 
 		programs.alacritty.settings = {
