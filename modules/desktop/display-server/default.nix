@@ -2,6 +2,7 @@
 
 {
 	imports = [
+		./compositor
 		./x11
 	];
 }

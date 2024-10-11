@@ -16,7 +16,7 @@
 		desktop.application-launcher.default = lib.mkDefault "fzf";
 		desktop.application-launcher.command =
 			if config.desktop.application-launcher.default == "fzf" then
-				lib.mkForce "${config.desktop.terminal.command} --title 'Application Launcher' --class floating-termial -e ${(pkgs.writeShellScript "fzf-launch.sh" (builtins.readFile ./launch.sh))}"
+				lib.mkForce "${config.tools.terminal.command} --title 'Application Launcher' --class floating-termial -e ${(pkgs.writeShellScript "fzf-launch.sh" (builtins.readFile ./launch.sh))}"
 			else "";
 	};
 }

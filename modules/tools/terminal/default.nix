@@ -6,7 +6,7 @@
 		./kitty
 	];
 
-	options.desktop.terminal = {
+	options.tools.terminal = {
 		command = lib.mkOption {
 			type = lib.types.str;
 			description = "Command for the terminal.";

@@ -2,7 +2,6 @@
 
 {
 	imports = [
-		./bat
-		./feh
+		./picom
 	];
 }

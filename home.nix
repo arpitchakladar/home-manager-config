@@ -7,13 +7,11 @@
 
 	# Desktop
 	desktop.display-server.x11.xinit.enable = true;
-	desktop.application-launcher.rofi.enable = true;
+	# desktop.application-launcher.rofi.enable = true;
 	desktop.application-launcher.fzf.enable = true;
 	desktop.application-launcher.default = "fzf";
+	desktop.display-server.compositor.picom.enable = true;
 	desktop.status-bar.polybar.enable = true;
-	desktop.terminal.alacritty.enable = true;
-	desktop.terminal.kitty.enable = true;
-	desktop.terminal.default = "kitty";
 	desktop.window-manager.bspwm.enable = true;
 	desktop.window-manager.sxhkd.enable = true;
 	desktop.xdg-portal.enable = true;
@@ -37,8 +35,12 @@
 	tools.git.username = "Arpit Chakladar";
 	tools.git.email = "54011232+arpitchakladar@users.noreply.github.com";
 	tools.system-monitor.htop.enable = true;
+	tools.terminal.alacritty.enable = true;
+	# tools.terminal.kitty.enable = true;
+	tools.terminal.default = "alacritty";
 	tools.utils.fzf.enable = true;
 	tools.viewer.bat.enable = true;
+	tools.viewer.feh.enable = true;
 
 	programs.home-manager.enable = true;
 }

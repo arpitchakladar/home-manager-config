@@ -1,15 +1,15 @@
 { pkgs, config, lib, ... }:
 
 {
-	options.desktop.terminal.alacritty = {
+	options.tools.terminal.alacritty = {
 		enable = lib.mkEnableOption "Enables alacritty.";
 	};
 
-	config = lib.mkIf config.desktop.terminal.alacritty.enable {
+	config = lib.mkIf config.tools.terminal.alacritty.enable {
 		programs.alacritty.enable = true;
-		desktop.terminal.default = lib.mkDefault "alacritty";
-		desktop.terminal.command =
-			if config.desktop.terminal.default == "alacritty" then
+		tools.terminal.default = lib.mkDefault "alacritty";
+		tools.terminal.command =
+			if config.tools.terminal.default == "alacritty" then
 				lib.mkForce "${pkgs.kitty}/bin/alacritty"
 			else "";
 
@@ -17,10 +17,10 @@
 			window = {
 				opacity = 1.0;
 				padding = {
-					x = 4;
-					y = 0;
+					x = config.desktop.window-manager.gap;
+					y = config.desktop.window-manager.gap;
 				};
-				decorations = "full";
+				decorations = "none";
 			};
 
 			font = {
