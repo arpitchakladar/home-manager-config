@@ -13,7 +13,9 @@ ${builtins.readFile (config.scheme {
 in
 ''
 ${builtins.readFile ./comment.lua}
-${builtins.readFile ./lualine.lua}
+${builtins.readFile (config.scheme {
+	template = builtins.readFile ./lualine.mustache.lua;
+})}
 ${import ./treesitter.nix { inherit config; }}
 ${builtins.readFile (config.scheme {
 	template = builtins.readFile ./base16.mustache.lua;

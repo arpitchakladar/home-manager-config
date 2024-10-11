@@ -21,7 +21,7 @@
 
 		gap = lib.mkOption {
 			type = lib.types.int;
-			default = 5;
+			default = 10;
 			description = "The spacing between windows.";
 		};
 	};
