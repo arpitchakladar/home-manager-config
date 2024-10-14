@@ -6,6 +6,6 @@
 		./display-server
 		./status-bar
 		./window-manager
-		./xdg-portal
+		./xdg
 	];
 }

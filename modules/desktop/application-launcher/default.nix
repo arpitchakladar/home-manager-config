@@ -12,7 +12,6 @@
 				"fzf"
 				"rofi"
 			];
-
 			description = "Select the default application launcher.";
 		};
 

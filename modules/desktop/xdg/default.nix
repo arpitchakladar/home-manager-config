@@ -1,11 +1,11 @@
 { pkgs, config, lib, ... }:
 
 {
-	options.desktop.xdg-portal = {
-		enable = lib.mkEnableOption "Enables xdg desktop portal.";
+	options.desktop.xdg = {
+		portal.enable = lib.mkEnableOption "Enables xdg desktop portal.";
 	};
 
-	config = lib.mkIf config.desktop.xdg-portal.enable {
+	config = lib.mkIf config.desktop.xdg.portal.enable {
 		xdg.portal.enable = true;
 		xdg.portal.xdgOpenUsePortal = true;
 

@@ -8,9 +8,9 @@
 	config = lib.mkIf config.shell.zsh.enable {
 		shell.default = lib.mkDefault "zsh";
 		shell.command =
-			if config.shell.default == "zsh" then
-				lib.mkForce "${pkgs.zsh}/bin/zsh"
-			else "";
+			lib.mkIf
+				(config.shell.default == "zsh")
+				"${pkgs.zsh}/bin/zsh";
 
 		programs.zsh.enable = true;
 		programs.zsh.dotDir = ".config/zsh";

@@ -1,38 +1,38 @@
-{ createKeybinding, pkgs }:
+{ createKeybinding, pkgs, lib }:
 
 let
 	bspc = "${pkgs.bspwm}/bin/bspc";
-in {
-	${(createKeybinding
+in lib.mkMerge [
+	(createKeybinding
 		"q"
-		"Kill current window.")}
-			= "${bspc} node -c";
+		"Kill current window."
+		"${bspc} node -c")
 
-	${(createKeybinding
+	(createKeybinding
 		"{1-9,0}"
-		"Switch workspace.")}
-			= "${bspc} desktop -f {1-9,10}";
+		"Switch workspace."
+		"${bspc} desktop -f {1-9,10}")
 
-	${(createKeybinding
+	(createKeybinding
 		"shift + {1-9,0}"
-		"Move window to workspace.")}
-			= "${bspc} node -d {1-9,10} --follow";
+		"Move window to workspace."
+		"${bspc} node -d {1-9,10} --follow")
 
-	${(createKeybinding
+	(createKeybinding
 		"{n,d,m}"
-		"Set current window mode (tiled, floating, fullscreen).")}
-			= "${bspc} node focused -t {tiled,floating,fullscreen}";
+		"Set current window mode (tiled, floating, fullscreen)."
+		"${bspc} node focused -t {tiled,floating,fullscreen}")
 
-	${(createKeybinding
+	(createKeybinding
 		"{_,shift + }{h,j,k,l}"
-		"Navigate between windows.")}
-			= "${bspc} node --{focus,swap} {west,south,north,east}";
+		"Navigate between windows."
+		"${bspc} node --{focus,swap} {west,south,north,east}")
 
 	# the indentation for each line is required to work with the help prompt
-	${(createKeybinding
+	(createKeybinding
 		"ctrl + {h,j,k,l}"
-		"Resize current window.")}
-			= ''
+		"Resize current window."
+		''
 	${bspc} node {@parent/second -z left -20 0; \
 	@parent/first -z right -20 0, \
 	@parent/second -z top 0 +20; \
@@ -41,5 +41,5 @@ in {
 	@parent/second -z top 0 -20, \
 	@parent/first -z right +20 0; \
 	@parent/second -z left +20 0}
-'';
-}
+'')
+]

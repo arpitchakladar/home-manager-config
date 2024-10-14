@@ -1,4 +1,4 @@
-{ config }:
+{ config, lib }:
 
 with config.scheme.withHashtag;
 let
@@ -36,9 +36,9 @@ in {
 	font-2 = "${config.fonts.normal}:style=Light:pixelsize=${largerFontSize};2";
 
 	modules-left =
-		if config.desktop.window-manager.bspwm.enable then
-			"bspwm separator"
-		else null;
+		lib.mkIf
+			config.desktop.window-manager.bspwm.enable
+			"bspwm separator";
 	modules-center = "xwindow";
 	modules-right = "separator memory cpu battery time date kernel-version";
 }

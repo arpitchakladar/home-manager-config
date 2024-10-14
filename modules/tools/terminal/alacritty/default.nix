@@ -9,9 +9,9 @@
 		programs.alacritty.enable = true;
 		tools.terminal.default = lib.mkDefault "alacritty";
 		tools.terminal.command =
-			if config.tools.terminal.default == "alacritty" then
-				lib.mkForce "${pkgs.alacritty}/bin/alacritty"
-			else "";
+			lib.mkIf
+				(config.tools.terminal.default == "alacritty")
+				"${pkgs.alacritty}/bin/alacritty";
 
 		programs.alacritty.settings = {
 			window = {

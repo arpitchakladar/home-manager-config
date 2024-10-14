@@ -13,11 +13,12 @@
 		services.picom.settings = {
 			blur-background = false;
 			background = "#000000";
+			transparent-clipping = true;
 		};
 		services.picom.activeOpacity = 0.8;
 		services.picom.inactiveOpacity = 0.8;
 		services.picom.opacityRules = [
-			"70:class_g = 'Polybar'"   # 70% opacity for Polybar
+			"100:class_g = 'Polybar'"   # 70% opacity for Polybar
 		];
 	};
 }

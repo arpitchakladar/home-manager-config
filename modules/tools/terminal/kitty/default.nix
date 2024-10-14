@@ -15,9 +15,9 @@
 		programs.kitty.enable = true;
 		tools.terminal.default = lib.mkDefault "kitty";
 		tools.terminal.command =
-			if config.tools.terminal.default == "kitty" then
-				lib.mkForce "${pkgs.kitty}/bin/kitty"
-			else "";
+			lib.mkIf
+				(config.tools.terminal.default == "kitty")
+				"${pkgs.kitty}/bin/kitty";
 
 		programs.kitty.settings = with config.scheme.withHashtag; {
 			window_padding_width = config.desktop.window-manager.gap;

@@ -7,14 +7,14 @@
 
 	# Desktop
 	desktop.display-server.x11.xinit.enable = true;
-	# desktop.application-launcher.rofi.enable = true;
+	desktop.application-launcher.rofi.enable = false;
 	desktop.application-launcher.fzf.enable = true;
 	desktop.application-launcher.default = "fzf";
-	desktop.display-server.compositor.picom.enable = true;
+	desktop.display-server.compositor.picom.enable = false;
 	desktop.status-bar.polybar.enable = true;
 	desktop.window-manager.bspwm.enable = true;
 	desktop.window-manager.sxhkd.enable = true;
-	desktop.xdg-portal.enable = true;
+	desktop.xdg.portal.enable = false;
 
 	# Fonts
 	fonts.nerdfont.fira-code.enable = true;
@@ -26,8 +26,8 @@
 
 	# Tools
 	tools.editor.neovim.enable = true;
-	tools.editor.neovim.configuration = "full";
-	tools.file-manager.lf.enable = true;
+	tools.editor.neovim.profile = "full";
+	tools.file-manager.lf.enable = false;
 	tools.file-manager.nnn.enable = true;
 	tools.file-manager.default = "nnn";
 	tools.file-manager.lsd.enable = true;
@@ -36,7 +36,7 @@
 	tools.git.email = "54011232+arpitchakladar@users.noreply.github.com";
 	tools.system-monitor.htop.enable = true;
 	tools.terminal.alacritty.enable = true;
-	# tools.terminal.kitty.enable = true;
+	tools.terminal.kitty.enable = false;
 	tools.terminal.default = "alacritty";
 	tools.utils.fzf.enable = true;
 	tools.viewer.bat.enable = true;

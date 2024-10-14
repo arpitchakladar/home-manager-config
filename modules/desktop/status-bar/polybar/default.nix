@@ -20,21 +20,9 @@ POLYBAR_WIDTH=$((MONITOR_WIDTH - 2 * OFFSET)) POLYBAR_OFFSET=$OFFSET polybar mai
 	config = lib.mkIf config.desktop.status-bar.polybar.enable {
 		services.polybar.enable = true;
 		services.polybar.script = config.desktop.status-bar.polybar.command;
-
-		services.polybar.config = {
-			"bar/main" = import ./bar/main.nix { inherit config; };
-			"module/separator" = import ./module/separator.nix { inherit config; };
-			"module/xwindow" = import ./module/xwindow.nix { inherit config; };
-			"module/bspwm" =
-				if config.desktop.window-manager.bspwm.enable then
-					import ./module/bspwm.nix { inherit config; }
-				else null;
-			"module/cpu" = import ./module/cpu.nix { inherit config; };
-			"module/memory" = import ./module/memory.nix { inherit config; };
-			"module/date" = import ./module/date.nix { inherit config; };
-			"module/time" = import ./module/time.nix { inherit config; };
-			"module/battery" = import ./module/battery.nix { inherit config; };
-			"module/kernel-version" = import ./module/kernel-version.nix { inherit config; };
-		};
+		services.polybar.config = lib.mkMerge [
+			(import ./bar { inherit config lib; })
+			(import ./module { inherit config lib; })
+		];
 	};
 }

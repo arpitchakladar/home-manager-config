@@ -3,13 +3,13 @@
 {
 	options.tools.editor.neovim = {
 		enable = lib.mkEnableOption "Enables neovim.";
-		configuration = lib.mkOption {
+		profile = lib.mkOption {
 			type = lib.types.enum [
 				"minimal"
 				"full"
 			];
 			default = "minimal";
-			description = "The configuration for neovim to use.";
+			description = "The profile for neovim to use.";
 		};
 	};
 

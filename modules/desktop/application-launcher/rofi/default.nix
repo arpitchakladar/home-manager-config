@@ -8,9 +8,10 @@
 	config = lib.mkIf config.desktop.application-launcher.rofi.enable {
 		desktop.application-launcher.default = lib.mkDefault "rofi";
 		desktop.application-launcher.command =
-			if config.desktop.application-launcher.default == "rofi" then
-				lib.mkForce "${pkgs.rofi}/bin/rofi -show run"
-			else "";
+			lib.mkIf
+				(config.desktop.application-launcher.default == "rofi")
+				"${pkgs.rofi}/bin/rofi -show run";
+
 		programs.rofi.enable = true;
 		programs.rofi.font = "${config.fonts.normal} ${toString config.fonts.size}";
 		programs.rofi.theme = config.scheme {

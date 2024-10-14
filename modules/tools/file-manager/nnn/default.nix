@@ -11,9 +11,9 @@
 	in lib.mkIf config.tools.file-manager.nnn.enable {
 		tools.file-manager.default = lib.mkDefault "nnn";
 		tools.file-manager.command =
-			if config.tools.file-manager.default == "nnn" then
-				lib.mkForce "${nnnWithNerdIcons}/bin/nnn -H -d"
-			else "";
+			lib.mkIf
+				(config.tools.file-manager.default == "nnn")
+				"${nnnWithNerdIcons}/bin/nnn -H -d";
 
 		programs.nnn.enable = true;
 		programs.nnn.package = nnnWithNerdIcons;

@@ -12,9 +12,9 @@
 	config = lib.mkIf config.shell.bash.enable {
 		shell.default = lib.mkDefault "bash";
 		shell.command =
-			if config.shell.default == "bash" then
-				lib.mkForce "${pkgs.zsh}/bin/bash"
-			else "";
+			lib.mkIf
+				(config.shell.default == "bash")
+				"${pkgs.zsh}/bin/bash";
 
 		programs.bash.enable = true;
 		programs.bash.historyFile = "${config.xdg.cacheHome}/bash/history";
@@ -25,8 +25,8 @@ ${if config.tools.utils.fzf.enable then
 else ""}
 		'';
 
-		home.activation.createBashCacheDirectory
-			= lib.hm.dag.entryAfter
+		home.activation.createBashCacheDirectory =
+			lib.hm.dag.entryAfter
 				[ "writeBoundary" ]
 				"mkdir -p ${config.xdg.cacheHome}/bash";
 	};

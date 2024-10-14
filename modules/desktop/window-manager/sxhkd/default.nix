@@ -11,36 +11,36 @@
 		services.sxhkd.keybindings =
 		let
 			modKey = "alt";
-			createKeybinding = keybinding: description: "# ${description}\n${modKey} + ${keybinding}";
+			createKeybinding = keybinding: description: command: {
+				"# ${description}\n${modKey} + ${keybinding}" = command;
+			};
 		in lib.mkMerge [
 			(
 				if config.desktop.window-manager.bspwm.enable then
-					(import ./keybindings/bspwm.nix { inherit pkgs createKeybinding; })
+					(import ./keybindings/bspwm.nix { inherit pkgs createKeybinding lib; })
 				else {}
 			)
-			{
-				${(createKeybinding
+			(lib.mkMerge [
+				(createKeybinding
 					"s"
-					"Show keybindings.")}
-						= pkgs.writeShellScript
-							"keybindings.sh"
-							(builtins.readFile ./scripts/keybindings.sh);
+					"Show keybindings."
+					(pkgs.writeShellScript "keybindings.sh" (builtins.readFile ./scripts/keybindings.sh)))
 
-				${(createKeybinding
-					"r"
-					"Application launcher.")}
-						= config.desktop.application-launcher.command;
+				(createKeybinding
+					"space"
+					"Application launcher."
+					config.desktop.application-launcher.command)
 
-				${(createKeybinding
+				(createKeybinding
 					"t"
-					"Launch terminal.")}
-						= config.tools.terminal.command;
+					"Launch terminal."
+					config.tools.terminal.command)
 
-				${(createKeybinding
+				(createKeybinding
 					"f"
-					"Launch File Manager.")}
-						= "${config.tools.terminal.command} --title 'File Manager' --class floating-termial -e ${config.tools.file-manager.command}";
-			}
+					"Launch File Manager."
+					"${config.tools.terminal.command} --title 'File Manager' --class floating-termial -e ${config.tools.file-manager.command}")
+			])
 		];
 	};
 }

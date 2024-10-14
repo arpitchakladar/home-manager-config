@@ -15,7 +15,7 @@
 				patchPhase = "ln -s ${config.scheme base16-vim} colors/base16-scheme.vim";
 			}))
 		]
-		(if config.tools.editor.neovim.configuration == "full" then
+		(if config.tools.editor.neovim.profile == "full" then
 			[
 				noice-nvim
 				dressing-nvim
