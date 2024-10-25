@@ -12,8 +12,8 @@ vim.o.laststatus = 3;
 vim.o.signcolumn = "auto";
 vim.opt.fillchars = { eob = " " };
 
-vim.o.tabstop = 2;
-vim.o.shiftwidth = 2;
+vim.o.tabstop = 3;
+vim.o.shiftwidth = 0;
 vim.o.expandtab = false;
 
 vim.o.updatetime = 300;
@@ -25,8 +25,8 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "*",
 	callback = function()
 		vim.bo.expandtab = false;
-		vim.bo.tabstop = 2;
-		vim.bo.shiftwidth = 2;
+		vim.bo.tabstop = 3;
+		vim.bo.shiftwidth = 0;
 	end,
 });
 

@@ -6,14 +6,16 @@
 	home.stateVersion = "23.11";
 
 	# Desktop
+	desktop.display-server.x11.xclip.enable = true;
 	desktop.display-server.x11.xinit.enable = true;
 	desktop.application-launcher.rofi.enable = false;
 	desktop.application-launcher.fzf.enable = true;
 	desktop.application-launcher.default = "fzf";
-	desktop.display-server.compositor.picom.enable = false;
+	desktop.display-server.compositor.picom.enable = true;
 	desktop.status-bar.polybar.enable = true;
 	desktop.window-manager.bspwm.enable = true;
 	desktop.window-manager.sxhkd.enable = true;
+	desktop.window-manager.default = "bspwm";
 	desktop.xdg.portal.enable = false;
 
 	# Fonts

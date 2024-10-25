@@ -6,6 +6,13 @@
 	};
 
 	config = lib.mkIf config.desktop.window-manager.bspwm.enable {
+		assertions = [
+			{
+				assertion = config.desktop.window-manager.sxhkd.enable;
+				message ="Module desktop.window-manager.bspwm requires desktop.window-manager.sxhkd module to be enabled.";
+			}
+		];
+
 		desktop.window-manager.default = lib.mkDefault "bspwm";
 		desktop.window-manager.command =
 			if config.desktop.window-manager.default == "bspwm" then

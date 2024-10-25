@@ -60,6 +60,13 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 });
 
+-- Show diagnostics in a floating window when hovering over the line
+vim.api.nvim_create_autocmd("CursorHold", {
+	callback = function()
+		vim.diagnostic.open_float(nil, { focusable = false })
+	end,
+})
+
 local lsp_keymap_opts = { noremap = true, silent = true };
 
 vim.keymap.set("n", "<leader>d", vim.lsp.buf.definition, lsp_keymap_opts);

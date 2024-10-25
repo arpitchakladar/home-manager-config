@@ -7,7 +7,6 @@
 
 	config = lib.mkIf config.desktop.window-manager.sxhkd.enable {
 		services.sxhkd.enable = true;
-
 		services.sxhkd.keybindings =
 		let
 			modKey = "alt";
@@ -27,7 +26,7 @@
 					(pkgs.writeShellScript "keybindings.sh" (builtins.readFile ./scripts/keybindings.sh)))
 
 				(createKeybinding
-					"space"
+					"r"
 					"Application launcher."
 					config.desktop.application-launcher.command)
 

@@ -11,6 +11,7 @@
 			nvim-web-devicons
 			nvim-tree-lua
 			which-key-nvim
+			bufferline-nvim
 			(base16-vim.overrideAttrs (old: {
 				patchPhase = "ln -s ${config.scheme base16-vim} colors/base16-scheme.vim";
 			}))
@@ -21,7 +22,7 @@
 				dressing-nvim
 				nvim-lspconfig
 			]
-		else null)
+		else [])
 	];
 
 	requirements = with pkgs; [
