@@ -6,12 +6,6 @@
 	};
 
 	config = lib.mkIf config.tools.terminal.kitty.enable {
-		assertions = [
-			{
-				assertion = config.desktop.xdg-portal.enable;
-				message ="Module tools.terminal.kitty requires desktop.xdg-portal module to be enabled.";
-			}
-		];
 		programs.kitty.enable = true;
 		tools.terminal.default = lib.mkDefault "kitty";
 		tools.terminal.command =

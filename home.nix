@@ -38,9 +38,9 @@
 	tools.git.username = "Arpit Chakladar";
 	tools.git.email = "54011232+arpitchakladar@users.noreply.github.com";
 	tools.system-monitor.htop.enable = true;
-	tools.terminal.alacritty.enable = true;
-	tools.terminal.kitty.enable = false;
-	tools.terminal.default = "alacritty";
+	tools.terminal.alacritty.enable = false;
+	tools.terminal.kitty.enable = true;
+	tools.terminal.default = "kitty";
 	tools.utils.fzf.enable = true;
 	tools.viewer.bat.enable = true;
 	tools.viewer.feh.enable = true;
