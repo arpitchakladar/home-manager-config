@@ -3,6 +3,7 @@
 {
 	imports = [
 		./bspwm
+		./i3
 		./sxhkd
 	];
 
@@ -10,6 +11,7 @@
 		default = lib.mkOption {
 			type = lib.types.enum [
 				"bspwm"
+				"i3"
 			];
 			description = "Default window manager.";
 		};

@@ -36,9 +36,11 @@ in {
 	font-2 = "${config.fonts.normal}:style=Light:pixelsize=${largerFontSize};2";
 
 	modules-left =
-		lib.mkIf
-			config.desktop.window-manager.bspwm.enable
-			"bspwm separator";
+		if config.desktop.window-manager.bspwm.enable then
+			"bspwm separator"
+		else if config.desktop.window-manager.i3.enable then
+			"i3 separator"
+		else "";
 	modules-center = "xwindow";
 	modules-right = "separator memory cpu battery time date kernel-version";
 }

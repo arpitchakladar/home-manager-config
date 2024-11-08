@@ -11,10 +11,11 @@
 	desktop.application-launcher.rofi.enable = false;
 	desktop.application-launcher.fzf.enable = true;
 	desktop.application-launcher.default = "fzf";
-	desktop.display-server.compositor.picom.enable = true;
+	desktop.display-server.compositor.picom.enable = false;
 	desktop.status-bar.polybar.enable = true;
 	desktop.window-manager.bspwm.enable = true;
 	desktop.window-manager.sxhkd.enable = true;
+	desktop.window-manager.i3.enable = false;
 	desktop.window-manager.default = "bspwm";
 	desktop.xdg.portal.enable = false;
 

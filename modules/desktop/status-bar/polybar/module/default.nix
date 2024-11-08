@@ -7,6 +7,10 @@
 		lib.mkIf
 			config.desktop.window-manager.bspwm.enable
 			(import ./bspwm.nix { inherit config; });
+	"module/i3" =
+		lib.mkIf
+			config.desktop.window-manager.i3.enable
+			(import ./i3.nix { inherit config; });
 	"module/cpu" = import ./cpu.nix { inherit config; };
 	"module/memory" = import ./memory.nix { inherit config; };
 	"module/date" = import ./date.nix { inherit config; };
