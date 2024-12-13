@@ -37,9 +37,11 @@
 	tools.git.enable = true;
 	tools.git.username = "Arpit Chakladar";
 	tools.git.email = "54011232+arpitchakladar@users.noreply.github.com";
+	tools.git.git-cola.enable = true;
 	tools.system-monitor.htop.enable = true;
 	tools.terminal.alacritty.enable = false;
 	tools.terminal.kitty.enable = true;
+	tools.terminal.tmux.enable = true;
 	tools.terminal.default = "kitty";
 	tools.utils.fzf.enable = true;
 	tools.viewer.bat.enable = true;

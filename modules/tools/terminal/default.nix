@@ -4,6 +4,7 @@
 	imports = [
 		./alacritty
 		./kitty
+		./tmux
 	];
 
 	options.tools.terminal = {

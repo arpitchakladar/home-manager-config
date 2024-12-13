@@ -21,7 +21,7 @@
 			)
 			(lib.mkMerge [
 				(createKeybinding
-					"h"
+					"s"
 					"Show keybindings."
 					"${config.tools.terminal.command} --title 'Keybindings' --class floating-termial -e ${pkgs.writeShellScript "keybindings.sh" (builtins.readFile ./scripts/keybindings.sh)}"
 					)
