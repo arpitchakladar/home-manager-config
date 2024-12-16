@@ -6,9 +6,9 @@
 	};
 
 	config = lib.mkIf config.scripts.enable {
-		home.file."scripts" = {
-			source = ./scripts;
-			recursive = true;
+		home.file."scripts/restart-network" = {
+			source = ./scripts/restart-network.sh;
+			executable = true;
 		};
 
 		home.file."scripts/home-manager-switch" = {
@@ -18,12 +18,5 @@ home-manager switch --flake ${config.baseDirectory}/#${config.home.username}
 			'';
 			executable = true;
 		};
-
-		home.activation.modifyScripts = lib.mkAfter ''
-			for script in ${config.home.homeDirectory}/scripts/*.sh; do
-				[ -f "$script" ] && mv "$script" "''${script%.sh}"
-			done
-			chmod -R u+x ${config.home.homeDirectory}/scripts
-		'';
 	};
 }
