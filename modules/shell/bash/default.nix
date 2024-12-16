@@ -23,6 +23,9 @@
 ${if config.tools.utils.fzf.enable then
 	"eval \"$(fzf --bash)\""
 else ""}
+${if config.scripts.enable then
+	"export PATH=${config.home.homeDirectory}/scripts:$PATH"
+else ""}
 		'';
 
 		home.activation.createBashCacheDirectory =

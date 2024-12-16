@@ -1,9 +1,11 @@
-{ pkgs, ... }:
+{ config, ... }:
 
 {
 	home.username = "arpit";
 	home.homeDirectory = "/home/arpit";
 	home.stateVersion = "23.11";
+
+	baseDirectory = "${config.home.homeDirectory}/home-manager";
 
 	# Desktop
 	desktop.display-server.x11.xclip.enable = true;
@@ -21,6 +23,8 @@
 
 	# Fonts
 	fonts.nerdfont.fira-code.enable = true;
+
+	scripts.enable = true;
 
 	# Shell
 	shell.bash.enable = true;

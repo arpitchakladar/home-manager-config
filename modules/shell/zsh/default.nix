@@ -21,6 +21,9 @@ ${if config.tools.utils.fzf.enable then
 	"eval \"$(fzf --zsh)\""
 else ""}
 ${builtins.readFile ./zshrc}
+${if config.scripts.enable then
+	"export PATH=${config.home.homeDirectory}/scripts:$PATH"
+else ""}
 		'';
 	};
 }
