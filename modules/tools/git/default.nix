@@ -1,10 +1,6 @@
 { lib, config, ... }:
 
 {
-	imports = [
-		./git-cola
-	];
-
 	options.tools.git = {
 		enable = lib.mkEnableOption "Enables git.";
 		username = lib.mkOption {
