@@ -3,7 +3,7 @@
 {
 	home.username = "arpit";
 	home.homeDirectory = "/home/arpit";
-	home.stateVersion = "23.11";
+	home.stateVersion = "24.11";
 
 	baseDirectory = "${config.home.homeDirectory}/home-manager";
 

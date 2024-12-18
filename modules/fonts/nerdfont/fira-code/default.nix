@@ -9,11 +9,7 @@
 		fonts.normal = lib.mkDefault "Fira Code Nerd Font";
 
 		home.packages = with pkgs; [
-			(nerdfonts.override {
-				fonts = [
-					"FiraCode"
-				];
-			})
+			nerd-fonts.fira-code
 		];
 	};
 }
