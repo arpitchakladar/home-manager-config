@@ -8,6 +8,8 @@ ${builtins.readFile ./dressing.lua}
 ${builtins.readFile (config.scheme {
 	template = builtins.readFile ./noice.mustache.lua;
 })}
+${builtins.readFile ./nvim-ufo.lua}
+${builtins.readFile ./which-key.lua}
 ''
 	else "";
 in
