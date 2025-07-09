@@ -2,12 +2,15 @@
 
 {
 	imports = [
-		./editor
-		./file-manager
+		./bat
+		./feh
+		./fzf
 		./git
-		./system-monitor
-		./terminal
-		./utils
-		./viewer
+		./htop
+		./kitty
+		./lsd
+		./neovim
+		./nnn
+		./zsh
 	];
 }
