@@ -8,6 +8,9 @@
 	# Fonts
 	fonts.nerdfont.fira-code.enable = true;
 
+	# Graphics
+	graphical.enable = true;
+
 	# Enable scripts
 	scripts.enable = true;
 
