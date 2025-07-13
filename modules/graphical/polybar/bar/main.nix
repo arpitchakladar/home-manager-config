@@ -7,7 +7,9 @@ in {
 	width = "100%:-20";
 	fixed-center = false;
 	height = 35;
-	override-redirect = true;
+	override-redirect = false;
+	wm-restack = "bspwm";
+	enable-ipc = true;
 
 	border-top-size = 1;
 	border-bottom-size = 1;

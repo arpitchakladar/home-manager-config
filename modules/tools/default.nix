@@ -9,8 +9,10 @@
 		./htop
 		./kitty
 		./lsd
+		./neofetch
 		./neovim
 		./nnn
+		./rofi
 		./zsh
 	];
 }

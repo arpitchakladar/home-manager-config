@@ -21,7 +21,7 @@
 			(createKeybinding
 				"r"
 				"Application launcher."
-				"rofi")
+				"rofi -show drun")
 
 			(createKeybinding
 				"t"

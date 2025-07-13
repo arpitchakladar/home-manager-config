@@ -8,7 +8,7 @@
 		];
 		services.polybar.script = "
 export PATH=${pkgs.coreutils}/bin/:$PATH
-${config.services.polybar.package}/bin/polybar main
+${config.services.polybar.package}/bin/polybar main &
 ";
 		services.polybar.config = lib.mkMerge [
 			(import ./bar { inherit config lib; })

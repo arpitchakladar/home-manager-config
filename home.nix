@@ -24,9 +24,11 @@
 	tools.htop.enable = true;
 	tools.kitty.enable = true;
 	tools.lsd.enable = true;
+	tools.neofetch.enable = true;
 	tools.neovim.enable = true;
 	tools.neovim.profile = "full";
 	tools.nnn.enable = true;
+	tools.rofi.enable = true;
 	tools.zsh.enable = true;
 
 	programs.home-manager.enable = true;

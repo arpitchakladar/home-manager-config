@@ -36,6 +36,7 @@
 for monitor in $(xrandr -q | grep -w 'connected' | cut -d' ' -f1); do
 	bspc monitor "$monitor" -d '1' '2' '3' '4' '5' '6'
 done
+polybar-msg cmd restart
 		'';
 	};
 }
