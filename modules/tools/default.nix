@@ -2,6 +2,7 @@
 
 {
 	imports = [
+		./acpi
 		./bat
 		./brave
 		./brightnessctl

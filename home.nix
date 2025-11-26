@@ -15,6 +15,7 @@
 	scripts.enable = true;
 
 	# Tools
+	tools.acpi.enable = true;
 	tools.bat.enable = true;
 	tools.brave.enable = true;
 	tools.brightnessctl.enable = true;
