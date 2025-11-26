@@ -11,7 +11,6 @@
 		./git
 		./htop
 		./kitty
-		./lsd
 		./neofetch
 		./neovim
 		./nnn

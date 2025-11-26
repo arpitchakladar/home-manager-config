@@ -13,7 +13,7 @@
 			focus_follows_pointer = true;
 			pointer_follows_focus = false;
 			pointer_motion_interval = 40;
-			pointer_modifier = "mod1"; # alt key
+			pointer_modifier = "mod4";
 			pointer_action1 = "resize_side";
 			pointer_action2 = "move";
 			pointer_action3 = "resize_corner";

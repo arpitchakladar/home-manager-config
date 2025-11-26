@@ -20,6 +20,9 @@
 ${if config.tools.feh.enable then
 	"${pkgs.feh}/bin/feh --bg-scale ${../../assets/skeleton-mage.png}"
 else "xsetroot -solid \"${config.scheme.withHashtag.base00}\""}
+pkill sxhkd
+sxhkd &
+exec ${pkgs.bspwm}/bin/bspwm
 ";
 	};
 }

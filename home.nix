@@ -26,7 +26,6 @@
 	tools.git.email = "54011232+arpitchakladar@users.noreply.github.com";
 	tools.htop.enable = true;
 	tools.kitty.enable = true;
-	tools.lsd.enable = true;
 	tools.neofetch.enable = true;
 	tools.neovim.enable = true;
 	tools.neovim.profile = "full";

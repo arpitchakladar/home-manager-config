@@ -6,5 +6,5 @@ with config.scheme.withHashtag;
 	interval = 30;
 	time = "%H:%M";
 	label = "%time%";
-	format-prefix = "%{T2}%{F${base03}}  %{F-}%{T-}";
+	format-prefix = "%{T2}%{F${base03}} %{F-}%{T-}";
 }

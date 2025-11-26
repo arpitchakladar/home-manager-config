@@ -4,6 +4,6 @@ with config.scheme.withHashtag;
 {
 	type = "internal/memory";
 	interval = 2;
-	format-prefix = "%{T2}%{F${base03}}  %{F-}%{T-}";
+	format-prefix = "%{T2}%{F${base03}} %{F-}%{T-}";
 	label = "%gb_used%";
 }
