@@ -5,12 +5,16 @@
 		services.sxhkd.enable = true;
 		services.sxhkd.keybindings =
 		let
-			modKey = "alt";
-			createKeybinding = keybinding: description: command: {
-				"# ${description}\n${modKey} + ${keybinding}" = command;
+			modKey = "super";
+			createKeybinding = keybinding: createKeybindingBase "${modKey} + ${keybinding}";
+			createKeybindingBase = keybinding: description: command: {
+				"# ${description}\n${keybinding}" = command;
 			};
 		in lib.mkMerge [
+			(import ./keybindings/brightnessctl.nix { inherit pkgs createKeybindingBase lib; })
 			(import ./keybindings/bspwm.nix { inherit pkgs createKeybinding lib; })
+			(import ./keybindings/pamixer.nix { inherit pkgs createKeybindingBase lib; })
+			(import ./keybindings/playerctl.nix { inherit pkgs createKeybindingBase lib; })
 
 			(createKeybinding
 				"s"

@@ -3,6 +3,8 @@
 {
 	imports = [
 		./bat
+		./brave
+		./brightnessctl
 		./feh
 		./fzf
 		./git
@@ -12,6 +14,8 @@
 		./neofetch
 		./neovim
 		./nnn
+		./pamixer
+		./playerctl
 		./rofi
 		./zsh
 	];

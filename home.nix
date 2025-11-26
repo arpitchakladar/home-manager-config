@@ -16,6 +16,8 @@
 
 	# Tools
 	tools.bat.enable = true;
+	tools.brave.enable = true;
+	tools.brightnessctl.enable = true;
 	tools.feh.enable = true;
 	tools.fzf.enable = true;
 	tools.git.enable = true;
@@ -28,6 +30,8 @@
 	tools.neovim.enable = true;
 	tools.neovim.profile = "full";
 	tools.nnn.enable = true;
+	tools.pamixer.enable = true;
+	tools.playerctl.enable = true;
 	tools.rofi.enable = true;
 	tools.zsh.enable = true;
 
