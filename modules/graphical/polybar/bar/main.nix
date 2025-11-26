@@ -40,5 +40,5 @@ in {
 
 	modules-left = "bspwm separator";
 	modules-center = "xwindow";
-	modules-right = "separator memory cpu battery time date kernel-version";
+	modules-right = "separator volume battery time memory cpu date";
 }

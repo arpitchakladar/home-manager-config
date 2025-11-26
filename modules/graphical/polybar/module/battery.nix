@@ -3,7 +3,7 @@
 with config.scheme.withHashtag;
 {
 	type = "internal/battery";
-	battery = "BAT0";
+	battery = "BAT1";
 	adapter = "ADP1";
 
 	format-charging = "%{T2}%{F${base03}}<animation-charging>%{F-}%{T-} <label-charging>";
