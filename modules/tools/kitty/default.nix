@@ -16,7 +16,6 @@
 			scrollback_indicator_opacity = "0.5";
 
 			dynamic_background_opacity = false;
-			allow_remote_control = false;
 			enable_audio_bell = false;
 
 			background = base00;
@@ -42,6 +41,9 @@
 
 			selection_background = base03;
 			selection_foreground = base00;
+
+			allow_remote_control = "yes";
+			listen_on = "unix:/tmp/kitty";
 		};
 	};
 }

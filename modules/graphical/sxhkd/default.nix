@@ -32,10 +32,10 @@
 				"Launch terminal."
 				"kitty")
 
-			# (createKeybinding
-			# 	"f"
-			# 	"Launch File Manager."
-			# 	"kitty --title 'File Manager' --class floating-termial -e ${config.tools.file-manager.command}")
+			(createKeybinding
+				"f"
+				"Launch File Manager."
+				"kitty --title 'File Manager' --class floating-termial -e nnn")
 		];
 	};
 }

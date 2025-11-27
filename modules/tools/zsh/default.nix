@@ -14,12 +14,7 @@ ${if config.tools.fzf.enable then
 	"eval \"$(fzf --zsh)\""
 else ""}
 ${builtins.readFile ./zshrc}
-${if config.scripts.enable then
-	"export PATH=${config.home.homeDirectory}/scripts:$PATH"
-else ""}
 		'';
 		programs.kitty.settings.shell = lib.mkIf config.tools.kitty.enable "zsh";
-		programs.zsh.shellAliases."nnn" = lib.mkIf config.tools.nnn.enable "nnn -H -d";
-		# programs.zsh.shellAliases."ls" = lib.mkIf config.tools.lsd.enable "lsd";
 	};
 }
