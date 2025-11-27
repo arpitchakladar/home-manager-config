@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }:
 
 {
-	config = lib.mkIf config.graphical.enable {
+	config = lib.mkIf config.desktop.enable {
 		services.sxhkd.enable = true;
 		services.sxhkd.keybindings =
 		let

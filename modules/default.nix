@@ -2,8 +2,8 @@
 
 {
 	imports = [
+		./desktop
 		./fonts
-		./graphical
 		./scripts
 		./tools
 	];

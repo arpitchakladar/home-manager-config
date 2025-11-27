@@ -14,15 +14,15 @@
 		};
 	};
 
-	outputs = { nixpkgs, home-manager, base16, ... }@inputs:
-		let
-			system = "x86_64-linux";
-			pkgs = nixpkgs.legacyPackages.${system};
-		in {
-			homeConfigurations."arpit" = home-manager.lib.homeManagerConfiguration {
+	outputs = { nixpkgs, home-manager, base16, ... }@inputs: {
+		homeConfigurations = {
+			arpit = let
+				system = "x86_64-linux";
+				pkgs = import nixpkgs { inherit system; };
+			in home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
 				modules = [
-					./home.nix
+					./users/arpit.nix
 					./modules
 					base16.homeManagerModule
 					{
@@ -31,4 +31,5 @@
 				];
 			};
 		};
+	};
 }

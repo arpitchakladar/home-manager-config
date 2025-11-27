@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-	config = lib.mkIf config.graphical.enable {
+	config = lib.mkIf config.desktop.enable {
 		services.polybar.enable = true;
 		services.polybar.package = (pkgs.polybar.override {
 			pulseSupport = true;

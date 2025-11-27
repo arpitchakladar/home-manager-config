@@ -10,7 +10,7 @@
 		programs.fzf.defaultOptions = [
 			"--height 100%"
 			"--layout=reverse"
-			''--pointer=\"${if config.fonts.nerdfont.fira-code.enable then " " else ">"}\"''
+			''--pointer=\" \"''
 			''--header=\" \"''
 			''--prompt=\" \"''
 			''--marker=\"✓ \"''

@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 
 {
-	config = lib.mkIf config.graphical.enable {
+	config = lib.mkIf config.desktop.enable {
 		xsession.windowManager.bspwm.enable = true;
 
 		xsession.windowManager.bspwm.settings = with config.scheme.withHashtag; {

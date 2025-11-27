@@ -5,11 +5,8 @@
 	home.homeDirectory = "/home/${config.home.username}";
 	home.stateVersion = "25.05";
 
-	# Fonts
-	fonts.nerdfont.fira-code.enable = true;
-
-	# Graphics
-	graphical.enable = true;
+	# Desktop environment
+	desktop.enable = true;
 
 	# Enable scripts
 	scripts.enable = true;
