@@ -1,6 +1,8 @@
 { config, ... }:
 
 {
+	nixpkgs.config.allowUnfree = true;
+
 	home.username = "arpit";
 	home.homeDirectory = "/home/${config.home.username}";
 	home.stateVersion = "25.05";
@@ -14,6 +16,7 @@
 	# Tools
 	tools.acpi.enable = true;
 	tools.bat.enable = true;
+	tools.bottom.enable = true;
 	tools.brave.enable = true;
 	tools.brightnessctl.enable = true;
 	tools.feh.enable = true;
@@ -28,9 +31,11 @@
 	tools.neovim.enable = true;
 	tools.neovim.profile = "full";
 	tools.nnn.enable = true;
+	tools.nvtop.enable = true;
 	tools.pamixer.enable = true;
 	tools.playerctl.enable = true;
 	tools.rofi.enable = true;
+	tools.tmux.enable = true;
 	tools.zsh.enable = true;
 
 	programs.home-manager.enable = true;

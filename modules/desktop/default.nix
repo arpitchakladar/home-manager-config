@@ -15,14 +15,17 @@
 		xdg.enable = true;
 		xsession.enable = true;
 
-		xsession.windowManager.command = lib.mkForce "
+		home.file.".xinitrc" = {
+			text = ''
 #!/bin/sh
-${if config.tools.feh.enable then
-	"${pkgs.feh}/bin/feh --bg-scale ${../../assets/skeleton-mage.png}"
-else "xsetroot -solid \"${config.scheme.withHashtag.base00}\""}
-pkill sxhkd
-sxhkd &
+
+[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+[ -f ~/.profile ] && . ~/.profile
+[ -f ~/.xsession ] && . ~/.xsession
+
 exec ${pkgs.bspwm}/bin/bspwm
-";
+'';
+			executable = true;
+		};
 	};
 }

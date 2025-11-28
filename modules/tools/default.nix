@@ -4,6 +4,7 @@
 	imports = [
 		./acpi
 		./bat
+		./bottom
 		./brave
 		./brightnessctl
 		./feh
@@ -15,9 +16,11 @@
 		./neofetch
 		./neovim
 		./nnn
+		./nvtop
 		./pamixer
 		./playerctl
 		./rofi
+		./tmux
 		./zsh
 	];
 }

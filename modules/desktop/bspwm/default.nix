@@ -36,7 +36,11 @@
 for monitor in $(xrandr -q | grep -w 'connected' | cut -d' ' -f1); do
 	bspc monitor "$monitor" -d '1' '2' '3' '4' '5' '6'
 done
-polybar-msg cmd restart
+
+${config.services.polybar.script}
+${if config.tools.feh.enable then
+	"${pkgs.feh}/bin/feh --bg-scale ${../../../assets/skeleton-mage.png}"
+else "xsetroot -solid \"${config.scheme.withHashtag.base00}\""}
 		'';
 	};
 }

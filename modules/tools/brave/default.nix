@@ -22,7 +22,7 @@
 
 		home.file.".local/bin/brave" = {
 			text = ''
-#!${pkgs.bash}/bin/bash
+#!/bin/sh
 exec ${pkgs.brave}/bin/brave --force-device-scale-factor=1.2 "$@"
 '';
 			executable = true;

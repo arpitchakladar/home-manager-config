@@ -14,5 +14,15 @@
 			source = ./restart-network.sh;
 			executable = true;
 		};
+		home.file."scripts/system-monitor" =
+			lib.mkIf
+				(config.tools.bottom.enable &&
+				config.tools.nvtop.enable &&
+				config.tools.tmux.enable &&
+				config.tools.kitty.enable)
+		{
+			source = ./system-monitor.sh;
+			executable = true;
+		};
 	};
 }
