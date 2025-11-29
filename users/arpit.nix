@@ -14,7 +14,6 @@
 	scripts.enable = true;
 
 	# Tools
-	tools.bat.enable = true;
 	tools.bluetui.enable = true;
 	tools.bottom.enable = true;
 	tools.brave.enable = true;

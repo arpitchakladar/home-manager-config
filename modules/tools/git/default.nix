@@ -16,9 +16,9 @@
 	config = lib.mkIf config.tools.git.enable {
 		programs.git = {
 			enable = true;
-			userName = config.tools.git.username;
-			userEmail = config.tools.git.email;
-			extraConfig = {
+			settings = {
+				user.name = config.tools.git.username;
+				user.email = config.tools.git.email;
 				credential.helper = "store --file ${config.xdg.cacheHome}/git/credential";
 				core.askPass = "";
 			};

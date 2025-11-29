@@ -2,7 +2,6 @@
 
 {
 	imports = [
-		./bat
 		./bluetui
 		./bottom
 		./brave
