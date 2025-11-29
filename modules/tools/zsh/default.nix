@@ -6,15 +6,16 @@
 	};
 
 	config = lib.mkIf config.tools.zsh.enable {
-		programs.zsh.enable = true;
-		programs.zsh.dotDir = ".config/zsh";
-		programs.zsh.history.path = "${config.xdg.cacheHome}/zsh/history";
-		programs.zsh.initContent = ''
+		programs.zsh = {
+			enable = true;
+			dotDir = ".config/zsh";
+			history.path = "${config.xdg.cacheHome}/zsh/history";
+			initContent = ''
 ${if config.tools.fzf.enable then
 	"eval \"$(fzf --zsh)\""
 else ""}
 ${builtins.readFile ./zshrc}
-		'';
-		programs.kitty.settings.shell = lib.mkIf config.tools.kitty.enable "zsh";
+			'';
+		};
 	};
 }

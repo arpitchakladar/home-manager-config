@@ -14,8 +14,8 @@
 	scripts.enable = true;
 
 	# Tools
-	tools.acpi.enable = true;
 	tools.bat.enable = true;
+	tools.bluetui.enable = true;
 	tools.bottom.enable = true;
 	tools.brave.enable = true;
 	tools.brightnessctl.enable = true;
@@ -25,6 +25,7 @@
 	tools.git.username = "Arpit Chakladar";
 	tools.git.email = "54011232+arpitchakladar@users.noreply.github.com";
 	tools.htop.enable = true;
+	tools.impala.enable = true;
 	tools.kitty.enable = true;
 	tools.lsd.enable = true;
 	tools.neofetch.enable = true;

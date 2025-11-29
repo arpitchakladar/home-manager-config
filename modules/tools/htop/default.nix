@@ -6,7 +6,9 @@
 	};
 
 	config = lib.mkIf config.tools.htop.enable {
-		programs.htop.enable = true;
-		programs.htop.package = pkgs.htop-vim;
+		programs.htop = {
+			enable = true;
+			package = pkgs.htop-vim;
+		};
 	};
 }

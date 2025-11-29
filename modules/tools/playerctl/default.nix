@@ -6,8 +6,8 @@
 	};
 
 	config = lib.mkIf config.tools.playerctl.enable {
-		home.packages = [
-			pkgs.playerctl
+		home.packages = with pkgs; [
+			playerctl
 		];
 	};
 }

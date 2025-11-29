@@ -6,8 +6,6 @@
 	};
 
 	config = lib.mkIf config.tools.tmux.enable {
-		home.packages = with pkgs; [
-			tmux
-		];
+		programs.tmux.enable = true;
 	};
 }

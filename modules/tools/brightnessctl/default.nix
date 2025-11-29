@@ -6,8 +6,8 @@
 	};
 
 	config = lib.mkIf config.tools.brightnessctl.enable {
-		home.packages = [
-			pkgs.brightnessctl
+		home.packages = with pkgs; [
+			brightnessctl
 		];
 	};
 }

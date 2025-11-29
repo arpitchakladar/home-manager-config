@@ -6,7 +6,9 @@
 	};
 
 	config = lib.mkIf config.tools.lsd.enable {
-		programs.lsd.enable = true;
-		programs.lsd.settings.icons.separator = "  ";
+		programs.lsd = {
+			enable = true;
+			settings.icons.separator = "  ";
+		};
 	};
 }

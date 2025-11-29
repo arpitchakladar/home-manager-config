@@ -6,8 +6,8 @@
 	};
 
 	config = lib.mkIf config.tools.pamixer.enable {
-		home.packages = [
-			pkgs.pamixer
+		home.packages = with pkgs; [
+			pamixer
 		];
 	};
 }

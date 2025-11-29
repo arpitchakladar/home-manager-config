@@ -6,8 +6,6 @@
 	};
 
 	config = lib.mkIf config.tools.bottom.enable {
-		home.packages = with pkgs; [
-			bottom
-		];
+		programs.bottom.enable = true;
 	};
 }

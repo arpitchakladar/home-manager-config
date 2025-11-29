@@ -2,8 +2,8 @@
 
 {
 	imports = [
-		./acpi
 		./bat
+		./bluetui
 		./bottom
 		./brave
 		./brightnessctl
@@ -11,6 +11,7 @@
 		./fzf
 		./git
 		./htop
+		./impala
 		./kitty
 		./lsd
 		./neofetch

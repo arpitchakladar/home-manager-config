@@ -13,24 +13,23 @@
 		};
 	};
 
-	config =
-	let
+	config = let
 		plugins = import ./plugins { inherit config pkgs lib; };
 	in lib.mkIf config.tools.neovim.enable {
-		programs.neovim.enable = true;
-		programs.neovim.viAlias = true;
-		programs.neovim.vimAlias = true;
-		programs.neovim.vimdiffAlias = true;
-		programs.neovim.defaultEditor = true;
-
-		home.packages = plugins.requirements;
-
-		programs.neovim.extraLuaConfig =
+		programs.neovim = {
+			enable = true;
+			viAlias = true;
+			vimAlias = true;
+			vimdiffAlias = true;
+			defaultEditor = true;
+			plugins = plugins.list;
+			extraLuaConfig =
 	''
 ${import ./config}
 ${plugins.configuration}
 	'';
+		};
 
-		programs.neovim.plugins = plugins.list;
+		home.packages = plugins.requirements;
 	};
 }
