@@ -10,10 +10,8 @@
 	# Desktop environment
 	desktop.enable = true;
 
-	# Enable scripts
-	scripts.enable = true;
-
 	# Tools
+	tools.atac.enable = true;
 	tools.bluetui.enable = true;
 	tools.bottom.enable = true;
 	tools.brave.enable = true;
@@ -26,6 +24,7 @@
 	tools.htop.enable = true;
 	tools.impala.enable = true;
 	tools.kitty.enable = true;
+	tools.libreoffice.enable = true;
 	tools.lsd.enable = true;
 	tools.neofetch.enable = true;
 	tools.neovim.enable = true;
@@ -36,6 +35,7 @@
 	tools.playerctl.enable = true;
 	tools.rofi.enable = true;
 	tools.tmux.enable = true;
+	tools.vlc.enable = true;
 	tools.zsh.enable = true;
 
 	programs.home-manager.enable = true;

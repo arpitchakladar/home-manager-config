@@ -2,6 +2,7 @@
 
 {
 	imports = [
+		./atac
 		./bluetui
 		./bottom
 		./brave
@@ -12,6 +13,7 @@
 		./htop
 		./impala
 		./kitty
+		./libreoffice
 		./lsd
 		./neofetch
 		./neovim
@@ -21,6 +23,7 @@
 		./playerctl
 		./rofi
 		./tmux
+		./vlc
 		./zsh
 	];
 }

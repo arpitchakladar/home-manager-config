@@ -1,4 +1,3 @@
-#!/bin/sh
 SESSION="system-monitor"
 
 kitty @ set-font-size -- -4
@@ -20,14 +19,6 @@ tmux split-window -h -t "$SESSION:0" -c "$HOME" "bash -c 'nvtop; tmux kill-sessi
 tmux set -g status off
 tmux set -g mouse on
 tmux set -g focus-events on
-
-# Hover over pane = instant focus
-tmux bind -n MouseDown1Pane select-pane -t= \; send-keys -M
-tmux bind -n MouseDrag1Pane select-pane -t= \; send-keys -M
-
-# Wheel always works in focused pane
-tmux bind -n WheelUpPane select-pane -t= \; send-keys -M
-tmux bind -n WheelDownPane select-pane -t= \; send-keys -M
 
 # Select main pane and attach
 tmux select-pane -t "$SESSION:0.0"
