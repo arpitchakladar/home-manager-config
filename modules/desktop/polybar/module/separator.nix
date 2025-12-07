@@ -3,5 +3,5 @@
 with config.scheme.withHashtag;
 {
 	type = "custom/text";
-	label = " ";
+	label = " %{F${base03}}%{T3}│%{T-}%{F-} ";
 }

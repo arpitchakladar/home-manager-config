@@ -26,10 +26,7 @@ in {
 	padding-left = 1;
 	padding-right = 1;
 
-	module-margin-left = 1;
-	module-margin-right = 1;
-
-	separator = "%{F${base03}}%{T3}│%{T-}%{F-}";
+	# separator = "%{F${base03}}%{T3}│%{T-}%{F-}";
 
 	offset-x = "10";
 	offset-y = "10";
@@ -40,5 +37,5 @@ in {
 
 	modules-left = "bspwm separator";
 	modules-center = "xwindow";
-	modules-right = "separator volume battery time memory cpu date";
+	modules-right = "separator volume separator battery separator wifi wifi-separator ethernet ethernet-separator time separator memory separator cpu separator date";
 }

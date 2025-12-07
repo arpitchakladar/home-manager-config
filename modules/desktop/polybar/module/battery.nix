@@ -6,9 +6,13 @@ with config.scheme.withHashtag;
 	battery = "BAT1";
 	adapter = "ADP1";
 
+	low-at = 0;
 	format-charging = "%{T2}%{F${base03}}<animation-charging>%{F-}%{T-} <label-charging>";
 	format-discharging = "%{T2}%{F${base03}}<ramp-capacity>%{F-}%{T-} <label-discharging>";
 	format-full-prefix = "󰁹 ";
+
+	label-charging = "%percentage:3%%";
+	label-discharging = "%percentage:3%%";
 
 	ramp-capacity-0 = "󰁺";
 	ramp-capacity-1 = "󰁻";

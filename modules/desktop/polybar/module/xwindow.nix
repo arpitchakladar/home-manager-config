@@ -3,5 +3,5 @@
 with config.scheme.withHashtag;
 {
 	type = "internal/xwindow";
-	label = "%title:0:40:...%";
+	label = "%title:0:20:...%";
 }
