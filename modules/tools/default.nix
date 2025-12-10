@@ -16,6 +16,7 @@
 		./libreoffice
 		./lsd
 		./neofetch
+		./nixvim
 		./neovim
 		./nnn
 		./nvtop
