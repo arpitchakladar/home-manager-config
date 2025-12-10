@@ -17,7 +17,7 @@
 		./lsd
 		./neofetch
 		./nixvim
-		./neovim
+		# ./neovim
 		./nnn
 		./nvtop
 		./pamixer

@@ -27,8 +27,8 @@
 	tools.libreoffice.enable = true;
 	tools.lsd.enable = true;
 	tools.neofetch.enable = true;
-	tools.neovim.enable = false;
-	tools.neovim.profile = "full";
+	# tools.neovim.enable = false;
+	# tools.neovim.profile = "full";
 	tools.nixvim.enable = true;
 	tools.nnn.enable = true;
 	tools.nvtop.enable = true;

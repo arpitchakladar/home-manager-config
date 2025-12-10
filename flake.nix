@@ -8,10 +8,6 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 		base16.url = "github:SenchoPens/base16.nix";
-		tt-schemes = {
-			url = "github:tinted-theming/schemes";
-			flake = false;
-		};
 	};
 
 	outputs = { nixpkgs, home-manager, base16, ... }@inputs: {
@@ -26,7 +22,7 @@
 					./modules
 					base16.homeManagerModule
 					{
-						scheme = "${inputs.tt-schemes}/base16/onedark-dark.yaml";
+						scheme = ./assets/onedark-dark.yml;
 					}
 				];
 			};
