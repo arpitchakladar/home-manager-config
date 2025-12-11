@@ -9,7 +9,7 @@ in {
 		nixvim.homeModules.nixvim
 		./colorscheme.nix
 		./keymaps.nix
-		./plugins.nix
+		./plugins
 	];
 
 	options.tools.nixvim = {
