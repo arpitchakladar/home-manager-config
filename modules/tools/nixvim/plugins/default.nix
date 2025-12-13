@@ -2,7 +2,9 @@
 
 {
 	imports = [
+		./cmp.nix
 		./comment.nix
+		./lsp.nix
 		./lualine.nix
 		./noice.nix
 		./notify.nix

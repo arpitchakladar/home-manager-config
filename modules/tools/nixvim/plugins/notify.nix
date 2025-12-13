@@ -2,6 +2,6 @@
 
 {
 	config.programs.nixvim.plugins.notify = lib.mkIf config.tools.nixvim.enable {
-		enable = true;
+		enable = false;
 	};
 }

@@ -30,6 +30,7 @@ in {
 				list = true;
 				laststatus = 3;
 				foldlevel = 99;
+				clipboard = "unnamedplus";
 			};
 			clipboard.providers.xclip.enable = true;
 			extraConfigLuaPre = with config.scheme.withHashtag; ''
