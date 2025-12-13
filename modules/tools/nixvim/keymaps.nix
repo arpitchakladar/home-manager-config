@@ -12,6 +12,7 @@
 				action = "<cmd>NvimTreeToggle<cr>";
 				mode = [ "n" "i" ];
 			}
+			{ key = "<c-c>"; action = "<cmd>NotificationsClear<cr>"; }
 		];
 	};
 }
