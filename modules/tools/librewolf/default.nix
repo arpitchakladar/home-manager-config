@@ -15,7 +15,6 @@
 			};
 			profiles."arpit" = {
 				isDefault = true;
-
 				settings = {
 					"extensions.autoDisableScopes" = 0;
 					"extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
@@ -24,13 +23,17 @@
 					"sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
 					"layout.css.devPixelsPerPx" = 1.1;
 					"layout.css.prefers-color-scheme.content-override" = 0; # Dark
+					"browser.toolbars.bookmarks.visibility" = "newtab";
+					"browser.startup.homepage"
+						= "moz-extension://8cb32547-41c0-4839-bec4-a4c08b4d267b/static/newtab.html"; # Tridactyl
+					"browser.startup.page" = 2;
+					"sidebar.expandOnHover" = false;
+					"sidebar.animation.enabled" = false;
 				};
 			};
 			policies = {
-				# BlockAboutConfig = true;
 				ExtensionSettings = {
 					"uBlock0@raymondhill.net" = {
-						default_area = "menupanel";
 						install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
 						installation_mode = "force_installed";
 						private_browsing = true;
