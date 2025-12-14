@@ -14,8 +14,8 @@
 	tools.atac.enable = true;
 	tools.bluetui.enable = true;
 	tools.bottom.enable = true;
-	tools.brave.enable = true;
 	tools.brightnessctl.enable = true;
+	tools.chromium.enable = true;
 	tools.feh.enable = true;
 	tools.fzf.enable = true;
 	tools.git.enable = true;

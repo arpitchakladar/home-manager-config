@@ -15,7 +15,9 @@
 		homeConfigurations = {
 			arpit = let
 				system = "x86_64-linux";
-				pkgs = import nixpkgs { inherit system; };
+				pkgs = import nixpkgs {
+					inherit system;
+				};
 			in home-manager.lib.homeManagerConfiguration {
 				inherit pkgs;
 				modules = [

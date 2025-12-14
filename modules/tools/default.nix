@@ -5,8 +5,8 @@
 		./atac
 		./bluetui
 		./bottom
-		./brave
 		./brightnessctl
+		./chromium
 		./feh
 		./fzf
 		./git
