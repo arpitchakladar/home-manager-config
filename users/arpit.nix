@@ -25,6 +25,7 @@
 	tools.impala.enable = true;
 	tools.kitty.enable = true;
 	tools.libreoffice.enable = true;
+	tools.librewolf.enable = true;
 	tools.lsd.enable = true;
 	tools.neofetch.enable = true;
 	tools.nixvim.enable = true;

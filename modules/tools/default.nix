@@ -14,6 +14,7 @@
 		./impala
 		./kitty
 		./libreoffice
+		./librewolf
 		./lsd
 		./neofetch
 		./nixvim
