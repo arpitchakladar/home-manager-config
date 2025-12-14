@@ -1,12 +1,7 @@
-{ pkgs, config, lib, ... }:
+{ config, lib, ... }:
 
-let
-	nixvim = import (builtins.fetchGit {
-		url = "https://github.com/nix-community/nixvim";
-	});
-in {
+{
 	imports = [
-		nixvim.homeModules.nixvim
 		./colorscheme.nix
 		./keymaps.nix
 		./plugins
@@ -20,6 +15,7 @@ in {
 	{
 		programs.nixvim = {
 			enable = true;
+			defaultEditor = true;
 			opts = {
 				number = true;
 				relativenumber = true;
@@ -68,6 +64,10 @@ in {
 				byteCompileLua.enable = true;
 				combinePlugins.enable = true;
 			};
+		};
+
+		home.sessionVariables = {
+			EDITOR = "nvim";
 		};
 	};
 }

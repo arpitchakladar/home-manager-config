@@ -8,9 +8,10 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 		base16.url = "github:SenchoPens/base16.nix";
+		nixvim.url = "github:nix-community/nixvim";
 	};
 
-	outputs = { nixpkgs, home-manager, base16, ... }@inputs: {
+	outputs = { nixpkgs, home-manager, base16, nixvim, ... }: {
 		homeConfigurations = {
 			arpit = let
 				system = "x86_64-linux";
@@ -24,7 +25,9 @@
 					{
 						scheme = ./assets/onedark-dark.yml;
 					}
+					nixvim.homeModules.nixvim
 				];
+				minimal = true;
 			};
 		};
 	};
