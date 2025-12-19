@@ -4,6 +4,7 @@
 	imports = [
 		./atac
 		./bluetui
+		./bottles
 		./bottom
 		./brightnessctl
 		./chromium

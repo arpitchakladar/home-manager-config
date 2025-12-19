@@ -13,6 +13,7 @@
 	# Tools
 	tools.atac.enable = true;
 	tools.bluetui.enable = true;
+	tools.bottles.enable = true;
 	tools.bottom.enable = true;
 	tools.brightnessctl.enable = true;
 	tools.chromium.enable = true;

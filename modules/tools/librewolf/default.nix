@@ -17,7 +17,7 @@
 				isDefault = true;
 				settings = {
 					"extensions.autoDisableScopes" = 0;
-					"extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
+					"extensions.activeThemeID" = "firefox-compact-dark@mozilla.org"; # Use default dark theme until Black gets installed
 					"sidebar.verticalTabs" = true;
 					"sidebar.visibility" = "always-show";
 					"sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
