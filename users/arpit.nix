@@ -36,6 +36,7 @@
 	tools.playerctl.enable = true;
 	tools.rofi.enable = true;
 	tools.tmux.enable = true;
+	tools.unar.enable = true;
 	tools.vlc.enable = true;
 	tools.zsh.enable = true;
 

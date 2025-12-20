@@ -25,6 +25,7 @@
 		./playerctl
 		./rofi
 		./tmux
+		./unar
 		./vlc
 		./zsh
 	];
