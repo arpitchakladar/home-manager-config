@@ -29,6 +29,8 @@
 					"browser.startup.page" = 2;
 					"sidebar.expandOnHover" = false;
 					"sidebar.animation.enabled" = false;
+					"privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
+					"dom.webnotifications.enabled" = false;
 				};
 			};
 			policies = {

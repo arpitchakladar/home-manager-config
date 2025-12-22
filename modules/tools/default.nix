@@ -7,7 +7,6 @@
 		./bottles
 		./bottom
 		./brightnessctl
-		./chromium
 		./feh
 		./fzf
 		./git
