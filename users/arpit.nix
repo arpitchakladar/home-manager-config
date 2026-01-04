@@ -16,6 +16,7 @@
 	tools.bottles.enable = true;
 	tools.bottom.enable = true;
 	tools.brightnessctl.enable = true;
+	tools.cloudflare-warp.enable = true;
 	tools.feh.enable = true;
 	tools.fzf.enable = true;
 	tools.git.enable = true;

@@ -7,6 +7,7 @@
 		./bottles
 		./bottom
 		./brightnessctl
+		./cloudflare-warp
 		./feh
 		./fzf
 		./git
