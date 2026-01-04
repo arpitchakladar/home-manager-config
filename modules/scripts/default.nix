@@ -6,18 +6,18 @@
 			"${config.home.homeDirectory}/scripts"
 		];
 
-		home.file."scripts/system-monitor" =
-			lib.mkIf
-				(config.tools.bottom.enable &&
-				config.tools.nvtop.enable &&
-				config.tools.tmux.enable &&
-				config.tools.kitty.enable)
-		{
-			text = ''
+		home.file = let
+			shellScript = path: {
+				text = ''
 #!${pkgs.bash}/bin/bash
-${builtins.readFile ./system-monitor.sh}
+${builtins.readFile path}
 '';
-			executable = true;
+				executable = true;
+			};
+		in {
+			"scripts/system-monitor" = shellScript ./system-monitor.sh;
+			"scripts/warp-start" = shellScript ./warp-start.sh;
+			"scripts/warp-stop" = shellScript ./warp-stop.sh;
 		};
 	};
 }
