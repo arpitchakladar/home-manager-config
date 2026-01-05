@@ -1,18 +1,26 @@
 set -euo pipefail
 
 stop_daemon() {
-	if systemctl list-unit-files | grep -q '^warp-svc\.service'; then
-		echo "Stopping warp-svc via systemd..."
-		sudo systemctl stop warp-svc.service
-		return
-	fi
+	echo "Stopping warp-svc process..."
 
 	if pgrep -x warp-svc >/dev/null 2>&1; then
-		echo "Killing warp-svc process..."
 		sudo pkill -x warp-svc
 	else
 		echo "warp-svc is not running."
+		return 0
 	fi
+
+	echo "Waiting for warp-svc to stop..."
+	for _ in {1..30}; do
+		if ! pgrep -x warp-svc >/dev/null 2>&1; then
+			echo "warp-svc stopped."
+			return 0
+		fi
+		sleep 1
+	done
+
+	echo "ERROR: warp-svc did not stop in time" >&2
+	exit 1
 }
 
 disconnect_client() {
@@ -26,13 +34,25 @@ disconnect_client() {
 }
 
 main() {
+	[[ "${EUID:-$(id -u)}" -eq 0 ]] || {
+		if [[ -t 2 ]]; then
+			echo -e "\e[31mERROR:\e[0m Must be run as root" >&2
+		else
+			echo "ERROR: Must be run as root" >&2
+		fi
+		exit 1
+	}
+
 	disconnect_client
 	stop_daemon
 
 	echo "Final status:"
 	warp-cli status || true
+
+	echo "Flushing DNS and restarting systemd-resolved..."
 	sudo systemd-resolve --flush-caches
 	sudo systemctl restart systemd-resolved
 }
 
 main "$@"
+
