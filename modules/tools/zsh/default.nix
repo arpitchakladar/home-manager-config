@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 {
 	options.tools.zsh = {
@@ -18,6 +18,6 @@ ${builtins.readFile ./zshrc}
 			'';
 		};
 
-		home.sessionVariables.SHELL = "${pkgs.zsh}/bin/zsh";
+		home.sessionVariables.SHELL = "${config.programs.zsh.package}/bin/zsh";
 	};
 }

@@ -17,11 +17,12 @@
 	tools.bottom.enable = true;
 	tools.brightnessctl.enable = true;
 	tools.cloudflare-warp.enable = true;
+	tools.devenv.enable = true;
 	tools.feh.enable = true;
 	tools.fzf.enable = true;
 	tools.git.enable = true;
 	tools.git.username = "Arpit Chakladar";
-	tools.git.email = "54011232+arpitchakladar@users.noreply.github.com";
+	tools.git.email = "arpitchakladar@proton.me";
 	tools.htop.enable = true;
 	tools.impala.enable = true;
 	tools.kitty.enable = true;

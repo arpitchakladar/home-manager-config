@@ -8,6 +8,7 @@
 		./bottom
 		./brightnessctl
 		./cloudflare-warp
+		./devenv
 		./feh
 		./fzf
 		./git
