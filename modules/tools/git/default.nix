@@ -5,11 +5,11 @@
 		enable = lib.mkEnableOption "Enables git.";
 		username = lib.mkOption {
 			type = lib.types.str;
-			description = "Github username.";
+			description = "Git username.";
 		};
 		email = lib.mkOption {
 			type = lib.types.str;
-			description = "Github email.";
+			description = "Git email.";
 		};
 	};
 

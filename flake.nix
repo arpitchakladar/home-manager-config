@@ -29,7 +29,6 @@
 					}
 					nixvim.homeModules.nixvim
 				];
-				minimal = true;
 			};
 		};
 	};

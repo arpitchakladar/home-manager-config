@@ -17,15 +17,18 @@
 				isDefault = true;
 				settings = {
 					"extensions.autoDisableScopes" = 0;
-					"extensions.activeThemeID" = "firefox-compact-dark@mozilla.org"; # Use default dark theme until Black gets installed
+					# Use default dark theme until Black gets installed
+					"extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
 					"sidebar.verticalTabs" = true;
 					"sidebar.visibility" = "always-show";
 					"sidebar.verticalTabs.dragToPinPromo.dismissed" = true;
 					"layout.css.devPixelsPerPx" = 1.1;
-					"layout.css.prefers-color-scheme.content-override" = 0; # Dark
+					# Dark
+					"layout.css.prefers-color-scheme.content-override" = 0;
 					"browser.toolbars.bookmarks.visibility" = "newtab";
+					# Tridactyl
 					"browser.startup.homepage"
-						= "moz-extension://8cb32547-41c0-4839-bec4-a4c08b4d267b/static/newtab.html"; # Tridactyl
+						= "moz-extension://8cb32547-41c0-4839-bec4-a4c08b4d267b/static/newtab.html";
 					"browser.startup.page" = 2;
 					"sidebar.expandOnHover" = false;
 					"sidebar.animation.enabled" = false;

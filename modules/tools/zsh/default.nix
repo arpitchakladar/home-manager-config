@@ -17,5 +17,7 @@ else ""}
 ${builtins.readFile ./zshrc}
 			'';
 		};
+
+		home.sessionVariables.SHELL = "${pkgs.zsh}/bin/zsh";
 	};
 }
