@@ -16,14 +16,14 @@
 				add_newline = true;# Single line layout
 
 				format = ''
-[╭─\[](red)[$username](bold green)[@](red)[$hostname](bold blue)[\]](red)$directory$git_branch$git_status
+[╭─\[](red)$hostname[@](red)$username[\]](red)$directory$git_branch$git_status
 [╰─](red)$status$character 
 '';
 
 				character.format = "[>](bold red)";
 
 				username = {
-					style_user = "green";
+					style_user = "blue";
 					style_root = "red bold";
 					format = "[$user]($style)";
 					show_always = true;
@@ -31,7 +31,7 @@
 
 				hostname = {
 					ssh_only = false;
-					style = "blue";
+					style = "green";
 					format = "[$hostname]($style)";
 				};
 
