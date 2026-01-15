@@ -20,7 +20,7 @@
 [╰─](red)$status$character 
 '';
 
-				character.format = "[>](bold red)";
+				character.format = "[>](red)";
 
 				username = {
 					style_user = "blue";
