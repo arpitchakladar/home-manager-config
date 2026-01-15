@@ -36,6 +36,7 @@
 	tools.pamixer.enable = true;
 	tools.playerctl.enable = true;
 	tools.rofi.enable = true;
+	tools.starship.enable = true;
 	tools.tmux.enable = true;
 	tools.unar.enable = true;
 	tools.vlc.enable = true;

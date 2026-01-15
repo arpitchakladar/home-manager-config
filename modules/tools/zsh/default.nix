@@ -14,7 +14,12 @@
 ${if config.tools.fzf.enable then
 	"eval \"$(fzf --zsh)\""
 else ""}
-${builtins.readFile ./zshrc}
+setopt PROMPT_SUBST
+
+autoload -U colors && colors
+
+bindkey "^[[3~" delete-char
+bindkey "^?" backward-delete-char
 			'';
 		};
 

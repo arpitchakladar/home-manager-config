@@ -25,6 +25,7 @@
 		./pamixer
 		./playerctl
 		./rofi
+		./starship
 		./tmux
 		./unar
 		./vlc
