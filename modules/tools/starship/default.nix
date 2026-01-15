@@ -32,7 +32,7 @@
 				hostname = {
 					ssh_only = false;
 					style = "green";
-							format = "[$hostname]($style)";
+					format = "[$hostname]($style)";
 				};
 
 				directory = {
@@ -54,12 +54,14 @@
 				nix_shell = {
 					format = mkSegment "$symbol $state( \($name\))";
 					symbol = "󱄅";
+					impure_msg = "󰻌";
+					pure_msg = "󰕥";
 				};
 
 				status = {
 					disabled = false;
 					format = ''${mkSegment "$symbol $status"}[┄─](red)'';
-					style = "cyan";
+					style = "white";
 				};
 			};
 		};
