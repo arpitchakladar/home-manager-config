@@ -20,7 +20,7 @@
 [╰─](red)$status$character 
 '';
 
-				character.format = "[>](red)";
+				character.format = "[](red)";
 
 				username = {
 					style_user = "blue";
@@ -43,12 +43,12 @@
 
 				git_branch = {
 					style = "bold yellow";
-					format = mkSegment "$symbol$branch(:$remote_branch)";
+					format = ''[┄\[](red)[$symbol$branch(:$remote_branch)]($style)'';
 				};
 
 				git_status = {
-					format = mkSegment "$all_status$ahead_behind";
 					style = "cyan";
+					format = ''( [$all_status$ahead_behind]($style))[\]](red)'';
 				};
 
 				nix_shell = {
