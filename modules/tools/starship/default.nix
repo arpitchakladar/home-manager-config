@@ -13,10 +13,10 @@
 			let
 				mkSegment = content: ''[┄\[](red)[${content}]($style)[\]](red)'';
 			in {
-				add_newline = true;# Single line layout
+				add_newline = true;
 
 				format = ''
-[╭─\[](red)$hostname[@](red)$username[\]](red)$directory$git_branch$git_status
+[╭─\[](red)$hostname[@](red)$username[\]](red)$directory$git_branch$git_status$nix_shell
 [╰─](red)$status$character 
 '';
 
@@ -32,7 +32,7 @@
 				hostname = {
 					ssh_only = false;
 					style = "green";
-					format = "[$hostname]($style)";
+							format = "[$hostname]($style)";
 				};
 
 				directory = {
@@ -49,6 +49,11 @@
 				git_status = {
 					format = mkSegment "$all_status$ahead_behind";
 					style = "cyan";
+				};
+
+				nix_shell = {
+					format = mkSegment "$symbol $state( \($name\))";
+					symbol = "󱄅";
 				};
 
 				status = {
