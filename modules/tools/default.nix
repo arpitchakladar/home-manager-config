@@ -26,6 +26,7 @@
 		./playerctl
 		./rofi
 		./starship
+		./systemctl-tui
 		./tmux
 		./unar
 		./vlc
