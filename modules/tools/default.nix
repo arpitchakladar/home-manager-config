@@ -26,6 +26,7 @@
 		./playerctl
 		./rofi
 		./starship
+		./steam
 		./systemctl-tui
 		./tmux
 		./unar
