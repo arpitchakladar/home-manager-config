@@ -18,6 +18,7 @@
 		./libreoffice
 		./librewolf
 		./lsd
+		./maim
 		./neofetch
 		./nixvim
 		./nnn

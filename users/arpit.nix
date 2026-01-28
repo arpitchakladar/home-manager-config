@@ -29,6 +29,7 @@
 	tools.libreoffice.enable = true;
 	tools.librewolf.enable = true;
 	tools.lsd.enable = true;
+	tools.maim.enable = true;
 	tools.neofetch.enable = true;
 	tools.nixvim.enable = true;
 	tools.nnn.enable = true;

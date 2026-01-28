@@ -13,6 +13,7 @@
 		in lib.mkMerge [
 			(import ./keybindings/brightnessctl.nix { inherit pkgs createKeybindingBase lib; })
 			(import ./keybindings/bspwm.nix { inherit pkgs createKeybinding lib; })
+			(import ./keybindings/maim.nix { inherit pkgs createKeybinding lib; })
 			(import ./keybindings/pamixer.nix { inherit pkgs createKeybindingBase lib; })
 			(import ./keybindings/playerctl.nix { inherit pkgs createKeybindingBase lib; })
 
