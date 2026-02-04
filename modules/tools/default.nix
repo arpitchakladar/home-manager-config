@@ -29,6 +29,7 @@
 		./starship
 		./steam
 		./systemctl-tui
+		./tdf
 		./tmux
 		./unar
 		./vlc
