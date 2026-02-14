@@ -40,10 +40,10 @@
 	tools.starship.enable = true;
 	tools.steam.enable = true;
 	tools.systemctl-tui.enable = true;
-	tools.tdf.enable = true;
 	tools.tmux.enable = true;
 	tools.unar.enable = true;
 	tools.vlc.enable = true;
+	tools.zathura.enable = true;
 	tools.zsh.enable = true;
 
 	programs.home-manager.enable = true;

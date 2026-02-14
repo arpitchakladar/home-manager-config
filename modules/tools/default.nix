@@ -29,10 +29,10 @@
 		./starship
 		./steam
 		./systemctl-tui
-		./tdf
 		./tmux
 		./unar
 		./vlc
+		./zathura
 		./zsh
 	];
 }
