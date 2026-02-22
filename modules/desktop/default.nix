@@ -3,6 +3,7 @@
 {
 	imports = [
 		./bspwm
+		./gtk
 		./polybar
 		./sxhkd
 	];
