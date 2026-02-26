@@ -17,8 +17,10 @@
 		programs.git = {
 			enable = true;
 			settings = {
-				user.name = config.tools.git.username;
-				user.email = config.tools.git.email;
+				user = {
+					name = config.tools.git.username;
+					email = config.tools.git.email;
+				};
 				credential.helper = "store --file ${config.xdg.cacheHome}/git/credential";
 				core.askPass = "";
 			};

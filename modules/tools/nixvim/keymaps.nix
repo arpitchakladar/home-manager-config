@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ config, lib, ... }:
 
 {
 	config = lib.mkIf config.tools.nixvim.enable {

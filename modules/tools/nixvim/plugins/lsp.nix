@@ -3,6 +3,13 @@
 {
 	config.programs.nixvim.plugins.lsp = lib.mkIf config.tools.nixvim.enable {
 		enable = true;
+		keymaps.lspBuf = {
+			K = "hover";
+			gD = "references";
+			gd = "definition";
+			gi = "implementation";
+			gt = "type_definition";
+		};
 		servers = {
 			nil_ls = {
 				enable = true;
