@@ -30,8 +30,10 @@
 		./steam
 		./systemctl-tui
 		./tmux
+		./tor-browser
 		./unar
 		./vlc
+		./vscode
 		./zathura
 		./zsh
 	];

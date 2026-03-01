@@ -41,8 +41,10 @@
 	tools.steam.enable = true;
 	tools.systemctl-tui.enable = true;
 	tools.tmux.enable = true;
+	tools.tor-browser.enable = true;
 	tools.unar.enable = true;
 	tools.vlc.enable = true;
+	tools.vscode.enable = true;
 	tools.zathura.enable = true;
 	tools.zsh.enable = true;
 
