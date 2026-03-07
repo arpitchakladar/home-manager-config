@@ -9,6 +9,7 @@
 		./brightnessctl
 		./cloudflare-warp
 		./devenv
+		./fastfetch
 		./feh
 		./fzf
 		./git
@@ -19,7 +20,6 @@
 		./librewolf
 		./lsd
 		./maim
-		./neofetch
 		./nixvim
 		./nnn
 		./nvtop

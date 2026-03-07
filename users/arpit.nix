@@ -18,6 +18,7 @@
 	tools.brightnessctl.enable = true;
 	tools.cloudflare-warp.enable = true;
 	tools.devenv.enable = true;
+	tools.fastfetch.enable = true;
 	tools.feh.enable = true;
 	tools.fzf.enable = true;
 	tools.git.enable = true;
@@ -30,7 +31,6 @@
 	tools.librewolf.enable = true;
 	tools.lsd.enable = true;
 	tools.maim.enable = true;
-	tools.neofetch.enable = true;
 	tools.nixvim.enable = true;
 	tools.nnn.enable = true;
 	tools.nvtop.enable = true;
