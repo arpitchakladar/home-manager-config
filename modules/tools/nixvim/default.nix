@@ -6,11 +6,11 @@
 		./keymaps.nix
 		./plugins
 	];
-
+	
 	options.tools.nixvim = {
 		enable = lib.mkEnableOption "Enables nixvim.";
 	};
-
+	
 	config = lib.mkIf config.tools.nixvim.enable
 	{
 		programs.nixvim = {
@@ -59,7 +59,7 @@
 				vim.api.nvim_set_hl(0, 'NotifyINFOBody', { link = 'Normal' })
 				vim.api.nvim_set_hl(0, 'NotifyDEBUGBody', { link = 'Normal' })
 				vim.api.nvim_set_hl(0, 'NotifyTRACEBody', { link = 'Normal' })
-
+				
 				vim.api.nvim_create_autocmd({ "FileType" }, {
 					pattern = "*",
 					callback = function()
@@ -69,7 +69,7 @@
 						vim.opt_local.tabstop = 3
 					end,
 				})
-
+				
 				vim.api.nvim_create_autocmd({ "FileType" }, {
 					pattern = { "yaml", "yml" },
 					callback = function()
@@ -85,7 +85,7 @@
 				combinePlugins.enable = true;
 			};
 		};
-
+		
 		home.sessionVariables.EDITOR = "nvim";
 	};
 }

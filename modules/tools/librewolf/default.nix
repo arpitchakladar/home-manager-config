@@ -4,7 +4,7 @@
 	options.tools.librewolf = {
 		enable = lib.mkEnableOption "Enables librewolf.";
 	};
-
+	
 	config = lib.mkIf config.tools.librewolf.enable {
 		programs.librewolf = {
 			enable = true;

@@ -5,7 +5,7 @@
 		home.sessionPath = [
 			"${config.home.homeDirectory}/scripts"
 		];
-
+		
 		home.file = let
 			shellScript = path: {
 				text = ''

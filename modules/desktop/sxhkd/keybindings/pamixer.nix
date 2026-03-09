@@ -7,12 +7,12 @@ in lib.mkMerge [
 		"XF86AudioLowerVolume"
 		"Decrease volume."
 		"${pamixer} --decrease 5")
-
+	
 	(createKeybindingBase
 		"XF86AudioRaiseVolume"
 		"Increase volume."
 		"${pamixer} --increase 5")
-
+	
 	(createKeybindingBase
 		"XF86AudioMute"
 		"Mute audio."

@@ -7,7 +7,7 @@ in lib.mkMerge [
 		"XF86MonBrightnessDown"
 		"Decrease brightness."
 		"${brightnessctl} set 5%-")
-
+	
 	(createKeybindingBase
 		"XF86MonBrightnessUp"
 		"Increase brightness."

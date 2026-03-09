@@ -36,13 +36,12 @@ border_line="├$(printf '%.0s─' $(seq 1 $max_keybinding_length))┼$(printf '
 	# Print table header with borders
 	echo "┌$(printf '%.0s─' $(seq 1 $max_keybinding_length))┬$(printf '%.0s─' $(seq 1 $description_width))┐"
 	printf "│ %-*s │ %-*s │\n" "$max_keybinding_content_length" "KEYBINDING" "$description_content_width" "DESCRIPTION"
-
-	# Initialize variables
+	
 	description=""
-
+	
 	# Load the sxhkd file into an array
 	mapfile -t lines < "$SXHKD_FILE"
-
+	
 	# Loop through lines for output
 	for line in "${lines[@]}"; do
 		# Check if the line is a comment

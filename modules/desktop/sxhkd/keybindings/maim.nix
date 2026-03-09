@@ -7,7 +7,7 @@ in lib.mkMerge [
 		"p"
 		"Take screenshot of selected area and save to clipboard"
 		"${maim} -s | xclip -selection clipboard -t image/png")
-
+	
 	(createKeybinding
 		"shift + p"
 		"Take screenshot of selected area and save to ~/Pictures/Screenshots"

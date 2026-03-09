@@ -2,14 +2,14 @@
 
 {
 	nixpkgs.config.allowUnfree = true;
-
+	
 	home.username = "arpit";
 	home.homeDirectory = "/home/${config.home.username}";
 	home.stateVersion = "25.05";
-
+	
 	# Desktop environment
 	desktop.enable = true;
-
+	
 	# Tools
 	tools.atac.enable = true;
 	tools.bluetui.enable = true;
@@ -47,6 +47,6 @@
 	tools.vscode.enable = true;
 	tools.zathura.enable = true;
 	tools.zsh.enable = true;
-
+	
 	programs.home-manager.enable = true;
 }

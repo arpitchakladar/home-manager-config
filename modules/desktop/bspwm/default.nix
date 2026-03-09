@@ -3,7 +3,7 @@
 {
 	config = lib.mkIf config.desktop.enable {
 		xsession.windowManager.bspwm.enable = true;
-
+		
 		xsession.windowManager.bspwm.settings = with config.scheme.withHashtag; {
 			window_gap = 10;
 			split_ratio = 0.5;
@@ -21,7 +21,7 @@
 			active_border_color = base02;
 			focused_border_color = base03;
 		};
-
+		
 		xsession.windowManager.bspwm.rules = {
 			"floating-termial" = {
 				state = "floating";
@@ -31,7 +31,7 @@
 				follow = true;
 			};
 		};
-
+		
 		xsession.windowManager.bspwm.extraConfig = ''
 for monitor in $(xrandr -q | grep -w 'connected' | cut -d' ' -f1); do
 	bspc monitor "$monitor" -d '1' '2' '3' '4' '5' '6'

@@ -16,23 +16,23 @@
 			(import ./keybindings/maim.nix { inherit pkgs createKeybinding lib; })
 			(import ./keybindings/pamixer.nix { inherit pkgs createKeybindingBase lib; })
 			(import ./keybindings/playerctl.nix { inherit pkgs createKeybindingBase lib; })
-
+			
 			(createKeybinding
 				"s"
 				"Show keybindings."
 				"kitty --title 'Keybindings' --class floating-termial -e ${pkgs.writeShellScript "keybindings.sh" (builtins.readFile ./scripts/keybindings.sh)}"
 				)
-
+			
 			(createKeybinding
 				"r"
 				"Application launcher."
 				"rofi -show drun")
-
+			
 			(createKeybinding
 				"t"
 				"Launch terminal."
 				"kitty")
-
+			
 			(createKeybinding
 				"f"
 				"Launch File Manager."

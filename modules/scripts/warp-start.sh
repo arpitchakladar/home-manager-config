@@ -21,7 +21,7 @@ wait_for_daemon() {
 		fi
 		sleep 1
 	done
-
+	
 	echo "ERROR: warp-svc did not become ready within ${DAEMON_TIMEOUT}s" >&2
 	exit 1
 }
@@ -52,21 +52,20 @@ main() {
 		fi
 		exit 1
 	}
-
+	
 	start_daemon
 	wait_for_daemon
-
+	
 	if ! is_registered; then
 		register_client
 	else
 		echo "Client already registered."
 	fi
-
+	
 	connect_client
-
+	
 	echo "Current status:"
 	warp-cli status
 }
 
 main
-
