@@ -9,6 +9,7 @@
     };
     base16.url = "github:SenchoPens/base16.nix";
     nixvim.url = "github:nix-community/nixvim";
+    pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
   outputs =
@@ -17,6 +18,7 @@
       home-manager,
       base16,
       nixvim,
+      pre-commit-hooks,
       ...
     }:
     let
@@ -24,6 +26,12 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
+      checks.${system}.pre-commit-check = pre-commit-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          nixfmt.enable = true;
+        };
+      };
       formatter.${system} = pkgs.nixfmt-tree;
 
       homeConfigurations = {
