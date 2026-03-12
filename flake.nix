@@ -14,6 +14,7 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       home-manager,
       base16,
@@ -33,6 +34,10 @@
         };
       };
       formatter.${system} = pkgs.nixfmt-tree;
+      devShells.${system}.default = pkgs.mkShell {
+        inherit (self.checks.${system}.pre-commit-check) shellHook;
+        buildInputs = self.checks.${system}.pre-commit-check.enabledPackages;
+      };
 
       homeConfigurations = {
         arpit =
