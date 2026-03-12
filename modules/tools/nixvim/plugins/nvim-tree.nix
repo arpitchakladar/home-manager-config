@@ -15,9 +15,7 @@
         ignore = false;
       };
       view = {
-        width = {
-          padding = 0;
-        };
+        width = 30;
       };
       renderer = {
         indent_markers = {
