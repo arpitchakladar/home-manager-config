@@ -1,10 +1,10 @@
 { ... }:
 
 {
-	imports = [
-		./desktop
-		./fonts
-		./scripts
-		./tools
-	];
+  imports = [
+    ./desktop
+    ./fonts
+    ./scripts
+    ./tools
+  ];
 }

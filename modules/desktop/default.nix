@@ -1,32 +1,32 @@
 { lib, config, pkgs, ... }:
 
 {
-	imports = [
-		./bspwm
-		./gtk
-		./polybar
-		./sxhkd
-	];
+  imports = [
+    ./bspwm
+    ./gtk
+    ./polybar
+    ./sxhkd
+  ];
 
-	options.desktop = {
-		enable = lib.mkEnableOption "Enables graphical interface.";
-	};
-	
-	config = lib.mkIf config.desktop.enable {
-		xdg.enable = true;
-		xsession.enable = true;
-		
-		home.file.".xinitrc" = {
-			text = ''
-#!/bin/sh
+  options.desktop = {
+    enable = lib.mkEnableOption "Enables graphical interface.";
+  };
 
-[ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
-[ -f ~/.profile ] && . ~/.profile
-[ -f ~/.xsession ] && . ~/.xsession
+  config = lib.mkIf config.desktop.enable {
+    xdg.enable = true;
+    xsession.enable = true;
 
-exec ${pkgs.bspwm}/bin/bspwm
-'';
-			executable = true;
-		};
-	};
+    home.file.".xinitrc" = {
+      text = ''
+        #!/bin/sh
+
+        [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
+        [ -f ~/.profile ] && . ~/.profile
+        [ -f ~/.xsession ] && . ~/.xsession
+
+        exec ${pkgs.bspwm}/bin/bspwm
+      '';
+      executable = true;
+    };
+  };
 }

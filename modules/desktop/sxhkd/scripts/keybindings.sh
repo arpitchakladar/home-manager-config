@@ -5,9 +5,9 @@ SXHKD_FILE="$HOME/.config/sxhkd/sxhkdrc"
 
 # Function to wrap text to a specified width
 wrap_text() {
-	local text="$1"
-	local width="$2"
-	echo "$text" | fold -s -w "$width"
+  local text="$1"
+  local width="$2"
+  echo "$text" | fold -s -w "$width"
 }
 
 # Get terminal width
@@ -33,44 +33,44 @@ border_line="├$(printf '%.0s─' $(seq 1 $max_keybinding_length))┼$(printf '
 
 # Pipe all output to less
 {
-	# Print table header with borders
-	echo "┌$(printf '%.0s─' $(seq 1 $max_keybinding_length))┬$(printf '%.0s─' $(seq 1 $description_width))┐"
-	printf "│ %-*s │ %-*s │\n" "$max_keybinding_content_length" "KEYBINDING" "$description_content_width" "DESCRIPTION"
-	
-	description=""
-	
-	# Load the sxhkd file into an array
-	mapfile -t lines < "$SXHKD_FILE"
-	
-	# Loop through lines for output
-	for line in "${lines[@]}"; do
-		# Check if the line is a comment
-		if [[ $line =~ ^# ]]; then
-			# Remove the "#" and any leading/trailing whitespace to capture the description
-			description="${line#\# }"
-		elif [[ $line =~ ^[^#[:space:]] ]]; then
-			# If it's a keybinding line, store it
-			keybinding="$line"
-			# Move to the next line for the command
-			command="${lines[((++i))]}"
+  # Print table header with borders
+  echo "┌$(printf '%.0s─' $(seq 1 $max_keybinding_length))┬$(printf '%.0s─' $(seq 1 $description_width))┐"
+  printf "│ %-*s │ %-*s │\n" "$max_keybinding_content_length" "KEYBINDING" "$description_content_width" "DESCRIPTION"
 
-			# Wrap the description to the calculated width
-			wrapped_description=$(wrap_text "$description" "$description_width")
+  description=""
 
-			# Print the keybinding with a border line above and below it
-			echo "$border_line"
-			printf "│ %-*s │ %-*s │\n" "$max_keybinding_content_length" "$keybinding" "$description_content_width" "$(echo "$wrapped_description" | head -n 1)"
-			
-			# Print wrapped description lines with empty keybinding column
-			echo "$wrapped_description" | sed '1d' | while read -r continuation; do
-				printf "│ %-*s │ %-*s │\n" "$max_keybinding_content_length" "" "$description_content_width" "$continuation"
-			done
+  # Load the sxhkd file into an array
+  mapfile -t lines < "$SXHKD_FILE"
 
-			# Reset description for the next keybinding
-			description=""
-		fi
-	done
+  # Loop through lines for output
+  for line in "${lines[@]}"; do
+    # Check if the line is a comment
+    if [[ $line =~ ^# ]]; then
+      # Remove the "#" and any leading/trailing whitespace to capture the description
+      description="${line#\# }"
+    elif [[ $line =~ ^[^#[:space:]] ]]; then
+      # If it's a keybinding line, store it
+      keybinding="$line"
+      # Move to the next line for the command
+      command="${lines[((++i))]}"
 
-	# Print the final border line
-	echo "└$(printf '%.0s─' $(seq 1 $max_keybinding_length))┴$(printf '%.0s─' $(seq 1 $description_width))┘"
+      # Wrap the description to the calculated width
+      wrapped_description=$(wrap_text "$description" "$description_width")
+
+      # Print the keybinding with a border line above and below it
+      echo "$border_line"
+      printf "│ %-*s │ %-*s │\n" "$max_keybinding_content_length" "$keybinding" "$description_content_width" "$(echo "$wrapped_description" | head -n 1)"
+
+      # Print wrapped description lines with empty keybinding column
+      echo "$wrapped_description" | sed '1d' | while read -r continuation; do
+        printf "│ %-*s │ %-*s │\n" "$max_keybinding_content_length" "" "$description_content_width" "$continuation"
+      done
+
+      # Reset description for the next keybinding
+      description=""
+    fi
+  done
+
+  # Print the final border line
+  echo "└$(printf '%.0s─' $(seq 1 $max_keybinding_length))┴$(printf '%.0s─' $(seq 1 $description_width))┘"
 } | less

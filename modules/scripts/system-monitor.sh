@@ -3,7 +3,7 @@ SESSION="system-monitor"
 kitty @ set-font-size -- -4
 
 cleanup() {
-	kitty @ set-font-size -- +4
+  kitty @ set-font-size -- +4
 }
 trap cleanup EXIT INT TERM
 

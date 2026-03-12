@@ -1,17 +1,18 @@
 { ... }:
 
 {
-	imports = [
-		./cmp.nix
-		./comment.nix
-		./lsp.nix
-		./lualine.nix
-		./luasnip.nix
-		./noice.nix
-		./notify.nix
-		./nvim-tree.nix
-		./treesitter.nix
-		./web-devicons.nix
-		./which-key.nix
-	];
+  imports = [
+    ./cmp.nix
+    ./comment.nix
+    ./indent-blankline.nix
+    ./lsp.nix
+    ./lualine.nix
+    ./luasnip.nix
+    ./noice.nix
+    ./notify.nix
+    ./nvim-tree.nix
+    ./treesitter.nix
+    ./web-devicons.nix
+    ./which-key.nix
+  ];
 }

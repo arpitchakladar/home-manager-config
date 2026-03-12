@@ -1,40 +1,40 @@
 { ... }:
 
 {
-	imports = [
-		./atac
-		./bluetui
-		./bottles
-		./bottom
-		./brightnessctl
-		./cloudflare-warp
-		./devenv
-		./fastfetch
-		./feh
-		./fzf
-		./git
-		./htop
-		./impala
-		./kitty
-		./libreoffice
-		./librewolf
-		./lsd
-		./maim
-		./nixvim
-		./nnn
-		./nvtop
-		./pamixer
-		./playerctl
-		./rofi
-		./starship
-		./steam
-		./systemctl-tui
-		./tmux
-		./tor-browser
-		./unar
-		./vlc
-		./vscode
-		./zathura
-		./zsh
-	];
+  imports = [
+    ./atac
+    ./bluetui
+    ./bottles
+    ./bottom
+    ./brightnessctl
+    ./cloudflare-warp
+    ./devenv
+    ./fastfetch
+    ./feh
+    ./fzf
+    ./git
+    ./htop
+    ./impala
+    ./kitty
+    ./libreoffice
+    ./librewolf
+    ./lsd
+    ./maim
+    ./nixvim
+    ./nnn
+    ./nvtop
+    ./pamixer
+    ./playerctl
+    ./rofi
+    ./starship
+    ./steam
+    ./systemctl-tui
+    ./tmux
+    ./tor-browser
+    ./unar
+    ./vlc
+    ./vscode
+    ./zathura
+    ./zsh
+  ];
 }
