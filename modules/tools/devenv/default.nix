@@ -6,19 +6,7 @@
   };
 
   config = let
-    # Use --no-reload by default for devenv shell
-    shellIntegration = ''
-devenv() {
-  for arg in "$@"; do
-    if [[ "$arg" == "--reload" || "$arg" == "--no-reload" ]]; then
-      command devenv "$@"
-      return
-    fi
-  done
-
-  command devenv "$@" --no-reload
-}
-'';
+    shellIntegration = builtins.readFile ./alias.sh;
   in lib.mkIf config.tools.devenv.enable {
     home.packages = with pkgs; [
       devenv
