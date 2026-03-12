@@ -11,8 +11,7 @@
     enable = lib.mkEnableOption "Enables nixvim.";
   };
 
-  config = lib.mkIf config.tools.nixvim.enable
-  {
+  config = lib.mkIf config.tools.nixvim.enable {
     programs.nixvim = {
       enable = true;
       defaultEditor = true;

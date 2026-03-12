@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   config = lib.mkIf config.desktop.enable {
@@ -33,14 +38,17 @@
     };
 
     xsession.windowManager.bspwm.extraConfig = ''
-for monitor in $(xrandr -q | grep -w 'connected' | cut -d' ' -f1); do
-  bspc monitor "$monitor" -d '1' '2' '3' '4' '5' '6'
-done
+      for monitor in $(xrandr -q | grep -w 'connected' | cut -d' ' -f1); do
+        bspc monitor "$monitor" -d '1' '2' '3' '4' '5' '6'
+      done
 
-${config.services.polybar.script}
-${if config.tools.feh.enable then
-  "${pkgs.feh}/bin/feh --bg-scale ${../../../assets/skeleton-mage.png}"
-else "xsetroot -solid \"${config.scheme.withHashtag.base00}\""}
+      ${config.services.polybar.script}
+      ${
+        if config.tools.feh.enable then
+          "${pkgs.feh}/bin/feh --bg-scale ${../../../assets/skeleton-mage.png}"
+        else
+          "xsetroot -solid \"${config.scheme.withHashtag.base00}\""
+      }
     '';
   };
 }

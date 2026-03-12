@@ -7,9 +7,14 @@
       plugins = {
         marks = true;
         registers = true;
-        spelling = { enabled = true; suggestions = 20; };
+        spelling = {
+          enabled = true;
+          suggestions = 20;
+        };
       };
-      win = { border = "single"; };
+      win = {
+        border = "single";
+      };
     };
   };
 }

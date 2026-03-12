@@ -3,7 +3,8 @@
 with config.scheme.withHashtag;
 let
   largerFontSize = toString (builtins.ceil (config.fonts.size * 9.0 / 8.0));
-in {
+in
+{
   width = "100%:-20";
   fixed-center = false;
   height = 35;

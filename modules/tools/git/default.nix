@@ -27,9 +27,8 @@
     };
 
     # The base directory of the credential file must exist
-    home.activation.createGitCacheDirectory
-      = lib.hm.dag.entryAfter
-        [ "writeBoundary" ]
-        "mkdir -p ${config.xdg.cacheHome}/git";
+    home.activation.createGitCacheDirectory = lib.hm.dag.entryAfter [
+      "writeBoundary"
+    ] "mkdir -p ${config.xdg.cacheHome}/git";
   };
 }

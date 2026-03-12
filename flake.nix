@@ -11,25 +11,41 @@
     nixvim.url = "github:nix-community/nixvim";
   };
 
-  outputs = { nixpkgs, home-manager, base16, nixvim, ... }: {
-    homeConfigurations = {
-      arpit = let
-        system = "x86_64-linux";
-        pkgs = import nixpkgs {
-          inherit system;
-        };
-      in home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [
-          ./users/arpit.nix
-          ./modules
-          base16.homeManagerModule
-          {
-            scheme = ./assets/onedark-dark.yml;
-          }
-          nixvim.homeModules.nixvim
-        ];
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      base16,
+      nixvim,
+      ...
+    }:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      formatter.${system} = pkgs.nixfmt-tree;
+
+      homeConfigurations = {
+        arpit =
+          let
+            system = "x86_64-linux";
+            pkgs = import nixpkgs {
+              inherit system;
+            };
+          in
+          home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+            modules = [
+              ./users/arpit.nix
+              ./modules
+              base16.homeManagerModule
+              {
+                scheme = ./assets/onedark-dark.yml;
+              }
+              nixvim.homeModules.nixvim
+            ];
+          };
       };
     };
-  };
 }

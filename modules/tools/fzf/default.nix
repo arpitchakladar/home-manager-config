@@ -1,56 +1,54 @@
-{ config, lib,... }:
+{ config, lib, ... }:
 
 {
   options.tools.fzf = {
     enable = lib.mkEnableOption "Enables fzf.";
   };
 
-  config = let
-    shellIntegration = ''
-${if config.tools.zsh.enable then
-  "eval \"$(fzf --zsh)\""
-else "eval \"$(fzf --bash)\""}
-    '';
-  in lib.mkIf config.tools.fzf.enable {
-    programs.fzf = {
-      enable = true;
+  config =
+    let
+      shellIntegration = ''
+        ${if config.tools.zsh.enable then "eval \"$(fzf --zsh)\"" else "eval \"$(fzf --bash)\""}
+      '';
+    in
+    lib.mkIf config.tools.fzf.enable {
+      programs.fzf = {
+        enable = true;
 
-      defaultOptions = [
-        "--height 100%"
-        "--layout=reverse"
-        ''--pointer=\" \"''
-        ''--header=\" \"''
-        ''--prompt=\" \"''
-        ''--marker=\"✓ \"''
-        "--border=none"
-        "--cycle"
-        "--no-info"
-        "--margin=\"1,2\""
-      ];
+        defaultOptions = [
+          "--height 100%"
+          "--layout=reverse"
+          ''--pointer=\" \"''
+          ''--header=\" \"''
+          ''--prompt=\" \"''
+          ''--marker=\"✓ \"''
+          "--border=none"
+          "--cycle"
+          "--no-info"
+          "--margin=\"1,2\""
+        ];
 
-      colors = with config.scheme.withHashtag; {
-        fg = base05; # Foreground
-        bg = "-1"; # Background (-1 for transparent)
-        hl = base0D; # Highlight
+        colors = with config.scheme.withHashtag; {
+          fg = base05; # Foreground
+          bg = "-1"; # Background (-1 for transparent)
+          hl = base0D; # Highlight
 
-        "fg+" = base07; # Foreground for selected item
-        "bg+" = "-1"; # Background for selected item
-        "hl+" = base0D; # Highlight for selected item
+          "fg+" = base07; # Foreground for selected item
+          "bg+" = "-1"; # Background for selected item
+          "hl+" = base0D; # Highlight for selected item
 
-        gutter = "-1"; # Remove the white margin at the left
+          gutter = "-1"; # Remove the white margin at the left
 
-        info = base0B; # Info text (usually count of items)
-        border = base03; # Border color
-        prompt = base0A; # Prompt text color
-        pointer = base0F; # Pointer color (e.g., > for selected)
-        marker = base0C; # Marker color (e.g., for multi-select)
-        spinner = base0C; # Spinner color (during search)
+          info = base0B; # Info text (usually count of items)
+          border = base03; # Border color
+          prompt = base0A; # Prompt text color
+          pointer = base0F; # Pointer color (e.g., > for selected)
+          marker = base0C; # Marker color (e.g., for multi-select)
+          spinner = base0C; # Spinner color (during search)
+        };
       };
-    };
 
-    programs.zsh.initContent = lib.mkIf config.programs.zsh.enable
-      (lib.mkAfter shellIntegration);
-    programs.bash.initExtra = lib.mkIf config.programs.bash.enable
-      (lib.mkAfter shellIntegration);
-  };
+      programs.zsh.initContent = lib.mkIf config.programs.zsh.enable (lib.mkAfter shellIntegration);
+      programs.bash.initExtra = lib.mkIf config.programs.bash.enable (lib.mkAfter shellIntegration);
+    };
 }
