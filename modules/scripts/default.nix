@@ -15,6 +15,7 @@
         executable = true;
       };
     in {
+      "scripts/deep-clean" = shellScript ./deep-clean.sh;
       "scripts/system-monitor" =
         lib.mkIf
           (config.tools.bottom.enable &&
