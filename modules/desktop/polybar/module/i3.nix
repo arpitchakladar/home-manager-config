@@ -8,6 +8,9 @@ with config.scheme.withHashtag;
   label-focused-underline = "${base0D}";
   label-focused-padding = 1;
 
+  label-unfocused = "%index%";
+  label-unfocused-padding = 1;
+
   label-occupied = "%index%";
   label-occupied-padding = 1;
 
@@ -21,4 +24,5 @@ with config.scheme.withHashtag;
 
   pin-workspaces = true;
   index-sort = true;
+  show-all = true;
 }
