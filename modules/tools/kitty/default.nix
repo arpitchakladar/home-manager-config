@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   options.tools.kitty = {
@@ -44,7 +49,7 @@
 
         allow_remote_control = "yes";
         listen_on = "unix:/tmp/kitty";
-        shell = lib.mkIf config.tools.zsh.enable "zsh";
+        shell = lib.mkIf config.tools.zsh.enable "${pkgs.zsh}/bin/zsh";
       };
     };
   };

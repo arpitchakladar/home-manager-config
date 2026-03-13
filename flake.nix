@@ -9,6 +9,7 @@
     };
     base16.url = "github:SenchoPens/base16.nix";
     nixvim.url = "github:nix-community/nixvim";
+    xremap-flake.url = "github:xremap/nix-flake";
     pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix";
   };
 
@@ -19,6 +20,7 @@
       home-manager,
       base16,
       nixvim,
+      xremap-flake,
       pre-commit-hooks,
       ...
     }:
@@ -57,6 +59,7 @@
                 scheme = ./assets/onedark-dark.yml;
               }
               nixvim.homeModules.nixvim
+              xremap-flake.homeManagerModules.default
             ];
           };
       };

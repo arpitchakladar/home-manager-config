@@ -10,7 +10,7 @@
     ./bspwm
     ./gtk
     ./polybar
-    ./sxhkd
+    ./xremap
   ];
 
   options.desktop = {

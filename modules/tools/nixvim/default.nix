@@ -18,10 +18,10 @@
       opts = {
         number = true;
         relativenumber = true;
-        shiftwidth = 3;
-        tabstop = 3;
-        softtabstop = 3;
-        expandtab = false;
+        shiftwidth = 2;
+        tabstop = 2;
+        softtabstop = 2;
+        expandtab = true;
         list = true;
         laststatus = 3;
         foldlevel = 99;
