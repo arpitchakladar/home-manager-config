@@ -7,10 +7,9 @@
 
 {
   imports = [
-    ./bspwm
+    ./i3
     ./gtk
     ./polybar
-    ./xremap
   ];
 
   options.desktop = {
@@ -29,7 +28,7 @@
         [ -f ~/.profile ] && . ~/.profile
         [ -f ~/.xsession ] && . ~/.xsession
 
-        exec ${pkgs.bspwm}/bin/bspwm
+        exec ${config.xsession.windowManager.i3.package}/bin/i3
       '';
       executable = true;
     };

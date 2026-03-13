@@ -11,6 +11,7 @@
     services.polybar.package = (
       pkgs.polybar.override {
         pulseSupport = true;
+        i3Support = true;
       }
     );
     services.polybar.script = "${config.services.polybar.package}/bin/polybar main &";

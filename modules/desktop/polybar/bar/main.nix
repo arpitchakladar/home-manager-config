@@ -9,7 +9,7 @@ in
   fixed-center = false;
   height = 35;
   override-redirect = false;
-  wm-restack = "bspwm";
+  wm-restack = "i3";
   enable-ipc = true;
 
   border-top-size = 1;
@@ -34,7 +34,7 @@ in
   font-1 = "${config.fonts.normal}:weight=Bold:pixelsize=${largerFontSize};3";
   font-2 = "${config.fonts.normal}:style=Light:pixelsize=${largerFontSize};2";
 
-  modules-left = "bspwm separator";
+  modules-left = "i3 separator";
   modules-center = "xwindow";
   modules-right = "separator volume separator battery separator wifi wifi-separator ethernet ethernet-separator time separator memory separator cpu separator date";
 }

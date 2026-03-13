@@ -2,11 +2,11 @@
 
 {
   "module/battery" = import ./battery.nix { inherit config; };
-  "module/bspwm" = import ./bspwm.nix { inherit config; };
   "module/cpu" = import ./cpu.nix { inherit config; };
   "module/date" = import ./date.nix { inherit config; };
   "module/ethernet-separator" = import ./ethernet-separator.nix { inherit config; };
   "module/ethernet" = import ./ethernet.nix { inherit config; };
+  "module/i3" = import ./i3.nix { inherit config; };
   "module/memory" = import ./memory.nix { inherit config; };
   "module/separator" = import ./separator.nix { inherit config; };
   "module/time" = import ./time.nix { inherit config; };

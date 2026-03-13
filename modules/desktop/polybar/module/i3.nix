@@ -2,7 +2,7 @@
 
 with config.scheme.withHashtag;
 {
-  type = "internal/bspwm";
+  type = "internal/i3";
 
   label-focused = "%index%";
   label-focused-underline = "${base0D}";
@@ -18,4 +18,7 @@ with config.scheme.withHashtag;
   label-empty = "%index%";
   label-empty-foreground = "${base03}";
   label-empty-padding = 1;
+
+  pin-workspaces = true;
+  index-sort = true;
 }
