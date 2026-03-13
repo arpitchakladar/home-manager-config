@@ -8,7 +8,7 @@ in
   width = "100%:-20";
   fixed-center = false;
   height = 35;
-  override-redirect = false;
+  override-redirect = true;
   wm-restack = "i3";
   enable-ipc = true;
 

@@ -16,6 +16,7 @@
 
         gaps = {
           inner = 10;
+          top = 50; # NOTE: Based on height of polybar
           outer = 0;
         };
 
