@@ -23,6 +23,7 @@
     ./nixvim
     ./nnn
     ./nvtop
+    ./opencode
     ./pamixer
     ./playerctl
     ./rofi

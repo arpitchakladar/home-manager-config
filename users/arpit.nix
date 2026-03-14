@@ -34,6 +34,7 @@
   tools.nixvim.enable = true;
   tools.nnn.enable = true;
   tools.nvtop.enable = true;
+  tools.opencode.enable = true;
   tools.pamixer.enable = true;
   tools.playerctl.enable = true;
   tools.rofi.enable = true;
