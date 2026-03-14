@@ -35,11 +35,11 @@
   tools.nnn.enable = true;
   tools.nvtop.enable = true;
   tools.opencode.enable = true;
+  tools.openssh.enable = true;
   tools.pamixer.enable = true;
   tools.playerctl.enable = true;
   tools.rofi.enable = true;
   tools.starship.enable = true;
-  tools.steam.enable = true;
   tools.systemctl-tui.enable = true;
   tools.tmux.enable = true;
   tools.tor-browser.enable = true;

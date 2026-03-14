@@ -24,11 +24,11 @@
     ./nnn
     ./nvtop
     ./opencode
+    ./openssh
     ./pamixer
     ./playerctl
     ./rofi
     ./starship
-    ./steam
     ./systemctl-tui
     ./tmux
     ./tor-browser
