@@ -1,4 +1,4 @@
-{ config, lib }:
+{ config }:
 
 {
   "module/battery" = import ./battery.nix { inherit config; };
@@ -13,5 +13,5 @@
   "module/volume" = import ./volume.nix { inherit config; };
   "module/wifi-separator" = import ./wifi-separator.nix { inherit config; };
   "module/wifi" = import ./wifi.nix { inherit config; };
-  "module/xwindow" = import ./xwindow.nix { inherit config; };
+  "module/xwindow" = import ./xwindow.nix { };
 }

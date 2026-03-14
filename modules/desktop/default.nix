@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 
@@ -22,7 +21,7 @@
 
     home.file.".xinitrc" = {
       text = ''
-        #!/bin/sh
+        #!/usr/bin/env sh
 
         [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
         [ -f ~/.profile ] && . ~/.profile

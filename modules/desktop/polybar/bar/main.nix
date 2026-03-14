@@ -1,4 +1,4 @@
-{ config, lib }:
+{ config }:
 
 with config.scheme.withHashtag;
 let

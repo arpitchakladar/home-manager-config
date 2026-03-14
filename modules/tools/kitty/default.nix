@@ -7,7 +7,7 @@
 
 {
   options.tools.kitty = {
-    enable = lib.mkEnableOption "Enables kitty. WARNING! Currently faces problems with color rendering with picom.";
+    enable = lib.mkEnableOption "Enables kitty.";
   };
 
   config = lib.mkIf config.tools.kitty.enable {
@@ -49,7 +49,7 @@
 
         allow_remote_control = "yes";
         listen_on = "unix:/tmp/kitty";
-        shell = lib.mkIf config.tools.zsh.enable "${pkgs.zsh}/bin/zsh";
+        shell = lib.mkIf config.tools.zsh.enable "${lib.getExe pkgs.zsh}";
       };
     };
   };

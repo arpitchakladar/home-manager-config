@@ -28,6 +28,6 @@
 
       programs.bash.initExtra = lib.mkIf config.programs.bash.enable (lib.mkAfter nixCommandWrappers);
 
-      home.sessionVariables.SHELL = "${config.programs.zsh.package}/bin/zsh";
+      home.sessionVariables.SHELL = "${lib.getExe config.programs.zsh.package}";
     };
 }

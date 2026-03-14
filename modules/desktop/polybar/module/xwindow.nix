@@ -1,4 +1,4 @@
-{ config }:
+{ }:
 
 {
   type = "internal/xwindow";

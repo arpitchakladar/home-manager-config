@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
@@ -15,7 +14,9 @@
       let
         shellScript = path: {
           text = ''
-            #!${pkgs.bash}/bin/bash
+            #!${
+              if config.tools.zsh.enable then (lib.getExe config.programs.zsh.package) else "#!/usr/bin/env sh"
+            }
             ${builtins.readFile path}
           '';
           executable = true;

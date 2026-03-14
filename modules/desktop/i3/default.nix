@@ -71,7 +71,7 @@
           {
             command =
               if config.tools.feh.enable then
-                "${pkgs.feh}/bin/feh --bg-scale ${../../../assets/skeleton-mage.png}"
+                "${lib.getExe pkgs.feh} --bg-scale ${../../../assets/skeleton-mage.png}"
               else
                 "xsetroot -solid \"${config.scheme.withHashtag.base00}\"";
             always = true;
@@ -79,7 +79,7 @@
           }
         ];
 
-        keybindings = lib.mkOptionDefault (import ./keybindings.nix { inherit pkgs lib; });
+        keybindings = lib.mkOptionDefault (import ./keybindings.nix { inherit pkgs lib config; });
       };
       extraConfig = ''
         exec_always --no-startup-id xrandr -q | grep -w 'connected' | cut -d' ' -f1 | xargs -I{} i3-msg "workspace 1 output {}"

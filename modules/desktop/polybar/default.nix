@@ -16,8 +16,8 @@
     );
     services.polybar.script = "${config.services.polybar.package}/bin/polybar main &";
     services.polybar.config = lib.mkMerge [
-      (import ./bar { inherit config lib; })
-      (import ./module { inherit config lib; })
+      (import ./bar { inherit config; })
+      (import ./module { inherit config; })
       {
         settings = {
           screenchange-reload = true;

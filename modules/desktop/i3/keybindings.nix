@@ -1,23 +1,35 @@
-{ pkgs, lib }:
+{
+  pkgs,
+  lib,
+  config,
+}:
 
 let
   mod = "Mod4";
 in
 {
   # --- General Applications ---
-  "${mod}+r" = "exec rofi -show drun";
-  "${mod}+t" = "exec ${pkgs.kitty}/bin/kitty";
-  "${mod}+f" = "exec kitty --title 'File Manager' --class floating-termial -e nnn";
-  "${mod}+s" = "exec kitty --title 'Keybindings' --class floating-termial -e keybindings.sh";
+  "${mod}+r" = lib.mkIf config.tools.rofi.enable "exec ${lib.getExe pkgs.rofi} -show drun";
+  "${mod}+t" = lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty}";
+  "${mod}+f" =
+    lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty} --title 'File Manager' --class floating-termial -e nnn";
+  "${mod}+s" =
+    lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty} --title 'Keybindings' --class floating-termial -e keybindings.sh";
   "${mod}+q" = "kill";
 
   # --- Media / Hardware Keys ---
-  "XF86MonBrightnessDown" = "exec brightnessctl set 5%-";
-  "XF86MonBrightnessUp" = "exec brightnessctl set +5%";
-  "XF86AudioLowerVolume" = "exec pamixer --decrease 5";
-  "XF86AudioRaiseVolume" = "exec pamixer --increase 5";
-  "XF86AudioMute" = "exec pamixer --toggle-mute";
-  "XF86AudioPlay" = "exec playerctl play-pause";
+  "XF86MonBrightnessDown" =
+    lib.mkIf config.tools.brightnessctl.enable "exec ${lib.getExe pkgs.brightnessctl} set 5%-";
+  "XF86MonBrightnessUp" =
+    lib.mkIf config.tools.brightnessctl.enable "exec ${lib.getExe pkgs.brightnessctl} set +5%";
+  "XF86AudioLowerVolume" =
+    lib.mkIf config.tools.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --decrease 5";
+  "XF86AudioRaiseVolume" =
+    lib.mkIf config.tools.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --increase 5";
+  "XF86AudioMute" =
+    lib.mkIf config.tools.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --toggle-mute";
+  "XF86AudioPlay" =
+    lib.mkIf config.tools.playerctl.enable "exec ${lib.getExe pkgs.playerctl} play-pause";
 
   # --- Window Management (Vim-style) ---
   # Focus
@@ -69,7 +81,8 @@ in
   "${mod}+Shift+0" = "move container to workspace number 10; workspace number 10";
 
   # --- Screenshots ---
-  "${mod}+p" = "exec \"maim -s | xclip -selection clipboard -t image/png\"";
+  "${mod}+p" =
+    lib.mkIf config.tools.maim.enable "exec \"${lib.getExe pkgs.maim} -s | xclip -selection clipboard -t image/png\"";
   "${mod}+Shift+p" =
-    "exec \"mkdir -p ~/Pictures/Screenshots && maim -s ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\"";
+    lib.mkIf config.tools.maim.enable "exec \"mkdir -p ~/Pictures/Screenshots && ${lib.getExe pkgs.maim} -s ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\"";
 }
