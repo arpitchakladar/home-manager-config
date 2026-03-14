@@ -31,9 +31,5 @@
         };
       };
     };
-
-    home.file.".ssh/config".text = ''
-      Include ~/.ssh/config.d/*.conf
-    '';
   };
 }
