@@ -51,7 +51,6 @@ in
   "${mod}+Control+l" = "resize grow width 20 px or 20 ppt";
 
   # Layout Modes
-  "${mod}+n" = "layout tiling"; # Best approx for 'tiled'
   "${mod}+d" = "floating toggle";
   "${mod}+m" = "fullscreen toggle";
 
