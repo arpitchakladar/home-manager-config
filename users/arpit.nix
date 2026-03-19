@@ -37,6 +37,7 @@
   tools.nvtop.enable = true;
   tools.opencode.enable = true;
   tools.openssh.enable = true;
+  tools.openvpn.enable = true;
   tools.pamixer.enable = true;
   tools.playerctl.enable = true;
   tools.rofi.enable = true;

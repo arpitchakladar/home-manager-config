@@ -26,6 +26,7 @@
     ./nvtop
     ./opencode
     ./openssh
+    ./openvpn
     ./pamixer
     ./playerctl
     ./rofi
