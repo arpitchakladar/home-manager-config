@@ -20,6 +20,7 @@
   tools.devenv.enable = true;
   tools.fastfetch.enable = true;
   tools.feh.enable = true;
+  tools.ffmpeg.enable = true;
   tools.fzf.enable = true;
   tools.git.enable = true;
   tools.git.username = "Arpit Chakladar";

@@ -11,6 +11,7 @@
     ./devenv
     ./fastfetch
     ./feh
+    ./ffmpeg
     ./fzf
     ./git
     ./htop

@@ -84,4 +84,22 @@ in
     lib.mkIf config.tools.maim.enable "exec \"${lib.getExe pkgs.maim} -s | xclip -selection clipboard -t image/png\"";
   "${mod}+Shift+p" =
     lib.mkIf config.tools.maim.enable "exec \"mkdir -p ~/Pictures/Screenshots && ${lib.getExe pkgs.maim} -s ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\"";
+
+  # --- Screen Recordings ---
+  "${mod}+Mod1+r" = lib.mkIf config.tools.ffmpeg.enable (
+    let
+      pidFile = "/tmp/ffmpeg-screenrecord.pid";
+      outDir = "~/Videos/Recordings";
+    in
+    "exec \""
+    + "if [ -f ${pidFile} ]; then "
+    + "kill $(cat ${pidFile}) && rm ${pidFile}; "
+    + "else "
+    + "mkdir -p ${outDir} && "
+    + "${lib.getExe pkgs.ffmpeg-full} -f x11grab -i $DISPLAY "
+    + "-framerate 30 -c:v libx264 -preset ultrafast -crf 23 "
+    + "${outDir}/recording-$(date +%Y%m%d-%H%M%S).mp4 "
+    + "& echo $! > ${pidFile}; "
+    + "fi\""
+  );
 }
