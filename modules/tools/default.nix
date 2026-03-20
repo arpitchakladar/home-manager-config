@@ -6,6 +6,7 @@
     ./bottles
     ./bottom
     ./brightnessctl
+    ./bruno
     ./devenv
     ./fastfetch
     ./feh
