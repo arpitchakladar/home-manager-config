@@ -30,8 +30,6 @@
           && config.tools.tmux.enable
           && config.tools.kitty.enable
         ) (shellScript ./system-monitor.sh);
-        "scripts/warp-start" = lib.mkIf config.tools.cloudflare-warp.enable (shellScript ./warp-start.sh);
-        "scripts/warp-stop" = lib.mkIf config.tools.cloudflare-warp.enable (shellScript ./warp-stop.sh);
       };
   };
 }

@@ -16,7 +16,6 @@
   tools.bottles.enable = true;
   tools.bottom.enable = true;
   tools.brightnessctl.enable = true;
-  tools.cloudflare-warp.enable = true;
   tools.devenv.enable = true;
   tools.fastfetch.enable = true;
   tools.feh.enable = true;

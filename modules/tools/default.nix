@@ -7,7 +7,6 @@
     ./bottles
     ./bottom
     ./brightnessctl
-    ./cloudflare-warp
     ./devenv
     ./fastfetch
     ./feh
