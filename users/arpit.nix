@@ -11,7 +11,6 @@
   desktop.enable = true;
 
   # Tools
-  tools.atac.enable = true;
   tools.bluetui.enable = true;
   tools.bottles.enable = true;
   tools.bottom.enable = true;
