@@ -24,6 +24,9 @@
       in
       {
         "scripts/deep-clean" = shellScript ./deep-clean.sh;
+        "scripts/screen-recording" = lib.mkIf config.tools.ffmpeg.enable (
+          shellScript ./screen-recording.sh
+        );
         "scripts/system-monitor" = lib.mkIf (
           config.tools.bottom.enable
           && config.tools.nvtop.enable
