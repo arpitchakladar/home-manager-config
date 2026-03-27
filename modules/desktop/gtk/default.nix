@@ -17,5 +17,6 @@
         name = "Nightfox-Dark-Carbonfox";
       };
     };
+    gtk.gtk4.theme = config.gtk.theme;
   };
 }
