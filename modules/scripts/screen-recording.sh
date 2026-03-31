@@ -17,40 +17,42 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 # --- 2. GEOMETRY SELECTION ---
-# Attempt to get screen resolution using xwininfo, fallback to a safe default if it fails
+# Default to a standard 1080p fallback if detection fails
+WIDTH=1920
+HEIGHT=1080
+X_OFF=0
+Y_OFF=0
+
+# Try to get actual root window size if xwininfo exists
 if command -v xwininfo >/dev/null 2>&1; then
 	WIDTH=$(xwininfo -root | grep 'Width:' | awk '{print $2}')
 	HEIGHT=$(xwininfo -root | grep 'Height:' | awk '{print $2}')
-else
-	# Fallback: Try to use a common default or let ffmpeg handle it
-	# If xwininfo is missing, we'll just omit -video_size for full screen
-	WIDTH=""
-	HEIGHT=""
 fi
-
-X_OFF=0
-Y_OFF=0
 
 if [ "$SELECT_MODE" = true ]; then
 	if command -v slop >/dev/null 2>&1; then
 		echo -e "${YELLOW}Select a window or draw a box...${NC}"
-		read -r WIDTH HEIGHT X_OFF Y_OFF < <(slop -f "%w %h %x %y" --nokeyboard)
-		[ -z "$WIDTH" ] && exit 1
+		# slop output: 123 456 10 20
+		read -r W H X Y < <(slop -f "%w %h %x %y" --nokeyboard)
+
+		if [ -n "$W" ]; then
+			WIDTH=$W
+			HEIGHT=$H
+			X_OFF=$X
+			Y_OFF=$Y
+		else
+			echo "Selection cancelled. Exiting."
+			exit 1
+		fi
 	else
-		echo -e "${RED}Error: 'slop' is not installed. Cannot select area.${NC}"
-		echo "Defaulting to full screen..."
+		echo -e "${RED}Error: 'slop' not found.${NC} Recording full screen..."
 		sleep 1
 	fi
 fi
 
-# Construct the video size argument only if we have values
-SIZE_ARG=""
-if [ -n "$WIDTH" ] && [ -n "$HEIGHT" ]; then
-	# Ensure even dimensions
-	WIDTH=$(( WIDTH + WIDTH % 2 ))
-	HEIGHT=$(( HEIGHT + HEIGHT % 2 ))
-	SIZE_ARG="-video_size ${WIDTH}x${HEIGHT}"
-fi
+# Ensure even dimensions (FFmpeg/x264 requirement)
+WIDTH=$(( WIDTH + WIDTH % 2 ))
+HEIGHT=$(( HEIGHT + HEIGHT % 2 ))
 
 # --- 3. START RECORDING ---
 FILENAME="$OUT_DIR/recording-$(date +%Y%m%d-%H%M%S).mp4"
@@ -60,10 +62,10 @@ echo -e "Press ${YELLOW}'q'${NC} in this terminal to stop."
 echo "File: $FILENAME"
 echo "------------------------------------------------"
 
-# Using ${DISPLAY:-:0} to ensure we have a display target
+# We pass arguments explicitly here to avoid "Unrecognized option" shell errors
 ffmpeg -hide_banner \
 	-f x11grab \
-	$SIZE_ARG \
+	-video_size "${WIDTH}x${HEIGHT}" \
 	-framerate 30 \
 	-i "${DISPLAY:-:0.0}+${X_OFF},${Y_OFF}" \
 	-c:v libx264 \
