@@ -29,6 +29,7 @@
     ./pamixer
     ./playerctl
     ./rofi
+    ./slop
     ./starship
     ./systemctl-tui
     ./tmux
