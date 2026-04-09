@@ -4,6 +4,7 @@
   imports = [
     ./cmp.nix
     ./comment.nix
+    ./gitsigns.nix
     ./indent-blankline.nix
     ./lsp.nix
     ./lualine.nix
