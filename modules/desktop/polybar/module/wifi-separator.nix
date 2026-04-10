@@ -1,5 +1,6 @@
 { config }:
 
+# WiFi-separator - Visual separator for WiFi module
 with config.scheme.withHashtag;
 {
   type = "internal/network";

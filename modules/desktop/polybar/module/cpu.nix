@@ -1,5 +1,6 @@
 { config }:
 
+# CPU - CPU usage percentage module
 with config.scheme.withHashtag;
 {
   type = "internal/cpu";

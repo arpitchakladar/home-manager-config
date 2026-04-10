@@ -1,5 +1,6 @@
 { config }:
 
+# Separator - Visual separator between modules
 with config.scheme.withHashtag;
 {
   type = "custom/text";

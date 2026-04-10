@@ -5,6 +5,7 @@
   ...
 }:
 
+# Fonts - Font configuration (Fira Code Nerd Font)
 {
   options.fonts = {
     normal = lib.mkOption {

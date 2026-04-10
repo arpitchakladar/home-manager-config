@@ -1,5 +1,6 @@
 { config }:
 
+# Battery - Battery status module with icons and charging animation
 with config.scheme.withHashtag;
 {
   type = "internal/battery";

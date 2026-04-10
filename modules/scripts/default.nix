@@ -4,6 +4,7 @@
   ...
 }:
 
+# Scripts - Home directory shell scripts (deep-clean, screen-recording, system-monitor)
 {
   config = {
     home.sessionPath = [

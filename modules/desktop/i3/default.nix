@@ -5,6 +5,7 @@
   ...
 }:
 
+# i3 - Window manager configuration (gaps, colors, startup, keybindings)
 {
   config = lib.mkIf config.desktop.enable {
     xsession.windowManager.i3 = {

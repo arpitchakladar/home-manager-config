@@ -1,5 +1,6 @@
 { config }:
 
+# Ethernet-separator - Visual separator for ethernet module
 with config.scheme.withHashtag;
 {
   type = "internal/network";

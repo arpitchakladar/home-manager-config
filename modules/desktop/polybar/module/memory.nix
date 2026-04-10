@@ -1,5 +1,6 @@
 { config }:
 
+# Memory - RAM usage module (displays GB used)
 with config.scheme.withHashtag;
 {
   type = "internal/memory";

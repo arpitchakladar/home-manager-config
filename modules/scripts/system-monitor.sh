@@ -1,3 +1,7 @@
+# System monitor script using tmux to run bottom and nvtop side-by-side
+# Opens a tmux session with:
+#   - Left pane: bottom (system/process monitor)
+#   - Right pane: nvtop (GPU monitor)
 SESSION="system-monitor"
 
 kitty @ set-font-size -- -4

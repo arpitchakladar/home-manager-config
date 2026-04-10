@@ -5,6 +5,7 @@
   ...
 }:
 
+# GTK - GTK3/GTK4 theme configuration (Nightfox dark theme)
 {
   config = lib.mkIf config.desktop.enable {
     gtk = {

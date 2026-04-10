@@ -4,6 +4,7 @@
   config,
 }:
 
+# Keybindings - i3 keyboard shortcuts (app launchers, vim directions, workspaces)
 let
   mod = "Mod4";
 in

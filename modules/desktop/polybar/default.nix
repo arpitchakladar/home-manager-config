@@ -5,6 +5,7 @@
   ...
 }:
 
+# Polybar - Status bar configuration (i3 integration, modules)
 {
   config = lib.mkIf config.desktop.enable {
     services.polybar.enable = true;

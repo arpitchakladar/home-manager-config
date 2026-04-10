@@ -1,3 +1,7 @@
+# Screen recording script using FFmpeg and slop for region selection
+# Records X11 screen to MP4 with x264 encoding
+# Usage: screen-recording.sh [-s|--select]
+#   -s, --select  Launch slop to select recording region
 OUT_DIR="$HOME/Videos/Recordings"
 mkdir -p "$OUT_DIR"
 
