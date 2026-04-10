@@ -1,5 +1,6 @@
 { config, lib, ... }:
 
+# LSD - Ls alternative with icons and colors (Rust-based)
 {
   options.tools.lsd = {
     enable = lib.mkEnableOption "Enables lsd.";

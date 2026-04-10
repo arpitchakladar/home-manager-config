@@ -5,6 +5,7 @@
   ...
 }:
 
+# brightnessctl - Backlight brightness control tool
 {
   options.tools.brightnessctl = {
     enable = lib.mkEnableOption "Enables brightnessctl.";

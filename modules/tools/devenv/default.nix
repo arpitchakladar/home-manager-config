@@ -5,6 +5,7 @@
   ...
 }:
 
+# Devenv - Developer environment tooling (Nix-based dev environments)
 {
   options.tools.devenv = {
     enable = lib.mkEnableOption "Enables devenv.";

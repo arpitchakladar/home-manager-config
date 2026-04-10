@@ -5,6 +5,7 @@
   ...
 }:
 
+# Unar - Command-line archive extractor for various formats (zip, rar, etc.)
 {
   options.tools.unar = {
     enable = lib.mkEnableOption "Enables unar.";

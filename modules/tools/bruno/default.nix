@@ -5,6 +5,7 @@
   ...
 }:
 
+# Bruno - Open-source API client for testing HTTP endpoints
 {
   options.tools.bruno = {
     enable = lib.mkEnableOption "Enables bruno.";

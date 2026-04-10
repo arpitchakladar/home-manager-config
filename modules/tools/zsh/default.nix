@@ -1,5 +1,6 @@
 { config, lib, ... }:
 
+# Zsh - Z shell, extended bash with additional features and plugins
 {
   options.tools.zsh = {
     enable = lib.mkEnableOption "Enables zsh.";

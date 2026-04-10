@@ -5,6 +5,7 @@
   ...
 }:
 
+# OpenSSH - Secure shell (SSH) client for encrypted remote connections
 {
   options.tools.openssh = {
     enable = lib.mkEnableOption "Enables OpenSSH client.";

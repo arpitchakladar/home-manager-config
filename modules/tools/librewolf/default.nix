@@ -5,6 +5,7 @@
   ...
 }:
 
+# Librewolf - A privacy-focused fork of Mozilla Firefox
 {
   options.tools.librewolf = {
     enable = lib.mkEnableOption "Enables librewolf.";
@@ -32,6 +33,7 @@
           "sidebar.animation.enabled" = false;
           "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
           "privacy.resistFingerprinting" = false;
+          "privacy.fingerprintingProtection" = true;
           "dom.webnotifications.enabled" = false;
         };
       };

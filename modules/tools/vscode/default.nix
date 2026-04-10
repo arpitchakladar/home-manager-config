@@ -5,6 +5,7 @@
   ...
 }:
 
+# VSCode - Visual Studio Code (using VSCodium open-source build)
 {
   options.tools.vscode = {
     enable = lib.mkEnableOption "Enables vscode.";

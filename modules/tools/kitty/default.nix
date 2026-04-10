@@ -5,6 +5,7 @@
   ...
 }:
 
+# Kitty - GPU-accelerated terminal emulator
 {
   options.tools.kitty = {
     enable = lib.mkEnableOption "Enables kitty.";

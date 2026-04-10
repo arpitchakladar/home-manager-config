@@ -5,6 +5,7 @@
   ...
 }:
 
+# Pamixer - PulseAudio command-line mixer (volume control)
 {
   options.tools.pamixer = {
     enable = lib.mkEnableOption "Enables pamixer.";

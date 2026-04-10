@@ -1,5 +1,6 @@
 { lib, config, ... }:
 
+# Git - Distributed version control system
 {
   options.tools.git = {
     enable = lib.mkEnableOption "Enables git.";

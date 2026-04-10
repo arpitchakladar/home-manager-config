@@ -1,5 +1,6 @@
 { config, lib, ... }:
 
+# Tmux - Terminal multiplexer (window/pane management)
 {
   options.tools.tmux = {
     enable = lib.mkEnableOption "Enables tmux.";

@@ -1,5 +1,6 @@
 { config, lib, ... }:
 
+# LSP - Language Server Protocol configuration (nvim-lspconfig)
 {
   config.programs.nixvim.plugins.lsp = lib.mkIf config.tools.nixvim.enable {
     enable = true;

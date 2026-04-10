@@ -1,5 +1,6 @@
 { config, lib, ... }:
 
+# Cmp - Completion plugin (nvim-cmp) for auto-completion
 {
   config.programs.nixvim.plugins.cmp = lib.mkIf config.tools.nixvim.enable {
     enable = true;

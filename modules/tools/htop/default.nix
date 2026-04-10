@@ -5,6 +5,7 @@
   ...
 }:
 
+# Htop - Interactive process viewer (using htop-vim version)
 {
   options.tools.htop = {
     enable = lib.mkEnableOption "Enables htop.";

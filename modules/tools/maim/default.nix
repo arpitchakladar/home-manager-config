@@ -5,6 +5,7 @@
   ...
 }:
 
+# Maim - Screenshot utility (slop-based region selection)
 {
   options.tools.maim = {
     enable = lib.mkEnableOption "Enables maim.";

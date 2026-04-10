@@ -5,6 +5,7 @@
   ...
 }:
 
+# LibreOffice - Open-source office suite (Word, Excel, PowerPoint alternative)
 {
   options.tools.libreoffice = {
     enable = lib.mkEnableOption "Enables libreoffice.";

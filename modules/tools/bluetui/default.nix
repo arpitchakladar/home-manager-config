@@ -5,6 +5,7 @@
   ...
 }:
 
+# Bluetui - Terminal UI for Bluetooth management
 {
   options.tools.bluetui = {
     enable = lib.mkEnableOption "Enables bluetui.";

@@ -5,6 +5,7 @@
   ...
 }:
 
+# Nvtop - GPU process monitor (NVIDIA/AMD/Intel GPUs)
 {
   options.tools.nvtop = {
     enable = lib.mkEnableOption "Enables nvtop.";

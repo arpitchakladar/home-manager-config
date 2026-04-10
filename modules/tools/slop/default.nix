@@ -5,6 +5,7 @@
   ...
 }:
 
+# Slop - Region selector for screenshots (used by maim/flameshot)
 {
   options.tools.slop = {
     enable = lib.mkEnableOption "Enables slop.";

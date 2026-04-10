@@ -5,6 +5,7 @@
   ...
 }:
 
+# Playerctl - CLI for controlling media players (Spotify, MPRIS, etc.)
 {
   options.tools.playerctl = {
     enable = lib.mkEnableOption "Enables playerctl.";

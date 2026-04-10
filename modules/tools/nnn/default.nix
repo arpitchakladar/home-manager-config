@@ -5,6 +5,7 @@
   ...
 }:
 
+# nnn - Terminal file manager (n³), a lightweight file browser
 {
   options.tools.nnn = {
     enable = lib.mkEnableOption "Enables nnn.";

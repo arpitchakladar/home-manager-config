@@ -5,6 +5,7 @@
   ...
 }:
 
+# Impala - Apache Impala: SQL query engine for Apache Hadoop
 {
   options.tools.impala = {
     enable = lib.mkEnableOption "Enables impala.";

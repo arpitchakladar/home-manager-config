@@ -1,5 +1,6 @@
 { lib, config, ... }:
 
+# Rofi - Window switcher, application launcher, and dmenu replacement
 {
   options.tools.rofi = {
     enable = lib.mkEnableOption "Enables rofi.";

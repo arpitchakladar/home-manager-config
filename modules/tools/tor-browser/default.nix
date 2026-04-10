@@ -5,6 +5,7 @@
   ...
 }:
 
+# Tor Browser - Anonymous web browser using Tor network
 {
   options.tools.tor-browser = {
     enable = lib.mkEnableOption "Enables tor-browser.";

@@ -1,5 +1,6 @@
 { config, lib, ... }:
 
+# FZF - Fuzzy finder, CLI fuzzy search tool
 {
   options.tools.fzf = {
     enable = lib.mkEnableOption "Enables fzf.";

@@ -1,5 +1,6 @@
 { config, lib, ... }:
 
+# Colorscheme - Base16 theme configuration for nixvim
 {
   config = lib.mkIf config.tools.nixvim.enable {
     programs.nixvim.colorschemes.base16 = {

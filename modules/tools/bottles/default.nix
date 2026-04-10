@@ -5,6 +5,7 @@
   ...
 }:
 
+# Bottles - Wine/Proton compatibility layer manager for Linux games
 {
   options.tools.bottles = {
     enable = lib.mkEnableOption "Enables bottles.";

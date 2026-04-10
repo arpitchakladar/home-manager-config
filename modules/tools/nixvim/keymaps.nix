@@ -1,5 +1,6 @@
 { config, lib, ... }:
 
+# Keymaps - Keyboard shortcut configuration for nixvim
 {
   config = lib.mkIf config.tools.nixvim.enable {
     programs.nixvim.keymaps = [

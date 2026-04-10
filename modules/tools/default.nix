@@ -1,5 +1,6 @@
 { ... }:
 
+# Tools - Collection of tool configurations (browsers, editors, utilities, etc.)
 {
   imports = [
     ./bluetui

@@ -4,6 +4,7 @@
   ...
 }:
 
+# Opencode - AI-powered coding assistant (opencode.ai)
 {
   options.tools.opencode = {
     enable = lib.mkEnableOption "Enables opencode.";

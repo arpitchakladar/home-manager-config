@@ -5,6 +5,7 @@
   ...
 }:
 
+# OpenVPN - Open-source VPN client for secure remote access
 {
   options.tools.openvpn = {
     enable = lib.mkEnableOption "Enables openvpn.";
