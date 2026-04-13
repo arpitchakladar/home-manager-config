@@ -7,7 +7,6 @@ CACHE_FILE="$HOME/.cache/openvpn/last_connection"
 # Create directories
 mkdir -p "$CREDS_DIR" "$SERVERS_DIR" "$(dirname "$CACHE_FILE")"
 
-# Logic to force a refresh (bypass cache)
 REFRESH=false
 if [[ "$1" == "--refresh" || "$1" == "-r" ]]; then
     REFRESH=true
@@ -16,29 +15,44 @@ fi
 # Try to load from cache
 if [[ "$REFRESH" == false && -f "$CACHE_FILE" ]]; then
     source "$CACHE_FILE"
-    # Validate cached files still exist
     if [[ ! -f "$CRED" || ! -f "$SERVER" ]]; then
-        echo "Cached config not found, falling back to selection..."
         REFRESH=true
     fi
 else
     REFRESH=true
 fi
 
-# If we need a refresh, run fzf
+# Selection logic
 if [[ "$REFRESH" == true ]]; then
-    CRED=$(find "$CREDS_DIR" -type f | fzf --prompt="Select Credentials > ")
+    # These variables ($FZF_BIN, etc) are provided by the Nix wrapper below
+    CRED=$(find "$CREDS_DIR" -type f | "$FZF_BIN" --prompt="Select Credentials > ")
     [ -z "$CRED" ] && exit 1
 
-    SERVER=$(find "$SERVERS_DIR" -type f \( -name "*.conf" -o -name "*.ovpn" \) | fzf --prompt="Select VPN Server > ")
+    SERVER=$(find "$SERVERS_DIR" -type f \( -name "*.conf" -o -name "*.ovpn" \) | "$FZF_BIN" --prompt="Select VPN Server > ")
     [ -z "$SERVER" ] && exit 1
 
-    # Save to cache
     echo "CRED=\"$CRED\"" > "$CACHE_FILE"
     echo "SERVER=\"$SERVER\"" >> "$CACHE_FILE"
 fi
 
-echo "Connecting to $SERVER using $CRED..."
+echo "Connecting to $SERVER..."
 
-# Execute openvpn
-sudo openvpn --config "$SERVER" --auth-user-pass "$CRED"
+# Create a temporary config file that sudo can read
+TMP_CONF=$(mktemp /tmp/vpn-config.XXXXXX)
+
+# Clean the config and save to the temp file
+sed -e '/up \/etc\/openvpn\/update-resolv-conf/d' \
+    -e '/down \/etc\/openvpn\/update-resolv-conf/d' "$SERVER" > "$TMP_CONF"
+
+# Use a trap to ensure the temp file is deleted when the script exits
+# (even if you Ctrl+C)
+trap 'rm -f "$TMP_CONF"' EXIT
+
+# Execute openvpn using the temporary file
+sudo "$OPENVPN_BIN" \
+  --config "$TMP_CONF" \
+  --auth-user-pass "$CRED" \
+  --script-security 2 \
+  --up "$RESOLVED_BIN" \
+  --down "$RESOLVED_BIN" \
+  --down-pre

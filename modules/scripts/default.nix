@@ -35,7 +35,16 @@ in
       ) (mkScript "system-monitor" ./system-monitor.sh))
 
       (lib.mkIf (config.tools.openvpn.enable && config.tools.fzf.enable) (
-        mkScript "vpn-connect" ./vpn-connect.sh
+        pkgs.writeShellScriptBin "vpn-connect" ''
+          #!${if config.tools.zsh.enable then (lib.getExe config.programs.zsh.package) else "/usr/bin/env sh"}
+
+          # Inject Nix store paths as environment variables for the script to use
+          export FZF_BIN="${lib.getExe pkgs.fzf}"
+          export OPENVPN_BIN="${lib.getExe pkgs.openvpn}"
+          export RESOLVED_BIN="${pkgs.openvpn}/libexec/update-systemd-resolved"
+
+          ${builtins.readFile ./vpn-connect.sh}
+        ''
       ))
     ];
   };
