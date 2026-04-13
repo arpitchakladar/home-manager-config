@@ -4,7 +4,6 @@
 {
   imports = [
     ./bluetui
-    ./bottles
     ./bottom
     ./brightnessctl
     ./bruno
@@ -35,6 +34,7 @@
     ./systemctl-tui
     ./tmux
     ./tor-browser
+    ./umu-launcher
     ./unar
     ./vlc
     ./vscode
