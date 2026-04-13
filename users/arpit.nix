@@ -12,7 +12,6 @@
 
   # Tools
   tools.bluetui.enable = true;
-  tools.bottles.enable = true;
   tools.bottom.enable = true;
   tools.brightnessctl.enable = true;
   tools.bruno.enable = true;
@@ -45,6 +44,7 @@
   tools.systemctl-tui.enable = true;
   tools.tmux.enable = true;
   tools.tor-browser.enable = true;
+  tools.umu-launcher.enable = true;
   tools.unar.enable = true;
   tools.vlc.enable = true;
   tools.vscode.enable = true;
