@@ -24,11 +24,10 @@ fi
 
 # Selection logic
 if [[ "$REFRESH" == true ]]; then
-    # These variables ($FZF_BIN, etc) are provided by the Nix wrapper below
-    CRED=$(find "$CREDS_DIR" -type f | "$FZF_BIN" --prompt="Select Credentials > ")
+    CRED=$(find "$CREDS_DIR" -type f | "$FZF" --prompt="Select Credentials > ")
     [ -z "$CRED" ] && exit 1
 
-    SERVER=$(find "$SERVERS_DIR" -type f \( -name "*.conf" -o -name "*.ovpn" \) | "$FZF_BIN" --prompt="Select VPN Server > ")
+    SERVER=$(find "$SERVERS_DIR" -type f \( -name "*.conf" -o -name "*.ovpn" \) | "$FZF" --prompt="Select VPN Server > ")
     [ -z "$SERVER" ] && exit 1
 
     echo "CRED=\"$CRED\"" > "$CACHE_FILE"
@@ -49,10 +48,10 @@ sed -e '/up \/etc\/openvpn\/update-resolv-conf/d' \
 trap 'rm -f "$TMP_CONF"' EXIT
 
 # Execute openvpn using the temporary file
-sudo "$OPENVPN_BIN" \
+sudo "$OPENVPN" \
   --config "$TMP_CONF" \
   --auth-user-pass "$CRED" \
   --script-security 2 \
-  --up "$RESOLVED_BIN" \
-  --down "$RESOLVED_BIN" \
+  --up "$SYSTEMD_RESOLVED" \
+  --down "$SYSTEMD_RESOLVED" \
   --down-pre

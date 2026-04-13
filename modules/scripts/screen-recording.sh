@@ -34,10 +34,10 @@ if command -v xwininfo >/dev/null 2>&1; then
 fi
 
 if [ "$SELECT_MODE" = true ]; then
-	if command -v slop >/dev/null 2>&1; then
+	if command -v "$SLOP" >/dev/null 2>&1; then
 		echo -e "${YELLOW}Select a window or draw a box...${NC}"
 		# slop output: 123 456 10 20
-		read -r W H X Y < <(slop -f "%w %h %x %y" --nokeyboard)
+		read -r W H X Y < <("$SLOP" -f "%w %h %x %y" --nokeyboard)
 
 		if [ -n "$W" ]; then
 			WIDTH=$W
@@ -67,7 +67,7 @@ echo "File: $FILENAME"
 echo "------------------------------------------------"
 
 # We pass arguments explicitly here to avoid "Unrecognized option" shell errors
-ffmpeg -hide_banner \
+"$FFMPEG" -hide_banner \
 	-f x11grab \
 	-video_size "${WIDTH}x${HEIGHT}" \
 	-framerate 30 \
