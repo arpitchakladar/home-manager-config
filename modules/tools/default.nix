@@ -28,6 +28,7 @@
     ./openvpn
     ./pamixer
     ./playerctl
+    ./qemu
     ./rofi
     ./slop
     ./starship
