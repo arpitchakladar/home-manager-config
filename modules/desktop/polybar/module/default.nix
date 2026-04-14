@@ -1,4 +1,8 @@
-{ config }:
+{
+  lib,
+  config,
+  pkgs,
+}:
 
 # Module - Polybar module definitions (battery, cpu, date, i3, memory, volume, wifi, etc.)
 {
@@ -12,6 +16,8 @@
   "module/separator" = import ./separator.nix { inherit config; };
   "module/time" = import ./time.nix { inherit config; };
   "module/volume" = import ./volume.nix { inherit config; };
+  "module/vpn-separator" = import ./vpn-separator.nix { inherit config lib pkgs; };
+  "module/vpn" = import ./vpn.nix { inherit config lib pkgs; };
   "module/wifi-separator" = import ./wifi-separator.nix { inherit config; };
   "module/wifi" = import ./wifi.nix { inherit config; };
   "module/xwindow" = import ./xwindow.nix { };

@@ -37,5 +37,5 @@ in
 
   modules-left = "i3 separator";
   modules-center = "xwindow";
-  modules-right = "separator volume separator battery separator wifi wifi-separator ethernet ethernet-separator time separator memory separator cpu separator date";
+  modules-right = "separator volume separator battery separator vpn vpn-separator wifi wifi-separator ethernet ethernet-separator time separator memory separator cpu separator date";
 }
