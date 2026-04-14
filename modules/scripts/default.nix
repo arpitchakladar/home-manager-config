@@ -37,6 +37,12 @@ in
       (mkScript "deep-clean" ./deep-clean.sh { })
 
       # Conditional scripts
+      (lib.mkIf config.tools.fzf.enable (
+        mkScript "fzf-launcher" ./fzf-launcher.sh {
+          FZF = lib.getExe pkgs.fzf;
+        }
+      ))
+
       (lib.mkIf (config.tools.ffmpeg.enable && config.tools.slop.enable) (
         mkScript "screen-recording" ./screen-recording.sh {
           FFMPEG = lib.getExe pkgs.ffmpeg-full;
