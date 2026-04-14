@@ -39,7 +39,6 @@
   tools.pamixer.enable = true;
   tools.playerctl.enable = true;
   tools.qemu.enable = true;
-  tools.rofi.enable = true;
   tools.slop.enable = true;
   tools.starship.enable = true;
   tools.systemctl-tui.enable = true;

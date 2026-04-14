@@ -10,7 +10,9 @@ let
 in
 {
   # --- General Applications ---
-  "${mod}+r" = lib.mkIf config.tools.rofi.enable "exec ${lib.getExe pkgs.rofi} -show drun";
+  "${mod}+r" =
+    lib.mkIf (config.tools.fzf.enable && config.tools.kitty.enable)
+      "exec ${lib.getExe pkgs.kitty} --class floating-termial -e ${lib.getExe config.scripts.fzf-launcher}";
   "${mod}+t" = lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty}";
   "${mod}+f" =
     lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty} --title 'File Manager' --class floating-termial -e nnn";

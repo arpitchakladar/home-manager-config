@@ -8,19 +8,15 @@ entries=""
 
 for dir in "${DIRS[@]}"; do
   [[ -d "$dir" ]] || continue
+
   for f in "$dir"/*.desktop; do
     [[ -f "$f" ]] || continue
 
     grep -q "^NoDisplay=true" "$f" && continue
-    grep -q "^Hidden=true"    "$f" && continue
-
-    # only keep Type=Application entries
+    grep -q "^Hidden=true" "$f" && continue
     grep -q "^Type=Application" "$f" || continue
+    grep -q "^Terminal=true" "$f" && continue
 
-    # skip terminal-only apps (no GUI window)
-    grep -q "^Terminal=true"   "$f" && continue
-
-    # skip entries that are purely settings/mime handlers/background services
     categories=$(grep -m1 "^Categories=" "$f" | cut -d= -f2-)
     if [[ -n "$categories" ]]; then
       echo "$categories" | grep -qE "(Settings|System|Screensaver|DesktopSettings|PackageManager)" && continue
@@ -31,21 +27,25 @@ for dir in "${DIRS[@]}"; do
 
     [[ -z "$name" || -z "$exec" ]] && continue
 
-    exec=$(echo "$exec" | sed 's/ %[fFuUickdDnNvm]//g')
+    # Remove field codes properly
+    exec=$(echo "$exec" | sed -E 's/ ?%[a-zA-Z]//g')
 
     entries+="$name"$'\t'"$exec"$'\n'
   done
 done
 
-chosen=$(printf '%s' "$entries" | sort -f -t$'\t' -k1,1 | "$FZF" \
+entries=$(printf '%s' "$entries" | sort -fu -t$'\t' -k1,1)
+
+chosen=$(printf '%s' "$entries" | "$FZF" \
   --prompt='Launch: ' \
   --layout=reverse \
   --info=inline \
-  --with-nth=1 \
-  --delimiter=$'\t')
+  --delimiter=$'\t' \
+  --with-nth=1)
 
 [[ -z "$chosen" ]] && exit 0
 
 exec_cmd=$(printf '%s' "$chosen" | cut -d$'\t' -f2)
-setsid bash -c "$exec_cmd" &>/dev/null &
+
+eval "$exec_cmd" &>/dev/null &
 disown
