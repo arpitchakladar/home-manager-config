@@ -1,10 +1,10 @@
-# Define directories
 CONF_DIR="$HOME/.config/openvpn"
 CREDS_DIR="$CONF_DIR/credentials"
 SERVERS_DIR="$CONF_DIR/servers"
 CACHE_FILE="$HOME/.cache/openvpn/last_connection"
+PID_FILE="$HOME/.cache/openvpn/vpn.pid"
+LOG_FILE="$HOME/.cache/openvpn/vpn.log"
 
-# Create directories
 mkdir -p "$CREDS_DIR" "$SERVERS_DIR" "$(dirname "$CACHE_FILE")"
 
 REFRESH=false
@@ -12,7 +12,7 @@ if [[ "$1" == "--refresh" || "$1" == "-r" ]]; then
     REFRESH=true
 fi
 
-# Try to load from cache
+# Load cache
 if [[ "$REFRESH" == false && -f "$CACHE_FILE" ]]; then
     source "$CACHE_FILE"
     if [[ ! -f "$CRED" || ! -f "$SERVER" ]]; then
@@ -22,7 +22,7 @@ else
     REFRESH=true
 fi
 
-# Selection logic
+# Select if needed
 if [[ "$REFRESH" == true ]]; then
     CRED=$(find "$CREDS_DIR" -type f | "$FZF" --prompt="Select Credentials > ")
     [ -z "$CRED" ] && exit 1
@@ -36,22 +36,25 @@ fi
 
 echo "Connecting to $SERVER..."
 
-# Create a temporary config file that sudo can read
 TMP_CONF=$(mktemp /tmp/vpn-config.XXXXXX)
 
-# Clean the config and save to the temp file
 sed -e '/up \/etc\/openvpn\/update-resolv-conf/d' \
     -e '/down \/etc\/openvpn\/update-resolv-conf/d' "$SERVER" > "$TMP_CONF"
 
-# Use a trap to ensure the temp file is deleted when the script exits
-# (even if you Ctrl+C)
-trap 'rm -f "$TMP_CONF"' EXIT
+# Run in background
+sudo -v || exit 1
 
-# Execute openvpn using the temporary file
-sudo "$OPENVPN" \
+nohup sudo "$OPENVPN" \
   --config "$TMP_CONF" \
   --auth-user-pass "$CRED" \
   --script-security 2 \
   --up "$SYSTEMD_RESOLVED" \
   --down "$SYSTEMD_RESOLVED" \
-  --down-pre
+  --down-pre \
+  > "$LOG_FILE" 2>&1 &
+
+VPN_PID=$!
+
+echo $VPN_PID > "$PID_FILE"
+echo "VPN started in background (PID: $VPN_PID)"
+echo "Logs: $LOG_FILE"

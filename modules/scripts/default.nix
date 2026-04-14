@@ -65,6 +65,10 @@ let
         SYSTEMD_RESOLVED = "${pkgs.openvpn}/libexec/update-systemd-resolved";
       }
     );
+
+    vpn-disconnect = lib.mkIf (config.tools.openvpn.enable && config.tools.fzf.enable) (
+      mkScript "vpn-disconnect" ./vpn-disconnect.sh { }
+    );
   };
 in
 {
