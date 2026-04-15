@@ -11,7 +11,6 @@
     ./lualine.nix
     ./luasnip.nix
     ./noice.nix
-    ./notify.nix
     ./nvim-tree.nix
     ./telescope.nix
     ./treesitter.nix
