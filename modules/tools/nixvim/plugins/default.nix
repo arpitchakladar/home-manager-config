@@ -13,6 +13,7 @@
     ./noice.nix
     ./notify.nix
     ./nvim-tree.nix
+    ./telescope.nix
     ./treesitter.nix
     ./web-devicons.nix
     ./which-key.nix
