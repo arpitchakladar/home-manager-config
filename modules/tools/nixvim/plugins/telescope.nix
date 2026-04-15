@@ -76,6 +76,10 @@
         action = "commands";
         options.desc = "Commands";
       };
+      "<leader>fk" = {
+        action = "keymaps";
+        options.desc = "Find keymaps";
+      };
     };
   };
 }
