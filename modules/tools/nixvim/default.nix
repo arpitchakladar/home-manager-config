@@ -76,6 +76,9 @@
       };
     };
 
-    home.sessionVariables.EDITOR = "nvim";
+    home.sessionVariables = {
+      EDITOR = lib.mkForce (lib.getExe config.programs.nixvim.package);
+      MANPAGER = "${lib.getExe config.programs.nixvim.package} +Man!";
+    };
   };
 }

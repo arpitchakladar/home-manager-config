@@ -6,6 +6,7 @@
     plugins.lsp = {
       enable = true;
       inlayHints = true;
+      autoLoad = true;
       keymaps.lspBuf = {
         K = "hover";
         gD = "references";
