@@ -16,7 +16,6 @@
     ./htop
     ./impala
     ./kitty
-    ./libreoffice
     ./librewolf
     ./lsd
     ./maim

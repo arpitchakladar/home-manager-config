@@ -26,7 +26,6 @@
   tools.htop.enable = true;
   tools.impala.enable = true;
   tools.kitty.enable = true;
-  tools.libreoffice.enable = true;
   tools.librewolf.enable = true;
   tools.lsd.enable = true;
   tools.maim.enable = true;
