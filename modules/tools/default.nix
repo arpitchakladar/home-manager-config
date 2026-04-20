@@ -32,7 +32,7 @@
     ./starship
     ./systemctl-tui
     ./tmux
-    ./tor-browser
+    ./tor
     ./umu-launcher
     ./unar
     ./vlc
