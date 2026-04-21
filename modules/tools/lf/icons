@@ -6,7 +6,7 @@ or             # ORPHAN
 tw      t       # STICKY_OTHER_WRITABLE
 ow             # OTHER_WRITABLE
 st      t       # STICKY
-di             # DIR
+di             # DIR
 pi      p       # FIFO
 so      s       # SOCK
 bd      b       # BLK
@@ -137,7 +137,7 @@ fi             # FILE
 *.r             󰟔
 *.rproj         󰗆
 *.sol           󰡪
-*.pem           
+*.pem           
 
 # file names (vim-devicons) (case-insensitive not supported in lf)
 *gruntfile.coffee       
