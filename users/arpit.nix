@@ -26,11 +26,11 @@
   tools.htop.enable = true;
   tools.impala.enable = true;
   tools.kitty.enable = true;
+  tools.lf.enable = true;
   tools.librewolf.enable = true;
   tools.lsd.enable = true;
   tools.maim.enable = true;
   tools.nixvim.enable = true;
-  tools.nnn.enable = true;
   tools.nvtop.enable = true;
   tools.opencode.enable = true;
   tools.openssh.enable = true;

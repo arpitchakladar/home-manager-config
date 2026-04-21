@@ -16,11 +16,11 @@
     ./htop
     ./impala
     ./kitty
+    ./lf
     ./librewolf
     ./lsd
     ./maim
     ./nixvim
-    ./nnn
     ./nvtop
     ./opencode
     ./openssh
