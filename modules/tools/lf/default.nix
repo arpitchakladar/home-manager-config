@@ -21,5 +21,7 @@
         hidden = true;
       };
     };
+
+    home.file.".config/lf/icons".source = ./icons;
   };
 }

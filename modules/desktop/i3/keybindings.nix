@@ -15,7 +15,8 @@ in
       "exec ${lib.getExe pkgs.kitty} --class floating-termial -e ${lib.getExe config.scripts.fzf-launcher}";
   "${mod}+t" = lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty}";
   "${mod}+f" =
-    lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty} --title 'File Manager' --class floating-termial -e nnn";
+    lib.mkIf (config.tools.kitty.enable && config.tools.lf.enable)
+      "exec ${lib.getExe pkgs.kitty} --title 'File Manager' --class floating-termial -e ${lib.getExe config.programs.lf.package}";
   "${mod}+s" =
     lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty} --title 'Keybindings' --class floating-termial -e keybindings.sh";
   "${mod}+q" = "kill";
