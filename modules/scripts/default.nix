@@ -46,6 +46,7 @@ let
     file-preview = {
       path = ./file-preview.sh;
       env = {
+        KITTEN = lib.getExe' config.programs.kitty.package "kitten";
         BAT = lib.getExe config.programs.bat.package;
         FILE = lib.getExe pkgs.file;
         FFMPEG = lib.getExe' pkgs.ffmpeg-full "ffmpeg";
@@ -54,6 +55,7 @@ let
         PDFTOPPM = lib.getExe' pkgs.poppler-utils "pdftoppm";
       };
       deps = [
+        config.programs.kitty.package
         config.programs.bat.package
         pkgs.file
         pkgs.ffmpeg-full
@@ -82,11 +84,15 @@ let
     };
     file-preview-clean = {
       path = ./file-preview-clean.sh;
-      env = { };
-      deps = [ config.programs.fzf.package ];
+      env = {
+        KITTEN = lib.getExe' config.programs.kitty.package "kitten";
+      };
+      deps = [
+        config.programs.kitty.package
+      ];
       conditions = [
         {
-          option = "tools.fzf.enable";
+          option = "scripts.file-preview.enable";
           value = true;
         }
       ];

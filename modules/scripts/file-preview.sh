@@ -21,8 +21,15 @@ INODE=$(stat -c '%i' "$FILE_PATH" 2>/dev/null || echo "0")
 
 # Render image via kitty
 render_image() {
-  kitten icat --clear --stdin no --transfer-mode memory --place "${w}x${h}@${x}x${y}" /dev/null </dev/null >/dev/tty
-  kitten icat --stdin no --transfer-mode memory --place "${w}x${h}@${x}x${y}" "$1" </dev/null >/dev/tty
+  local file="$1"
+  local tries=0
+  while [ ! -s "$file" ] && [ "$tries" -lt 10 ]; do
+    sleep 0.2
+    tries=$((tries + 1))
+  done
+  [ ! -s "$file" ] && exit 0
+  "$KITTEN" icat --clear --stdin no --transfer-mode memory --place "${w}x${h}@${x}x${y}" /dev/null </dev/null >/dev/tty
+  "$KITTEN" icat --stdin no --transfer-mode memory --place "${w}x${h}@${x}x${y}" "$file" </dev/null >/dev/tty
   exit 1
 }
 
@@ -35,47 +42,65 @@ y="$5"
 # Ensure file exists
 [ ! -r "$FILE_PATH" ] && exit 0
 
-MIMETYPE=$(file --dereference --brief --mime-type "$FILE_PATH")
+MIMETYPE=$("$FILE" --dereference --brief --mime-type "$FILE_PATH")
 case "$MIMETYPE" in
   # --- IMAGES ---
   image/svg+xml)
     TMP_IMG="$TMP_DIR/svg-${INODE}.png"
-    [ ! -f "$TMP_IMG" ] && rsvg-convert "$FILE_PATH" -o "$TMP_IMG" >/dev/null 2>&1
-    [ -f "$TMP_IMG" ] && render_image "$TMP_IMG"
+    if [ ! -f "$TMP_IMG" ]; then
+      STAGING="$TMP_IMG.tmp"
+      rsvg-convert "$FILE_PATH" -o "$STAGING" >/dev/null 2>&1
+      [ -s "$STAGING" ] && mv "$STAGING" "$TMP_IMG"
+    fi
+    render_image "$TMP_IMG"
     ;;
+
   image/*)
     render_image "$FILE_PATH"
     ;;
+
   # --- VIDEOS ---
   video/*)
     TMP_IMG="$TMP_DIR/vid-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
+      STAGING="$TMP_IMG.tmp"
       if command -v ffmpegthumbnailer >/dev/null; then
-        ffmpegthumbnailer -i "$FILE_PATH" -o "$TMP_IMG" -s 0 -q 5 >/dev/null 2>&1
+        ffmpegthumbnailer -i "$FILE_PATH" -o "$STAGING" -s 0 -q 5 >/dev/null 2>&1
       else
-        "$FFMPEG" -y -i "$FILE_PATH" -ss 00:00:01 -vframes 1 "$TMP_IMG" >/dev/null 2>&1
+        "$FFMPEG" -y -i "$FILE_PATH" -ss 00:00:01 -vframes 1 "$STAGING" >/dev/null 2>&1
       fi
+      [ -s "$STAGING" ] && mv "$STAGING" "$TMP_IMG"
     fi
-    [ -f "$TMP_IMG" ] && render_image "$TMP_IMG"
+    render_image "$TMP_IMG"
     ;;
+
   # --- AUDIO ---
   audio/*)
     TMP_IMG="$TMP_DIR/aud-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
+      STAGING="$TMP_IMG.tmp"
       "$FFMPEG" -y -i "$FILE_PATH" \
         -filter_complex "showwavespic=s=${WIDTH}x${HEIGHT}:colors=white" \
-        -frames:v 1 "$TMP_IMG" >/dev/null 2>&1
+        -frames:v 1 "$STAGING" >/dev/null 2>&1
+      [ -s "$STAGING" ] && mv "$STAGING" "$TMP_IMG"
     fi
     "$FFPROBE" -hide_banner -v quiet -show_format -show_streams "$FILE_PATH"
-    [ -f "$TMP_IMG" ] && render_image "$TMP_IMG"
+    render_image "$TMP_IMG"
     exit 0
     ;;
 
   # --- PDF ---
   application/pdf)
     TMP_IMG="$TMP_DIR/pdf-${INODE}.png"
-    [ ! -f "$TMP_IMG" ] && "$PDFTOPPM" -f 1 -l 1 -png -singlefile "$FILE_PATH" "${TMP_IMG%.png}" >/dev/null 2>&1
-    [ -f "$TMP_IMG" ] && render_image "$TMP_IMG"
+    if [ ! -f "$TMP_IMG" ]; then
+      STAGING="$TMP_IMG.tmp"
+      "$PDFTOPPM" -f 1 -l 1 -png -singlefile \
+        -scale-to $((WIDTH * 8)) \
+        -r 72 \
+        "$FILE_PATH" "${STAGING%.png}" >/dev/null 2>&1
+      [ -s "$STAGING" ] && mv "$STAGING" "$TMP_IMG"
+    fi
+    render_image "$TMP_IMG"
     ;;
 
   # --- EPUB / MOBI ---
@@ -92,11 +117,15 @@ case "$MIMETYPE" in
   application/vnd.openxmlformats-officedocument.*|application/msword|application/vnd.oasis.opendocument.*)
     TMP_IMG="$TMP_DIR/doc-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
+      STAGING="$TMP_IMG.tmp"
       libreoffice --headless --convert-to pdf --outdir "$TMP_DIR" "$FILE_PATH" >/dev/null 2>&1
       PDF_VER="${TMP_DIR}/$(basename "${FILE_PATH%.*}").pdf"
-      [ -f "$PDF_VER" ] && "$PDFTOPPM" -f 1 -l 1 -png -singlefile "$PDF_VER" "${TMP_IMG%.png}" >/dev/null 2>&1
+      if [ -f "$PDF_VER" ]; then
+        "$PDFTOPPM" -f 1 -l 1 -png -singlefile "$PDF_VER" "${STAGING%.png}" >/dev/null 2>&1
+        [ -s "$STAGING" ] && mv "$STAGING" "$TMP_IMG"
+      fi
     fi
-    [ -f "$TMP_IMG" ] && render_image "$TMP_IMG"
+    render_image "$TMP_IMG"
     ;;
 
   # --- ARCHIVES ---
@@ -119,7 +148,7 @@ case "$MIMETYPE" in
 
   # --- FALLBACK ---
   *)
-    file --dereference --brief "$FILE_PATH"
+    "$FILE" --dereference --brief "$FILE_PATH"
     echo "------------------------------------------------"
     hexdump -C "$FILE_PATH" | head -n 100
     exit 0
