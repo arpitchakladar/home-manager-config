@@ -73,7 +73,7 @@ case "$MIMETYPE" in
 
   # --- EPUB / MOBI ---
   application/epub+zip|application/x-mobipocket-ebook)
-    unzip -p "$FILE" "*/cover*.jpg" > "$TMP_IMG" 2>/dev/null
+    ouch decompress "$FILE" --limit "*/cover*.jpg" --dir /tmp && mv /tmp/cover*.jpg "$TMP_IMG"
     [ -s "$TMP_IMG" ] && render_image "$TMP_IMG"
     ;;
 
@@ -89,7 +89,7 @@ case "$MIMETYPE" in
 
   # --- ARCHIVES ---
   application/zip|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-gzip)
-    7z l "$FILE" 2>/dev/null || bsdtar -tf "$FILE"
+    ouch list -t "$FILE" 2>/dev/null
     exit 0
     ;;
 
