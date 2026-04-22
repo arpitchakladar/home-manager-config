@@ -46,7 +46,7 @@ let
     file-preview = {
       path = ./file-preview.sh;
       env = {
-        BAT = lib.getExe pkgs.bat;
+        BAT = lib.getExe config.programs.bat.package;
         FILE = lib.getExe pkgs.file;
         FFMPEG = lib.getExe' pkgs.ffmpeg-full "ffmpeg";
         FFPROBE = lib.getExe' pkgs.ffmpeg-full "ffprobe";
@@ -54,7 +54,7 @@ let
         PDFTOPPM = lib.getExe' pkgs.poppler-utils "pdftoppm";
       };
       deps = [
-        pkgs.bat
+        config.programs.bat.package
         pkgs.file
         pkgs.ffmpeg-full
         pkgs.ouch
@@ -74,12 +74,16 @@ let
           option = "tools.zathura.enable";
           value = true;
         }
+        {
+          option = "tools.bat.enable";
+          value = true;
+        }
       ];
     };
     file-preview-clean = {
       path = ./file-preview-clean.sh;
       env = { };
-      deps = [ pkgs.fzf ];
+      deps = [ config.programs.fzf.package ];
       conditions = [
         {
           option = "tools.fzf.enable";
@@ -90,11 +94,11 @@ let
     fzf-launcher = {
       path = ./fzf-launcher.sh;
       env = {
-        FZF = lib.getExe pkgs.fzf;
+        FZF = lib.getExe config.programs.fzf.package;
         SETSID = lib.getExe' pkgs.util-linux "setsid";
       };
       deps = [
-        pkgs.fzf
+        config.programs.fzf.package
         pkgs.util-linux
       ];
       conditions = [
@@ -142,13 +146,13 @@ let
         BTM = lib.getExe pkgs.bottom;
         NVTOP = lib.getExe pkgs.nvtopPackages.full;
         TMUX = lib.getExe pkgs.tmux;
-        KITTY = lib.getExe pkgs.kitty;
+        KITTY = lib.getExe config.programs.kitty.package;
       };
       deps = [
         pkgs.bottom
         pkgs.nvtopPackages.full
         pkgs.tmux
-        pkgs.kitty
+        config.programs.kitty.package
       ];
       conditions = [
         {
@@ -172,12 +176,12 @@ let
     vpn-connect = {
       path = ./vpn-connect.sh;
       env = {
-        FZF = lib.getExe pkgs.fzf;
+        FZF = lib.getExe config.programs.fzf.package;
         OPENVPN = lib.getExe pkgs.openvpn;
         SYSTEMD_RESOLVED = "${pkgs.openvpn}/libexec/update-systemd-resolved";
       };
       deps = [
-        pkgs.fzf
+        config.programs.fzf.package
         pkgs.openvpn
       ];
       conditions = [
@@ -254,7 +258,7 @@ in
 
     home.packages = [
       pkgs.file
-      pkgs.bat
+      config.programs.bat.package
     ]
     ++ lib.filter (x: x != null) (lib.mapAttrsToList (_: s: s.package) config.scripts);
   };

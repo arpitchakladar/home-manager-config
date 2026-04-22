@@ -3,6 +3,7 @@
 # Tools - Collection of tool configurations (browsers, editors, utilities, etc.)
 {
   imports = [
+    ./bat
     ./bluetui
     ./bottom
     ./brightnessctl
