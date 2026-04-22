@@ -102,6 +102,7 @@ in
 
     home.packages = [
       pkgs.file
+      pkgs.bat
     ]
     ++ (lib.filter (x: x != null) (lib.mapAttrsToList (_: v: lib.mkIf true v) scripts));
   };

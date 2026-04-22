@@ -98,16 +98,10 @@ case "$MIMETYPE" in
 
   # --- TEXT / CODE ---
   text/*|application/json|application/javascript|application/xml)
-    if command -v nvim >/dev/null; then
-      nvim --headless \
-        +"set nomore" \
-        +"set nowrap" \
-        +"syntax on" \
-        +"set number" \
-        +"0,200print" \
-    +q "$FILE" 2>/dev/null
+    if command -v bat >/dev/null; then
+      bat --color=always --style=numbers --line-range :200 "$FILE"
     else
-        cat "$FILE"
+      cat "$FILE"
     fi
     exit 0
     ;;
