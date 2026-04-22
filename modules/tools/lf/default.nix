@@ -36,11 +36,11 @@
         sortby = "natural";
         dirfirst = true;
 
-        cleaner = lib.getExe config.scripts.file-preview-clean;
+        cleaner = lib.getExe config.scripts.file-preview-clean.package;
       };
 
       previewer = {
-        source = lib.getExe config.scripts.file-preview;
+        source = lib.getExe config.scripts.file-preview.package;
       };
 
       extraConfig = ''

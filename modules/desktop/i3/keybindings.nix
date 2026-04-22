@@ -12,13 +12,13 @@ in
   # --- General Applications ---
   "${mod}+r" =
     lib.mkIf (config.tools.fzf.enable && config.tools.kitty.enable)
-      "exec ${lib.getExe pkgs.kitty} --class application-launcher -e ${lib.getExe config.scripts.fzf-launcher}";
+      "exec ${lib.getExe pkgs.kitty} --class application-launcher -e ${lib.getExe config.scripts.fzf-launcher.package}";
   "${mod}+t" = lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty}";
   "${mod}+f" =
     lib.mkIf (config.tools.kitty.enable && config.tools.lf.enable)
       "exec ${lib.getExe pkgs.kitty} --title 'File Manager' --class file-explorer -e ${lib.getExe config.programs.lf.package}";
   "${mod}+s" =
-    lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty} --title 'Keybindings' --class keybindings-viewer -e ${lib.getExe config.scripts.i3-keybindings}";
+    lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty} --title 'Keybindings' --class keybindings-viewer -e ${lib.getExe config.scripts.i3-keybindings.package}";
   "${mod}+q" = "kill";
 
   # --- Media / Hardware Keys ---

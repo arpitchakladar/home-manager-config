@@ -63,7 +63,7 @@
           }
           {
             command = "floating enable, sticky enable, resize set 1000 600, move position center";
-            criteria.class = "keybindings";
+            criteria.class = "keybindings-viewer";
           }
         ];
 
