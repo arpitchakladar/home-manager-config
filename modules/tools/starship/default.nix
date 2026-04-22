@@ -17,7 +17,7 @@
         {
           add_newline = true;
 
-          format = ''''\n[╭─\[](red)$hostname[@](red)$username[\]](red)$directory$git_branch$git_status$nix_shell''\n[╰─](red)$status$character ''\n'';
+          format = ''''\n[╭─\[](red)$username[@](red)$hostname[\]](red)$directory$git_branch$git_status$nix_shell''\n[╰─](red)$status$character ''\n'';
 
           character.format = "[](red)";
 
