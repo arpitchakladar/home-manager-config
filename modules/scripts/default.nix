@@ -2,24 +2,46 @@
   config,
   lib,
   pkgs,
-  utils,
   ...
 }:
 let
-  scriptUtils = utils.scripts { inherit pkgs lib config; };
+  shell =
+    if config.tools.zsh.enable then (lib.getExe config.programs.zsh.package) else "/usr/bin/env sh";
+
+  mkScript =
+    name: path: env:
+    let
+      envVars = lib.concatStringsSep "\n" (lib.mapAttrsToList (n: v: "${n}=\"${toString v}\"") env);
+    in
+    pkgs.writeTextFile {
+      name = name;
+      executable = true;
+      destination = "/bin/${name}";
+      text = ''
+        #!${shell}
+        ${envVars}
+        ${builtins.readFile path}
+      '';
+    };
 
   scripts = {
-    deep-clean = scriptUtils.mkScript "deep-clean" ./deep-clean.sh { };
+    deep-clean = mkScript "deep-clean" ./deep-clean.sh { };
 
     fzf-launcher = lib.mkIf config.tools.fzf.enable (
-      scriptUtils.mkScript "fzf-launcher" ./fzf-launcher.sh {
+      mkScript "fzf-launcher" ./fzf-launcher.sh {
         FZF = lib.getExe pkgs.fzf;
         SETSID = lib.getExe' pkgs.util-linux "setsid";
       }
     );
 
+    i3-keybindings = lib.mkIf config.desktop.enable (
+      mkScript "i3-keybindings" ./i3-keybindings.sh {
+
+      }
+    );
+
     screen-recording = lib.mkIf (config.tools.ffmpeg.enable && config.tools.slop.enable) (
-      scriptUtils.mkScript "screen-recording" ./screen-recording.sh {
+      mkScript "screen-recording" ./screen-recording.sh {
         FFMPEG = lib.getExe pkgs.ffmpeg-full;
         SLOP = lib.getExe pkgs.slop;
       }
@@ -34,7 +56,7 @@ let
           && config.tools.kitty.enable
         )
         (
-          scriptUtils.mkScript "system-monitor" ./system-monitor.sh {
+          mkScript "system-monitor" ./system-monitor.sh {
             BTM = lib.getExe pkgs.bottom;
             NVTOP = lib.getExe pkgs.nvtopPackages.full;
             TMUX = lib.getExe pkgs.tmux;
@@ -43,7 +65,7 @@ let
         );
 
     vpn-connect = lib.mkIf (config.tools.openvpn.enable && config.tools.fzf.enable) (
-      scriptUtils.mkScript "vpn-connect" ./vpn-connect.sh {
+      mkScript "vpn-connect" ./vpn-connect.sh {
         FZF = lib.getExe pkgs.fzf;
         OPENVPN = lib.getExe pkgs.openvpn;
         SYSTEMD_RESOLVED = "${pkgs.openvpn}/libexec/update-systemd-resolved";
@@ -51,7 +73,7 @@ let
     );
 
     vpn-disconnect = lib.mkIf (config.tools.openvpn.enable && config.tools.fzf.enable) (
-      scriptUtils.mkScript "vpn-disconnect" ./vpn-disconnect.sh { }
+      mkScript "vpn-disconnect" ./vpn-disconnect.sh { }
     );
   };
 in

@@ -82,7 +82,15 @@
           }
         ];
 
-        keybindings = lib.mkOptionDefault (import ./keybindings.nix { inherit pkgs lib config; });
+        keybindings = lib.mkOptionDefault (
+          import ./keybindings.nix {
+            inherit
+              pkgs
+              lib
+              config
+              ;
+          }
+        );
       };
       extraConfig = ''
         exec_always --no-startup-id xrandr -q | grep -w 'connected' | cut -d' ' -f1 | xargs -I{} i3-msg "workspace 1 output {}"

@@ -1,3 +1,0 @@
-{
-  scripts = import ./scripts.nix;
-}
