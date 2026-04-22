@@ -35,16 +35,15 @@
         info = "size";
         sortby = "natural";
         dirfirst = true;
+
+        cleaner = lib.getExe config.scripts.file-preview-clean;
       };
 
       previewer = {
-        source = lib.getExe' pkgs.ctpv "ctpv";
+        source = lib.getExe config.scripts.file-preview;
       };
 
       extraConfig = ''
-        &${lib.getExe' pkgs.ctpv "ctpv"} -s $id
-        cmd on-quit %${lib.getExe' pkgs.ctpv "ctpv"} -e $id
-        set cleaner ${lib.getExe' pkgs.ctpv "ctpvclear"}
         ${builtins.readFile ./lfrc}
       '';
     };

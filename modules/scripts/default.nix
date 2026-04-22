@@ -27,6 +27,16 @@ let
   scripts = {
     deep-clean = mkScript "deep-clean" ./deep-clean.sh { };
 
+    file-preview = lib.mkIf config.tools.fzf.enable (
+      mkScript "file-preview" ./file-preview.sh {
+      }
+    );
+
+    file-preview-clean = lib.mkIf config.tools.fzf.enable (
+      mkScript "file-preview-clean" ./file-preview-clean.sh {
+      }
+    );
+
     fzf-launcher = lib.mkIf config.tools.fzf.enable (
       mkScript "fzf-launcher" ./fzf-launcher.sh {
         FZF = lib.getExe pkgs.fzf;
@@ -90,6 +100,9 @@ in
   config = {
     scripts = scripts;
 
-    home.packages = lib.filter (x: x != null) (lib.mapAttrsToList (_: v: lib.mkIf true v) scripts);
+    home.packages = [
+      pkgs.file
+    ]
+    ++ (lib.filter (x: x != null) (lib.mapAttrsToList (_: v: lib.mkIf true v) scripts));
   };
 }
