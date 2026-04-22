@@ -45,7 +45,14 @@ let
     };
     file-preview = {
       path = ./file-preview.sh;
-      env = { };
+      env = {
+        BAT = lib.getExe pkgs.bat;
+        FILE = lib.getExe pkgs.file;
+        FFMPEG = lib.getExe' pkgs.ffmpeg-full "ffmpeg";
+        FFPROBE = lib.getExe' pkgs.ffmpeg-full "ffprobe";
+        OUCH = lib.getExe pkgs.ouch;
+        PDFTOPPM = lib.getExe' pkgs.poppler-utils "pdftoppm";
+      };
       deps = [
         pkgs.bat
         pkgs.file
@@ -55,7 +62,16 @@ let
       ];
       conditions = [
         {
-          option = "tools.fzf.enable";
+          option = "tools.ffmpeg.enable";
+          value = true;
+        }
+        {
+          option = "tools.ouch.enable";
+          value = true;
+        }
+        {
+          # not a dependency
+          option = "tools.zathura.enable";
           value = true;
         }
       ];
