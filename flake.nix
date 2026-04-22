@@ -49,6 +49,9 @@
           in
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
+            extraSpecialArgs = {
+              utils = import ./utils;
+            };
             modules = [
               ./users/arpit.nix
               ./modules
