@@ -34,9 +34,6 @@ y="$5"
 
 MIMETYPE=$(file --dereference --brief --mime-type "$FILE")
 
-echo $FILE > /tmp/testing-my-script.txt
-echo $MIMETYPE >> /tmp/testing-my-script.txt
-
 case "$MIMETYPE" in
   # --- IMAGES ---
   image/svg+xml)

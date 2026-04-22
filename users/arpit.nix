@@ -35,6 +35,7 @@
   tools.opencode.enable = true;
   tools.openssh.enable = true;
   tools.openvpn.enable = true;
+  tools.ouch.enable = true;
   tools.pamixer.enable = true;
   tools.playerctl.enable = true;
   tools.qemu.enable = true;
@@ -44,7 +45,6 @@
   tools.tmux.enable = true;
   tools.tor.enable = true;
   tools.umu-launcher.enable = true;
-  tools.unar.enable = true;
   tools.vlc.enable = true;
   tools.vscode.enable = true;
   tools.zathura.enable = true;

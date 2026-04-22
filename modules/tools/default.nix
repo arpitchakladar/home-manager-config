@@ -25,6 +25,7 @@
     ./opencode
     ./openssh
     ./openvpn
+    ./ouch
     ./pamixer
     ./playerctl
     ./qemu
@@ -34,7 +35,6 @@
     ./tmux
     ./tor
     ./umu-launcher
-    ./unar
     ./vlc
     ./vscode
     ./zathura
