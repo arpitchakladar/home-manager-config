@@ -30,7 +30,7 @@ let
     fzf-launcher = lib.mkIf config.tools.fzf.enable (
       mkScript "fzf-launcher" ./fzf-launcher.sh {
         FZF = lib.getExe pkgs.fzf;
-        SETSID = "${pkgs.util-linux}/bin/setsid";
+        SETSID = lib.getExe' pkgs.util-linux "setsid";
       }
     );
 
