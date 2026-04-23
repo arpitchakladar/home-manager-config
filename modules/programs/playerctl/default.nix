@@ -9,11 +9,10 @@
 {
   options.programs.playerctl = {
     enable = lib.mkEnableOption "Enables playerctl.";
+    package = lib.mkPackageOption pkgs "playerctl" { };
   };
 
   config = lib.mkIf config.programs.playerctl.enable {
-    home.packages = with pkgs; [
-      playerctl
-    ];
+    home.packages = [ config.programs.playerctl.package ];
   };
 }

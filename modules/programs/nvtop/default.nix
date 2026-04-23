@@ -9,11 +9,10 @@
 {
   options.programs.nvtop = {
     enable = lib.mkEnableOption "Enables nvtop.";
+    package = lib.mkPackageOption pkgs "nvtopPackages.full" { };
   };
 
   config = lib.mkIf config.programs.nvtop.enable {
-    home.packages = with pkgs; [
-      nvtopPackages.full
-    ];
+    home.packages = [ config.programs.nvtop.package ];
   };
 }

@@ -9,11 +9,10 @@
 {
   options.programs.maim = {
     enable = lib.mkEnableOption "Enables maim.";
+    package = lib.mkPackageOption pkgs "maim" { };
   };
 
   config = lib.mkIf config.programs.maim.enable {
-    home.packages = with pkgs; [
-      maim
-    ];
+    home.packages = [ config.programs.maim.package ];
   };
 }

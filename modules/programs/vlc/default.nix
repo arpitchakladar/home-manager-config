@@ -9,11 +9,10 @@
 {
   options.programs.vlc = {
     enable = lib.mkEnableOption "Enables vlc.";
+    package = lib.mkPackageOption pkgs "vlc" { };
   };
 
   config = lib.mkIf config.programs.vlc.enable {
-    home.packages = with pkgs; [
-      vlc
-    ];
+    home.packages = [ config.programs.vlc.package ];
   };
 }

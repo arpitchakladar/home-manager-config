@@ -9,11 +9,10 @@
 {
   options.programs.slop = {
     enable = lib.mkEnableOption "Enables slop.";
+    package = lib.mkPackageOption pkgs "slop" { };
   };
 
   config = lib.mkIf config.programs.slop.enable {
-    home.packages = with pkgs; [
-      slop
-    ];
+    home.packages = [ config.programs.slop.package ];
   };
 }

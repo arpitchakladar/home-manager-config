@@ -9,11 +9,10 @@
 {
   options.programs.bluetui = {
     enable = lib.mkEnableOption "Enables bluetui.";
+    package = lib.mkPackageOption pkgs "bluetui" { };
   };
 
   config = lib.mkIf config.programs.bluetui.enable {
-    home.packages = with pkgs; [
-      bluetui
-    ];
+    home.packages = [ config.programs.bluetui.package ];
   };
 }

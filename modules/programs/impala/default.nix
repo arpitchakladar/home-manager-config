@@ -9,11 +9,10 @@
 {
   options.programs.impala = {
     enable = lib.mkEnableOption "Enables impala.";
+    package = lib.mkPackageOption pkgs "impala" { };
   };
 
   config = lib.mkIf config.programs.impala.enable {
-    home.packages = with pkgs; [
-      impala
-    ];
+    home.packages = [ config.programs.impala.package ];
   };
 }

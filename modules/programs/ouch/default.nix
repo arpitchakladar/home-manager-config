@@ -9,11 +9,10 @@
 {
   options.programs.ouch = {
     enable = lib.mkEnableOption "Enables ouch.";
+    package = lib.mkPackageOption pkgs "ouch" { };
   };
 
   config = lib.mkIf config.programs.ouch.enable {
-    home.packages = with pkgs; [
-      ouch
-    ];
+    home.packages = [ config.programs.ouch.package ];
   };
 }

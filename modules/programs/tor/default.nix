@@ -9,12 +9,11 @@
 {
   options.programs.tor = {
     enable = lib.mkEnableOption "Enables tor.";
+    package = lib.mkPackageOption pkgs "tor" { };
   };
 
   config = lib.mkIf config.programs.tor.enable {
-    home.packages = with pkgs; [
-      tor
-    ];
+    home.packages = [ config.programs.tor.package ];
 
     home.file.".config/tor/torrc".text = ''
       SocksPort 127.0.0.1:9050
