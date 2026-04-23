@@ -49,17 +49,17 @@ let
         KITTEN = lib.getExe' config.programs.kitty.package "kitten";
         BAT = lib.getExe config.programs.bat.package;
         FILE = lib.getExe pkgs.file;
-        FFMPEG = lib.getExe' pkgs.ffmpeg-full "ffmpeg";
-        FFPROBE = lib.getExe' pkgs.ffmpeg-full "ffprobe";
-        OUCH = lib.getExe pkgs.ouch;
+        FFMPEG = lib.getExe' config.programs.ffmpeg.package "ffmpeg";
+        FFPROBE = lib.getExe' config.programs.ffmpeg.package "ffprobe";
+        OUCH = lib.getExe config.programs.ouch.package;
         PDFTOPPM = lib.getExe' pkgs.poppler-utils "pdftoppm";
       };
       deps = [
         config.programs.kitty.package
         config.programs.bat.package
         pkgs.file
-        pkgs.ffmpeg-full
-        pkgs.ouch
+        config.programs.ffmpeg.package
+        config.programs.ouch.package
         pkgs.poppler-utils
       ];
       conditions = [
@@ -128,12 +128,12 @@ let
     screen-recording = {
       path = ./screen-recording.sh;
       env = {
-        FFMPEG = lib.getExe pkgs.ffmpeg-full;
-        SLOP = lib.getExe pkgs.slop;
+        FFMPEG = lib.getExe config.programs.ffmpeg.package;
+        SLOP = lib.getExe config.programs.slop.package;
       };
       deps = [
-        pkgs.ffmpeg-full
-        pkgs.slop
+        config.programs.ffmpeg.package
+        config.programs.slop.package
       ];
       conditions = [
         {
@@ -150,13 +150,13 @@ let
       path = ./system-monitor.sh;
       env = {
         BTM = lib.getExe config.programs.bottom.package;
-        NVTOP = lib.getExe pkgs.nvtopPackages.full;
+        NVTOP = lib.getExe config.programs.nvtop.package;
         TMUX = lib.getExe config.programs.tmux.package;
         KITTY = lib.getExe config.programs.kitty.package;
       };
       deps = [
         config.programs.bottom.package
-        pkgs.nvtopPackages.full
+        config.programs.nvtop.package
         config.programs.tmux.package
         config.programs.kitty.package
       ];
@@ -183,12 +183,12 @@ let
       path = ./vpn-connect.sh;
       env = {
         FZF = lib.getExe config.programs.fzf.package;
-        OPENVPN = lib.getExe pkgs.openvpn;
-        SYSTEMD_RESOLVED = "${pkgs.openvpn}/libexec/update-systemd-resolved";
+        OPENVPN = lib.getExe config.programs.openvpn.package;
+        SYSTEMD_RESOLVED = "${config.programs.openvpn.package}/libexec/update-systemd-resolved";
       };
       deps = [
         config.programs.fzf.package
-        pkgs.openvpn
+        config.programs.openvpn.package
       ];
       conditions = [
         {
@@ -207,11 +207,7 @@ let
       deps = [ ];
       conditions = [
         {
-          option = "programs.openvpn.enable";
-          value = true;
-        }
-        {
-          option = "programs.fzf.enable";
+          option = "scripts.vpn-connect.enable";
           value = true;
         }
       ];
