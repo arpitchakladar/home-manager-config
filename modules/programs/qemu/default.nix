@@ -9,21 +9,22 @@
 {
   options.programs.qemu = {
     enable = lib.mkEnableOption "Enables qemu.";
-    packages = {
-      qemu = lib.mkPackageOption pkgs "qemu" { };
-      libvirt = lib.mkPackageOption pkgs "libvirt" { };
-      virtiofsd = lib.mkPackageOption pkgs "virtiofsd" { };
-      virt-manager = lib.mkPackageOption pkgs "virt-manager" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.symlinkJoin {
+        name = "qemu-bundle";
+        paths = with pkgs; [
+          qemu
+          libvirt
+          virtiofsd
+          virt-manager
+        ];
+      };
+      description = "Bundle of QEMU-related packages.";
     };
   };
 
   config = lib.mkIf config.programs.qemu.enable {
-    home.packages = with config.programs.qemu.packages; [
-      qemu
-      libvirt
-      virtiofsd
-
-      virt-manager
-    ];
+    home.packages = [ config.programs.qemu.package ];
   };
 }

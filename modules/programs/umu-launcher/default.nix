@@ -9,16 +9,20 @@
 {
   options.programs.umu-launcher = {
     enable = lib.mkEnableOption "Enables umu-launcher.";
-    packages = {
-      umu-launcher = lib.mkPackageOption pkgs "umu-launcher" { };
-      winetricks = lib.mkPackageOption pkgs "winetricks" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.symlinkJoin {
+        name = "umu-launcher-bundle";
+        paths = with pkgs; [
+          umu-launcher
+          winetricks
+        ];
+      };
+      description = "Bundle of UMU Launcher and winetricks.";
     };
   };
 
   config = lib.mkIf config.programs.umu-launcher.enable {
-    home.packages = with config.programs.umu-launcher.packages; [
-      umu-launcher
-      winetricks
-    ];
+    home.packages = [ config.programs.umu-launcher.package ];
   };
 }
