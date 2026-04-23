@@ -20,7 +20,7 @@
         hidden = true;
         preview = true;
 
-        shell = if config.programs.zsh.enable then lib.getExe pkgs.zsh else "bash";
+        shell = lib.mkIf config.programs.zsh.enable (lib.getExe config.programs.zsh.package);
         shellopts = "'-eu'";
         ifs = "\n";
         scrolloff = "4";

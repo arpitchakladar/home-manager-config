@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
@@ -45,7 +44,7 @@
 
         allow_remote_control = "yes";
         listen_on = "unix:/tmp/kitty";
-        shell = lib.mkIf config.programs.zsh.enable "${lib.getExe pkgs.zsh}";
+        shell = lib.mkIf config.programs.zsh.enable (lib.getExe config.programs.zsh.package);
       };
     };
   };
