@@ -12,13 +12,14 @@ in
   # --- General Applications ---
   "${mod}+r" =
     lib.mkIf (config.programs.fzf.enable && config.programs.kitty.enable)
-      "exec ${lib.getExe pkgs.kitty} --class application-launcher -e ${lib.getExe config.scripts.fzf-launcher.package}";
-  "${mod}+t" = lib.mkIf config.programs.kitty.enable "exec ${lib.getExe pkgs.kitty}";
+      "exec ${lib.getExe config.programs.kitty.package} --class application-launcher -e ${lib.getExe config.scripts.fzf-launcher.package}";
+  "${mod}+t" =
+    lib.mkIf config.programs.kitty.enable "exec ${lib.getExe config.programs.kitty.package}";
   "${mod}+f" =
     lib.mkIf (config.programs.kitty.enable && config.programs.lf.enable)
-      "exec ${lib.getExe pkgs.kitty} --title 'File Manager' --class file-explorer -e ${lib.getExe config.programs.lf.package}";
+      "exec ${lib.getExe config.programs.kitty.package} --title 'File Manager' --class file-explorer -e ${lib.getExe config.programs.lf.package}";
   "${mod}+s" =
-    lib.mkIf config.programs.kitty.enable "exec ${lib.getExe pkgs.kitty} --title 'Keybindings' --class keybindings-viewer -e ${lib.getExe config.scripts.i3-keybindings.package}";
+    lib.mkIf config.programs.kitty.enable "exec ${lib.getExe config.programs.kitty.package} --title 'Keybindings' --class keybindings-viewer -e ${lib.getExe config.scripts.i3-keybindings.package}";
   "${mod}+q" = "kill";
 
   # --- Media / Hardware Keys ---

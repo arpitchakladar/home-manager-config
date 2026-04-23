@@ -149,15 +149,15 @@ let
     system-monitor = {
       path = ./system-monitor.sh;
       env = {
-        BTM = lib.getExe pkgs.bottom;
+        BTM = lib.getExe config.programs.bottom.package;
         NVTOP = lib.getExe pkgs.nvtopPackages.full;
-        TMUX = lib.getExe pkgs.tmux;
+        TMUX = lib.getExe config.programs.tmux.package;
         KITTY = lib.getExe config.programs.kitty.package;
       };
       deps = [
-        pkgs.bottom
+        config.programs.bottom.package
         pkgs.nvtopPackages.full
-        pkgs.tmux
+        config.programs.tmux.package
         config.programs.kitty.package
       ];
       conditions = [
