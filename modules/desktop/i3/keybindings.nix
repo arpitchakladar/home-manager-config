@@ -24,17 +24,17 @@ in
 
   # --- Media / Hardware Keys ---
   "XF86MonBrightnessDown" =
-    lib.mkIf config.programs.brightnessctl.enable "exec ${lib.getExe pkgs.brightnessctl} set 5%-";
+    lib.mkIf config.programs.brightnessctl.enable "exec ${lib.getExe config.programs.brightnessctl.package} set 5%-";
   "XF86MonBrightnessUp" =
-    lib.mkIf config.programs.brightnessctl.enable "exec ${lib.getExe pkgs.brightnessctl} set +5%";
+    lib.mkIf config.programs.brightnessctl.enable "exec ${lib.getExe config.programs.brightnessctl.package} set +5%";
   "XF86AudioLowerVolume" =
-    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --decrease 5";
+    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe config.programs.pamixer.package} --decrease 5";
   "XF86AudioRaiseVolume" =
-    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --increase 5";
+    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe config.programs.pamixer.package} --increase 5";
   "XF86AudioMute" =
-    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --toggle-mute";
+    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe config.programs.pamixer.package} --toggle-mute";
   "XF86AudioPlay" =
-    lib.mkIf config.programs.playerctl.enable "exec ${lib.getExe pkgs.playerctl} play-pause";
+    lib.mkIf config.programs.playerctl.enable "exec ${lib.getExe config.programs.playerctl.package} play-pause";
 
   # --- Window Management (Vim-style) ---
   # Focus
@@ -86,7 +86,7 @@ in
 
   # --- Screenshots ---
   "${mod}+p" =
-    lib.mkIf config.programs.maim.enable "exec \"${lib.getExe pkgs.maim} -s | xclip -selection clipboard -t image/png\"";
+    lib.mkIf config.programs.maim.enable "exec \"${lib.getExe config.programs.maim.package} -s | xclip -selection clipboard -t image/png\"";
   "${mod}+Shift+p" =
-    lib.mkIf config.programs.maim.enable "exec \"mkdir -p ~/Pictures/Screenshots && ${lib.getExe pkgs.maim} -s ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\"";
+    lib.mkIf config.programs.maim.enable "exec \"mkdir -p ~/Pictures/Screenshots && ${lib.getExe config.programs.maim.package} -s ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\"";
 }
