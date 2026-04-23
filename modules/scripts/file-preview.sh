@@ -23,7 +23,7 @@ INODE=$(stat -c '%i' "$FILE_PATH" 2>/dev/null || echo "0")
 render_image() {
   local file="$1"
   local tries=0
-  while [ ! -s "$file" ] && [ "$tries" -lt 10 ]; do
+  while [ ! -s "$file" ]; do
     sleep 0.2
     tries=$((tries + 1))
   done
@@ -48,9 +48,9 @@ case "$MIMETYPE" in
   image/svg+xml)
     TMP_IMG="$TMP_DIR/svg-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
-      STAGING="$TMP_IMG.tmp"
-      rsvg-convert "$FILE_PATH" -o "$STAGING" >/dev/null 2>&1
-      [ -s "$STAGING" ] && mv "$STAGING" "$TMP_IMG"
+      TMP_IMG="$TMP_IMG.tmp"
+      rsvg-convert "$FILE_PATH" -o "$TMP_IMG" >/dev/null 2>&1
+      [ -s "$TMP_IMG" ] && mv "$TMP_IMG" "$TMP_IMG"
     fi
     render_image "$TMP_IMG"
     ;;
@@ -63,13 +63,11 @@ case "$MIMETYPE" in
   video/*)
     TMP_IMG="$TMP_DIR/vid-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
-      STAGING="$TMP_IMG.tmp"
       if command -v ffmpegthumbnailer >/dev/null; then
-        ffmpegthumbnailer -i "$FILE_PATH" -o "$STAGING" -s 0 -q 5 >/dev/null 2>&1
+        ffmpegthumbnailer -i "$FILE_PATH" -o "$TMP_IMG" -s 0 -q 5 >/dev/null 2>&1
       else
-        "$FFMPEG" -y -i "$FILE_PATH" -ss 00:00:01 -vframes 1 "$STAGING" >/dev/null 2>&1
+        "$FFMPEG" -y -i "$FILE_PATH" -ss 00:00:01 -vframes 1 "$TMP_IMG" >/dev/null 2>&1
       fi
-      [ -s "$STAGING" ] && mv "$STAGING" "$TMP_IMG"
     fi
     render_image "$TMP_IMG"
     ;;
@@ -78,11 +76,9 @@ case "$MIMETYPE" in
   audio/*)
     TMP_IMG="$TMP_DIR/aud-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
-      STAGING="$TMP_IMG.tmp"
       "$FFMPEG" -y -i "$FILE_PATH" \
         -filter_complex "showwavespic=s=${WIDTH}x${HEIGHT}:colors=white" \
-        -frames:v 1 "$STAGING" >/dev/null 2>&1
-      [ -s "$STAGING" ] && mv "$STAGING" "$TMP_IMG"
+        -frames:v 1 "$TMP_IMG" >/dev/null 2>&1
     fi
     "$FFPROBE" -hide_banner -v quiet -show_format -show_streams "$FILE_PATH"
     render_image "$TMP_IMG"
@@ -93,12 +89,10 @@ case "$MIMETYPE" in
   application/pdf)
     TMP_IMG="$TMP_DIR/pdf-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
-      STAGING="$TMP_IMG.tmp"
       "$PDFTOPPM" -f 1 -l 1 -png -singlefile \
         -scale-to $((WIDTH * 8)) \
         -r 72 \
-        "$FILE_PATH" "${STAGING%.png}" >/dev/null 2>&1
-      [ -s "$STAGING" ] && mv "$STAGING" "$TMP_IMG"
+        "$FILE_PATH" "${TMP_IMG%.png}" >/dev/null 2>&1
     fi
     render_image "$TMP_IMG"
     ;;
@@ -117,12 +111,10 @@ case "$MIMETYPE" in
   application/vnd.openxmlformats-officedocument.*|application/msword|application/vnd.oasis.opendocument.*)
     TMP_IMG="$TMP_DIR/doc-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
-      STAGING="$TMP_IMG.tmp"
       libreoffice --headless --convert-to pdf --outdir "$TMP_DIR" "$FILE_PATH" >/dev/null 2>&1
       PDF_VER="${TMP_DIR}/$(basename "${FILE_PATH%.*}").pdf"
       if [ -f "$PDF_VER" ]; then
-        "$PDFTOPPM" -f 1 -l 1 -png -singlefile "$PDF_VER" "${STAGING%.png}" >/dev/null 2>&1
-        [ -s "$STAGING" ] && mv "$STAGING" "$TMP_IMG"
+        "$PDFTOPPM" -f 1 -l 1 -png -singlefile "$PDF_VER" "${TMP_IMG%.png}" >/dev/null 2>&1
       fi
     fi
     render_image "$TMP_IMG"
