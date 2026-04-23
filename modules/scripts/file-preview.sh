@@ -28,8 +28,7 @@ render_image() {
     tries=$((tries + 1))
   done
   [ ! -s "$file" ] && exit 0
-  "$KITTEN" icat --clear --stdin no --transfer-mode memory --place "${w}x${h}@${x}x${y}" /dev/null </dev/null >/dev/tty
-  "$KITTEN" icat --stdin no --transfer-mode memory --place "${w}x${h}@${x}x${y}" "$file" </dev/null >/dev/tty
+  "$KITTEN" icat --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$file" </dev/null >/dev/tty
   exit 1
 }
 
