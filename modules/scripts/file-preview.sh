@@ -28,15 +28,9 @@ render_image() {
     tries=$((tries + 1))
   done
   [ ! -s "$file" ] && exit 0
-  kitten icat --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$file" </dev/null >/dev/tty
+  kitten icat --stdin no --transfer-mode file --place "${WIDTH}x${HEIGHT}@${X}x${Y}" "$file" </dev/null >/dev/tty
   exit 1
 }
-
-file="$1"
-w="$2"
-h="$3"
-x="$4"
-y="$5"
 
 # Ensure file exists
 [ ! -r "$FILE_PATH" ] && exit 0
@@ -47,7 +41,6 @@ case "$MIMETYPE" in
   image/svg+xml)
     TMP_IMG="$TMP_DIR/svg-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
-      TMP_IMG="$TMP_IMG.tmp"
       rsvg-convert "$FILE_PATH" -o "$TMP_IMG" >/dev/null 2>&1
       [ -s "$TMP_IMG" ] && mv "$TMP_IMG" "$TMP_IMG"
     fi
