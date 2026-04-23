@@ -11,29 +11,29 @@ in
 {
   # --- General Applications ---
   "${mod}+r" =
-    lib.mkIf (config.tools.fzf.enable && config.tools.kitty.enable)
+    lib.mkIf (config.programs.fzf.enable && config.programs.kitty.enable)
       "exec ${lib.getExe pkgs.kitty} --class application-launcher -e ${lib.getExe config.scripts.fzf-launcher.package}";
-  "${mod}+t" = lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty}";
+  "${mod}+t" = lib.mkIf config.programs.kitty.enable "exec ${lib.getExe pkgs.kitty}";
   "${mod}+f" =
-    lib.mkIf (config.tools.kitty.enable && config.tools.lf.enable)
+    lib.mkIf (config.programs.kitty.enable && config.programs.lf.enable)
       "exec ${lib.getExe pkgs.kitty} --title 'File Manager' --class file-explorer -e ${lib.getExe config.programs.lf.package}";
   "${mod}+s" =
-    lib.mkIf config.tools.kitty.enable "exec ${lib.getExe pkgs.kitty} --title 'Keybindings' --class keybindings-viewer -e ${lib.getExe config.scripts.i3-keybindings.package}";
+    lib.mkIf config.programs.kitty.enable "exec ${lib.getExe pkgs.kitty} --title 'Keybindings' --class keybindings-viewer -e ${lib.getExe config.scripts.i3-keybindings.package}";
   "${mod}+q" = "kill";
 
   # --- Media / Hardware Keys ---
   "XF86MonBrightnessDown" =
-    lib.mkIf config.tools.brightnessctl.enable "exec ${lib.getExe pkgs.brightnessctl} set 5%-";
+    lib.mkIf config.programs.brightnessctl.enable "exec ${lib.getExe pkgs.brightnessctl} set 5%-";
   "XF86MonBrightnessUp" =
-    lib.mkIf config.tools.brightnessctl.enable "exec ${lib.getExe pkgs.brightnessctl} set +5%";
+    lib.mkIf config.programs.brightnessctl.enable "exec ${lib.getExe pkgs.brightnessctl} set +5%";
   "XF86AudioLowerVolume" =
-    lib.mkIf config.tools.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --decrease 5";
+    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --decrease 5";
   "XF86AudioRaiseVolume" =
-    lib.mkIf config.tools.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --increase 5";
+    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --increase 5";
   "XF86AudioMute" =
-    lib.mkIf config.tools.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --toggle-mute";
+    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe pkgs.pamixer} --toggle-mute";
   "XF86AudioPlay" =
-    lib.mkIf config.tools.playerctl.enable "exec ${lib.getExe pkgs.playerctl} play-pause";
+    lib.mkIf config.programs.playerctl.enable "exec ${lib.getExe pkgs.playerctl} play-pause";
 
   # --- Window Management (Vim-style) ---
   # Focus
@@ -85,7 +85,7 @@ in
 
   # --- Screenshots ---
   "${mod}+p" =
-    lib.mkIf config.tools.maim.enable "exec \"${lib.getExe pkgs.maim} -s | xclip -selection clipboard -t image/png\"";
+    lib.mkIf config.programs.maim.enable "exec \"${lib.getExe pkgs.maim} -s | xclip -selection clipboard -t image/png\"";
   "${mod}+Shift+p" =
-    lib.mkIf config.tools.maim.enable "exec \"mkdir -p ~/Pictures/Screenshots && ${lib.getExe pkgs.maim} -s ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\"";
+    lib.mkIf config.programs.maim.enable "exec \"mkdir -p ~/Pictures/Screenshots && ${lib.getExe pkgs.maim} -s ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\"";
 }

@@ -5,6 +5,6 @@
     ./desktop
     ./fonts
     ./scripts
-    ./tools
+    ./programs
   ];
 }

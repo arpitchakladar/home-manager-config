@@ -6,7 +6,7 @@
 }:
 let
   shell =
-    if config.tools.zsh.enable then (lib.getExe config.programs.zsh.package) else "/usr/bin/env sh";
+    if config.programs.zsh.enable then (lib.getExe config.programs.zsh.package) else "/usr/bin/env sh";
 
   mkScript =
     name: path: env: deps:
@@ -64,20 +64,20 @@ let
       ];
       conditions = [
         {
-          option = "tools.ffmpeg.enable";
+          option = "programs.ffmpeg.enable";
           value = true;
         }
         {
-          option = "tools.ouch.enable";
+          option = "programs.ouch.enable";
           value = true;
         }
         {
           # not a dependency
-          option = "tools.zathura.enable";
+          option = "programs.zathura.enable";
           value = true;
         }
         {
-          option = "tools.bat.enable";
+          option = "programs.bat.enable";
           value = true;
         }
       ];
@@ -109,7 +109,7 @@ let
       ];
       conditions = [
         {
-          option = "tools.fzf.enable";
+          option = "programs.fzf.enable";
           value = true;
         }
       ];
@@ -137,11 +137,11 @@ let
       ];
       conditions = [
         {
-          option = "tools.ffmpeg.enable";
+          option = "programs.ffmpeg.enable";
           value = true;
         }
         {
-          option = "tools.slop.enable";
+          option = "programs.slop.enable";
           value = true;
         }
       ];
@@ -162,19 +162,19 @@ let
       ];
       conditions = [
         {
-          option = "tools.bottom.enable";
+          option = "programs.bottom.enable";
           value = true;
         }
         {
-          option = "tools.nvtop.enable";
+          option = "programs.nvtop.enable";
           value = true;
         }
         {
-          option = "tools.tmux.enable";
+          option = "programs.tmux.enable";
           value = true;
         }
         {
-          option = "tools.kitty.enable";
+          option = "programs.kitty.enable";
           value = true;
         }
       ];
@@ -192,11 +192,11 @@ let
       ];
       conditions = [
         {
-          option = "tools.openvpn.enable";
+          option = "programs.openvpn.enable";
           value = true;
         }
         {
-          option = "tools.fzf.enable";
+          option = "programs.fzf.enable";
           value = true;
         }
       ];
@@ -207,11 +207,11 @@ let
       deps = [ ];
       conditions = [
         {
-          option = "tools.openvpn.enable";
+          option = "programs.openvpn.enable";
           value = true;
         }
         {
-          option = "tools.fzf.enable";
+          option = "programs.fzf.enable";
           value = true;
         }
       ];

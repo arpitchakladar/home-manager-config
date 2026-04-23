@@ -77,7 +77,7 @@
           }
           {
             command =
-              if config.tools.feh.enable then
+              if config.programs.feh.enable then
                 "${lib.getExe pkgs.feh} --bg-scale ${../../../assets/sapling.png}"
               else
                 "xsetroot -solid \"${config.scheme.withHashtag.base00}\"";
