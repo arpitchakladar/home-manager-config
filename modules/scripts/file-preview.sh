@@ -13,7 +13,7 @@ X="$4"
 Y="$5"
 
 # Temp dir
-TMP_DIR="/tmp/preview-$(id -u)"
+TMP_DIR="/tmp/file-preview-$(id -u)"
 mkdir -p "$TMP_DIR"
 
 # Unique temp file per actual file using inode

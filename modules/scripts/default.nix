@@ -48,6 +48,7 @@ let
         config.programs.ffmpeg.package
         config.programs.ouch.package
         pkgs.file
+        pkgs.librsvg
         pkgs.poppler-utils
       ];
       conditions = [
