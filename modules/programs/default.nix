@@ -20,7 +20,7 @@
     ./librewolf
     ./lsd
     ./maim
-    # ./nixvim
+    ./nixvim
     ./nvtop
     ./opencode
     ./ssh

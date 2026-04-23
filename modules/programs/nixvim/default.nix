@@ -8,11 +8,7 @@
     ./plugins
   ];
 
-  options.programs.nixvim = {
-    enable = lib.mkEnableOption "Enables nixvim.";
-  };
-
-  config = lib.mkIf config.programs.nixvim.enable {
+  config = {
     programs.nixvim = {
       defaultEditor = true;
       opts = {
@@ -26,6 +22,7 @@
         laststatus = 3;
         foldlevel = 99;
         clipboard = "unnamedplus";
+        updatetime = 500;
       };
       clipboard.providers.xclip.enable = true;
       extraConfigLuaPre = with config.scheme.withHashtag; ''
@@ -73,9 +70,37 @@
         byteCompileLua.enable = true;
         combinePlugins.enable = true;
       };
+
+      diagnostic = {
+        settings = {
+          virtual_text = false;
+          signs = true;
+          underline = true;
+          update_in_insert = false;
+          float = {
+            border = "rounded";
+            source = true; # Show which LSP the diagnostic is from
+            header = "";
+            prefix = "";
+          };
+        };
+      };
+
+      # Show diagnostics float on cursor hold
+      autoCmd = [
+        {
+          event = [ "CursorHold" ];
+          pattern = "*";
+          callback.__raw = ''
+            function()
+              vim.diagnostic.open_float(nil, { focus = false })
+            end
+          '';
+        }
+      ];
     };
 
-    home.sessionVariables = {
+    home.sessionVariables = lib.mkIf config.programs.nixvim.enable {
       EDITOR = lib.mkForce (lib.getExe config.programs.nixvim.package);
       MANPAGER = "${lib.getExe config.programs.nixvim.package} +Man!";
     };
