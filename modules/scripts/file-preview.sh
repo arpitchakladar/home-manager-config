@@ -28,7 +28,7 @@ render_image() {
     tries=$((tries + 1))
   done
   [ ! -s "$file" ] && exit 0
-  "$KITTEN" icat --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$file" </dev/null >/dev/tty
+  kitten icat --stdin no --transfer-mode file --place "${w}x${h}@${x}x${y}" "$file" </dev/null >/dev/tty
   exit 1
 }
 
@@ -41,7 +41,7 @@ y="$5"
 # Ensure file exists
 [ ! -r "$FILE_PATH" ] && exit 0
 
-MIMETYPE=$("$FILE" --dereference --brief --mime-type "$FILE_PATH")
+MIMETYPE=$(file --dereference --brief --mime-type "$FILE_PATH")
 case "$MIMETYPE" in
   # --- IMAGES ---
   image/svg+xml)
@@ -65,7 +65,7 @@ case "$MIMETYPE" in
       if command -v ffmpegthumbnailer >/dev/null; then
         ffmpegthumbnailer -i "$FILE_PATH" -o "$TMP_IMG" -s 0 -q 5 >/dev/null 2>&1
       else
-        "$FFMPEG" -y -i "$FILE_PATH" -ss 00:00:01 -vframes 1 "$TMP_IMG" >/dev/null 2>&1
+        ffmpeg -y -i "$FILE_PATH" -ss 00:00:01 -vframes 1 "$TMP_IMG" >/dev/null 2>&1
       fi
     fi
     render_image "$TMP_IMG"
@@ -75,11 +75,11 @@ case "$MIMETYPE" in
   audio/*)
     TMP_IMG="$TMP_DIR/aud-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
-      "$FFMPEG" -y -i "$FILE_PATH" \
+      ffmpeg -y -i "$FILE_PATH" \
         -filter_complex "showwavespic=s=${WIDTH}x${HEIGHT}:colors=white" \
         -frames:v 1 "$TMP_IMG" >/dev/null 2>&1
     fi
-    "$FFPROBE" -hide_banner -v quiet -show_format -show_streams "$FILE_PATH"
+    ffprobe -hide_banner -v quiet -show_format -show_streams "$FILE_PATH"
     render_image "$TMP_IMG"
     exit 0
     ;;
@@ -88,7 +88,7 @@ case "$MIMETYPE" in
   application/pdf)
     TMP_IMG="$TMP_DIR/pdf-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
-      "$PDFTOPPM" -f 1 -l 1 -png -singlefile \
+      pdftoppm -f 1 -l 1 -png -singlefile \
         -scale-to $((WIDTH * 8)) \
         -r 72 \
         "$FILE_PATH" "${TMP_IMG%.png}" >/dev/null 2>&1
@@ -100,7 +100,7 @@ case "$MIMETYPE" in
   application/epub+zip|application/x-mobipocket-ebook)
     TMP_IMG="$TMP_DIR/epub-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
-      "$OUCH" decompress "$FILE_PATH" --limit "*/cover*.jpg" --dir "$TMP_DIR" >/dev/null 2>&1
+      ouch decompress "$FILE_PATH" --limit "*/cover*.jpg" --dir "$TMP_DIR" >/dev/null 2>&1
       mv "$TMP_DIR"/cover*.jpg "$TMP_IMG" 2>/dev/null
     fi
     [ -s "$TMP_IMG" ] && render_image "$TMP_IMG"
@@ -113,7 +113,7 @@ case "$MIMETYPE" in
       libreoffice --headless --convert-to pdf --outdir "$TMP_DIR" "$FILE_PATH" >/dev/null 2>&1
       PDF_VER="${TMP_DIR}/$(basename "${FILE_PATH%.*}").pdf"
       if [ -f "$PDF_VER" ]; then
-        "$PDFTOPPM" -f 1 -l 1 -png -singlefile "$PDF_VER" "${TMP_IMG%.png}" >/dev/null 2>&1
+        pdftoppm -f 1 -l 1 -png -singlefile "$PDF_VER" "${TMP_IMG%.png}" >/dev/null 2>&1
       fi
     fi
     render_image "$TMP_IMG"
@@ -121,13 +121,13 @@ case "$MIMETYPE" in
 
   # --- ARCHIVES ---
   application/zip|application/x-7z-compressed|application/x-rar|application/x-tar|application/x-gzip)
-    "$OUCH" list -t "$FILE_PATH" 2>/dev/null
+    ouch list -t "$FILE_PATH" 2>/dev/null
     exit 0
     ;;
 
   # --- TEXT / CODE ---
   text/*|application/json|application/javascript|application/xml)
-    "$BAT" --color=always --style=numbers --line-range :200 "$FILE_PATH" 2>/dev/null
+    bat --color=always --style=numbers --line-range :200 "$FILE_PATH" 2>/dev/null
     exit 0
     ;;
 
@@ -139,7 +139,7 @@ case "$MIMETYPE" in
 
   # --- FALLBACK ---
   *)
-    "$FILE" --dereference --brief "$FILE_PATH"
+    file --dereference --brief "$FILE_PATH"
     echo "------------------------------------------------"
     hexdump -C "$FILE_PATH" | head -n 100
     exit 0

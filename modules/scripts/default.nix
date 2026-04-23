@@ -34,32 +34,20 @@ let
       meta.mainProgram = name;
     };
 
-  # Script definitions: { path, env, deps, condition }
+  # Script definitions: { path, env?, deps?, conditions? }
   # condition: attrset of { option (string path), value (expected value) }
   scriptDefs = {
     deep-clean = {
       path = ./deep-clean.sh;
-      env = { };
-      deps = [ ];
-      conditions = [ ];
     };
     file-preview = {
       path = ./file-preview.sh;
-      env = {
-        KITTEN = lib.getExe' config.programs.kitty.package "kitten";
-        BAT = lib.getExe config.programs.bat.package;
-        FILE = lib.getExe pkgs.file;
-        FFMPEG = lib.getExe' config.programs.ffmpeg.package "ffmpeg";
-        FFPROBE = lib.getExe' config.programs.ffmpeg.package "ffprobe";
-        OUCH = lib.getExe config.programs.ouch.package;
-        PDFTOPPM = lib.getExe' pkgs.poppler-utils "pdftoppm";
-      };
       deps = [
         config.programs.kitty.package
         config.programs.bat.package
-        pkgs.file
         config.programs.ffmpeg.package
         config.programs.ouch.package
+        pkgs.file
         pkgs.poppler-utils
       ];
       conditions = [
@@ -84,9 +72,6 @@ let
     };
     file-preview-clean = {
       path = ./file-preview-clean.sh;
-      env = {
-        KITTEN = lib.getExe' config.programs.kitty.package "kitten";
-      };
       deps = [
         config.programs.kitty.package
       ];
@@ -99,10 +84,6 @@ let
     };
     fzf-launcher = {
       path = ./fzf-launcher.sh;
-      env = {
-        FZF = lib.getExe config.programs.fzf.package;
-        SETSID = lib.getExe' pkgs.util-linux "setsid";
-      };
       deps = [
         config.programs.fzf.package
         pkgs.util-linux
@@ -116,8 +97,6 @@ let
     };
     i3-keybindings = {
       path = ./i3-keybindings.sh;
-      env = { };
-      deps = [ ];
       conditions = [
         {
           option = "desktop.enable";
@@ -127,10 +106,6 @@ let
     };
     screen-recording = {
       path = ./screen-recording.sh;
-      env = {
-        FFMPEG = lib.getExe config.programs.ffmpeg.package;
-        SLOP = lib.getExe config.programs.slop.package;
-      };
       deps = [
         config.programs.ffmpeg.package
         config.programs.slop.package
@@ -148,12 +123,6 @@ let
     };
     system-monitor = {
       path = ./system-monitor.sh;
-      env = {
-        BTM = lib.getExe config.programs.bottom.package;
-        NVTOP = lib.getExe config.programs.nvtop.package;
-        TMUX = lib.getExe config.programs.tmux.package;
-        KITTY = lib.getExe config.programs.kitty.package;
-      };
       deps = [
         config.programs.bottom.package
         config.programs.nvtop.package
@@ -181,11 +150,6 @@ let
     };
     vpn-connect = {
       path = ./vpn-connect.sh;
-      env = {
-        FZF = lib.getExe config.programs.fzf.package;
-        OPENVPN = lib.getExe config.programs.openvpn.package;
-        SYSTEMD_RESOLVED = "${config.programs.openvpn.package}/libexec/update-systemd-resolved";
-      };
       deps = [
         config.programs.fzf.package
         config.programs.openvpn.package
@@ -203,8 +167,6 @@ let
     };
     vpn-disconnect = {
       path = ./vpn-disconnect.sh;
-      env = { };
-      deps = [ ];
       conditions = [
         {
           option = "scripts.vpn-connect.enable";
@@ -217,9 +179,9 @@ let
   # Check whether all conditions for a script are satisfied
   conditionsMet =
     name: def:
-    lib.all (
-      cond: lib.attrByPath (lib.splitString "." cond.option) false config == cond.value
-    ) def.conditions;
+    lib.all (cond: lib.attrByPath (lib.splitString "." cond.option) false config == cond.value) (
+      def.conditions or [ ]
+    );
 
 in
 {
@@ -243,7 +205,9 @@ in
   config = {
     # Wire up .package for each enabled script, with assertions for unmet conditions
     scripts = lib.mapAttrs (name: def: {
-      package = lib.mkIf config.scripts.${name}.enable (mkScript name def.path def.env def.deps);
+      package = lib.mkIf config.scripts.${name}.enable (
+        mkScript name def.path (def.env or { }) (def.deps or [ ])
+      );
     }) scriptDefs;
 
     assertions = lib.concatLists (
@@ -254,7 +218,7 @@ in
             !config.scripts.${name}.enable
             || lib.attrByPath (lib.splitString "." cond.option) false config == cond.value;
           message = "scripts.${name} is enabled but requires `${cond.option} = ${builtins.toJSON cond.value}`.";
-        }) def.conditions
+        }) (def.conditions or [ ])
       ) scriptDefs
     );
 

@@ -24,10 +24,10 @@ fi
 
 # Select if needed
 if [[ "$REFRESH" == true ]]; then
-  CRED=$(find "$CREDS_DIR" -type f | "$FZF" --prompt="Select Credentials > ")
+  CRED=$(find "$CREDS_DIR" -type f | fzf --prompt="Select Credentials > ")
   [ -z "$CRED" ] && exit 1
 
-  SERVER=$(find "$SERVERS_DIR" -type f \( -name "*.conf" -o -name "*.ovpn" \) | "$FZF" --prompt="Select VPN Server > ")
+  SERVER=$(find "$SERVERS_DIR" -type f \( -name "*.conf" -o -name "*.ovpn" \) | fzf --prompt="Select VPN Server > ")
   [ -z "$SERVER" ] && exit 1
 
   echo "CRED=\"$CRED\"" > "$CACHE_FILE"
@@ -44,12 +44,15 @@ sed -e '/up \/etc\/openvpn\/update-resolv-conf/d' \
 # Run in background
 sudo -v || exit 1
 
-nohup sudo "$OPENVPN" \
+OPENVPNBinary=$(command -v openvpn)
+SYSTEMD_RESOLVED_PATH="${OPENVPNBinary%/openvpn}/libexec/update-systemd-resolved"
+
+nohup sudo openvpn \
   --config "$TMP_CONF" \
   --auth-user-pass "$CRED" \
   --script-security 2 \
-  --up "$SYSTEMD_RESOLVED" \
-  --down "$SYSTEMD_RESOLVED" \
+  --up "$SYSTEMD_RESOLVED_PATH" \
+  --down "$SYSTEMD_RESOLVED_PATH" \
   --down-pre \
   > "$LOG_FILE" 2>&1 &
 

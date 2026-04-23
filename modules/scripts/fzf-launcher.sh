@@ -48,7 +48,7 @@ done
 entries=$(printf '%s' "$entries" | sort -fu -t$'\t' -k1,1)
 
 # FZF selection
-chosen=$(printf '%s' "$entries" | "$FZF" \
+chosen=$(printf '%s' "$entries" | fzf \
   --prompt='Launch: ' \
   --layout=reverse \
   --info=inline \
