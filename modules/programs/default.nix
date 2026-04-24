@@ -8,7 +8,6 @@
     ./bottom
     ./brightnessctl
     ./bruno
-    ./devenv
     ./feh
     ./ffmpeg
     ./fzf

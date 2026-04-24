@@ -16,7 +16,6 @@
   programs.bottom.enable = true;
   programs.brightnessctl.enable = true;
   programs.bruno.enable = true;
-  programs.devenv.enable = true;
   programs.feh.enable = true;
   programs.ffmpeg.enable = true;
   programs.fzf.enable = true;
