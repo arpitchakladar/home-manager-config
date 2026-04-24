@@ -151,6 +151,9 @@ let
     };
     vpn-connect = {
       path = ./vpn-connect.sh;
+      env = {
+        SYSTEMD_RESOLVED_PATH = "${config.programs.openvpn.package}/libexec/update-systemd-resolved";
+      };
       deps = [
         config.programs.fzf.package
         config.programs.openvpn.package

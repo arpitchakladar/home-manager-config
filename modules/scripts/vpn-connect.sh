@@ -44,9 +44,6 @@ sed -e '/up \/etc\/openvpn\/update-resolv-conf/d' \
 # Run in background
 sudo -v || exit 1
 
-OPENVPNBinary=$(command -v openvpn)
-SYSTEMD_RESOLVED_PATH="${OPENVPNBinary%/openvpn}/libexec/update-systemd-resolved"
-
 nohup sudo openvpn \
   --config "$TMP_CONF" \
   --auth-user-pass "$CRED" \
