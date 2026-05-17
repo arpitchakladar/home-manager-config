@@ -45,7 +45,7 @@
   programs.tor.enable = true;
   programs.umu-launcher.enable = true;
   programs.vlc.enable = true;
-  programs.vscode.enable = true;
+  programs.vscodium.enable = true;
   programs.zathura.enable = true;
   programs.zsh.enable = true;
 

@@ -35,7 +35,7 @@
     ./tor
     ./umu-launcher
     ./vlc
-    ./vscode
+    ./vscodium
     ./zathura
     ./zsh
   ];

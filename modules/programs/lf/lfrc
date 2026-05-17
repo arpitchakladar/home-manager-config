@@ -1,279 +1,168 @@
-# ─── lf config — nvim-tree style keybindings ───────────────────────────────
+# =========================
+# BASIC MOVEMENT (nvim-like)
+# =========================
 
-# ─── Colors (optional — remove if you use a color scheme plugin) ──────────────
-# set color256 true
+map j down
+map k up
+map h updir
+map l open
 
-# ─── Custom commands ──────────────────────────────────────────────────────────
+map gg top
+map G bottom
 
-# Create a new file (like nvim-tree 'a' with no trailing /)
-cmd touch %{{
-    printf "New file name: "
-    read -r name
-    touch "$name"
-    lf -remote "send $id select '$name'"
-}}
+map <c-u> half-up
+map <c-d> half-down
 
-# Create a new directory (like nvim-tree 'a' with trailing /)
-cmd mkdir %{{
-    printf "New directory name: "
-    read -r name
-    mkdir -p "$name"
-    lf -remote "send $id select '$name'"
-}}
+map <c-b> page-up
+map <c-f> page-down
 
-# Rename — full name (like nvim-tree 'r')
-cmd rename ${{
-    printf "Rename '%s' to: " "$f"
-    read -r newname
-    mv -- "$f" "$(dirname "$f")/$newname"
-    lf -remote "send $id select '$newname'"
-}}
+# =========================
+# SELECTION
+# =========================
 
-# Rename — only basename without extension (like nvim-tree 'e' in some configs)
-cmd rename_stem ${{
-    stem="${f##*/}"
-    stem="${stem%.*}"
-    printf "Rename stem to: "
-    read -r newname
-    ext="${f##*.}"
-    if [ "${f##*/}" = "$stem" ]; then
-        mv -- "$f" "$(dirname "$f")/$newname"
-    else
-        mv -- "$f" "$(dirname "$f")/$newname.$ext"
-    fi
-}}
+map <space> toggle
+map v invert
+map V select
 
-# Delete — trash (safe) using trash-cli if available, else rm
-cmd trash %{{
-    set -f
-    files=$(printf '%s\n' $fx | wc -l)
-    printf "Trash $files item(s)? [y/N] "
-    read -r ans
-    [ "$ans" = "y" ] || [ "$ans" = "Y" ] || exit 0
-    if command -v trash-put >/dev/null 2>&1; then
-        printf '%s\n' $fx | xargs trash-put --
-    else
-        printf '%s\n' $fx | xargs rm -rf --
-    fi
-}}
+# =========================
+# OPENING
+# =========================
 
-# Delete — permanent, no confirmation prompt (use carefully)
-cmd delete ${{
-    set -f
-    printf "Permanently delete? [y/N] "
-    read -r ans
-    [ "$ans" = "y" ] || [ "$ans" = "Y" ] || exit 0
-    rm -rf -- $fx
-}}
+map o open
+map <enter> open
+map L open
 
-# Paste (move or copy depending on operation)
-cmd paste &{{
-    set -f
-    load=$(lf -remote 'load')
-    mode=$(echo "$load" | sed -n '1p')
-    list=$(echo "$load" | sed -n '2,$p')
-    if [ "$mode" = "copy" ]; then
-        cp -rn -- $list .
-    elif [ "$mode" = "move" ]; then
-        mv -n -- $list .
-        lf -remote 'send clear'
-    fi
-    lf -remote 'send reload'
-    lf -remote 'send clear'
-}}
+# =========================
+# DIRECTORY NAVIGATION
+# =========================
 
-# Paste with overwrite
-cmd paste_overwrite &{{
-    set -f
-    load=$(lf -remote 'load')
-    mode=$(echo "$load" | sed -n '1p')
-    list=$(echo "$load" | sed -n '2,$p')
-    if [ "$mode" = "copy" ]; then
-        cp -r -- $list .
-    elif [ "$mode" = "move" ]; then
-        mv -- $list .
-        lf -remote 'send clear'
-    fi
-    lf -remote 'send reload'
-    lf -remote 'send clear'
-}}
+map H cd ..
+map gh cd ~
+map ge cd /
 
-# Open in nvim
-cmd edit $nvim "$f"
+# =========================
+# FILE OPERATIONS
+# =========================
 
-# Open with xdg-open (GUI apps)
-cmd open_gui &xdg-open "$f"
+map y copy
+map x cut
+map p paste
 
-# Toggle hidden files (like nvim-tree 'H')
-cmd toggle_hidden :{{
-    set hidden!
-    set info
-}}
+map d delete
 
-# Bulk rename with $EDITOR (like vimv / nvim-tree mass rename)
-cmd bulk_rename ${{
-    index=$(mktemp /tmp/lf-bulk-index.XXXXXX)
-    names=$(mktemp /tmp/lf-bulk-names.XXXXXX)
-    printf '%s\n' $fx > "$index"
-    sed 's|.*/||' "$index" > "$names"
-    $EDITOR "$names"
-    paste "$index" "$names" | while IFS=$'\t' read -r old new; do
-        if [ "$old" != "$(dirname "$old")/$new" ]; then
-            mv -- "$old" "$(dirname "$old")/$new"
-        fi
-    done
-    rm -- "$index" "$names"
-    lf -remote 'send reload'
-}}
+map a :push %mkdir<space>
+map A :push %touch<space>
 
-# Create symlink (relative)
-cmd symlink %{{
-    printf "Symlink target name: "
-    read -r name
-    ln -s "$f" "$name"
-}}
+map r rename
 
-# Copy path to clipboard (needs xclip / xsel / wl-copy)
-cmd copy_path &{{
-    printf '%s' "$f" | xclip -selection clipboard 2>/dev/null \
-      || printf '%s' "$f" | xsel --clipboard --input 2>/dev/null \
-      || printf '%s' "$f" | wl-copy 2>/dev/null
-}}
+# =========================
+# SEARCH
+# =========================
 
-# Show file info (like nvim-tree 'i')
-cmd info %{{
-    stat -- "$f"
-    printf '\nPress ENTER...'
-    read -r _
-}}
+map / search
+map n search-next
+map N search-prev
 
-# Jump to bookmarks (requires fzf)
-cmd bookmark_jump ${{
-    bm="$HOME/.config/lf/bookmarks"
-    [ -f "$bm" ] || touch "$bm"
-    dest=$(cat "$bm" | fzf --prompt "Jump to: ")
-    [ -n "$dest" ] && lf -remote "send $id cd '$dest'"
-}}
+map f find
+map F find-back
 
-# Add bookmark
-cmd bookmark_add %{{
-    bm="$HOME/.config/lf/bookmarks"
-    printf '%s\n' "$PWD" >> "$bm"
-    sort -u "$bm" -o "$bm"
-    echo "Bookmarked: $PWD"
-}}
+# =========================
+# FILTER
+# =========================
 
-# fzf-based fuzzy find & cd/select
-cmd fzf_cd ${{
-    dest=$(find . -type d 2>/dev/null | fzf --prompt "cd: ")
-    [ -n "$dest" ] && lf -remote "send $id cd '$dest'"
-}}
+map zf filter
+map zc clear
 
-cmd fzf_file ${{
-    file=$(find . -type f 2>/dev/null | fzf --prompt "open: ")
-    [ -n "$dest" ] && lf -remote "send $id select '$file'"
-}}
+# =========================
+# MARKS (vim-style)
+# =========================
 
-# ─── Keybindings — clear defaults and remap ───────────────────────────────────
+map m mark-save
+map ' mark-load
 
-# Unmap keys we'll remap
-map d
-map y
-map p
-map c
-map r
-map a
-map e
-map f
-map g
-map G
-map i
-map o
-map H
-map m
+# =========================
+# HISTORY
+# =========================
 
-# ── Navigation ────────────────────────────────────────────────────────────────
-map h   updir               # go up one dir
-map l   open                # open file/dir (maps to $EDITOR for files)
-map j   down
-map k   up
-map J   half-down
-map K   half-up
-map gg  top
-map G   bottom
-map gd  cd ~/Downloads
-map gh  cd ~
-map gc  cd ~/.config
-map gp  cd ~/projects
+map <c-o> history-prev
+map <c-i> history-next
 
-# Page navigation (nvim-style)
-map <c-d>  half-down
-map <c-u>  half-up
-map <c-f>  page-down
-map <c-b>  page-up
+# =========================
+# RELOAD
+# =========================
 
-# ── Opening / editing ─────────────────────────────────────────────────────────
-map <enter>  open              # open with default
-map o        open_gui          # open with GUI app
-map e        edit              # open in nvim explicitly
+map R reload
 
-# ── File / dir creation ───────────────────────────────────────────────────────
-map af   touch               # a → file  (like nvim-tree 'a' without /)
-map ad   mkdir               # a → dir   (like nvim-tree 'a' with /)
+# =========================
+# SHELL / COMMANDS
+# =========================
 
-# ── Rename ────────────────────────────────────────────────────────────────────
-map r    rename              # full rename (like nvim-tree 'r')
-map R    bulk_rename         # bulk rename in $EDITOR
-map cw   rename              # alias: cw like vim's 'change word'
-map I    rename              # alias: go to start (lf positions cursor)
-map A    rename              # alias: go to end
+map ! shell
+map : read
 
-# ── Delete ────────────────────────────────────────────────────────────────────
-map dd   trash               # move to trash (safe delete — like nvim-tree 'd')
-map dD   delete              # permanent delete (no trash)
+map & shell-async
 
-# ── Yank / Copy / Cut / Paste ─────────────────────────────────────────────────
-map yy   copy                # yank/copy selection (like nvim-tree 'c')
-map yn   copy_path           # yank path to clipboard
-map dd   cut                 # cut selection (like nvim-tree 'x') — overrides trash above;
-                             # uncomment the trash line below if you prefer separate keys
-# map dt   trash             # use 'dt' for trash if 'dd' is used for cut
-map pp   paste               # paste (like nvim-tree 'p')
-map po   paste_overwrite     # paste with overwrite
-map P    paste               # alias
+# =========================
+# VISUAL MODES / TAGGING
+# =========================
 
-# ── Marking / selection ───────────────────────────────────────────────────────
-map <space>  toggle          # toggle mark on current item (like nvim-tree space)
-map v        invert          # invert selection
-map V        invert          # alias
-map u        unselect        # clear all marks
-map *        glob-select '*' # select all via glob
+map t tag
+map T tag-toggle
 
-# ── Search ────────────────────────────────────────────────────────────────────
-map /        search          # incremental search forward
-map n        search-next
-map N        search-prev
-map f        fzf_file        # fuzzy find file (requires fzf)
-map F        fzf_cd          # fuzzy cd into dir (requires fzf)
+# =========================
+# SORTING
+# =========================
 
-# ── View toggles ──────────────────────────────────────────────────────────────
-map H    toggle_hidden       # toggle hidden files (like nvim-tree 'H')
-map zi   set icons!
-map zr   set reverse!
-map zh   set hidden!
-map zn   set sortby natural
-map zs   set sortby size
-map zm   set sortby modified
-map ze   set sortby ext
+map sn set sortby name
+map ss set sortby size
+map st set sortby time
+map se set sortby ext
 
-# ── Info / misc ───────────────────────────────────────────────────────────────
-map i        info            # show stat info (like nvim-tree 'i')
-map <c-r>    reload          # reload directory
-map <esc>    clear           # clear selection
-map q        quit
-map Q        quit
-map m        bookmark_add    # add bookmark
-map '        bookmark_jump   # jump to bookmark (requires fzf)
+# =========================
+# TOGGLES
+# =========================
 
-# Symlink
-map S        symlink
+map zh set hidden!
+map zr set reverse!
+
+# =========================
+# VIEW
+# =========================
+
+map zi set info
+map zs set preview
+
+# =========================
+# JUMPS
+# =========================
+
+map [ jump-prev
+map ] jump-next
+
+# =========================
+# CLIPBOARD-LIKE
+# =========================
+
+map c clear
+map u unselect
+
+# =========================
+# MULTI-SELECTION NAV
+# =========================
+
+map J down-select
+map K up-select
+
+# =========================
+# COMMAND MODE SHORTCUTS
+# =========================
+
+map w :write
+map q quit
+map Q quit!
+
+# =========================
+# FILE INFO
+# =========================
+
+map i info

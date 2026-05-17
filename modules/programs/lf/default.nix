@@ -9,10 +9,15 @@
 {
   config = lib.mkIf config.programs.lf.enable {
     home.packages = with pkgs; [
-      ctpv
+      busybox
     ];
 
     programs.lf = {
+      package = pkgs.lf.overrideAttrs (old: {
+        dontWrapQtApps = true;
+        dontPatchShebangs = true;
+      });
+
       settings = {
         number = true;
         icons = true;
@@ -20,8 +25,7 @@
         hidden = true;
         preview = true;
 
-        shell = lib.mkIf config.programs.zsh.enable (lib.getExe config.programs.zsh.package);
-        shellopts = "'-eu'";
+        shell = "sh";
         ifs = "\n";
         scrolloff = "4";
         period = "1";
