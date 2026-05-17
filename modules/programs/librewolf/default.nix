@@ -52,6 +52,11 @@
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/darkreader/latest.xpi";
             installation_mode = "force_installed";
           };
+          "{e2488817-3d73-4013-850d-b66c5e42d505}" = {
+            install_url = "https://addons.mozilla.org/firefox/downloads/latest/aria2-integration/latest.xpi";
+            installation_mode = "force_installed";
+            private_browsing = true;
+          };
         };
       };
     };

@@ -3,6 +3,7 @@
 # Tools - Collection of tool configurations (browsers, editors, utilities, etc.)
 {
   imports = [
+    ./aria2
     ./bat
     ./bluetui
     ./bottom
@@ -12,6 +13,7 @@
     ./ffmpeg
     ./fzf
     ./git
+    ./heroic
     ./htop
     ./impala
     ./kitty
@@ -33,7 +35,6 @@
     ./systemctl-tui
     ./tmux
     ./tor
-    ./umu-launcher
     ./vlc
     ./vscodium
     ./zathura

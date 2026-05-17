@@ -11,6 +11,7 @@
   desktop.enable = true;
 
   # Tools
+  programs.aria2.enable = true;
   programs.bat.enable = true;
   programs.bluetui.enable = true;
   programs.bottom.enable = true;
@@ -22,6 +23,7 @@
   programs.git.enable = true;
   programs.git.username = "Arpit Chakladar";
   programs.git.email = "arpitchakladar@proton.me";
+  programs.heroic.enable = true;
   programs.htop.enable = true;
   programs.impala.enable = true;
   programs.kitty.enable = true;
@@ -43,7 +45,6 @@
   programs.systemctl-tui.enable = true;
   programs.tmux.enable = true;
   programs.tor.enable = true;
-  programs.umu-launcher.enable = true;
   programs.vlc.enable = true;
   programs.vscodium.enable = true;
   programs.zathura.enable = true;
