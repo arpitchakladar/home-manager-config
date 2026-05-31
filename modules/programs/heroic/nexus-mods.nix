@@ -16,13 +16,13 @@
     };
   };
 
-  config = lib.mkIf config.programs.heroic.enable {
+  config = lib.mkIf config.programs.heroic.nexus-mods.enable {
     home.packages = [ config.programs.heroic.nexus-mods.package ];
 
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {
-        "x-scheme-handler/nxm" = [ "nexusmods-app.desktop" ];
+        "x-scheme-handler/nxm" = [ "com.nexusmods.app.desktop" ];
       };
     };
 
