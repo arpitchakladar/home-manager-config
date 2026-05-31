@@ -7,6 +7,10 @@
 
 # Heroic Games Launcher - An elegant UI for Epic, GOG, and Amazon Games using UMU under the hood
 {
+  imports = [
+    ./nexus-mods.nix
+  ];
+
   options.programs.heroic = {
     enable = lib.mkEnableOption "Enables Heroic Games Launcher.";
     package = lib.mkOption {

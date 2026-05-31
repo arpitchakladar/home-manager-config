@@ -2,6 +2,7 @@
 
 {
   nixpkgs.config.allowUnfree = true;
+  xdg.configFile."mimeapps.list".force = true;
 
   home.username = "arpit";
   home.homeDirectory = "/home/${config.home.username}";
@@ -24,6 +25,7 @@
   programs.git.username = "Arpit Chakladar";
   programs.git.email = "arpitchakladar@proton.me";
   programs.heroic.enable = true;
+  programs.heroic.nexus-mods.enable = true;
   programs.htop.enable = true;
   programs.impala.enable = true;
   programs.kitty.enable = true;
