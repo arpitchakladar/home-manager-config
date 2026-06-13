@@ -9,6 +9,7 @@
 {
   imports = [
     ./nexus-mods.nix
+    ./steam.nix
   ];
 
   options.programs.heroic = {

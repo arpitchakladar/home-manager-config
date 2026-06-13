@@ -37,6 +37,18 @@ let
   # Script definitions: { path, env?, deps?, conditions? }
   # condition: attrset of { option (string path), value (expected value) }
   scriptDefs = {
+    aria2-run = {
+      path = ./aria2-run.sh;
+      deps = [
+        config.programs.aria2.package
+      ];
+      conditions = [
+        {
+          option = "programs.aria2.enable";
+          value = true;
+        }
+      ];
+    };
     deep-clean = {
       path = ./deep-clean.sh;
     };
