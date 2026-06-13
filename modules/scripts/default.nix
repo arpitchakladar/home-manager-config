@@ -199,6 +199,27 @@ let
       def.conditions or [ ]
     );
 
+  # Generate a .desktop entry that launches the script in kitty
+  mkDesktopItem =
+    name: def:
+    let
+      sc = config.scripts.${name};
+    in
+    if sc.enable && sc.desktop.enable then
+      pkgs.makeDesktopItem {
+        name = name;
+        desktopName = sc.desktop.displayName;
+        exec = "${lib.getExe config.programs.kitty.package} -e ${lib.getExe sc.package}";
+        icon = "kitty";
+        categories = [ "Utility" ];
+        terminal = false;
+        type = "Application";
+      }
+    else
+      null;
+
+  desktopItems = lib.mapAttrsToList mkDesktopItem scriptDefs;
+
 in
 {
   options.scripts = lib.mapAttrs (name: def: {
@@ -216,15 +237,47 @@ in
       readOnly = true;
       description = "The derivation for the ${name} script. Set automatically when enabled.";
     };
+    desktop = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Whether to create a .desktop entry for this script.";
+      };
+      displayName = lib.mkOption {
+        type = lib.types.str;
+        default = name;
+        description = "Display name for the .desktop entry.";
+      };
+    };
   }) scriptDefs;
 
   config = {
     # Wire up .package for each enabled script, with assertions for unmet conditions
-    scripts = lib.mapAttrs (name: def: {
-      package = lib.mkIf config.scripts.${name}.enable (
-        mkScript name def.path (def.env or { }) (def.deps or [ ])
-      );
-    }) scriptDefs;
+    scripts =
+      lib.recursiveUpdate
+        (lib.mapAttrs (name: def: {
+          package = lib.mkIf config.scripts.${name}.enable (
+            mkScript name def.path (def.env or { }) (def.deps or [ ])
+          );
+        }) scriptDefs)
+        {
+          aria2-run.desktop = {
+            enable = true;
+            displayName = "Aria2 Download Manager";
+          };
+          i3-keybindings.desktop = {
+            enable = true;
+            displayName = "i3 Keybindings";
+          };
+          screen-recording.desktop = {
+            enable = true;
+            displayName = "Screen Recording";
+          };
+          system-monitor.desktop = {
+            enable = true;
+            displayName = "System Monitor";
+          };
+        };
 
     assertions = lib.concatLists (
       lib.mapAttrsToList (
@@ -242,6 +295,7 @@ in
       pkgs.file
       config.programs.bat.package
     ]
-    ++ lib.filter (x: x != null) (lib.mapAttrsToList (_: s: s.package) config.scripts);
+    ++ lib.filter (x: x != null) (lib.mapAttrsToList (_: s: s.package) config.scripts)
+    ++ lib.filter (x: x != null) desktopItems;
   };
 }
