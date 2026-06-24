@@ -19,6 +19,7 @@
         { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
         { id = "mpkodccbngfoacfalldjimigbofkhgjn"; } # Aria2 Explorer
         { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark Reader
+        { id = "hpejmncgbammabkkodflfeekpcicfjnk"; } # Quite Black
       ];
     };
 
@@ -29,15 +30,6 @@
         ForceDarkMode = true;
         DefaultCookiesSetting = 1;
         PasswordManagerEnabled = false;
-
-        ExtensionSettings = {
-          "nngceckbapebfimnlniiiahkandclblb" = {
-            toolbar_pin = "force_pinned";
-          };
-          "eimadpbcbfnmbkopoojfekhnkhdbieeh" = {
-            toolbar_pin = "force_pinned";
-          };
-        };
       };
     };
 
@@ -45,7 +37,7 @@
       force = true;
       text = builtins.toJSON {
         brave = {
-          darker_mode = true;
+          darker_mode = false;
           enable_window_closing_confirm = false;
           tabs = {
             vertical_tabs_enabled = true;
