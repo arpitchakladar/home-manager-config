@@ -53,6 +53,13 @@
             vertical_tabs_floating_enabled = false;
             always_hide_tab_close_button = true;
           };
+          show_side_panel_button = false;
+          ai_chat = {
+            show_toolbar_button = false;
+          };
+          wallet = {
+            show_wallet_icon_on_toolbar = false;
+          };
         };
         browser = {
           show_full_urls = true;
