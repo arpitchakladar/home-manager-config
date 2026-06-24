@@ -19,7 +19,7 @@
         VisualHostKey = "yes";
         HashKnownHosts = "yes";
       };
-      matchBlocks = {
+      settings = {
         "github.com" = {
           hostname = "github.com";
           user = "git";

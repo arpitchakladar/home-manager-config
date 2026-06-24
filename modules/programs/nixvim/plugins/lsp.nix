@@ -45,7 +45,7 @@
         enable = true;
         package = null;
       };
-      bash-language-server = {
+      bashls = {
         enable = true;
         package = null;
       };

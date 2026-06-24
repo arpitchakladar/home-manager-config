@@ -19,12 +19,22 @@
       default = pkgs.symlinkJoin {
         name = "heroic-bundle";
         paths = with pkgs; [
-          heroic
+          # Wrap Heroic so it dynamically appends gamemode's library folder to LD_LIBRARY_PATH
+          (pkgs.symlinkJoin {
+            name = "heroic-wrapped";
+            paths = [ heroic ];
+            buildInputs = [ pkgs.makeWrapper ];
+            postBuild = ''
+              wrapProgram $out/bin/heroic \
+                --prefix LD_LIBRARY_PATH : "${pkgs.gamemode.lib}/lib:${pkgs.pkgsi686Linux.gamemode.lib}/lib"
+            '';
+          })
           winetricks
           xdg-user-dirs
+          gamemode
         ];
       };
-      description = "Bundle of Heroic Games Launcher, winetricks, and core utilities.";
+      description = "Bundle of Heroic Games Launcher, winetricks, and core utilities with GameMode support.";
     };
   };
 
