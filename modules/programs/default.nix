@@ -7,6 +7,7 @@
     ./bat
     ./bluetui
     ./bottom
+    ./brave
     ./brightnessctl
     ./bruno
     ./feh
@@ -18,7 +19,6 @@
     ./impala
     ./kitty
     ./lf
-    ./librewolf
     ./lsd
     ./maim
     ./nixvim

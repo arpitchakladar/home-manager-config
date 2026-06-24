@@ -15,6 +15,7 @@
   programs.bat.enable = true;
   programs.bluetui.enable = true;
   programs.bottom.enable = true;
+  programs.brave.enable = true;
   programs.brightnessctl.enable = true;
   programs.bruno.enable = true;
   programs.feh.enable = true;
@@ -28,7 +29,6 @@
   programs.impala.enable = true;
   programs.kitty.enable = true;
   programs.lf.enable = true;
-  programs.librewolf.enable = true;
   programs.lsd.enable = true;
   programs.maim.enable = true;
   programs.nixvim.enable = true;
