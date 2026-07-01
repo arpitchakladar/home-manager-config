@@ -10,6 +10,7 @@
     ./brave
     ./brightnessctl
     ./bruno
+    ./enteauth
     ./feh
     ./ffmpeg
     ./fzf

@@ -18,6 +18,7 @@
   programs.brave.enable = true;
   programs.brightnessctl.enable = true;
   programs.bruno.enable = true;
+  programs.enteauth.enable = true;
   programs.feh.enable = true;
   programs.ffmpeg.enable = true;
   programs.fzf.enable = true;
