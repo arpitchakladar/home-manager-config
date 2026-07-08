@@ -32,7 +32,7 @@
     ./openvpn
     ./ouch
     ./pamixer
-    ./pass
+    ./gopass
     ./playerctl
     ./qemu
     ./slop

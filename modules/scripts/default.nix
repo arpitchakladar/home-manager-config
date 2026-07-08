@@ -43,7 +43,7 @@ let
         pkgs.gnupg
         pkgs.isync
         pkgs.notmuch
-        pkgs.pass
+        config.programs.gopass.package
       ];
       conditions = [
         {

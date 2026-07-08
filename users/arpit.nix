@@ -44,7 +44,7 @@
   programs.openvpn.enable = true;
   programs.ouch.enable = true;
   programs.pamixer.enable = true;
-  programs.pass.enable = true;
+  programs.gopass.enable = true;
   programs.playerctl.enable = true;
   programs.qemu.enable = true;
   programs.slop.enable = true;
