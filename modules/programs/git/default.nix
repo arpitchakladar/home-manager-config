@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
@@ -22,8 +21,6 @@
   };
 
   config = lib.mkIf config.programs.git.enable {
-    home.packages = lib.mkIf config.programs.pass.enable [ pkgs.pass-git-helper ];
-
     programs.git = {
       settings =
         lib.recursiveUpdate

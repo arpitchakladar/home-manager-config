@@ -7,6 +7,8 @@
 
 # OpenSSH - Secure shell (SSH) client for encrypted remote connections
 {
+  imports = [ ./git.nix ];
+
   config = lib.mkIf config.programs.ssh.enable {
     programs.ssh = {
       package = pkgs.openssh;
@@ -18,13 +20,6 @@
         ServerAliveCountMax = "3";
         VisualHostKey = "yes";
         HashKnownHosts = "yes";
-      };
-      settings = {
-        "github.com" = {
-          hostname = "github.com";
-          user = "git";
-          identityFile = "${config.home.homeDirectory}/.ssh/github";
-        };
       };
     };
   };

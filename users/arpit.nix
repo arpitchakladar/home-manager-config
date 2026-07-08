@@ -25,7 +25,8 @@
   programs.fzf.enable = true;
   programs.git.enable = true;
   programs.git.username = "Arpit Chakladar";
-  programs.git.email = "arpitchakladar@proton.me";
+  programs.git.email = "arpitchakladar@gmail.com";
+  programs.git.useSSH = true;
   programs.gpg.enable = true;
   programs.heroic.enable = true;
   programs.htop.enable = true;
