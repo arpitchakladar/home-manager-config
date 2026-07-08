@@ -1,9 +1,6 @@
 { config, lib, ... }:
 
 let
-  homeDir = config.home.homeDirectory;
-  keyDir = "${homeDir}/.local/share/ssh/git";
-
   hosts = [
     {
       domain = "github.com";
@@ -32,7 +29,7 @@ let
     lib.nameValuePair domain {
       hostname = domain;
       user = "git";
-      identityFile = "${keyDir}/${identityName}";
+      identityFile = "${config.home.homeDirectory}/.local/share/ssh/git/${identityName}";
     };
 
   mkKeyFile =
