@@ -27,6 +27,8 @@
   programs.git.username = "Arpit Chakladar";
   programs.git.email = "arpitchakladar@gmail.com";
   programs.git.useSSH = true;
+  programs.git.signing.signByDefault = true;
+  programs.git.signCommits = true;
   programs.gpg.enable = true;
   programs.heroic.enable = true;
   programs.htop.enable = true;

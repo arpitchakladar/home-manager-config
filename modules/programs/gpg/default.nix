@@ -7,6 +7,7 @@
 }:
 
 {
+  imports = [ ./git.nix ];
   config = lib.mkIf config.programs.gpg.enable {
     services.gpg-agent = {
       enable = true;

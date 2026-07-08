@@ -22,6 +22,11 @@
 
   config = lib.mkIf config.programs.git.enable {
     programs.git = {
+      includes = [
+        # An additional config file for global git settings but for more
+        # private/non-portable configuration options like GPG keys
+        { path = "${config.xdg.configHome}/git/personal"; }
+      ];
       settings =
         lib.recursiveUpdate
           {
