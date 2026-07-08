@@ -19,35 +19,35 @@
     };
   };
 
-  config = lib.mkIf config.program.pass.enable {
+  config = lib.mkIf config.programs.pass.enable {
     programs.password-store = {
       enable = true;
-      package = config.program.pass.package;
+      package = config.programs.pass.package;
       settings = {
-        PASSWORD_STORE_DIR = config.program.pass.storeDir;
+        PASSWORD_STORE_DIR = config.programs.pass.storeDir;
       };
     };
 
-    home.file.".config/pass-git-helper/git-pass-mapping.ini".text = ''
-      [github.com]
-      target = github/token
-      username = ${config.program.pass.github.username}
-      username_extractor = static
-
-      [github.com/*]
-      target = github/token
-      username = ${config.program.pass.github.username}
-      username_extractor = static
-
-      [*.github.com]
-      target = github/token
-      username = ${config.program.pass.github.username}
-      username_extractor = static
-
-      [*.github.com/*]
-      target = github/token
-      username = ${config.program.pass.github.username}
-      username_extractor = static
-    '';
+    # home.file.".config/pass-git-helper/git-pass-mapping.ini".text = ''
+    #   [github.com]
+    #   target = github/token
+    #   username = ${config.programs.pass.github.username}
+    #   username_extractor = static
+    #
+    #   [github.com/*]
+    #   target = github/token
+    #   username = ${config.programs.pass.github.username}
+    #   username_extractor = static
+    #
+    #   [*.github.com]
+    #   target = github/token
+    #   username = ${config.programs.pass.github.username}
+    #   username_extractor = static
+    #
+    #   [*.github.com/*]
+    #   target = github/token
+    #   username = ${config.programs.pass.github.username}
+    #   username_extractor = static
+    # '';
   };
 }

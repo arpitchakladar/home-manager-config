@@ -12,14 +12,17 @@
       type = lib.types.str;
       description = "Git username.";
     };
+
     email = lib.mkOption {
       type = lib.types.str;
       description = "Git email.";
     };
+
+    useSSH = lib.mkEnableOption "Use SSH instead of HTTPS for common git platforms.";
   };
 
   config = lib.mkIf config.programs.git.enable {
-    home.packages = lib.mkIfconfig config.programs.pass.enable [ pkgs.pass-git-helper ];
+    home.packages = lib.mkIf config.programs.pass.enable [ pkgs.pass-git-helper ];
 
     programs.git = {
       settings =
@@ -32,11 +35,12 @@
             core.askPass = "";
           }
           (
-            lib.optionalAttrs config.programs.pass.enable {
-              credential."https://github.com" = {
-                username = config.programs.pass.github.username;
-                helper = lib.getExe pkgs.pass-git-helper;
-              };
+            lib.optionalAttrs config.programs.git.useSSH {
+              url."git@github.com:".insteadOf = "https://github.com/";
+              url."git@gitlab.com:".insteadOf = "https://gitlab.com/";
+              url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
+              url."git@codeberg.org:".insteadOf = "https://codeberg.org/";
+              url."git@git.sr.ht:".insteadOf = "https://git.sr.ht/";
             }
           );
     };
