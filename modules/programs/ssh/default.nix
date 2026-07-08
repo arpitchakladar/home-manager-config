@@ -22,5 +22,9 @@
         HashKnownHosts = "yes";
       };
     };
+
+    services.ssh-agent = {
+      enable = true;
+    };
   };
 }
