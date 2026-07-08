@@ -1,3 +1,4 @@
+# gpg - GNU Privacy Guard
 {
   config,
   lib,

@@ -6,10 +6,6 @@
 }:
 
 # Git - Distributed version control system
-let
-  passCfg = config.programs.pass;
-  passGitHelper = lib.getExe pkgs.pass-git-helper;
-in
 {
   options.programs.git = {
     username = lib.mkOption {
@@ -23,6 +19,8 @@ in
   };
 
   config = lib.mkIf config.programs.git.enable {
+    home.packages = lib.mkIfconfig config.programs.pass.enable [ pkgs.pass-git-helper ];
+
     programs.git = {
       settings =
         lib.recursiveUpdate
@@ -34,10 +32,10 @@ in
             core.askPass = "";
           }
           (
-            lib.optionalAttrs passCfg.enable {
+            lib.optionalAttrs config.programs.pass.enable {
               credential."https://github.com" = {
-                username = passCfg.github.username;
-                helper = passGitHelper;
+                username = config.programs.pass.github.username;
+                helper = lib.getExe pkgs.pass-git-helper;
               };
             }
           );

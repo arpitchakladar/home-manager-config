@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 set -euo pipefail
 
 config_home="${XDG_CONFIG_HOME:-$HOME/.config}"

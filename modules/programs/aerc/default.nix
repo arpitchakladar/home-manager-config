@@ -1,8 +1,10 @@
+# aerc - Terminal email client
 {
   config,
   lib,
   ...
 }:
+
 {
   config = lib.mkIf config.programs.aerc.enable {
     programs.aerc = {
