@@ -22,6 +22,9 @@
 
           autoload -U colors && colors
 
+          export GPG_TTY="$(tty)"
+          gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
+
           bindkey "^[[3~" delete-char
           bindkey "^?" backward-delete-char
           ${nixCommandWrappers}

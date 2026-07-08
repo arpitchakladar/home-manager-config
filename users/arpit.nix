@@ -11,6 +11,7 @@
   desktop.enable = true;
 
   # Tools
+  programs.aerc.enable = true;
   programs.aria2.enable = true;
   programs.bat.enable = true;
   programs.bluetui.enable = true;
@@ -25,10 +26,12 @@
   programs.git.enable = true;
   programs.git.username = "Arpit Chakladar";
   programs.git.email = "arpitchakladar@proton.me";
+  programs.gpg.enable = true;
   programs.heroic.enable = true;
   programs.htop.enable = true;
   programs.impala.enable = true;
   programs.kitty.enable = true;
+  programs.less.enable = true;
   programs.lf.enable = true;
   programs.lsd.enable = true;
   programs.maim.enable = true;
@@ -39,6 +42,7 @@
   programs.openvpn.enable = true;
   programs.ouch.enable = true;
   programs.pamixer.enable = true;
+  programs.pass.enable = true;
   programs.playerctl.enable = true;
   programs.qemu.enable = true;
   programs.slop.enable = true;

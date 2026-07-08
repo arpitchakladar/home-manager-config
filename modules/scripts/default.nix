@@ -37,6 +37,34 @@ let
   # Script definitions: { path, env?, deps?, conditions? }
   # condition: attrset of { option (string path), value (expected value) }
   scriptDefs = {
+    aerc-mail-setup = {
+      path = ./aerc-mail-setup.sh;
+      deps = [
+        pkgs.gnupg
+        pkgs.isync
+        pkgs.notmuch
+        pkgs.pass
+      ];
+      conditions = [
+        {
+          option = "programs.aerc.enable";
+          value = true;
+        }
+      ];
+    };
+    aerc-sync-mail = {
+      path = ./aerc-sync-mail.sh;
+      deps = [
+        pkgs.isync
+        pkgs.notmuch
+      ];
+      conditions = [
+        {
+          option = "programs.aerc.enable";
+          value = true;
+        }
+      ];
+    };
     aria2-run = {
       path = ./aria2-run.sh;
       deps = [

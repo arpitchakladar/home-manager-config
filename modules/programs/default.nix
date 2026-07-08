@@ -3,6 +3,7 @@
 # Tools - Collection of tool configurations (browsers, editors, utilities, etc.)
 {
   imports = [
+    ./aerc
     ./aria2
     ./bat
     ./bluetui
@@ -15,10 +16,12 @@
     ./ffmpeg
     ./fzf
     ./git
+    ./gpg
     ./heroic
     ./htop
     ./impala
     ./kitty
+    ./less
     ./lf
     ./lsd
     ./maim
@@ -29,6 +32,7 @@
     ./openvpn
     ./ouch
     ./pamixer
+    ./pass
     ./playerctl
     ./qemu
     ./slop

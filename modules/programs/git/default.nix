@@ -1,6 +1,15 @@
-{ lib, config, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 # Git - Distributed version control system
+let
+  passCfg = config.programs.pass;
+  passGitHelper = lib.getExe pkgs.pass-git-helper;
+in
 {
   options.programs.git = {
     username = lib.mkOption {
@@ -15,19 +24,23 @@
 
   config = lib.mkIf config.programs.git.enable {
     programs.git = {
-      settings = {
-        user = {
-          name = config.programs.git.username;
-          email = config.programs.git.email;
-        };
-        credential.helper = "store --file ${config.xdg.cacheHome}/git/credential";
-        core.askPass = "";
-      };
+      settings =
+        lib.recursiveUpdate
+          {
+            user = {
+              name = config.programs.git.username;
+              email = config.programs.git.email;
+            };
+            core.askPass = "";
+          }
+          (
+            lib.optionalAttrs passCfg.enable {
+              credential."https://github.com" = {
+                username = passCfg.github.username;
+                helper = passGitHelper;
+              };
+            }
+          );
     };
-
-    # The base directory of the credential file must exist
-    home.activation.createGitCacheDirectory = lib.hm.dag.entryAfter [
-      "writeBoundary"
-    ] "mkdir -p ${config.xdg.cacheHome}/git";
   };
 }
