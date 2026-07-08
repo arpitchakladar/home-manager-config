@@ -6,6 +6,8 @@
 
 # Git - Distributed version control system
 {
+  imports = [ ./assertions.nix ];
+
   options.programs.git = {
     username = lib.mkOption {
       type = lib.types.str;

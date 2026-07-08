@@ -2,6 +2,8 @@
 
 # FZF - Fuzzy finder, CLI fuzzy search tool
 {
+  imports = [ ./assertions.nix ];
+
   config =
     let
       shellIntegration = ''

@@ -6,6 +6,8 @@
 }:
 
 {
+  imports = [ ./assertions.nix ];
+
   config = lib.mkIf config.programs.aerc.enable {
     programs.aerc = {
       extraConfig = {
