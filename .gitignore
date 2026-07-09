@@ -1,2 +1,6 @@
 .pre-commit-config.yaml
 .devenv
+
+# Private/secret configuration - track *.example.nix, ignore *.nix
+modules/private/*.nix
+!modules/private/*.example.nix

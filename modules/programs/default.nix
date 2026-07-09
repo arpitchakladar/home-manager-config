@@ -3,7 +3,6 @@
 # Tools - Collection of tool configurations (browsers, editors, utilities, etc.)
 {
   imports = [
-    ./aerc
     ./aria2
     ./bat
     ./bluetui
@@ -25,6 +24,7 @@
     ./lf
     ./lsd
     ./maim
+    ./meli
     ./nixvim
     ./nvtop
     ./opencode
@@ -33,6 +33,7 @@
     ./ouch
     ./pamixer
     ./gopass
+    ./email
     ./playerctl
     ./qemu
     ./slop

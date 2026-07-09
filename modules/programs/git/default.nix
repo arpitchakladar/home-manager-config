@@ -20,14 +20,24 @@
     };
 
     useSSH = lib.mkEnableOption "Use SSH instead of HTTPS for common git platforms.";
+
+    signing = {
+      key = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "GPG signing key ID.";
+      };
+      signByDefault = lib.mkEnableOption "Sign commits by default";
+    };
   };
 
   config = lib.mkIf config.programs.git.enable {
     programs.git = {
       includes = [
-        # An additional config file for global git settings but for more
-        # private/non-portable configuration options like GPG keys
-        { path = "${config.xdg.configHome}/git/personal"; }
+        {
+          path = "${config.xdg.configHome}/git/personal";
+          condition = "hasconfig:remote.*.url:git@*";
+        }
       ];
       settings =
         lib.recursiveUpdate
@@ -47,6 +57,13 @@
               url."git@git.sr.ht:".insteadOf = "https://git.sr.ht/";
             }
           );
+      extraConfig = {
+        user.signingKey = lib.mkIf (
+          config.programs.git.signing.key != null
+        ) config.programs.git.signing.key;
+        commit.gpgSign = config.programs.git.signing.signByDefault;
+        tag.forceSignAnnotated = config.programs.git.signing.signByDefault;
+      };
     };
   };
 }

@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -11,7 +11,6 @@
   desktop.enable = true;
 
   # Tools
-  programs.aerc.enable = true;
   programs.aria2.enable = true;
   programs.bat.enable = true;
   programs.bluetui.enable = true;
@@ -19,6 +18,7 @@
   programs.brave.enable = true;
   programs.brightnessctl.enable = true;
   programs.bruno.enable = true;
+  programs.email.enable = true;
   programs.enteauth.enable = true;
   programs.feh.enable = true;
   programs.ffmpeg.enable = true;
@@ -37,6 +37,7 @@
   programs.lf.enable = true;
   programs.lsd.enable = true;
   programs.maim.enable = true;
+  programs.meli.enable = true;
   programs.nixvim.enable = true;
   programs.nvtop.enable = true;
   programs.opencode.enable = true;

@@ -32,6 +32,7 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      lib = nixpkgs.lib;
     in
     {
       formatter.${system} = pkgs.nixfmt-tree;
@@ -64,7 +65,10 @@
                 scheme = ./assets/onedark-dark.yml;
               }
               nixvim.homeModules.nixvim
-            ];
+            ]
+            ++ lib.optional (builtins.pathExists ./modules/private/default.nix) (
+              import ./modules/private/default.nix
+            );
           };
       };
     };
