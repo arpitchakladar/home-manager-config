@@ -190,19 +190,6 @@ let
         }
       ];
     };
-    meli-sync = {
-      path = ./meli-sync.sh;
-      deps = [
-        pkgs.mbsync
-        pkgs.notmuch
-      ];
-      conditions = [
-        {
-          option = "programs.meli.enable";
-          value = true;
-        }
-      ];
-    };
   };
 
   # Check whether all conditions for a script are satisfied

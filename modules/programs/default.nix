@@ -24,7 +24,7 @@
     ./lf
     ./lsd
     ./maim
-    ./meli
+    ./neomutt
     ./nixvim
     ./nvtop
     ./opencode

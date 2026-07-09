@@ -6,7 +6,10 @@
 
 # Git - Distributed version control system
 {
-  imports = [ ./assertions.nix ];
+  imports = [
+    ./assertions.nix
+  ]
+  ++ lib.optional (builtins.pathExists ../../private/git.nix) ../../private/git.nix;
 
   options.programs.git = {
     username = lib.mkOption {
@@ -20,25 +23,10 @@
     };
 
     useSSH = lib.mkEnableOption "Use SSH instead of HTTPS for common git platforms.";
-
-    signing = {
-      key = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "GPG signing key ID.";
-      };
-      signByDefault = lib.mkEnableOption "Sign commits by default";
-    };
   };
 
   config = lib.mkIf config.programs.git.enable {
     programs.git = {
-      includes = [
-        {
-          path = "${config.xdg.configHome}/git/personal";
-          condition = "hasconfig:remote.*.url:git@*";
-        }
-      ];
       settings =
         lib.recursiveUpdate
           {
@@ -57,13 +45,6 @@
               url."git@git.sr.ht:".insteadOf = "https://git.sr.ht/";
             }
           );
-      extraConfig = {
-        user.signingKey = lib.mkIf (
-          config.programs.git.signing.key != null
-        ) config.programs.git.signing.key;
-        commit.gpgSign = config.programs.git.signing.signByDefault;
-        tag.forceSignAnnotated = config.programs.git.signing.signByDefault;
-      };
     };
   };
 }

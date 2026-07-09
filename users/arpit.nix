@@ -1,6 +1,11 @@
 { config, lib, ... }:
 
 {
+  imports = [
+    ../modules/private/email.nix
+    ../modules/private/git.nix
+  ];
+
   nixpkgs.config.allowUnfree = true;
 
   home.username = "arpit";
@@ -24,8 +29,6 @@
   programs.ffmpeg.enable = true;
   programs.fzf.enable = true;
   programs.git.enable = true;
-  programs.git.username = "Arpit Chakladar";
-  programs.git.email = "arpitchakladar+git@gmail.com";
   programs.git.useSSH = true;
   programs.git.signing.signByDefault = true;
   programs.gpg.enable = true;
@@ -37,7 +40,7 @@
   programs.lf.enable = true;
   programs.lsd.enable = true;
   programs.maim.enable = true;
-  programs.meli.enable = true;
+  programs.neomutt.enable = true;
   programs.nixvim.enable = true;
   programs.nvtop.enable = true;
   programs.opencode.enable = true;

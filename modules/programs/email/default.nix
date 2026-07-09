@@ -2,12 +2,11 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
 let
-  mailDir = "${config.home.homeDirectory}/.local/mail";
+  mailDir = "${config.home.homeDirectory}/.local/share/mail";
 in
 {
   options.programs.email = {
@@ -15,39 +14,11 @@ in
   };
 
   config = lib.mkIf config.programs.email.enable {
-    home.packages = [
-      pkgs.mbsync
-      pkgs.notmuch
-    ];
+    programs.mbsync.enable = true;
+    programs.notmuch.enable = true;
 
-    home.sessionVariables = {
-      MAILDIR = mailDir;
-      NOTMUCH_CONFIG = "${config.xdg.configHome}/notmuch/notmuchrc";
-    };
+    accounts.email.maildirBasePath = mailDir;
 
-    xdg.configFile."notmuch/notmuch.config" = {
-      text = ''
-        [database]
-        path=${mailDir}/.notmuch
-
-        [user]
-        name=
-        address=
-        primary_key=
-
-        [new]
-        tags=unclassified;new;
-        ignore=
-
-        [search]
-        exclude_tags=deleted;spam;
-
-        [maildir]
-        synchronize_flags=true
-
-        [crypto]
-        gpg_path=${pkgs.gnupg}/bin/gpg
-      '';
-    };
+    home.sessionVariables.MAILDIR = mailDir;
   };
 }
