@@ -28,14 +28,14 @@
 
         viewer = {
           pager = lib.getExe config.programs.less.package;
+          show-headers = true;
         };
 
         filters = ''
-          text/plain = wrap -w 100 | colorize
-          text/html = ! html
-          text/* = ${lib.getExe config.programs.bat.package} -fP --file-name="''${AERC_FILENAME:-message.txt}" --style=plain
-          message/delivery-status = colorize
-          .headers = colorize
+          text/plain = fold -w 100 -s
+          text/html = fold -w 100 -s
+          text/* = fold -w 100 -s
+          message/delivery-status = fold -w 100 -s
         '';
 
         hooks = {

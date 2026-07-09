@@ -25,7 +25,7 @@
   programs.fzf.enable = true;
   programs.git.enable = true;
   programs.git.username = "Arpit Chakladar";
-  programs.git.email = "arpitchakladar@gmail.com";
+  programs.git.email = "arpitchakladar+git@gmail.com";
   programs.git.useSSH = true;
   programs.git.signing.signByDefault = true;
   programs.gpg.enable = true;
