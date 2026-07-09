@@ -8,7 +8,7 @@
 {
   imports = [
     ./assertions.nix
-    ./colorscheme.nix
+    ./theme.nix
   ];
 
   config = lib.mkIf config.programs.neomutt.enable {
