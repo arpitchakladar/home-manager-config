@@ -15,6 +15,7 @@
     programs.neomutt = {
       sidebar.enable = true;
       sort = "reverse-threads";
+      vimKeys = true;
     };
   };
 }

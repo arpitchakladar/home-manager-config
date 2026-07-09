@@ -99,10 +99,5 @@
         }
       ];
     };
-
-    home.sessionVariables = lib.mkIf config.programs.nixvim.enable {
-      EDITOR = lib.mkForce (lib.getExe config.programs.nixvim.package);
-      MANPAGER = "${lib.getExe config.programs.nixvim.package} +Man!";
-    };
   };
 }
