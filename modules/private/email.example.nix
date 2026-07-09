@@ -1,29 +1,33 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 {
   config.accounts.email.accounts = {
     "example" = {
-      realName = "Example User";
-      address = "user@example.com";
-      userName = "user@example.com";
-      passwordCommand = "${config.programs.gopass.package}/bin/gopass show -o mail/example";
+      realName = "example";
+      address = "user@gmail.com";
+      userName = "user@gmail.com";
+      passwordCommand = "${lib.getExe config.programs.gopass.package} -o mail/user@gmail.com";
       flavor = "gmail.com";
       primary = true;
+      neomutt.enable = true;
 
       mbsync = {
         enable = true;
-        createMailbox = true;
+        create = "maildir";
+        patterns = [
+          "INBOX"
+          "\"[Gmail]/All Mail\""
+          "\"[Gmail]/Sent Mail\""
+          "\"[Gmail]/Drafts\""
+          "\"[Gmail]/Spam\""
+          "\"[Gmail]/Trash\""
+        ];
         extraConfig.channel = {
-          Patterns = "*";
           SyncState = "*";
         };
       };
 
       notmuch.enable = true;
-
-      mu.enable = false;
-      msmtp.enable = false;
-      imapnotify.enable = false;
     };
   };
 }
