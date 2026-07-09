@@ -6,7 +6,10 @@
 }:
 
 {
-  imports = [ ./assertions.nix ];
+  imports = [
+    ./assertions.nix
+    ./colorscheme.nix
+  ];
 
   config = lib.mkIf config.programs.neomutt.enable {
     programs.neomutt = {
