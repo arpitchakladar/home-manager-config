@@ -42,6 +42,15 @@
             { ... }:
             {
               git-hooks.hooks.nixfmt.enable = true;
+
+              git-hooks.hooks.forbid-private = {
+                enable = true;
+                name = "Forbid committing private files";
+                entry = "found private file in staging! Do not commit files under modules/private/ (except .example.nix files).";
+                language = "fail";
+                files = "modules/private/";
+                excludes = [ "\\.example\\.nix$" ];
+              };
             }
           )
         ];
