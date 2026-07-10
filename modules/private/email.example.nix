@@ -12,6 +12,9 @@
       neomutt = {
         enable = true;
         mailboxType = "maildir";
+        extraConfig = ''
+          mailboxes =Inbox ="[Gmail]/Drafts" ="[Gmail]/Sent Mail" ="[Gmail]/Trash"
+        '';
       };
 
       folders = {
@@ -34,10 +37,19 @@
           SyncState = "*";
           Sync = "All";
           CopyArrivalDate = "yes";
+          Expunge = "Both";
         };
       };
 
-      notmuch.enable = true;
+      notmuch = {
+        enable = true;
+        neomutt.virtualMailboxes = [
+          {
+            name = "All Mail";
+            query = "folder:example/Inbox or folder:\"example/[Gmail]/Sent Mail\"";
+          }
+        ];
+      };
     };
   };
 }
