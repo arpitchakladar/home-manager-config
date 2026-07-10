@@ -3,25 +3,31 @@
 {
   config.accounts.email.accounts = {
     "example" = {
-      realName = "example";
+      realName = "Example User";
       address = "user@gmail.com";
       userName = "user@gmail.com";
       passwordCommand = "${lib.getExe config.programs.gopass.package} -o mail/user@gmail.com";
       flavor = "gmail.com";
       primary = true;
-      neomutt.enable = true;
+      neomutt = {
+        enable = true;
+        mailboxType = "maildir";
+      };
 
-      neomutt.extraConfig = ''
-        mailboxes "+Inbox" "+[Gmail]/Drafts" "+[Gmail]/Spam" "+[Gmail]/Trash"
-      '';
+      folders = {
+        inbox = "Inbox";
+        drafts = "[Gmail]/Drafts";
+        sent = "[Gmail]/Sent Mail";
+        trash = "[Gmail]/Trash";
+      };
 
       mbsync = {
         enable = true;
         create = "maildir";
         patterns = [
-          "Inbox"
+          "INBOX"
           "\"[Gmail]/Drafts\""
-          "\"[Gmail]/Spam\""
+          "\"[Gmail]/Sent Mail\""
           "\"[Gmail]/Trash\""
         ];
         extraConfig.channel = {
