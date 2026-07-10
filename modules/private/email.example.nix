@@ -11,19 +11,23 @@
       primary = true;
       neomutt.enable = true;
 
+      neomutt.extraConfig = ''
+        mailboxes "+Inbox" "+[Gmail]/Drafts" "+[Gmail]/Spam" "+[Gmail]/Trash"
+      '';
+
       mbsync = {
         enable = true;
         create = "maildir";
         patterns = [
-          "INBOX"
-          "\"[Gmail]/All Mail\""
-          "\"[Gmail]/Sent Mail\""
+          "Inbox"
           "\"[Gmail]/Drafts\""
           "\"[Gmail]/Spam\""
           "\"[Gmail]/Trash\""
         ];
         extraConfig.channel = {
           SyncState = "*";
+          Sync = "All";
+          CopyArrivalDate = "yes";
         };
       };
 

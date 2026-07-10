@@ -16,6 +16,7 @@
       sidebar.enable = true;
       sort = "reverse-threads";
       vimKeys = true;
+      unmailboxes = true;
       binds = [
         {
           map = [
