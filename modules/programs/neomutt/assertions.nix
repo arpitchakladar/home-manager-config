@@ -3,24 +3,24 @@
 {
   assertions = [
     {
-      assertion = !config.programs.meli.enable || config.programs.less.enable;
+      assertion = !config.programs.neomutt.enable || config.programs.less.enable;
       message = ''
-        programs.meli is enabled but programs.less.enable is not.
-        meli requires less as its pager. Please enable programs.less.
+        programs.neomutt is enabled but programs.less.enable is not.
+        neomutt requires less as its pager. Please enable programs.less.
       '';
     }
     {
-      assertion = !config.programs.meli.enable || config.programs.bat.enable;
+      assertion = !config.programs.neomutt.enable || config.programs.bat.enable;
       message = ''
-        programs.meli is enabled but programs.bat.enable is not.
-        meli requires bat for text/html filtering. Please enable programs.bat.
+        programs.neomutt is enabled but programs.bat.enable is not.
+        neomutt requires bat for text/html filtering. Please enable programs.bat.
       '';
     }
     {
-      assertion = !config.programs.meli.enable || config.programs.email.enable;
+      assertion = !config.programs.neomutt.enable || config.programs.email.enable;
       message = ''
-        programs.meli is enabled but programs.email.enable is not.
-        meli requires the email module (mbsync + notmuch) to be enabled.
+        programs.neomutt is enabled but programs.email.enable is not.
+        neomutt requires the email module (mbsync + notmuch) to be enabled.
       '';
     }
   ];
