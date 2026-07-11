@@ -11,5 +11,10 @@
     programs.vscodium = {
       package = pkgs.vscodium;
     };
+
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/vscodium" = "vscodium.desktop";
+      "text/plain" = "vscodium.desktop";
+    };
   };
 }

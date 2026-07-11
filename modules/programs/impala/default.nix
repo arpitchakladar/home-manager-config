@@ -14,5 +14,13 @@
 
   config = lib.mkIf config.programs.impala.enable {
     home.packages = [ config.programs.impala.package ];
+
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/impala" = "impala.desktop";
+      "audio/mpeg" = "impala.desktop";
+      "audio/ogg" = "impala.desktop";
+      "audio/flac" = "impala.desktop";
+      "audio/x-flac" = "impala.desktop";
+    };
   };
 }

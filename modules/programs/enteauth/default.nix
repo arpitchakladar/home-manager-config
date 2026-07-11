@@ -53,5 +53,9 @@ in
 
   config = lib.mkIf config.programs.enteauth.enable {
     home.packages = [ config.programs.enteauth.package ];
+
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/enteauth" = "enteauth.desktop";
+    };
   };
 }

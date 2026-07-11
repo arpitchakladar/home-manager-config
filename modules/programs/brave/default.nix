@@ -33,6 +33,14 @@
       };
     };
 
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/http" = "brave-browser.desktop";
+      "x-scheme-handler/https" = "brave-browser.desktop";
+      "x-scheme-handler/chrome" = "brave-browser.desktop";
+      "text/html" = "brave-browser.desktop";
+      "application/xhtml+xml" = "brave-browser.desktop";
+    };
+
     xdg.configFile."BraveSoftware/Brave-Browser/Default/Preferences" = {
       force = true;
       text = builtins.toJSON {

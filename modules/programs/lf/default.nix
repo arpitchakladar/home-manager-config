@@ -8,6 +8,10 @@
 # lf - terminal file manager
 {
   config = lib.mkIf config.programs.lf.enable {
+    xdg.mimeApps.defaultApplications = {
+      "inode/directory" = "lf.desktop";
+    };
+
     home.packages = with pkgs; [
       busybox
     ];

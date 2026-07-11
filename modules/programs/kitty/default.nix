@@ -7,6 +7,10 @@
 # Kitty - GPU-accelerated terminal emulator
 {
   config = lib.mkIf config.programs.kitty.enable {
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/terminal" = "kitty.desktop";
+    };
+
     programs.kitty = {
       settings = with config.scheme.withHashtag; {
         window_padding_width = 10;

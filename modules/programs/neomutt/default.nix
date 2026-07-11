@@ -11,6 +11,10 @@
     ./theme.nix
   ];
   config = lib.mkIf config.programs.neomutt.enable {
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/mailto" = "neomutt.desktop";
+    };
+
     home.packages = [
       pkgs.urlscan
       pkgs.w3m

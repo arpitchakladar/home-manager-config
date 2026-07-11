@@ -46,4 +46,10 @@
     ./zathura
     ./zsh
   ];
+
+  config = {
+    xdg.mimeApps = {
+      enable = true;
+    };
+  };
 }

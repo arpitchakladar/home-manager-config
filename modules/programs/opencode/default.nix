@@ -11,5 +11,9 @@
     programs.opencode = {
       package = pkgs.opencode;
     };
+
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/opencode" = "opencode.desktop";
+    };
   };
 }

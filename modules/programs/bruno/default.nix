@@ -14,5 +14,9 @@
 
   config = lib.mkIf config.programs.bruno.enable {
     home.packages = [ config.programs.bruno.package ];
+
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/bruno" = "bruno.desktop";
+    };
   };
 }

@@ -40,5 +40,9 @@
 
   config = lib.mkIf config.programs.heroic.enable {
     home.packages = [ config.programs.heroic.package ];
+
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/heroic" = "heroic.desktop";
+    };
   };
 }
