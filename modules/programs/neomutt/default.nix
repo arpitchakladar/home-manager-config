@@ -83,6 +83,8 @@ in
       checkStatsInterval = 20;
 
       extraConfig = ''
+        set menu_scroll = yes
+
         # cancel any prompt/command-line entry with Esc, vim-style
         set abort_key = "<Esc>"
 
@@ -270,12 +272,12 @@ in
         {
           map = [ "index" ];
           key = "\\Cd";
-          action = "next-page";
+          action = "half-down";
         }
         {
           map = [ "index" ];
           key = "\\Cu";
-          action = "previous-page";
+          action = "half-up";
         }
 
         # --- search (vim: / forward, ? backward, n/N repeat) ---
@@ -355,6 +357,18 @@ in
           map = [ "index" ];
           key = "gt";
           action = "next-unread-mailbox";
+        }
+
+        # --- help message to show functions and keybindings ---
+        {
+          map = [
+            "index"
+            "pager"
+            "browser"
+            "attach"
+          ];
+          key = "g?";
+          action = "help";
         }
       ];
 

@@ -9,7 +9,7 @@
     # Base16 OneDark Dark terminal colors for neomutt
     # Each column in the index receives a distinct color to keep the UI organized.
 
-    set index_format = " %5C │ %Z │ %{%d/%m %H:%M} │ %-25.25a │ %s%* "
+    set index_format = " %5C │ %Z │ %{%d/%m/%y %H:%M} │ %-25.25a │ %s%* "
 
     # Hide the keybindings help bar at the top to save vertical space
     set help = no
