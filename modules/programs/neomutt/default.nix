@@ -5,6 +5,21 @@
   pkgs,
   ...
 }:
+let
+  neomuttDesktopItem = pkgs.makeDesktopItem {
+    name = "neomutt";
+    desktopName = "NeoMutt";
+    exec = "${lib.getExe config.programs.kitty.package} -e ${lib.getExe config.programs.neomutt.package}";
+    icon = "kitty";
+    categories = [
+      "Network"
+      "Email"
+    ];
+    comment = "Terminal email client";
+    terminal = false;
+    type = "Application";
+  };
+in
 {
   imports = [
     ./assertions.nix
@@ -18,6 +33,7 @@
     home.packages = [
       pkgs.urlscan
       pkgs.w3m
+      neomuttDesktopItem
     ];
 
     xdg.configFile."neomutt/mailcap".text = ''
