@@ -13,7 +13,7 @@
         enable = true;
         mailboxType = "maildir";
         extraConfig = ''
-          mailboxes =Inbox ="[Gmail]/Drafts" ="[Gmail]/Sent Mail" ="[Gmail]/Trash"
+          mailboxes =Inbox ="[Gmail]/Drafts" ="[Gmail]/Sent Mail" ="[Gmail]/Spam" ="[Gmail]/Trash"
         '';
       };
 
@@ -29,9 +29,10 @@
         create = "maildir";
         patterns = [
           "INBOX"
-          "\"[Gmail]/Drafts\""
-          "\"[Gmail]/Sent Mail\""
-          "\"[Gmail]/Trash\""
+          "[Gmail]/Drafts"
+          "[Gmail]/Sent Mail"
+          "[Gmail]/Spam"
+          "[Gmail]/Trash"
         ];
         extraConfig.channel = {
           SyncState = "*";
@@ -46,7 +47,7 @@
         neomutt.virtualMailboxes = [
           {
             name = "All Mail";
-            query = "folder:example/Inbox or folder:\"example/[Gmail]/Sent Mail\"";
+            query = "folder:arpitchakladar/Inbox or folder:\"arpitchakladar/[Gmail]/Sent Mail\"";
           }
         ];
       };

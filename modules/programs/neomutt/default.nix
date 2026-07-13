@@ -50,7 +50,7 @@ in
       NeoMutt Index Flags
       ===================
 
-      Message state ($flag_chars)
+      Message state ($flag_chars) -- unchanged defaults
         N   New       - unread, arrived since you last checked
         O   Old       - unread, but seen in a previous session
         D   Deleted   - marked for deletion (pending expunge)
@@ -58,18 +58,21 @@ in
         !   Flagged   - important (toggle with F)
         *   Tagged    - selected for a bulk operation (toggle with t)
         r   Replied   - you've replied to this message
-        S   Signed    - PGP/SMIME signed
-        P   Encrypted - PGP/SMIME encrypted
-        s   Cert      - contains a S/MIME certificate/key
-        K   PGP key   - contains a PGP public key
         (blank)       - read, nothing else notable
 
+      Cryptography ($crypt_chars)
+           Verified   - signed, and the signature checks out
+           Encrypted  - PGP/SMIME encrypted
+           Signed     - PGP/SMIME signed (unverified)
+           PGP key    - message contains a PGP public key
+        (blank)         - no cryptography info
+
       Addressing ($to_chars)
-        +   To you only     - sent to you and only you
-        T   To (with others) - you're in the To: list, among others
-        C   Cc only          - you're only in the Cc: list
-        F   From you         - sent by you
-        L   Mailing list     - sent to a list you're subscribed to
+           To you only      - sent to you and only you
+           To (with others) - you're in the To: list, among others
+           Cc only          - you're only in the Cc: list
+           From you         - sent by you
+           Mailing list     - sent to a list you're subscribed to
         (blank)              - not in To/Cc (e.g. Bcc, unlisted)
 
       Press q to close.
@@ -357,6 +360,20 @@ in
           map = [ "index" ];
           key = "gt";
           action = "next-unread-mailbox";
+        }
+
+        # --- filter/limit (vim: gf to 'find' or 'filter') ---
+        {
+          map = [ "index" ];
+          key = "gf";
+          action = "limit";
+        }
+
+        # --- filter/limit (vim: gf to 'find' or 'filter') ---
+        {
+          map = [ "index" ];
+          key = "gF";
+          action = "limit";
         }
 
         # --- help message to show functions and keybindings ---
