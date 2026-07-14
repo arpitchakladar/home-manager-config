@@ -23,7 +23,8 @@
         };
         git = {
           log.showWholeGraph = true;
-          branchLogCmd = "git log-graph";
+          branchLogCmd = "git log-graph-embed";
+          overrideGpg = true;
         };
         update.method = "never";
       };
