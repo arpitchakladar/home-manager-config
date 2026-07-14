@@ -7,7 +7,7 @@
 
 # Steam - game store
 {
-  options.programs.heroic.steam = {
+  options.gaming.steam = {
     enable = lib.mkEnableOption "Enables steam.";
     package = lib.mkOption {
       type = lib.types.package;
@@ -16,7 +16,7 @@
     };
   };
 
-  config = lib.mkIf config.programs.heroic.steam.enable {
-    home.packages = [ config.programs.heroic.steam.package ];
+  config = lib.mkIf config.gaming.steam.enable {
+    home.packages = [ config.gaming.steam.package ];
   };
 }

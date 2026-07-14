@@ -5,16 +5,15 @@
   ...
 }:
 
-# Heroic Games Launcher - An elegant UI for Epic, GOG, and Amazon Games using UMU under the hood
+# Gaming - Collection of game launchers and gaming utilities
 {
   imports = [
-    ./nexus-mods.nix
     ./steam.nix
   ];
 
-  options.programs.heroic = {
-    enable = lib.mkEnableOption "Enables Heroic Games Launcher.";
-    package = lib.mkOption {
+  options.gaming = {
+    enable = lib.mkEnableOption "gaming tools bundle (Heroic, winetricks, gamemode).";
+    launcher = lib.mkOption {
       type = lib.types.package;
       default = pkgs.symlinkJoin {
         name = "heroic-bundle";
@@ -34,12 +33,12 @@
           gamemode
         ];
       };
-      description = "Bundle of Heroic Games Launcher, winetricks, and core utilities with GameMode support.";
+      description = "Bundle of game launchers (Heroic), winetricks, and core gaming utilities with GameMode support.";
     };
   };
 
-  config = lib.mkIf config.programs.heroic.enable {
-    home.packages = [ config.programs.heroic.package ];
+  config = lib.mkIf config.gaming.enable {
+    home.packages = [ config.gaming.launcher ];
 
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/heroic" = "heroic.desktop";

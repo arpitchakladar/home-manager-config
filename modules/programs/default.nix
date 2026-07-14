@@ -16,7 +16,6 @@
     ./fzf
     ./git
     ./gpg
-    ./heroic
     ./htop
     ./impala
     ./kitty

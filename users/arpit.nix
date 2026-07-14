@@ -15,6 +15,10 @@
   # Desktop environment
   desktop.enable = true;
 
+  # Gaming
+  gaming.enable = true;
+  gaming.steam.enable = false;
+
   # Tools
   programs.aria2.enable = true;
   programs.bat.enable = true;
@@ -32,7 +36,6 @@
   programs.git.useSSH = true;
   programs.git.signing.signByDefault = true;
   programs.gpg.enable = true;
-  programs.heroic.enable = true;
   programs.htop.enable = true;
   programs.impala.enable = true;
   programs.kitty.enable = true;
