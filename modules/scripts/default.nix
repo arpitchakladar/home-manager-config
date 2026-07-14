@@ -100,10 +100,15 @@ let
       deps = [
         config.programs.fzf.package
         pkgs.util-linux
+        config.programs.zsh.package
       ];
       conditions = [
         {
           option = "programs.fzf.enable";
+          value = true;
+        }
+        {
+          option = "programs.zsh.enable";
           value = true;
         }
       ];

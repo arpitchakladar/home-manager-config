@@ -62,4 +62,3 @@ exec_cmd=$(printf '%s' "$chosen" | cut -d$'\t' -f2)
 
 # Launch safely
 eval "$exec_cmd" &>/dev/null &
-disown
