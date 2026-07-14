@@ -51,6 +51,10 @@
                 files = "modules/private/";
                 excludes = [ "\\.example\\.nix$" ];
               };
+
+              packages = with pkgs; [
+                nixd
+              ];
             }
           )
         ];
