@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, ... }:
 
 {
   imports = [
@@ -39,6 +39,7 @@
   programs.htop.enable = true;
   programs.impala.enable = true;
   programs.kitty.enable = true;
+  programs.lazygit.enable = true;
   programs.less.enable = true;
   programs.lf.enable = true;
   programs.lsd.enable = true;

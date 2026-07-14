@@ -19,6 +19,7 @@
     ./htop
     ./impala
     ./kitty
+    ./lazygit
     ./less
     ./lf
     ./lsd

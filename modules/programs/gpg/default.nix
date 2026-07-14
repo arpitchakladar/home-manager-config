@@ -13,6 +13,7 @@
       enableZshIntegration = true;
       defaultCacheTtl = 3600;
       maxCacheTtl = 86400;
+      enableSshSupport = config.programs.ssh.enable;
       pinentry.package = pkgs.pinentry-gtk2;
     };
   };
