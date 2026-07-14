@@ -21,6 +21,10 @@
           mouseEvents = true;
           border = "single";
         };
+        git = {
+          log.showWholeGraph = true;
+          branchLogCmd = "git log-graph";
+        };
         update.method = "never";
       };
     };

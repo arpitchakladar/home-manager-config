@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -26,6 +27,10 @@
   };
 
   config = lib.mkIf config.programs.git.enable {
+    home.packages = with pkgs; [
+      git-graph
+    ];
+
     programs.git = {
       settings =
         lib.recursiveUpdate
@@ -35,6 +40,17 @@
               email = config.programs.git.email;
             };
             core.askPass = "";
+            alias = {
+              # The exclamation mark (!) tells Git to execute this as an external shell command.
+              # This overrides standard git-graph behavior with your custom format string.
+              log-graph = ''
+                !f() {
+                  fmt=$(printf '\033[1;34mCommit:\033[0m \033[33m%%h\033[0m%%n\033[1;34mParents:\033[0m \033[35m%%p\033[0m%%n\033[1;34mAuthor:\033[0m \033[32m%%an\033[0m <\033[96m%%ae\033[0m>%%n\033[1;34mDate:\033[0m \033[36m%%ad (%%ar)\033[0m%%n%%n%%B%%n\033[90m--------------------------------------------------------\033[0m')
+
+                  git-graph --color always --sparse --style round --format="$fmt"
+                }; f
+              '';
+            };
           }
           (
             lib.optionalAttrs config.programs.git.useSSH {
