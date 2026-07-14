@@ -27,6 +27,7 @@
   programs.brave.enable = true;
   programs.brightnessctl.enable = true;
   programs.bruno.enable = true;
+  programs.delta.enable = true;
   programs.email.enable = true;
   programs.enteauth.enable = true;
   programs.feh.enable = true;

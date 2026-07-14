@@ -16,8 +16,10 @@
           };
           showIcons = true;
           scrollHeight = 2;
+          nerdFontsVersion = "3";
           scrollPastBottom = true;
           mouseEvents = true;
+          border = "single";
         };
         update.method = "never";
       };
