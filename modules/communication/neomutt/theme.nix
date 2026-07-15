@@ -117,7 +117,7 @@
     color body        brightblack   default "^gpg: "             # 
 
     # --- Sidebar (was completely unset despite sidebar.enable = true) -----
-    set sidebar_format = " %D%* %?N?  %N%?F?  %F?  "
+    set sidebar_format = " %D%* %?N? %N ?%?F? %F ?"
     color sidebar_background default     default     # transparent, blends with terminal bg
     color sidebar_divider    white       default    # base03 (matches old tree color)
     color sidebar_ordinary   white       default    #  base05 (normal mailbox entries)

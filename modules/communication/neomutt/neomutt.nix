@@ -75,6 +75,7 @@ in
     '';
 
     programs.neomutt = {
+      enable = true;
       sidebar.enable = true;
       sort = "reverse-threads";
       vimKeys = true;
@@ -392,7 +393,7 @@ in
             "pager"
           ];
           key = "O";
-          action = "<sync-mailbox><shell-escape>mbsync -a<enter><sync-mailbox>";
+          action = "<sync-mailbox><shell-escape>mbsync -a && notmuch new<enter><sync-mailbox>";
         }
         {
           # gx: extract links from the current message and open one, vim-netrw style
