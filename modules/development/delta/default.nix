@@ -10,12 +10,15 @@
   };
 
   config = lib.mkIf config.development.delta.enable {
-    programs.delta.options = {
-      line-numbers = true;
-      hunk-header-style = "omit";
-      hunk-header-decoration-style = "omit";
-      line-numbers-left-format = "{nm}│ ";
-      line-numbers-right-format = "{np}│ ";
+    programs.delta = {
+      enable = true;
+      options = {
+        line-numbers = true;
+        hunk-header-style = "omit";
+        hunk-header-decoration-style = "omit";
+        line-numbers-left-format = "{nm}│ ";
+        line-numbers-right-format = "{np}│ ";
+      };
     };
 
     programs.git.settings = lib.mkIf config.development.git.enable {
