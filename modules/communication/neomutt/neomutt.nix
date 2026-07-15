@@ -26,9 +26,9 @@ in
       "x-scheme-handler/mailto" = "neomutt.desktop";
     };
 
-    home.packages = [
-      pkgs.urlscan
-      pkgs.w3m
+    home.packages = with pkgs; [
+      urlscan
+      w3m
       neomuttDesktopItem
     ];
 
@@ -393,7 +393,7 @@ in
             "pager"
           ];
           key = "O";
-          action = "<sync-mailbox><shell-escape>mbsync -a && notmuch new<enter><sync-mailbox>";
+          action = "<enter-command>set my_wait_key=$wait_key wait_key=no<enter><sync-mailbox><shell-escape>${lib.getExe config.scripts.neomutt-sync.package}<enter><sync-mailbox><enter-command>set wait_key=$my_wait_key<enter>";
         }
         {
           # gx: extract links from the current message and open one, vim-netrw style

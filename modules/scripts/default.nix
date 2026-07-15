@@ -195,6 +195,20 @@ let
         }
       ];
     };
+    neomutt-sync = {
+      path = ./neomutt-sync.sh;
+      deps = [
+        pkgs.dialog
+        config.programs.mbsync.package
+        config.programs.notmuch.package
+      ];
+      conditions = [
+        {
+          option = "communication.neomutt.enable";
+          value = true;
+        }
+      ];
+    };
   };
 
   # Check whether all conditions for a script are satisfied
