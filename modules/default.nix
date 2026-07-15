@@ -2,10 +2,24 @@
 
 {
   imports = [
+    ./communication
     ./desktop
+    ./development
+    ./file-management
     ./fonts
     ./gaming
+    ./media
+    ./office
     ./scripts
-    ./programs
+    ./security
+    ./system
+    ./terminal
+    ./web
   ];
+
+  config = {
+    xdg.mimeApps = {
+      enable = true;
+    };
+  };
 }

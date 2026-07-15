@@ -60,7 +60,6 @@
   programs.starship.enable = true;
   programs.systemctl-tui.enable = true;
   programs.tmux.enable = true;
-  programs.tor.enable = true;
   programs.vlc.enable = true;
   programs.vscodium.enable = true;
   programs.zathura.enable = true;
