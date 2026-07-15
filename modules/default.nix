@@ -9,6 +9,7 @@
     ./fonts
     ./gaming
     ./media
+    ./networking
     ./office
     ./scripts
     ./security

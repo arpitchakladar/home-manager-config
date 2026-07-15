@@ -42,12 +42,15 @@
   # Media
   media.feh.enable = true;
   media.ffmpeg.enable = true;
-  media.impala.enable = true;
   media.maim.enable = true;
   media.pamixer.enable = true;
   media.playerctl.enable = true;
   media.slop.enable = true;
   media.vlc.enable = true;
+
+  # Networking
+  networking.impala.enable = true;
+  networking.bluetui.enable = true;
 
   # Office
   office.zathura.enable = true;
@@ -60,7 +63,6 @@
   security.ssh.enable = true;
 
   # System
-  system.bluetui.enable = true;
   system.bottom.enable = true;
   system.brightnessctl.enable = true;
   system.htop.enable = true;

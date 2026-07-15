@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./bluetui
     ./bottom
     ./brightnessctl
     ./htop
