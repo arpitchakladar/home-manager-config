@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./email
     ./neomutt
   ];
 }

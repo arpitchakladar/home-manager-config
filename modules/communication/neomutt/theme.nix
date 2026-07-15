@@ -58,7 +58,7 @@
     color index_tags      cyan        default        # 󰓼 base0C (Transformed tags, %g %J)
 
     # --- Index Message States ---------------------------------------------
-    # By targeting *only* `index_subject`, we preserve your multi-color
+    # By targeting *only* `index_subject`, you preserve your multi-color
     # columns while still easily identifying unread or flagged emails.
     color index_subject blue        default "~U"  #  Unread: Blue (base0D)
     color index_subject blue        default "~N"  # 󰄯 New: Blue (base0D)
@@ -117,7 +117,7 @@
     color body        brightblack   default "^gpg: "             # 
 
     # --- Sidebar (was completely unset despite sidebar.enable = true) -----
-    set sidebar_format = " %D%* %?N?  %N?%?F?  %F?  "
+    set sidebar_format = " %D%* %?N?  %N%?F?  %F?  "
     color sidebar_background default     default     # transparent, blends with terminal bg
     color sidebar_divider    white       default    # base03 (matches old tree color)
     color sidebar_ordinary   white       default    #  base05 (normal mailbox entries)

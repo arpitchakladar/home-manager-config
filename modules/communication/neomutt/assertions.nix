@@ -17,13 +17,6 @@
       '';
     }
     {
-      assertion = !config.communication.neomutt.enable || config.communication.email.enable;
-      message = ''
-        communication.neomutt is enabled but communication.email.enable is not.
-        neomutt requires the email module (mbsync + notmuch) to be enabled.
-      '';
-    }
-    {
       assertion = !config.communication.neomutt.enable || config.terminal.kitty.enable;
       message = ''
         communication.neomutt is enabled but terminal.kitty.enable is not.

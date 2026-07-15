@@ -20,7 +20,6 @@
   gaming.steam.enable = false;
 
   # Communication
-  communication.email.enable = true;
   communication.neomutt.enable = true;
 
   # Development
