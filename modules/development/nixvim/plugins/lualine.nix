@@ -2,7 +2,7 @@
 
 # Lualine - Statusline configuration (lualine.nvim)
 {
-  config.programs.nixvim.plugins.lualine = lib.mkIf config.programs.nixvim.enable {
+  config.programs.nixvim.plugins.lualine = lib.mkIf config.development.nixvim.enable {
     enable = true;
     settings = {
       options = {

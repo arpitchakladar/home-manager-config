@@ -6,7 +6,7 @@
 }:
 let
   shell =
-    if config.programs.zsh.enable then (lib.getExe config.programs.zsh.package) else "/usr/bin/env sh";
+    if config.terminal.zsh.enable then (lib.getExe config.terminal.zsh.package) else "/usr/bin/env sh";
 
   mkScript =
     name: path: env: deps:
@@ -40,11 +40,11 @@ let
     aria2-run = {
       path = ./aria2-run.sh;
       deps = [
-        config.programs.aria2.package
+        config.web.aria2.package
       ];
       conditions = [
         {
-          option = "programs.aria2.enable";
+          option = "web.aria2.enable";
           value = true;
         }
       ];
@@ -55,30 +55,30 @@ let
     file-preview = {
       path = ./file-preview.sh;
       deps = [
-        config.programs.kitty.package
-        config.programs.bat.package
-        config.programs.ffmpeg.package
-        config.programs.ouch.package
+        config.terminal.kitty.package
+        config.terminal.bat.package
+        config.media.ffmpeg.package
+        config.file-management.ouch.package
         pkgs.file
         pkgs.librsvg
         pkgs.poppler-utils
       ];
       conditions = [
         {
-          option = "programs.ffmpeg.enable";
+          option = "media.ffmpeg.enable";
           value = true;
         }
         {
-          option = "programs.ouch.enable";
+          option = "file-management.ouch.enable";
           value = true;
         }
         {
           # not a dependency
-          option = "programs.zathura.enable";
+          option = "office.zathura.enable";
           value = true;
         }
         {
-          option = "programs.bat.enable";
+          option = "terminal.bat.enable";
           value = true;
         }
       ];
@@ -86,7 +86,7 @@ let
     file-preview-clean = {
       path = ./file-preview-clean.sh;
       deps = [
-        config.programs.kitty.package
+        config.terminal.kitty.package
       ];
       conditions = [
         {
@@ -98,17 +98,17 @@ let
     fzf-launcher = {
       path = ./fzf-launcher.sh;
       deps = [
-        config.programs.fzf.package
+        config.terminal.fzf.package
         pkgs.util-linux
-        config.programs.zsh.package
+        config.terminal.zsh.package
       ];
       conditions = [
         {
-          option = "programs.fzf.enable";
+          option = "terminal.fzf.enable";
           value = true;
         }
         {
-          option = "programs.zsh.enable";
+          option = "terminal.zsh.enable";
           value = true;
         }
       ];
@@ -125,16 +125,16 @@ let
     screen-recording = {
       path = ./screen-recording.sh;
       deps = [
-        config.programs.ffmpeg.package
-        config.programs.slop.package
+        config.media.ffmpeg.package
+        config.media.slop.package
       ];
       conditions = [
         {
-          option = "programs.ffmpeg.enable";
+          option = "media.ffmpeg.enable";
           value = true;
         }
         {
-          option = "programs.slop.enable";
+          option = "media.slop.enable";
           value = true;
         }
       ];
@@ -142,26 +142,26 @@ let
     system-monitor = {
       path = ./system-monitor.sh;
       deps = [
-        config.programs.bottom.package
-        config.programs.nvtop.package
-        config.programs.tmux.package
-        config.programs.kitty.package
+        config.system.bottom.package
+        config.system.nvtop.package
+        config.terminal.tmux.package
+        config.terminal.kitty.package
       ];
       conditions = [
         {
-          option = "programs.bottom.enable";
+          option = "system.bottom.enable";
           value = true;
         }
         {
-          option = "programs.nvtop.enable";
+          option = "system.nvtop.enable";
           value = true;
         }
         {
-          option = "programs.tmux.enable";
+          option = "terminal.tmux.enable";
           value = true;
         }
         {
-          option = "programs.kitty.enable";
+          option = "terminal.kitty.enable";
           value = true;
         }
       ];
@@ -169,19 +169,19 @@ let
     vpn-connect = {
       path = ./vpn-connect.sh;
       env = {
-        SYSTEMD_RESOLVED_PATH = "${config.programs.openvpn.package}/libexec/update-systemd-resolved";
+        SYSTEMD_RESOLVED_PATH = "${config.security.openvpn.package}/libexec/update-systemd-resolved";
       };
       deps = [
-        config.programs.fzf.package
-        config.programs.openvpn.package
+        config.terminal.fzf.package
+        config.security.openvpn.package
       ];
       conditions = [
         {
-          option = "programs.openvpn.enable";
+          option = "security.openvpn.enable";
           value = true;
         }
         {
-          option = "programs.fzf.enable";
+          option = "terminal.fzf.enable";
           value = true;
         }
       ];
@@ -214,7 +214,7 @@ let
       pkgs.makeDesktopItem {
         name = name;
         desktopName = sc.desktop.displayName;
-        exec = "${lib.getExe config.programs.kitty.package} -e ${lib.getExe sc.package}";
+        exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe sc.package}";
         icon = "kitty";
         categories = [ "Utility" ];
         terminal = false;
@@ -298,7 +298,7 @@ in
 
     home.packages = [
       pkgs.file
-      config.programs.bat.package
+      config.terminal.bat.package
     ]
     ++ lib.filter (x: x != null) (lib.mapAttrsToList (_: s: s.package) config.scripts)
     ++ lib.filter (x: x != null) desktopItems;

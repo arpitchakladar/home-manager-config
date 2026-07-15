@@ -7,7 +7,7 @@
 }:
 
 {
-  options.programs.gopass = {
+  options.security.gopass = {
     enable = lib.mkEnableOption "Enables gopass.";
 
     package = lib.mkOption {
@@ -18,10 +18,10 @@
     };
   };
 
-  config = lib.mkIf config.programs.gopass.enable {
+  config = lib.mkIf config.security.gopass.enable {
     programs.password-store = {
       enable = true;
-      package = config.programs.gopass.package;
+      package = config.security.gopass.package;
       settings = {
         PASSWORD_STORE_DIR = "${config.home.homeDirectory}/.local/share/pass";
       };

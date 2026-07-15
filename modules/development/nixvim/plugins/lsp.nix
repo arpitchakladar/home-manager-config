@@ -2,7 +2,7 @@
 
 # LSP - Language Server Protocol configuration (nvim-lspconfig)
 {
-  config.programs.nixvim.plugins.lsp = lib.mkIf config.programs.nixvim.enable {
+  config.programs.nixvim.plugins.lsp = lib.mkIf config.development.nixvim.enable {
     enable = true;
     inlayHints = true;
     autoLoad = true;

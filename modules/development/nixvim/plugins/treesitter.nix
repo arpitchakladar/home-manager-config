@@ -2,7 +2,7 @@
 
 # Treesitter - Syntax highlighting and parsing (nvim-treesitter)
 {
-  config.programs.nixvim.plugins.treesitter = lib.mkIf config.programs.nixvim.enable {
+  config.programs.nixvim.plugins.treesitter = lib.mkIf config.development.nixvim.enable {
     enable = true;
     folding = {
       enable = true;

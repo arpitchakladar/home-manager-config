@@ -7,8 +7,13 @@
 
 # Opencode - AI-powered coding assistant (opencode.ai)
 {
-  config = lib.mkIf config.programs.opencode.enable {
+  options.development.opencode = {
+    enable = lib.mkEnableOption "Enables opencode.";
+  };
+
+  config = lib.mkIf config.development.opencode.enable {
     programs.opencode = {
+      enable = true;
       package = pkgs.opencode;
     };
 

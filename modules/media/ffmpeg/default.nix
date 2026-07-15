@@ -7,12 +7,12 @@
 
 # FFmpeg - Command-line audio/video converter and streaming tool
 {
-  options.programs.ffmpeg = {
+  options.media.ffmpeg = {
     enable = lib.mkEnableOption "Enables ffmpeg.";
     package = lib.mkPackageOption pkgs "ffmpeg-full" { };
   };
 
-  config = lib.mkIf config.programs.ffmpeg.enable {
-    home.packages = [ config.programs.ffmpeg.package ];
+  config = lib.mkIf config.media.ffmpeg.enable {
+    home.packages = [ config.media.ffmpeg.package ];
   };
 }

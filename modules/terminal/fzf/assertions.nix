@@ -3,9 +3,9 @@
   assertions = [
     {
       assertion =
-        !config.programs.fzf.enable || config.programs.zsh.enable || config.programs.bash.enable;
+        !config.terminal.fzf.enable || config.terminal.zsh.enable || config.terminal.bash.enable;
       message = ''
-        programs.fzf is enabled but neither programs.zsh.enable nor programs.bash.enable is set.
+        terminal.fzf is enabled but neither terminal.zsh.enable nor terminal.bash.enable is set.
         fzf shell integration requires zsh or bash. Please enable at least one.
       '';
     }

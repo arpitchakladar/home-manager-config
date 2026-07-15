@@ -1,17 +1,25 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
 # Kitty - GPU-accelerated terminal emulator
 {
-  config = lib.mkIf config.programs.kitty.enable {
+  options.terminal.kitty = {
+    enable = lib.mkEnableOption "Enables kitty.";
+    package = lib.mkPackageOption pkgs "kitty" { };
+  };
+
+  config = lib.mkIf config.terminal.kitty.enable {
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/terminal" = "kitty.desktop";
     };
 
     programs.kitty = {
+      enable = true;
+      package = config.terminal.kitty.package;
       settings = with config.scheme.withHashtag; {
         window_padding_width = 10;
         font_size = config.fonts.size;
@@ -48,7 +56,7 @@
 
         allow_remote_control = "yes";
         listen_on = "unix:/tmp/kitty";
-        shell = lib.mkIf config.programs.zsh.enable (lib.getExe config.programs.zsh.package);
+        shell = lib.mkIf config.terminal.zsh.enable (lib.getExe config.terminal.zsh.package);
       };
     };
   };

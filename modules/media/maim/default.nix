@@ -7,12 +7,12 @@
 
 # Maim - Screenshot utility (slop-based region selection)
 {
-  options.programs.maim = {
+  options.media.maim = {
     enable = lib.mkEnableOption "Enables maim.";
     package = lib.mkPackageOption pkgs "maim" { };
   };
 
-  config = lib.mkIf config.programs.maim.enable {
-    home.packages = [ config.programs.maim.package ];
+  config = lib.mkIf config.media.maim.enable {
+    home.packages = [ config.media.maim.package ];
   };
 }

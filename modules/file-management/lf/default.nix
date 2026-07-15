@@ -7,7 +7,19 @@
 
 # lf - terminal file manager
 {
-  config = lib.mkIf config.programs.lf.enable {
+  options.file-management.lf = {
+    enable = lib.mkEnableOption "Enables lf.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.lf.overrideAttrs (old: {
+        dontWrapQtApps = true;
+        dontPatchShebangs = true;
+      });
+      description = "The lf package to use.";
+    };
+  };
+
+  config = lib.mkIf config.file-management.lf.enable {
     xdg.mimeApps.defaultApplications = {
       "inode/directory" = "lf.desktop";
     };
@@ -17,11 +29,8 @@
     ];
 
     programs.lf = {
-      package = pkgs.lf.overrideAttrs (old: {
-        dontWrapQtApps = true;
-        dontPatchShebangs = true;
-      });
-
+      enable = true;
+      package = config.file-management.lf.package;
       settings = {
         number = true;
         icons = true;

@@ -7,13 +7,13 @@
 
 # Impala - Apache Impala: SQL query engine for Apache Hadoop
 {
-  options.programs.impala = {
+  options.media.impala = {
     enable = lib.mkEnableOption "Enables impala.";
     package = lib.mkPackageOption pkgs "impala" { };
   };
 
-  config = lib.mkIf config.programs.impala.enable {
-    home.packages = [ config.programs.impala.package ];
+  config = lib.mkIf config.media.impala.enable {
+    home.packages = [ config.media.impala.package ];
 
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/impala" = "impala.desktop";

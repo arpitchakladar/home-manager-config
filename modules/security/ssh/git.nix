@@ -41,7 +41,7 @@ let
     };
 in
 {
-  config = lib.mkIf (config.programs.ssh.enable && config.programs.git.useSSH) {
+  config = lib.mkIf (config.security.ssh.enable && config.development.git.useSSH) {
     home.file = builtins.listToAttrs (map mkKeyFile hosts);
 
     programs.ssh.settings = builtins.listToAttrs (map mkGitHost hosts);

@@ -8,8 +8,13 @@
     ./plugins
   ];
 
-  config = {
+  options.development.nixvim = {
+    enable = lib.mkEnableOption "Enables nixvim.";
+  };
+
+  config = lib.mkIf config.development.nixvim.enable {
     programs.nixvim = {
+      enable = true;
       defaultEditor = true;
       opts = {
         number = true;
@@ -79,14 +84,13 @@
           update_in_insert = false;
           float = {
             border = "rounded";
-            source = true; # Show which LSP the diagnostic is from
+            source = true;
             header = "";
             prefix = "";
           };
         };
       };
 
-      # Show diagnostics float on cursor hold
       autoCmd = [
         {
           event = [ "CursorHold" ];

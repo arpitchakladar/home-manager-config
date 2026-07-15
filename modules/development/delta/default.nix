@@ -5,7 +5,11 @@
 }:
 # Delta - A syntax-highlighting pager for git, diff, and grep output
 {
-  config = lib.mkIf config.programs.delta.enable {
+  options.development.delta = {
+    enable = lib.mkEnableOption "Enables delta.";
+  };
+
+  config = lib.mkIf config.development.delta.enable {
     programs.delta.options = {
       line-numbers = true;
       hunk-header-style = "omit";
@@ -14,13 +18,13 @@
       line-numbers-right-format = "{np}│ ";
     };
 
-    programs.git.settings = lib.mkIf config.programs.git.enable {
+    programs.git.settings = lib.mkIf config.development.git.enable {
       core.pager = "delta";
       interactive.diffFilter = "delta --color-only";
       delta.navigate = true;
     };
 
-    programs.lazygit.settings = lib.mkIf config.programs.lazygit.enable {
+    programs.lazygit.settings = lib.mkIf config.development.lazygit.enable {
       git.pagers = [
         {
           colorArg = "always";

@@ -11,30 +11,30 @@ in
 {
   # --- General Applications ---
   "${mod}+r" =
-    lib.mkIf (config.programs.fzf.enable && config.programs.kitty.enable)
-      "exec ${lib.getExe config.programs.kitty.package} --class application-launcher -e ${lib.getExe config.scripts.fzf-launcher.package}";
+    lib.mkIf (config.terminal.fzf.enable && config.terminal.kitty.enable)
+      "exec ${lib.getExe config.terminal.kitty.package} --class application-launcher -e ${lib.getExe config.scripts.fzf-launcher.package}";
   "${mod}+t" =
-    lib.mkIf config.programs.kitty.enable "exec ${lib.getExe config.programs.kitty.package}";
+    lib.mkIf config.terminal.kitty.enable "exec ${lib.getExe config.terminal.kitty.package}";
   "${mod}+f" =
-    lib.mkIf (config.programs.kitty.enable && config.programs.lf.enable)
-      "exec ${lib.getExe config.programs.kitty.package} --title 'File Manager' --class file-explorer -e ${lib.getExe config.programs.lf.package}";
+    lib.mkIf (config.terminal.kitty.enable && config.file-management.lf.enable)
+      "exec ${lib.getExe config.terminal.kitty.package} --title 'File Manager' --class file-explorer -e ${lib.getExe config.file-management.lf.package}";
   "${mod}+s" =
-    lib.mkIf config.programs.kitty.enable "exec ${lib.getExe config.programs.kitty.package} --title 'Keybindings' --class keybindings-viewer -e ${lib.getExe config.scripts.i3-keybindings.package}";
+    lib.mkIf config.terminal.kitty.enable "exec ${lib.getExe config.terminal.kitty.package} --title 'Keybindings' --class keybindings-viewer -e ${lib.getExe config.scripts.i3-keybindings.package}";
   "${mod}+q" = "kill";
 
   # --- Media / Hardware Keys ---
   "XF86MonBrightnessDown" =
-    lib.mkIf config.programs.brightnessctl.enable "exec ${lib.getExe config.programs.brightnessctl.package} set 5%-";
+    lib.mkIf config.system.brightnessctl.enable "exec ${lib.getExe config.system.brightnessctl.package} set 5%-";
   "XF86MonBrightnessUp" =
-    lib.mkIf config.programs.brightnessctl.enable "exec ${lib.getExe config.programs.brightnessctl.package} set +5%";
+    lib.mkIf config.system.brightnessctl.enable "exec ${lib.getExe config.system.brightnessctl.package} set +5%";
   "XF86AudioLowerVolume" =
-    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe config.programs.pamixer.package} --decrease 5";
+    lib.mkIf config.media.pamixer.enable "exec ${lib.getExe config.media.pamixer.package} --decrease 5";
   "XF86AudioRaiseVolume" =
-    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe config.programs.pamixer.package} --increase 5";
+    lib.mkIf config.media.pamixer.enable "exec ${lib.getExe config.media.pamixer.package} --increase 5";
   "XF86AudioMute" =
-    lib.mkIf config.programs.pamixer.enable "exec ${lib.getExe config.programs.pamixer.package} --toggle-mute";
+    lib.mkIf config.media.pamixer.enable "exec ${lib.getExe config.media.pamixer.package} --toggle-mute";
   "XF86AudioPlay" =
-    lib.mkIf config.programs.playerctl.enable "exec ${lib.getExe config.programs.playerctl.package} play-pause";
+    lib.mkIf config.media.playerctl.enable "exec ${lib.getExe config.media.playerctl.package} play-pause";
 
   # --- Window Management (Vim-style) ---
   # Focus
@@ -86,7 +86,7 @@ in
 
   # --- Screenshots ---
   "${mod}+p" =
-    lib.mkIf config.programs.maim.enable "exec \"${lib.getExe config.programs.maim.package} -s | xclip -selection clipboard -t image/png\"";
+    lib.mkIf config.media.maim.enable "exec \"${lib.getExe config.media.maim.package} -s | xclip -selection clipboard -t image/png\"";
   "${mod}+Shift+p" =
-    lib.mkIf config.programs.maim.enable "exec \"mkdir -p ~/Pictures/Screenshots && ${lib.getExe config.programs.maim.package} -s ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\"";
+    lib.mkIf config.media.maim.enable "exec \"mkdir -p ~/Pictures/Screenshots && ${lib.getExe config.media.maim.package} -s ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png\"";
 }

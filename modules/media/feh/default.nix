@@ -7,8 +7,13 @@
 
 # Feh - Lightweight image viewer and wallpaper setter
 {
-  config = lib.mkIf config.programs.feh.enable {
+  options.media.feh = {
+    enable = lib.mkEnableOption "Enables feh.";
+  };
+
+  config = lib.mkIf config.media.feh.enable {
     programs.feh = {
+      enable = true;
       package = pkgs.feh;
     };
 

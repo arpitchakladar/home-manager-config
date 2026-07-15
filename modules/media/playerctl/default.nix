@@ -7,12 +7,12 @@
 
 # Playerctl - CLI for controlling media players (Spotify, MPRIS, etc.)
 {
-  options.programs.playerctl = {
+  options.media.playerctl = {
     enable = lib.mkEnableOption "Enables playerctl.";
     package = lib.mkPackageOption pkgs "playerctl" { };
   };
 
-  config = lib.mkIf config.programs.playerctl.enable {
-    home.packages = [ config.programs.playerctl.package ];
+  config = lib.mkIf config.media.playerctl.enable {
+    home.packages = [ config.media.playerctl.package ];
   };
 }

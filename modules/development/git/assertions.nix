@@ -3,10 +3,10 @@
   assertions = [
     {
       assertion =
-        !config.programs.git.useSSH || (config.programs.git.enable && config.programs.ssh.enable);
+        !config.development.git.useSSH || (config.development.git.enable && config.security.ssh.enable);
       message = ''
-        programs.git.useSSH is enabled but programs.ssh.enable is not.
-        SSH must be enabled (programs.ssh.enable = true) to use SSH for git.
+        development.git.useSSH is enabled but security.ssh.enable is not.
+        SSH must be enabled (security.ssh.enable = true) to use SSH for git.
       '';
     }
   ];

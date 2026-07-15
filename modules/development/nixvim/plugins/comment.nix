@@ -2,7 +2,7 @@
 
 # Comment - Comment toggling plugin (comment.nvim)
 {
-  config.programs.nixvim.plugins.comment = lib.mkIf config.programs.nixvim.enable {
+  config.programs.nixvim.plugins.comment = lib.mkIf config.development.nixvim.enable {
     enable = true;
     settings = {
       toggler = {

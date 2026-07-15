@@ -7,13 +7,13 @@
 
 # VLC - Versatile multimedia player for audio/video playback
 {
-  options.programs.vlc = {
+  options.media.vlc = {
     enable = lib.mkEnableOption "Enables vlc.";
     package = lib.mkPackageOption pkgs "vlc" { };
   };
 
-  config = lib.mkIf config.programs.vlc.enable {
-    home.packages = [ config.programs.vlc.package ];
+  config = lib.mkIf config.media.vlc.enable {
+    home.packages = [ config.media.vlc.package ];
 
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/vlc" = "vlc.desktop";

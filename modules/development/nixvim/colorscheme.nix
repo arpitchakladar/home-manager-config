@@ -2,7 +2,7 @@
 
 # Colorscheme - Base16 theme configuration for nixvim
 {
-  config.programs.nixvim.colorschemes.base16 = lib.mkIf config.programs.nixvim.enable {
+  config.programs.nixvim.colorschemes.base16 = lib.mkIf config.development.nixvim.enable {
     enable = true;
     colorscheme = with config.scheme.withHashtag; {
       base00 = base00;

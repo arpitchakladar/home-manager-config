@@ -42,7 +42,7 @@ let
   };
 in
 {
-  options.programs.enteauth = {
+  options.security.enteauth = {
     enable = lib.mkEnableOption "Enables wrapped ente-auth with automated keyring unlocks and a desktop entry.";
     package = lib.mkOption {
       type = lib.types.package;
@@ -51,8 +51,8 @@ in
     };
   };
 
-  config = lib.mkIf config.programs.enteauth.enable {
-    home.packages = [ config.programs.enteauth.package ];
+  config = lib.mkIf config.security.enteauth.enable {
+    home.packages = [ config.security.enteauth.package ];
 
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/enteauth" = "enteauth.desktop";

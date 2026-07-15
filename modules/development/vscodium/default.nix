@@ -7,8 +7,13 @@
 
 # VSCodium - Visual Studio Code fork
 {
-  config = lib.mkIf config.programs.vscodium.enable {
+  options.development.vscodium = {
+    enable = lib.mkEnableOption "Enables vscodium.";
+  };
+
+  config = lib.mkIf config.development.vscodium.enable {
     programs.vscodium = {
+      enable = true;
       package = pkgs.vscodium;
     };
 

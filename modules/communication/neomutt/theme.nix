@@ -3,7 +3,7 @@
 # Colorscheme - True base16 OneDark colors for neomutt
 # Leverages Kitty's precise mapping to base16 (color0-15)
 {
-  config.programs.neomutt.extraConfig = lib.mkIf config.programs.neomutt.enable ''
+  config.programs.neomutt.extraConfig = lib.mkIf config.communication.neomutt.enable ''
     # vim: filetype=muttrc
     #
     # Base16 OneDark Dark terminal colors for neomutt

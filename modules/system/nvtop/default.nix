@@ -7,7 +7,7 @@
 
 # Nvtop - GPU process monitor (NVIDIA/AMD/Intel GPUs)
 {
-  options.programs.nvtop = {
+  options.system.nvtop = {
     enable = lib.mkEnableOption "Enables nvtop.";
     package = lib.mkOption {
       type = lib.types.package;
@@ -17,7 +17,7 @@
     };
   };
 
-  config = lib.mkIf config.programs.nvtop.enable {
-    home.packages = [ config.programs.nvtop.package ];
+  config = lib.mkIf config.system.nvtop.enable {
+    home.packages = [ config.system.nvtop.package ];
   };
 }

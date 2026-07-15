@@ -25,7 +25,11 @@ in
     ./assertions.nix
     ./theme.nix
   ];
-  config = lib.mkIf config.programs.neomutt.enable {
+  options.communication.neomutt = {
+    enable = lib.mkEnableOption "Enables neomutt.";
+  };
+
+  config = lib.mkIf config.communication.neomutt.enable {
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/mailto" = "neomutt.desktop";
     };

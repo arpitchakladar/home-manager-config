@@ -1,7 +1,7 @@
 { ... }:
 
 {
-  config.programs.git = {
+  config.development.git = {
     username = "Arpit Chakladar";
     email = "arpitchakladar+git@gmail.com";
     signing = {

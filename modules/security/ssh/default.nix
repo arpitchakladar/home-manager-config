@@ -9,8 +9,13 @@
 {
   imports = [ ./git.nix ];
 
-  config = lib.mkIf config.programs.ssh.enable {
+  options.security.ssh = {
+    enable = lib.mkEnableOption "Enables ssh.";
+  };
+
+  config = lib.mkIf config.security.ssh.enable {
     programs.ssh = {
+      enable = true;
       package = pkgs.openssh;
       enableDefaultConfig = false;
       extraOptionOverrides = {

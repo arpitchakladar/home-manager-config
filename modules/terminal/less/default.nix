@@ -2,8 +2,13 @@
 
 # less - terminal pager
 {
-  config = lib.mkIf config.programs.less.enable {
+  options.terminal.less = {
+    enable = lib.mkEnableOption "Enables less.";
+  };
+
+  config = lib.mkIf config.terminal.less.enable {
     programs.less = {
+      enable = true;
       options = [
         "--RAW-CONTROL-CHARS"
         "--quit-if-one-screen"

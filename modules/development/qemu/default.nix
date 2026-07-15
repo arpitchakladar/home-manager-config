@@ -7,7 +7,7 @@
 
 # QEMU - generic and open source machine & userspace emulator and virtualizer.
 {
-  options.programs.qemu = {
+  options.development.qemu = {
     enable = lib.mkEnableOption "Enables qemu.";
     package = lib.mkOption {
       type = lib.types.package;
@@ -24,7 +24,7 @@
     };
   };
 
-  config = lib.mkIf config.programs.qemu.enable {
-    home.packages = [ config.programs.qemu.package ];
+  config = lib.mkIf config.development.qemu.enable {
+    home.packages = [ config.development.qemu.package ];
   };
 }

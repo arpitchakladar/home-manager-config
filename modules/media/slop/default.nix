@@ -7,12 +7,12 @@
 
 # Slop - Region selector for screenshots (used by maim/flameshot)
 {
-  options.programs.slop = {
+  options.media.slop = {
     enable = lib.mkEnableOption "Enables slop.";
     package = lib.mkPackageOption pkgs "slop" { };
   };
 
-  config = lib.mkIf config.programs.slop.enable {
-    home.packages = [ config.programs.slop.package ];
+  config = lib.mkIf config.media.slop.enable {
+    home.packages = [ config.media.slop.package ];
   };
 }

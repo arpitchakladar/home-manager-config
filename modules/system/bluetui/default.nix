@@ -7,12 +7,12 @@
 
 # Bluetui - Terminal UI for Bluetooth management
 {
-  options.programs.bluetui = {
+  options.system.bluetui = {
     enable = lib.mkEnableOption "Enables bluetui.";
     package = lib.mkPackageOption pkgs "bluetui" { };
   };
 
-  config = lib.mkIf config.programs.bluetui.enable {
-    home.packages = [ config.programs.bluetui.package ];
+  config = lib.mkIf config.system.bluetui.enable {
+    home.packages = [ config.system.bluetui.package ];
   };
 }

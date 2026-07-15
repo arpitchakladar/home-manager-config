@@ -2,9 +2,14 @@
 
 # Starship - Minimal, blazing-fast shell prompt
 {
-  config = lib.mkIf config.programs.starship.enable {
+  options.terminal.starship = {
+    enable = lib.mkEnableOption "Enables starship.";
+  };
+
+  config = lib.mkIf config.terminal.starship.enable {
     programs.starship = {
-      enableZshIntegration = config.programs.zsh.enable;
+      enable = true;
+      enableZshIntegration = config.terminal.zsh.enable;
       settings =
         let
           mkSegment = content: ''[┄\[](red)[${content}]($style)[\]](red)'';

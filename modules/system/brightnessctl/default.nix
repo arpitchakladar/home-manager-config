@@ -7,12 +7,12 @@
 
 # brightnessctl - Backlight brightness control tool
 {
-  options.programs.brightnessctl = {
+  options.system.brightnessctl = {
     enable = lib.mkEnableOption "Enables brightnessctl.";
     package = lib.mkPackageOption pkgs "brightnessctl" { };
   };
 
-  config = lib.mkIf config.programs.brightnessctl.enable {
-    home.packages = [ config.programs.brightnessctl.package ];
+  config = lib.mkIf config.system.brightnessctl.enable {
+    home.packages = [ config.system.brightnessctl.package ];
   };
 }

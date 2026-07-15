@@ -2,7 +2,7 @@
 
 # Which-key - Popup for keybindings (which-key.nvim)
 {
-  config.programs.nixvim.plugins.which-key = lib.mkIf config.programs.nixvim.enable {
+  config.programs.nixvim.plugins.which-key = lib.mkIf config.development.nixvim.enable {
     enable = true;
     settings = {
       plugins = {

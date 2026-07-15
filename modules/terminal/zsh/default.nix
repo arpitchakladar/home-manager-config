@@ -7,13 +7,19 @@
 
 # Zsh - Z shell, extended bash with additional features and plugins
 {
+  options.terminal.zsh = {
+    enable = lib.mkEnableOption "Enables zsh.";
+    package = lib.mkPackageOption pkgs "zsh" { };
+  };
+
   config =
     let
       nixCommandWrappers = builtins.readFile ./nix-aliases.sh;
     in
-    lib.mkIf config.programs.zsh.enable {
+    lib.mkIf config.terminal.zsh.enable {
       programs.zsh = {
-        package = pkgs.zsh;
+        enable = true;
+        package = config.terminal.zsh.package;
         dotDir = "${config.xdg.configHome}/zsh";
         history.path = "${config.xdg.cacheHome}/zsh/history";
         enableCompletion = true;
@@ -31,8 +37,8 @@
         '';
       };
 
-      programs.bash.initExtra = lib.mkIf config.programs.bash.enable (lib.mkAfter nixCommandWrappers);
+      programs.bash.initExtra = lib.mkIf config.terminal.bash.enable (lib.mkAfter nixCommandWrappers);
 
-      home.sessionVariables.SHELL = "${lib.getExe config.programs.zsh.package}";
+      home.sessionVariables.SHELL = "${lib.getExe config.terminal.zsh.package}";
     };
 }

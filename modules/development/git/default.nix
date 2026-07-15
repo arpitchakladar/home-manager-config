@@ -12,7 +12,9 @@
   ]
   ++ lib.optional (builtins.pathExists ../../private/git.nix) ../../private/git.nix;
 
-  options.programs.git = {
+  options.development.git = {
+    enable = lib.mkEnableOption "Enables git.";
+
     username = lib.mkOption {
       type = lib.types.str;
       description = "Git username.";
@@ -24,9 +26,19 @@
     };
 
     useSSH = lib.mkEnableOption "Use SSH instead of HTTPS for common git platforms.";
+
+    signing = {
+      key = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "GPG key ID used for signing commits.";
+      };
+
+      signByDefault = lib.mkEnableOption "Sign commits by default.";
+    };
   };
 
-  config = lib.mkIf config.programs.git.enable {
+  config = lib.mkIf config.development.git.enable {
     home.packages = with pkgs; [
       git-graph
     ];
@@ -56,7 +68,6 @@
         ['^(bugfix|hotfix).*$', ['bright_red']],
         ['^tags/.*$', ['bright_green']],
       ]
-      # Everything else (e.g. custom/service branches) cycles through these instead of all being white
       unknown = ['bright_white', 'bright_red', 'bright_green', 'bright_yellow', 'bright_blue', 'bright_magenta', 'bright_cyan']
 
       [svg_colors]
@@ -72,24 +83,26 @@
     '';
 
     programs.git = {
+      enable = true;
+      signing = {
+        key = config.development.git.signing.key;
+        signByDefault = config.development.git.signing.signByDefault;
+      };
       settings =
         lib.recursiveUpdate
           {
             user = {
-              name = config.programs.git.username;
-              email = config.programs.git.email;
+              name = config.development.git.username;
+              email = config.development.git.email;
             };
             core.askPass = "";
             alias = {
-              # The exclamation mark (!) tells Git to execute this as an external shell command.
-              # This overrides standard git-graph behavior with your custom format string.
               log-graph = ''
                 !f() {
                   fmt=$(printf '\033[1;34mCommit:\033[0m \033[33m%%h\033[0m \033[91m%%d\033[0m%%n\033[1;34mParents:\033[0m \033[35m%%p\033[0m%%n\033[1;34mAuthor:\033[0m \033[32m%%an\033[0m <\033[96m%%ae\033[0m>%%n\033[1;34mDate:\033[0m \033[36m%%ad (%%ar)\033[0m%%n%%n%%B%%n\033[90m--------------------------------------------------------\033[0m')
                   git-graph --model custom --color always --sparse --style round --format="$fmt"
                 }; f | less -R
               '';
-              # Same formatting, but no pager — meant for embedding (lazygit, etc.)
               log-graph-embed = ''
                 !f() {
                   fmt=$(printf '\033[1;34mCommit:\033[0m \033[33m%%h\033[0m \033[91m%%d\033[0m%%n\033[1;34mParents:\033[0m \033[35m%%p\033[0m%%n\033[1;34mAuthor:\033[0m \033[32m%%an\033[0m <\033[96m%%ae\033[0m>%%n\033[1;34mDate:\033[0m \033[36m%%ad (%%ar)\033[0m%%n%%n%%B%%n\033[90m--------------------------------------------------------\033[0m')
@@ -99,7 +112,7 @@
             };
           }
           (
-            lib.optionalAttrs config.programs.git.useSSH {
+            lib.optionalAttrs config.development.git.useSSH {
               url."git@github.com:".insteadOf = "https://github.com/";
               url."git@gitlab.com:".insteadOf = "https://gitlab.com/";
               url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";

@@ -2,7 +2,7 @@
 
 # Keymaps - Keyboard shortcut configuration for nixvim
 {
-  config.programs.nixvim.keymaps = lib.mkIf config.programs.nixvim.enable [
+  config.programs.nixvim.keymaps = lib.mkIf config.development.nixvim.enable [
     {
       key = "<c-h>";
       action = "<c-w>h";

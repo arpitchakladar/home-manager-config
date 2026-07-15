@@ -2,12 +2,17 @@
 
 # Lazygit - A simple terminal UI for git commands
 {
-  config = lib.mkIf config.programs.lazygit.enable {
+  options.development.lazygit = {
+    enable = lib.mkEnableOption "Enables lazygit.";
+  };
+
+  config = lib.mkIf config.development.lazygit.enable {
     programs.lazygit = {
-      enableBashIntegration = config.programs.bash.enable;
+      enable = true;
+      enableBashIntegration = config.terminal.bash.enable;
       enableFishIntegration = config.programs.fish.enable;
       enableNushellIntegration = config.programs.nushell.enable;
-      enableZshIntegration = config.programs.zsh.enable;
+      enableZshIntegration = config.terminal.zsh.enable;
 
       settings = {
         gui = {

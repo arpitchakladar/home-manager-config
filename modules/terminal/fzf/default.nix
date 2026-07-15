@@ -1,17 +1,29 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 # FZF - Fuzzy finder, CLI fuzzy search tool
 {
   imports = [ ./assertions.nix ];
 
+  options.terminal.fzf = {
+    enable = lib.mkEnableOption "Enables fzf.";
+    package = lib.mkPackageOption pkgs "fzf" { };
+  };
+
   config =
     let
       shellIntegration = ''
-        ${if config.programs.zsh.enable then "eval \"$(fzf --zsh)\"" else "eval \"$(fzf --bash)\""}
+        ${if config.terminal.zsh.enable then "eval \"$(fzf --zsh)\"" else "eval \"$(fzf --bash)\""}
       '';
     in
-    lib.mkIf config.programs.fzf.enable {
+    lib.mkIf config.terminal.fzf.enable {
       programs.fzf = {
+        enable = true;
+        package = config.terminal.fzf.package;
         defaultOptions = [
           "--height 100%"
           "--layout=reverse"
@@ -26,26 +38,26 @@
         ];
 
         colors = with config.scheme.withHashtag; {
-          fg = base05; # Foreground
-          bg = "-1"; # Background (-1 for transparent)
-          hl = base0D; # Highlight
+          fg = base05;
+          bg = "-1";
+          hl = base0D;
 
-          "fg+" = base07; # Foreground for selected item
-          "bg+" = "-1"; # Background for selected item
-          "hl+" = base0D; # Highlight for selected item
+          "fg+" = base07;
+          "bg+" = "-1";
+          "hl+" = base0D;
 
-          gutter = "-1"; # Remove the white margin at the left
+          gutter = "-1";
 
-          info = base0B; # Info text (usually count of items)
-          border = base03; # Border color
-          prompt = base0A; # Prompt text color
-          pointer = base0F; # Pointer color (e.g., > for selected)
-          marker = base0C; # Marker color (e.g., for multi-select)
-          spinner = base0C; # Spinner color (during search)
+          info = base0B;
+          border = base03;
+          prompt = base0A;
+          pointer = base0F;
+          marker = base0C;
+          spinner = base0C;
         };
       };
 
-      programs.zsh.initContent = lib.mkIf config.programs.zsh.enable (lib.mkAfter shellIntegration);
-      programs.bash.initExtra = lib.mkIf config.programs.bash.enable (lib.mkAfter shellIntegration);
+      programs.zsh.initContent = lib.mkIf config.terminal.zsh.enable (lib.mkAfter shellIntegration);
+      programs.bash.initExtra = lib.mkIf config.terminal.bash.enable (lib.mkAfter shellIntegration);
     };
 }

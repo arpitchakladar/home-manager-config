@@ -7,13 +7,13 @@
 
 # Bruno - Open-source API client for testing HTTP endpoints
 {
-  options.programs.bruno = {
+  options.development.bruno = {
     enable = lib.mkEnableOption "Enables bruno.";
     package = lib.mkPackageOption pkgs "bruno" { };
   };
 
-  config = lib.mkIf config.programs.bruno.enable {
-    home.packages = [ config.programs.bruno.package ];
+  config = lib.mkIf config.development.bruno.enable {
+    home.packages = [ config.development.bruno.package ];
 
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/bruno" = "bruno.desktop";

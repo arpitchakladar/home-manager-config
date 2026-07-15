@@ -6,8 +6,13 @@
 }:
 
 {
-  config = lib.mkIf config.programs.brave.enable {
+  options.web.brave = {
+    enable = lib.mkEnableOption "Enables brave.";
+  };
+
+  config = lib.mkIf config.web.brave.enable {
     programs.brave = {
+      enable = true;
       package = pkgs.brave;
 
       commandLineArgs = [
@@ -16,10 +21,10 @@
       ];
 
       extensions = [
-        { id = "nngceckbapebfimnlniiiahkandclblb"; } # Bitwarden
-        { id = "mpkodccbngfoacfalldjimigbofkhgjn"; } # Aria2 Explorer
-        { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark Reader
-        { id = "hpejmncgbammabkkodflfeekpcicfjnk"; } # Quite Black
+        { id = "nngceckbapebfimnlniiiahkandclblb"; }
+        { id = "mpkodccbngfoacfalldjimigbofkhgjn"; }
+        { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; }
+        { id = "hpejmncgbammabkkodflfeekpcicfjnk"; }
       ];
     };
 

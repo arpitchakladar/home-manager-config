@@ -1,12 +1,12 @@
 { config, lib, ... }:
 
 {
-  config.accounts.email.accounts = {
+  config.communication.email.accounts = {
     "example" = {
       realName = "Example User";
       address = "user@gmail.com";
       userName = "user@gmail.com";
-      passwordCommand = "${lib.getExe config.programs.gopass.package} -o mail/user@gmail.com";
+      passwordCommand = "${lib.getExe config.security.gopass.package} -o mail/user@gmail.com";
       flavor = "gmail.com";
       primary = true;
       neomutt = {

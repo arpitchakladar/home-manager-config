@@ -2,7 +2,7 @@
 
 # Nvim-tree - File explorer sidebar (nvim-tree.lua)
 {
-  config.programs.nixvim.plugins.nvim-tree = lib.mkIf config.programs.nixvim.enable {
+  config.programs.nixvim.plugins.nvim-tree = lib.mkIf config.development.nixvim.enable {
     enable = true;
     settings = {
       filters = {

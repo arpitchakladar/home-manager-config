@@ -2,7 +2,7 @@
 
 # Cmp - Completion plugin (nvim-cmp) for auto-completion
 {
-  config.programs.nixvim.plugins.cmp = lib.mkIf config.programs.nixvim.enable {
+  config.programs.nixvim.plugins.cmp = lib.mkIf config.development.nixvim.enable {
     enable = true;
     autoEnableSources = true;
     settings = {
