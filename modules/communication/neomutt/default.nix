@@ -4,9 +4,10 @@
   imports = [
     ./account
     ./sync
-    ./neomutt.nix
     ./assertions.nix
-    ./theme.nix
+    ./keybindings.nix
+    ./macros.nix
+    ./neomutt.nix
   ];
 
   options.communication.neomutt = {
