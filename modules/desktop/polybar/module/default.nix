@@ -1,10 +1,9 @@
+# Module - Polybar module definitions (battery, cpu, date, i3, memory, volume, wifi, etc.)
 {
   lib,
   config,
   pkgs,
 }:
-
-# Module - Polybar module definitions (battery, cpu, date, i3, memory, volume, wifi, etc.)
 {
   "module/battery" = import ./battery.nix { inherit config; };
   "module/cpu" = import ./cpu.nix { inherit config; };

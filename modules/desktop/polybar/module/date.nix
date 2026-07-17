@@ -1,6 +1,5 @@
-{ config }:
-
 # Date - Current date display module
+{ config }:
 with config.scheme.withHashtag;
 {
   type = "internal/date";

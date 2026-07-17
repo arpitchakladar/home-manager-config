@@ -1,3 +1,4 @@
+# Communication - Email client modules
 { ... }:
 
 {

@@ -1,6 +1,5 @@
-{ config }:
-
 # Main - Main polybar bar configuration (dimensions, colors, modules)
+{ config }:
 with config.scheme.withHashtag;
 let
   largerFontSize = toString (builtins.ceil (config.fonts.size * 9.0 / 8.0));

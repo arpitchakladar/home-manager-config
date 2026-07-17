@@ -1,11 +1,10 @@
+# Zsh - Z shell, extended bash with additional features and plugins
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# Zsh - Z shell, extended bash with additional features and plugins
 {
   options.terminal.zsh = {
     enable = lib.mkEnableOption "Enables zsh.";

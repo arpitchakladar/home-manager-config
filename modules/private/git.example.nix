@@ -1,5 +1,5 @@
+# Git example - Template for configuring git identity and signing
 { ... }:
-
 {
   config.development.git = {
     username = "Arpit Chakladar";

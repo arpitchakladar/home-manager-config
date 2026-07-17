@@ -1,10 +1,9 @@
+# Desktop - Desktop environment configuration (i3, GTK, polybar)
 {
   lib,
   config,
   ...
 }:
-
-# Desktop - Desktop environment configuration (i3, GTK, polybar)
 {
   imports = [
     ./i3

@@ -1,11 +1,10 @@
+# QEMU - generic and open source machine & userspace emulator and virtualizer.
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# QEMU - generic and open source machine & userspace emulator and virtualizer.
 {
   options.development.qemu = {
     enable = lib.mkEnableOption "Enables qemu.";

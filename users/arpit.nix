@@ -1,5 +1,5 @@
+# Arpit - User-specific home-manager configuration
 { config, ... }:
-
 {
   imports = [
     ../modules/private/email.nix

@@ -1,5 +1,5 @@
+# Git - SSH host configurations for git platforms (github, gitlab, bitbucket, codeberg, sr.ht)
 { config, lib, ... }:
-
 let
   hosts = [
     {

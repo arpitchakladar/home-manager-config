@@ -1,11 +1,10 @@
+# Nvtop - GPU process monitor (NVIDIA/AMD/Intel GPUs)
 {
   config,
   pkgs,
   lib,
   ...
 }:
-
-# Nvtop - GPU process monitor (NVIDIA/AMD/Intel GPUs)
 {
   options.system.nvtop = {
     enable = lib.mkEnableOption "Enables nvtop.";

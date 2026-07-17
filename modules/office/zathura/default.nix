@@ -1,11 +1,9 @@
+# Zathura - Minimalistic document viewer (PDF, DJVU, etc.)
 {
   config,
   lib,
-  pkgs,
   ...
 }:
-
-# Zathura - Minimalistic document viewer (PDF, DJVU, etc.)
 {
   options.office.zathura = {
     enable = lib.mkEnableOption "Enables zathura.";
@@ -14,7 +12,6 @@
   config = lib.mkIf config.office.zathura.enable {
     programs.zathura = {
       enable = true;
-      package = pkgs.zathura;
     };
 
     xdg.mimeApps.defaultApplications = {

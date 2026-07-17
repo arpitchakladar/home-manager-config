@@ -1,11 +1,10 @@
+# OpenSSH - Secure shell (SSH) client for encrypted remote connections
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# OpenSSH - Secure shell (SSH) client for encrypted remote connections
 {
   imports = [ ./git.nix ];
 

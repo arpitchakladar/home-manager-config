@@ -1,11 +1,10 @@
+# FFmpeg - Command-line audio/video converter and streaming tool
 {
   config,
   pkgs,
   lib,
   ...
 }:
-
-# FFmpeg - Command-line audio/video converter and streaming tool
 {
   options.media.ffmpeg = {
     enable = lib.mkEnableOption "Enables ffmpeg.";

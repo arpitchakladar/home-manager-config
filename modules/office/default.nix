@@ -1,3 +1,4 @@
+# Office - Document viewer modules (zathura)
 { ... }:
 
 {

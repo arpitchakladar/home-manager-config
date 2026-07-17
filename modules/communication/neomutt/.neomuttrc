@@ -42,7 +42,7 @@ color progress    black         yellow      # 󰦖 base0A bg (Progress bar)
 
 # Selected row and status bar
 color status      white         brightblack # base05  on base03
-color indicator   default       brightblack #  default on base03 (Selected email)
+color indicator   default       brightblack # default on base03 (Selected email)
 color tree        magenta       default     # base03  (Thread arrows)
 
 # Whole-line fallback for the index (base for anything not caught below)

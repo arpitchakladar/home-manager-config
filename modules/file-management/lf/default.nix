@@ -1,11 +1,10 @@
+# lf - terminal file manager
 {
   pkgs,
   lib,
   config,
   ...
 }:
-
-# lf - terminal file manager
 {
   options.file-management.lf = {
     enable = lib.mkEnableOption "Enables lf.";

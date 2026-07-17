@@ -1,5 +1,5 @@
+# Modules - Top-level module aggregator importing all submodules
 { ... }:
-
 {
   imports = [
     ./communication

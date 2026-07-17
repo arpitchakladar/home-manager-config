@@ -1,11 +1,10 @@
+# bat - a cat clone with wings
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# bat - a cat clone with wings
 {
   options.terminal.bat = {
     enable = lib.mkEnableOption "Enables bat.";

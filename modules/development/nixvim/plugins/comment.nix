@@ -1,6 +1,5 @@
-{ config, lib, ... }:
-
 # Comment - Comment toggling plugin (comment.nvim)
+{ config, lib, ... }:
 {
   config.programs.nixvim.plugins.comment = lib.mkIf config.development.nixvim.enable {
     enable = true;

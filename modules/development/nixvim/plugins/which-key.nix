@@ -1,6 +1,5 @@
-{ config, lib, ... }:
-
 # Which-key - Popup for keybindings (which-key.nvim)
+{ config, lib, ... }:
 {
   config.programs.nixvim.plugins.which-key = lib.mkIf config.development.nixvim.enable {
     enable = true;

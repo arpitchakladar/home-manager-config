@@ -1,3 +1,4 @@
+# Media - Multimedia tools (feh, ffmpeg, maim, pamixer, playerctl, slop, vlc)
 { ... }:
 
 {

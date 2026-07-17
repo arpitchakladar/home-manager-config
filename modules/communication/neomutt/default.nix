@@ -1,3 +1,4 @@
+# Neomutt - Email suite entry point (neomutt + mbsync + notmuch)
 { config, lib, ... }:
 
 {

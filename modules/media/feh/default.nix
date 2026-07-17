@@ -1,11 +1,10 @@
+# Feh - Lightweight image viewer and wallpaper setter
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# Feh - Lightweight image viewer and wallpaper setter
 {
   options.media.feh = {
     enable = lib.mkEnableOption "Enables feh.";

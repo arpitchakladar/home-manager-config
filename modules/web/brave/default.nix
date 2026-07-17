@@ -1,10 +1,10 @@
+# Brave - Privacy-focused web browser configuration
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
 {
   options.web.brave = {
     enable = lib.mkEnableOption "Enables brave.";

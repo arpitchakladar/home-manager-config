@@ -1,6 +1,5 @@
-{ ... }:
-
 # Plugins - Collection of nixvim plugin configurations
+{ ... }:
 {
   imports = [
     ./cmp.nix

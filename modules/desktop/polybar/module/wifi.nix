@@ -1,6 +1,5 @@
-{ config }:
-
 # WiFi - Wireless network module (signal strength, speed)
+{ config }:
 with config.scheme.withHashtag;
 {
   type = "internal/network";

@@ -1,3 +1,4 @@
+# VPN-connect - OpenVPN connection script with credential caching and monitoring
 CONF_DIR="$HOME/.config/openvpn"
 CREDS_DIR="$CONF_DIR/credentials"
 SERVERS_DIR="$CONF_DIR/servers"

@@ -1,9 +1,9 @@
+# Delta - A syntax-highlighting pager for git, diff, and grep output
 {
   config,
   lib,
   ...
 }:
-# Delta - A syntax-highlighting pager for git, diff, and grep output
 {
   options.development.delta = {
     enable = lib.mkEnableOption "Enables delta.";

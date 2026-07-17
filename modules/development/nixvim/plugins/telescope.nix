@@ -1,6 +1,5 @@
-{ config, lib, ... }:
-
 # Telescope - Fuzzy finder
+{ config, lib, ... }:
 {
   config.programs.nixvim.plugins.telescope = lib.mkIf config.development.nixvim.enable {
     enable = true;

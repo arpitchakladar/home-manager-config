@@ -1,11 +1,10 @@
+# brightnessctl - Backlight brightness control tool
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# brightnessctl - Backlight brightness control tool
 {
   options.system.brightnessctl = {
     enable = lib.mkEnableOption "Enables brightnessctl.";

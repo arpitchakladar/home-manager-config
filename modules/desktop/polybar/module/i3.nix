@@ -1,6 +1,5 @@
-{ config }:
-
 # i3 - i3 workspace display module (focused, occupied, urgent workspaces)
+{ config }:
 with config.scheme.withHashtag;
 {
   type = "internal/i3";

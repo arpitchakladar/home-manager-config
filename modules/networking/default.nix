@@ -1,3 +1,4 @@
+# Networking - Network utility modules (bluetui, impala)
 { ... }:
 
 {

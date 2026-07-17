@@ -1,11 +1,10 @@
+# FZF - Fuzzy finder, CLI fuzzy search tool
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# FZF - Fuzzy finder, CLI fuzzy search tool
 {
   imports = [ ./assertions.nix ];
 

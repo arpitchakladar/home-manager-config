@@ -1,6 +1,5 @@
-{ config, lib, ... }:
-
 # Nixvim - Neovim configured through Nix (home-manager integration)
+{ config, lib, ... }:
 {
   imports = [
     ./colorscheme.nix

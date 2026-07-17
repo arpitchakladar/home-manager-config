@@ -1,3 +1,4 @@
+# VPN-disconnect - Kill VPN process and clean up
 PID_FILE="$HOME/.cache/openvpn/vpn.pid"
 
 if [[ ! -f "$PID_FILE" ]]; then

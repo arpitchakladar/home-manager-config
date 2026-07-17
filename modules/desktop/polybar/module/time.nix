@@ -1,6 +1,5 @@
-{ config }:
-
 # Time - Current time display module (12-hour format)
+{ config }:
 with config.scheme.withHashtag;
 {
   type = "internal/date";

@@ -1,3 +1,4 @@
+# Mbsync - Mailbox synchronization (isync/mbsync)
 { config, lib, ... }:
 
 with lib;

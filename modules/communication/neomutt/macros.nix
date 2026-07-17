@@ -1,3 +1,4 @@
+# Macros - neomutt macros for sync, URL extraction, flag legend, and quit
 { config, lib, ... }:
 
 {

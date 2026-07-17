@@ -1,3 +1,4 @@
+# Fzf-launcher - FZF-based application launcher (scans .desktop files)
 DIRS=(
   /run/current-system/sw/share/applications
   "$HOME/.nix-profile/share/applications"

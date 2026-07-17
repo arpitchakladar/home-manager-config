@@ -1,10 +1,9 @@
+# VPN - Just indicates if VPN is connected with openvpn
 {
   pkgs,
   lib,
   config,
 }:
-
-# VPN - Just indicates if VPN is connected with openvpn
 with config.scheme.withHashtag;
 {
   type = "custom/script";

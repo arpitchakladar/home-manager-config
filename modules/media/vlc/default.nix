@@ -1,11 +1,10 @@
+# VLC - Versatile multimedia player for audio/video playback
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# VLC - Versatile multimedia player for audio/video playback
 {
   options.media.vlc = {
     enable = lib.mkEnableOption "Enables vlc.";

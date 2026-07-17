@@ -1,5 +1,5 @@
+# Email example - Template for configuring neomutt email accounts
 { ... }:
-
 {
   config.communication.neomutt.accounts = {
     "example" = {

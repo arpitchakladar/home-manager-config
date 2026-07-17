@@ -1,11 +1,10 @@
+# Ouch! - CLI tool for compressing and decompressing various formats.
 {
   pkgs,
   lib,
   config,
   ...
 }:
-
-# Ouch! - CLI tool for compressing and decompressing various formats.
 {
   options.file-management.ouch = {
     enable = lib.mkEnableOption "Enables ouch.";

@@ -1,11 +1,10 @@
+# Opencode - AI-powered coding assistant (opencode.ai)
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# Opencode - AI-powered coding assistant (opencode.ai)
 {
   options.development.opencode = {
     enable = lib.mkEnableOption "Enables opencode.";

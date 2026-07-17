@@ -1,3 +1,4 @@
+# Flake - Home Manager configuration for Arpit's NixOS system
 {
   description = "Home Manager configuration of arpit.";
   inputs = {

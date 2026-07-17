@@ -1,11 +1,10 @@
+# Bottom - Cross-platform graphical process/system monitor (Rust-based)
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# Bottom - Cross-platform graphical process/system monitor (Rust-based)
 {
   options.system.bottom = {
     enable = lib.mkEnableOption "Enables bottom.";

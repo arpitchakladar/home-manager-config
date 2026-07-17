@@ -1,3 +1,4 @@
+# Notmuch - Mail indexer for fast email search
 { config, lib, ... }:
 
 with lib;

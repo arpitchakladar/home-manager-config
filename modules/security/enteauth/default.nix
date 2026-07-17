@@ -1,11 +1,10 @@
+# Ente Auth - end-to-end encrypted authentication (2FA)
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# Ente Auth - end-to-end encrypted authentication (2FA)
 let
   enteAuthWithKeyring = pkgs.symlinkJoin {
     name = "ente-auth-wrapped";

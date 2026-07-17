@@ -1,11 +1,10 @@
+# Gaming - Collection of game launchers and gaming utilities
 {
   config,
   pkgs,
   lib,
   ...
 }:
-
-# Gaming - Collection of game launchers and gaming utilities
 {
   imports = [
     ./steam.nix

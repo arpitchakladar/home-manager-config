@@ -1,3 +1,4 @@
+# File Management - File manager and utility modules (lf, lsd, ouch)
 { ... }:
 
 {

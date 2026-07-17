@@ -5,7 +5,6 @@
   pkgs,
   ...
 }:
-
 {
   options.security.gopass = {
     enable = lib.mkEnableOption "Enables gopass.";

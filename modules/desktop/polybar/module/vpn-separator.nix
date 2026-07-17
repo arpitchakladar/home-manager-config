@@ -1,10 +1,9 @@
+# VPN-separator - Visual separator for VPN module
 {
   pkgs,
   lib,
   config,
 }:
-
-# VPN - Visual separator for VPN module
 with config.scheme.withHashtag;
 {
   type = "custom/script";

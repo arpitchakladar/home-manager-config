@@ -1,11 +1,10 @@
+# Steam - game store
 {
   config,
   pkgs,
   lib,
   ...
 }:
-
-# Steam - game store
 {
   options.gaming.steam = {
     enable = lib.mkEnableOption "Enables steam.";

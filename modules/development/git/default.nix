@@ -1,11 +1,10 @@
+# Git - Distributed version control system
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# Git - Distributed version control system
 {
   imports = [
     ./assertions.nix

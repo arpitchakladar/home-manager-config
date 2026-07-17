@@ -1,11 +1,10 @@
+# OpenVPN - Open-source VPN client for secure remote access
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# OpenVPN - Open-source VPN client for secure remote access
 {
   options.security.openvpn = {
     enable = lib.mkEnableOption "Enables openvpn.";

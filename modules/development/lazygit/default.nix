@@ -1,6 +1,5 @@
-{ config, lib, ... }:
-
 # Lazygit - A simple terminal UI for git commands
+{ config, lib, ... }:
 {
   options.development.lazygit = {
     enable = lib.mkEnableOption "Enables lazygit.";
@@ -14,33 +13,33 @@
       enableZshIntegration = config.terminal.zsh.enable;
       settings = {
         gui = {
-          theme = {
+          theme = with config.scheme.withHashtag; {
             lightTheme = false;
             activeBorderColor = [
-              "blue"
+              base0D
               "bold"
             ];
-            inactiveBorderColor = [ "brightblack" ];
-            optionsTextColor = [ "blue" ];
-            selectedLineBgColor = [ "black" ];
-            selectedRangeBgColor = [ "black" ];
-            cherryPickedCommitBgColor = [ "cyan" ];
-            cherryPickedCommitFgColor = [ "blue" ];
-            markedBaseCommitBgColor = [ "yellow" ];
-            markedBaseCommitFgColor = [ "blue" ];
-            unstagedChangesColor = [ "red" ];
-            defaultFgColor = [ "white" ];
+            inactiveBorderColor = [ base03 ];
+            optionsTextColor = [ base0D ];
+            selectedLineBgColor = [ base01 ];
+            selectedRangeBgColor = [ base01 ];
+            cherryPickedCommitBgColor = [ base0C ];
+            cherryPickedCommitFgColor = [ base0D ];
+            markedBaseCommitBgColor = [ base0A ];
+            markedBaseCommitFgColor = [ base0D ];
+            unstagedChangesColor = [ base08 ];
+            defaultFgColor = [ base05 ];
             searchingActiveBorderColor = [
-              "yellow"
+              base0A
               "bold"
             ];
           };
           authorColors = {
-            "*" = "magenta";
+            "*" = (with config.scheme.withHashtag; base0E);
           };
           branchColors = {
-            "master" = "red";
-            "main" = "red";
+            "master" = (with config.scheme.withHashtag; base08);
+            "main" = (with config.scheme.withHashtag; base08);
           };
           showIcons = true;
           scrollHeight = 2;

@@ -1,3 +1,4 @@
+# Sync - Mail synchronization modules (mbsync, notmuch)
 { ... }:
 
 {

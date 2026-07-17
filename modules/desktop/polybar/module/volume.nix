@@ -1,6 +1,5 @@
-{ config }:
-
 # Volume - PulseAudio volume level module with icons
+{ config }:
 with config.scheme.withHashtag;
 {
   type = "internal/pulseaudio";

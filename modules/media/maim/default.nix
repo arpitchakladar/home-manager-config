@@ -1,11 +1,10 @@
+# Maim - Screenshot utility (slop-based region selection)
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# Maim - Screenshot utility (slop-based region selection)
 {
   options.media.maim = {
     enable = lib.mkEnableOption "Enables maim.";

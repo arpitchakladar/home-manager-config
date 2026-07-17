@@ -1,11 +1,10 @@
+# systemctl-tui - TUI for systemctl (systemd service management)
 {
   config,
   pkgs,
   lib,
   ...
 }:
-
-# systemctl-tui - TUI for systemctl (systemd service management)
 {
   options.system.systemctl-tui = {
     enable = lib.mkEnableOption "Enables systemctl-tui.";

@@ -1,3 +1,4 @@
+# Scripts - Generates wrapped scripts with environment variables and dependencies
 {
   config,
   lib,

@@ -1,11 +1,10 @@
+# i3 - Window manager configuration (gaps, colors, startup, keybindings)
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# i3 - Window manager configuration (gaps, colors, startup, keybindings)
 {
   config = lib.mkIf config.desktop.enable {
     xsession.windowManager.i3 = {
@@ -89,7 +88,6 @@
         keybindings = lib.mkOptionDefault (
           import ./keybindings.nix {
             inherit
-              pkgs
               lib
               config
               ;

@@ -1,3 +1,4 @@
+# Account - Converts neomutt account options into home-manager email config
 { config, lib, ... }:
 
 with lib;

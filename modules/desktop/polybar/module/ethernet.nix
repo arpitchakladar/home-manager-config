@@ -1,6 +1,5 @@
-{ config }:
-
 # Ethernet - Wired network module (connection speed)
+{ config }:
 with config.scheme.withHashtag;
 {
   type = "internal/network";

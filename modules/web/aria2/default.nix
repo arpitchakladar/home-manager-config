@@ -1,11 +1,10 @@
+# Aria2 - command line download manager
 {
   pkgs,
   lib,
   config,
   ...
 }:
-
-# Aria2 - command line download manager
 {
   options.web.aria2 = {
     enable = lib.mkEnableOption "Enables aria2.";

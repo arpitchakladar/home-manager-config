@@ -1,5 +1,5 @@
+# Keybindings - Vim-style keyboard shortcuts for neomutt
 { config, lib, ... }:
-
 {
   config.programs.neomutt.binds = lib.mkIf config.communication.neomutt.enable [
     # --- sidebar navigation (vim: k=up, j=down) ---

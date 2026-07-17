@@ -1,11 +1,10 @@
+# gpg - GNU Privacy Guard
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# gpg - GNU Privacy Guard
 {
   options.security.gpg = {
     enable = lib.mkEnableOption "Enables gpg.";

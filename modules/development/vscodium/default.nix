@@ -1,11 +1,10 @@
+# VSCodium - Visual Studio Code fork
 {
   config,
   lib,
   pkgs,
   ...
 }:
-
-# VSCodium - Visual Studio Code fork
 {
   options.development.vscodium = {
     enable = lib.mkEnableOption "Enables vscodium.";

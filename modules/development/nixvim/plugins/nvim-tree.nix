@@ -1,6 +1,5 @@
-{ config, lib, ... }:
-
 # Nvim-tree - File explorer sidebar (nvim-tree.lua)
+{ config, lib, ... }:
 {
   config.programs.nixvim.plugins.nvim-tree = lib.mkIf config.development.nixvim.enable {
     enable = true;

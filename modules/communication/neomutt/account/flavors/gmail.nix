@@ -1,3 +1,4 @@
+# Gmail - Gmail-specific defaults for folder names, mbsync patterns, and mailboxes
 {
   config,
   lib,

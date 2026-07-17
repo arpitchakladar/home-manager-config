@@ -1,3 +1,4 @@
+# EditorConfig - Consistent coding styles across editors
 root = true
 
 [*.nix]

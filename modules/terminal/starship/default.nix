@@ -1,6 +1,5 @@
-{ config, lib, ... }:
-
 # Starship - Minimal, blazing-fast shell prompt
+{ config, lib, ... }:
 {
   options.terminal.starship = {
     enable = lib.mkEnableOption "Enables starship.";

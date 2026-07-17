@@ -1,6 +1,5 @@
-{ config, lib, ... }:
-
 # less - terminal pager
+{ config, lib, ... }:
 {
   options.terminal.less = {
     enable = lib.mkEnableOption "Enables less.";
