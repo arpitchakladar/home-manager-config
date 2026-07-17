@@ -69,7 +69,7 @@
       action = "select-entry";
     }
 
-    # --- back / exit (vim: h = left/back) ---
+    # --- back / exit / fold-close (vim: h = left/back) ---
     {
       map = [ "pager" ];
       key = "h";
@@ -86,6 +86,10 @@
       action = "exit";
     }
     {
+      # in the index, h/l act as fold-close/fold-open on a thread
+      # rather than "back" (there's nowhere to go "back" to from the
+      # top-level index) -- same convention as fold/tree keybindings
+      # in tools like NERDTree or fugitive.
       map = [ "index" ];
       key = "h";
       action = "collapse-thread";
@@ -221,6 +225,24 @@
       action = "search-opposite";
     }
 
+    # --- delete / undelete (vim: dd delete line, u undo) ---
+    {
+      map = [ "index" ];
+      key = "d";
+      action = "noop";
+    }
+    {
+      map = [ "index" ];
+      key = "dd";
+      action = "delete-message";
+    }
+    {
+      # capital D deletes the whole thread, mirroring the v/V
+      # (single vs. whole-thread) convention used below for tagging
+      map = [ "index" ];
+      key = "D";
+      action = "delete-thread";
+    }
     {
       map = [
         "index"
@@ -233,12 +255,18 @@
     # --- copy (vim: yy yank -- non-destructive, unlike save-message
     #     which moves/deletes the original) ---
     {
-      map = [ "index" ];
+      map = [
+        "index"
+        "pager"
+      ];
       key = "y";
       action = "noop";
     }
     {
-      map = [ "index" ];
+      map = [
+        "index"
+        "pager"
+      ];
       key = "yy";
       action = "copy-message";
     }
@@ -259,24 +287,25 @@
       action = "tag-thread";
     }
 
-    # --- mailbox switching (vim: gt = next tab) ---
+    # --- mailbox switching (vim: gt/gT next/previous tab) ---
     {
       map = [ "index" ];
       key = "gt";
       action = "next-unread-mailbox";
     }
+    {
+      map = [ "index" ];
+      key = "gT";
+      action = "previous-unread-mailbox";
+    }
 
-    # --- filter/limit (vim: gf to 'find' or 'filter') ---
+    # --- filter/limit (vim: gf to 'find'/'filter') ---
+    # gF is the "clear filter" counterpart, defined as a macro
+    # (see macros.nix) since resetting the limit needs a fixed
+    # pattern rather than an interactive prompt.
     {
       map = [ "index" ];
       key = "gf";
-      action = "limit";
-    }
-
-    # --- filter/limit (vim: gf to 'find' or 'filter') ---
-    {
-      map = [ "index" ];
-      key = "gF";
       action = "limit";
     }
 
