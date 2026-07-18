@@ -1,4 +1,3 @@
-# Path to your i3 config file
 I3_CONFIG="$HOME/.config/i3/config"
 
 # Function to wrap text

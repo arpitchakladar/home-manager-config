@@ -1,6 +1,3 @@
-# Deep clean script for Nix systems
-# Removes old generations, garbage, and optimizes store
-# WARNING: Do NOT run with sudo - run as normal user
 echo "--- Starting Nix Deep Clean ---"
 
 if [[ $EUID -eq 0 ]]; then

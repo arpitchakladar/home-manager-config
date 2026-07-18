@@ -1,5 +1,3 @@
-# Neomutt-sync - Interactive mail sync with dialog progress bar
-# 1. Create temporary files for the dark theme and notmuch logs
 export DIALOGRC=$(mktemp)
 NOTMUCH_LOG=$(mktemp)
 TITLE="[SYNCING MAIL]"

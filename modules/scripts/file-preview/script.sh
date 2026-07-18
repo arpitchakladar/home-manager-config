@@ -1,4 +1,3 @@
-# Timeout protection (prevents hanging)
 TIMEOUT=5
 if [ -z "$LF_PREVIEW_RUNNING" ]; then
     export LF_PREVIEW_RUNNING=1
