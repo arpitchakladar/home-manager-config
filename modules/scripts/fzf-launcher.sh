@@ -1,55 +1,41 @@
 # Fzf-launcher - FZF-based application launcher (scans .desktop files)
+
 DIRS=(
   /run/current-system/sw/share/applications
   "$HOME/.nix-profile/share/applications"
   "$HOME/.local/share/applications"
 )
 
-entries=""
+shopt -s nullglob
 
+entries=""
 for dir in "${DIRS[@]}"; do
   [[ -d "$dir" ]] || continue
-
-  shopt -s nullglob
   for f in "$dir"/*.desktop; do
     [[ -f "$f" ]] || continue
 
-    # Skip hidden entries
     grep -q "^NoDisplay=true" "$f" && continue
     grep -q "^Hidden=true" "$f" && continue
-
-    # Only GUI apps
     grep -q "^Type=Application" "$f" || continue
     grep -q "^Terminal=true" "$f" && continue
 
-    # Skip ONLY actual junk categories (not System!)
     categories=$(grep -m1 "^Categories=" "$f" | cut -d= -f2-)
     if [[ -n "$categories" ]]; then
       echo "$categories" | grep -qE "(Settings|Screensaver|DesktopSettings)" && continue
     fi
 
-    # Get name (handle localized fallback)
     name=$(grep -m1 "^Name=" "$f" | cut -d= -f2-)
     if [[ -z "$name" ]]; then
       name=$(grep -m1 -E "^Name\[.*\]=" "$f" | cut -d= -f2-)
     fi
+    [[ -z "$name" ]] && continue
 
-    # Get exec
-    exec=$(grep -m1 "^Exec=" "$f" | cut -d= -f2-)
-
-    [[ -z "$name" || -z "$exec" ]] && continue
-
-    # Remove field codes like %U %F etc.
-    exec=$(echo "$exec" | sed -E 's/ ?%[a-zA-Z]//g')
-
-    entries+="$name"$'\t'"$exec"$'\n'
+    entries+="$name"$'\t'"$f"$'\n'
   done
 done
 
-# Deduplicate + sort
 entries=$(printf '%s' "$entries" | sort -fu -t$'\t' -k1,1)
 
-# FZF selection
 chosen=$(printf '%s' "$entries" | fzf \
   --prompt='Launch: ' \
   --layout=reverse \
@@ -59,7 +45,6 @@ chosen=$(printf '%s' "$entries" | fzf \
 
 [[ -z "$chosen" ]] && exit 0
 
-exec_cmd=$(printf '%s' "$chosen" | cut -d$'\t' -f2)
+desktop_file=$(printf '%s' "$chosen" | cut -d$'\t' -f2-)
 
-# Launch safely
-eval "$exec_cmd" &>/dev/null &
+setsid -f dex "$desktop_file" </dev/null >/dev/null 2>&1

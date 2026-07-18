@@ -52,12 +52,12 @@ EOF
   # --- PHASE 2: notmuch ---
   printf "XXX\n100\nIndexing new mail with notmuch...\nXXX\n"
   notmuch new > "$NOTMUCH_LOG" 2>&1
-) | dialog --title $TITLE --gauge "Initializing..." 8 80 0
+) | dialog --title "$TITLE" --gauge "Initializing..." 8 80 0
 
 # 3. Format the captured notmuch output into a single clean line
 CLEAN_OUT=$(tr '\n' ' ' < "$NOTMUCH_LOG" | sed 's/  */ /g')
 
 # 4. Display final results and wait for user input (Enter/Esc) to dismiss
-dialog --title $TITLE --msgbox "Done!\n$CLEAN_OUT" 8 80
+dialog --title "$TITLE" --msgbox "Done!\n$CLEAN_OUT" 8 80
 
 clear

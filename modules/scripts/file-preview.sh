@@ -93,8 +93,10 @@ case "$MIMETYPE" in
   application/epub+zip|application/x-mobipocket-ebook)
     TMP_IMG="$TMP_DIR/epub-${INODE}.png"
     if [ ! -f "$TMP_IMG" ]; then
-      ouch decompress "$FILE_PATH" --limit "*/cover*.jpg" --dir "$TMP_DIR" >/dev/null 2>&1
-      mv "$TMP_DIR"/cover*.jpg "$TMP_IMG" 2>/dev/null
+      EPUB_DIR="$TMP_DIR/epub-${INODE}"
+      ouch decompress --yes --dir "$EPUB_DIR" "$FILE_PATH" >/dev/null 2>&1
+      COVER=$(find "$EPUB_DIR" -type f \( -iname 'cover*.jpg' -o -iname 'cover*.jpeg' -o -iname 'cover*.png' \) -print -quit)
+      [ -n "$COVER" ] && cp "$COVER" "$TMP_IMG"
     fi
     [ -s "$TMP_IMG" ] && render_image "$TMP_IMG"
     ;;

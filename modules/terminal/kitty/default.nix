@@ -19,6 +19,17 @@
     programs.kitty = {
       enable = true;
       package = config.terminal.kitty.package;
+      extraConfig = ''
+        # Keep normal clicks for selection and prompt placement; Ctrl+click opens links.
+        mouse_map left click ungrabbed mouse_handle_click selection prompt
+        mouse_map ctrl+left click grabbed,ungrabbed mouse_handle_click link
+
+        # Vim-style navigation between Kitty windows in the current tab.
+        map ctrl+shift+h neighboring_window left
+        map ctrl+shift+j neighboring_window bottom
+        map ctrl+shift+k neighboring_window top
+        map ctrl+shift+l neighboring_window right
+      '';
       settings = with config.scheme.withHashtag; {
         window_padding_width = 10;
         font_size = config.fonts.size;

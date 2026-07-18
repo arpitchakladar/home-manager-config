@@ -11,7 +11,7 @@ in
   "${mod}+r" =
     lib.mkIf (config.terminal.fzf.enable && config.terminal.kitty.enable)
       "exec ${lib.getExe config.terminal.kitty.package} --class application-launcher -e ${lib.getExe config.scripts.fzf-launcher.package}";
-  "${mod}+t" =
+  "${mod}+Return" =
     lib.mkIf config.terminal.kitty.enable "exec ${lib.getExe config.terminal.kitty.package}";
   "${mod}+f" =
     lib.mkIf (config.terminal.kitty.enable && config.file-management.lf.enable)

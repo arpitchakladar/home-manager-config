@@ -25,6 +25,10 @@
         initContent = ''
           setopt PROMPT_SUBST
 
+          # Vi insert/command modes for command-line editing. Escape enters normal mode.
+          bindkey -v
+          KEYTIMEOUT=1
+
           autoload -U colors && colors
 
           export GPG_TTY="$(tty)"

@@ -65,6 +65,7 @@ let
         config.file-management.ouch.package
         pkgs.coreutils
         pkgs.file
+        pkgs.findutils
         pkgs.fontconfig
         pkgs.librsvg
         pkgs.antiword
@@ -107,6 +108,7 @@ let
       path = ./fzf-launcher.sh;
       deps = [
         config.terminal.fzf.package
+        pkgs.dex
         pkgs.util-linux
       ];
       conditions = [

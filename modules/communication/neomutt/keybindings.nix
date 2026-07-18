@@ -225,17 +225,7 @@
       action = "search-opposite";
     }
 
-    # --- delete / undelete (vim: dd delete line, u undo) ---
-    {
-      map = [ "index" ];
-      key = "d";
-      action = "noop";
-    }
-    {
-      map = [ "index" ];
-      key = "dd";
-      action = "delete-message";
-    }
+    # --- undelete ---
     {
       # capital D deletes the whole thread, mirroring the v/V
       # (single vs. whole-thread) convention used below for tagging
@@ -287,18 +277,12 @@
       action = "tag-thread";
     }
 
-    # --- mailbox switching (vim: gt/gT next/previous tab) ---
+    # --- mailbox switching ---
     {
       map = [ "index" ];
       key = "gt";
       action = "next-unread-mailbox";
     }
-    {
-      map = [ "index" ];
-      key = "gT";
-      action = "previous-unread-mailbox";
-    }
-
     # --- filter/limit (vim: gf to 'find'/'filter') ---
     # gF is the "clear filter" counterpart, defined as a macro
     # (see macros.nix) since resetting the limit needs a fixed
