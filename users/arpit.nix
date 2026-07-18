@@ -16,7 +16,7 @@
   desktop.enable = true;
 
   # Gaming
-  gaming.enable = true;
+  gaming.heroic.enable = true;
   gaming.steam.enable = false;
 
   # Communication
