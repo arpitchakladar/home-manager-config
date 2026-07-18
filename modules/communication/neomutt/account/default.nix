@@ -20,7 +20,36 @@ in
     description = "Specification of email accounts.";
   };
 
-  config = mkIf config.communication.neomutt.enable {
+  config = {
+    assertions = [
+      {
+        assertion =
+          !config.communication.neomutt.enable
+          || !lib.any (account: account.enable && account.passwordGopassSecret != null) (
+            lib.attrValues config.communication.neomutt.accounts
+          )
+          || config.security.gopass.enable;
+        message = ''
+          An enabled communication.neomutt account uses passwordGopassSecret but security.gopass.enable is not set.
+          Enable security.gopass to provide the account password command.
+        '';
+      }
+      {
+        assertion =
+          !config.communication.neomutt.enable
+          || !lib.any (account: account.enable && account.gpg.key != null) (
+            lib.attrValues config.communication.neomutt.accounts
+          )
+          || config.security.gpg.enable;
+        message = ''
+          An enabled communication.neomutt account specifies a GPG key but security.gpg.enable is not set.
+          Enable security.gpg to provide mail signing and encryption support.
+        '';
+      }
+    ];
+
+  }
+  // mkIf config.communication.neomutt.enable {
     accounts.email.accounts = mapAttrs (
       name: account:
       let

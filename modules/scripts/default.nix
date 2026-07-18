@@ -6,8 +6,7 @@
   ...
 }:
 let
-  shell =
-    if config.terminal.zsh.enable then (lib.getExe config.terminal.zsh.package) else "/usr/bin/env sh";
+  shell = pkgs.runtimeShell;
 
   mkScript =
     name: path: env: deps:
@@ -24,16 +23,20 @@ let
         '';
       };
     in
-    pkgs.symlinkJoin {
-      name = name;
-      paths = [ wrappedScript ] ++ deps;
-      buildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
+    pkgs.runCommand name
+      {
+        name = name;
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        meta.mainProgram = name;
+      }
+      ''
+        mkdir -p $out/bin
+        cp ${wrappedScript}/bin/${name} $out/bin/${name}
+        chmod +x $out/bin/${name}
+
         wrapProgram $out/bin/${name} \
           --prefix PATH : ${lib.makeBinPath deps}
       '';
-      meta.mainProgram = name;
-    };
 
   # Script definitions: { path, env?, deps?, conditions? }
   # condition: attrset of { option (string path), value (expected value) }
@@ -60,22 +63,26 @@ let
         config.terminal.bat.package
         config.media.ffmpeg.package
         config.file-management.ouch.package
+        pkgs.coreutils
         pkgs.file
+        pkgs.fontconfig
         pkgs.librsvg
+        pkgs.antiword
+        pkgs.pandoc
         pkgs.poppler-utils
+        pkgs.util-linux
       ];
       conditions = [
+        {
+          option = "terminal.kitty.enable";
+          value = true;
+        }
         {
           option = "media.ffmpeg.enable";
           value = true;
         }
         {
           option = "file-management.ouch.enable";
-          value = true;
-        }
-        {
-          # not a dependency
-          option = "office.zathura.enable";
           value = true;
         }
         {
@@ -101,24 +108,28 @@ let
       deps = [
         config.terminal.fzf.package
         pkgs.util-linux
-        config.terminal.zsh.package
       ];
       conditions = [
         {
           option = "terminal.fzf.enable";
           value = true;
         }
-        {
-          option = "terminal.zsh.enable";
-          value = true;
-        }
       ];
     };
     i3-keybindings = {
       path = ./i3-keybindings.sh;
+      deps = [
+        pkgs.coreutils
+        pkgs.gawk
+        pkgs.ncurses
+      ];
       conditions = [
         {
           option = "desktop.enable";
+          value = true;
+        }
+        {
+          option = "terminal.less.enable";
           value = true;
         }
       ];
@@ -147,6 +158,7 @@ let
         config.system.nvtop.package
         config.terminal.tmux.package
         config.terminal.kitty.package
+        pkgs.bash
       ];
       conditions = [
         {
@@ -175,6 +187,10 @@ let
       deps = [
         config.terminal.fzf.package
         config.security.openvpn.package
+        pkgs.coreutils
+        pkgs.findutils
+        pkgs.gnugrep
+        pkgs.gnused
       ];
       conditions = [
         {
@@ -200,6 +216,10 @@ let
       path = ./neomutt-sync.sh;
       deps = [
         pkgs.dialog
+        pkgs.coreutils
+        pkgs.gawk
+        pkgs.gnused
+        pkgs.util-linux
         config.programs.mbsync.package
         config.programs.notmuch.package
       ];
@@ -299,17 +319,25 @@ in
           };
         };
 
-    assertions = lib.concatLists (
-      lib.mapAttrsToList (
-        name: def:
-        map (cond: {
-          assertion =
-            !config.scripts.${name}.enable
-            || lib.attrByPath (lib.splitString "." cond.option) false config == cond.value;
-          message = "scripts.${name} is enabled but requires `${cond.option} = ${builtins.toJSON cond.value}`.";
-        }) (def.conditions or [ ])
-      ) scriptDefs
-    );
+    assertions =
+      lib.concatLists (
+        lib.mapAttrsToList (
+          name: def:
+          map (cond: {
+            assertion =
+              !config.scripts.${name}.enable
+              || lib.attrByPath (lib.splitString "." cond.option) false config == cond.value;
+            message = "scripts.${name} is enabled but requires `${cond.option} = ${builtins.toJSON cond.value}`.";
+          }) (def.conditions or [ ])
+        ) scriptDefs
+      )
+      ++ lib.mapAttrsToList (name: _: {
+        assertion =
+          !config.scripts.${name}.enable
+          || !config.scripts.${name}.desktop.enable
+          || config.terminal.kitty.enable;
+        message = "scripts.${name}.desktop.enable requires terminal.kitty.enable because desktop entries launch scripts in kitty.";
+      }) scriptDefs;
 
     home.packages = [
       pkgs.file

@@ -19,6 +19,17 @@
   };
 
   config = lib.mkIf config.file-management.lf.enable {
+    assertions = [
+      {
+        assertion = config.scripts.file-preview.enable;
+        message = "file-management.lf.enable requires scripts.file-preview.enable for file previews.";
+      }
+      {
+        assertion = config.scripts.file-preview-clean.enable;
+        message = "file-management.lf.enable requires scripts.file-preview-clean.enable to clear kitty previews.";
+      }
+    ];
+
     xdg.mimeApps.defaultApplications = {
       "inode/directory" = "lf.desktop";
     };

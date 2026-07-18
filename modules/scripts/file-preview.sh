@@ -99,17 +99,16 @@ case "$MIMETYPE" in
     [ -s "$TMP_IMG" ] && render_image "$TMP_IMG"
     ;;
 
-  # --- OFFICE ---
-  application/vnd.openxmlformats-officedocument.*|application/msword|application/vnd.oasis.opendocument.*)
-    TMP_IMG="$TMP_DIR/doc-${INODE}.png"
-    if [ ! -f "$TMP_IMG" ]; then
-      libreoffice --headless --convert-to pdf --outdir "$TMP_DIR" "$FILE_PATH" >/dev/null 2>&1
-      PDF_VER="${TMP_DIR}/$(basename "${FILE_PATH%.*}").pdf"
-      if [ -f "$PDF_VER" ]; then
-        pdftoppm -f 1 -l 1 -png -singlefile "$PDF_VER" "${TMP_IMG%.png}" >/dev/null 2>&1
-      fi
-    fi
-    render_image "$TMP_IMG"
+  # --- OFFICE DOCUMENTS ---
+  # Extract text in the terminal instead of pulling in a graphical office suite.
+  application/vnd.openxmlformats-officedocument.wordprocessingml.document|application/vnd.oasis.opendocument.text)
+    pandoc --to plain "$FILE_PATH" 2>/dev/null
+    exit 0
+    ;;
+
+  application/msword)
+    antiword "$FILE_PATH" 2>/dev/null
+    exit 0
     ;;
 
   # --- ARCHIVES ---

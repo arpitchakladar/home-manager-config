@@ -7,7 +7,7 @@
 with config.scheme.withHashtag;
 {
   type = "custom/script";
-  exec-if = "${lib.getExe config.terminal.zsh.package} -c '${lib.getExe' pkgs.iproute2 "ip"} a | ${lib.getExe pkgs.gnugrep} -q tun0'";
+  exec-if = "${pkgs.runtimeShell} -c '${lib.getExe' pkgs.iproute2 "ip"} a | ${lib.getExe pkgs.gnugrep} -q tun0'";
   exec = "echo VPN";
   interval = 5;
 

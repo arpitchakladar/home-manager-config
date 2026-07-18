@@ -10,7 +10,7 @@ entries=""
 for dir in "${DIRS[@]}"; do
   [[ -d "$dir" ]] || continue
 
-  setopt nullglob
+  shopt -s nullglob
   for f in "$dir"/*.desktop; do
     [[ -f "$f" ]] || continue
 

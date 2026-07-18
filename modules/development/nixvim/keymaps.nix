@@ -31,10 +31,5 @@
       ];
       options.desc = "Toggle file explorer";
     }
-    {
-      key = "<c-c>";
-      action = "<cmd>NotificationsClear<cr>";
-      options.desc = "Clear notifications";
-    }
   ];
 }
