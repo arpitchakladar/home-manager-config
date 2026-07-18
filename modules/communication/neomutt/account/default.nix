@@ -1,15 +1,9 @@
 # Account - Converts neomutt account options into home-manager email config
 { config, lib, ... }:
-
-with lib;
-
-let
-  inherit (lib) types;
-in
 {
-  options.communication.neomutt.accounts = mkOption {
-    type = types.attrsOf (
-      types.submodule {
+  options.communication.neomutt.accounts = lib.mkOption {
+    type = lib.types.attrsOf (
+      lib.types.submodule {
         imports = [
           ./options.nix
           ./flavors/gmail.nix
@@ -49,8 +43,8 @@ in
     ];
 
   }
-  // mkIf config.communication.neomutt.enable {
-    accounts.email.accounts = mapAttrs (
+  // lib.mkIf config.communication.neomutt.enable {
+    accounts.email.accounts = lib.mapAttrs (
       name: account:
       let
         a = account;
@@ -71,8 +65,8 @@ in
         folders = {
           inherit (a.folders) inbox trash;
         }
-        // optionalAttrs (a.folders.drafts != null) { drafts = a.folders.drafts; }
-        // optionalAttrs (a.folders.sent != null) { sent = a.folders.sent; };
+        // lib.optionalAttrs (a.folders.drafts != null) { drafts = a.folders.drafts; }
+        // lib.optionalAttrs (a.folders.sent != null) { sent = a.folders.sent; };
 
         neomutt = {
           enable = true;
@@ -101,7 +95,7 @@ in
           };
         };
 
-        imap = optionalAttrs (a.imap.host != null) {
+        imap = lib.optionalAttrs (a.imap.host != null) {
           host = a.imap.host;
           port = a.imap.port;
           tls = {
@@ -110,7 +104,7 @@ in
           };
         };
 
-        smtp = optionalAttrs (a.smtp.host != null) {
+        smtp = lib.optionalAttrs (a.smtp.host != null) {
           host = a.smtp.host;
           port = a.smtp.port;
           tls = {
@@ -119,18 +113,18 @@ in
           };
         };
 
-        gpg = optionalAttrs (a.gpg.key != null) {
+        gpg = lib.optionalAttrs (a.gpg.key != null) {
           key = a.gpg.key;
           signByDefault = a.gpg.signByDefault;
           encryptByDefault = a.gpg.encryptByDefault;
         };
 
-        signature = optionalAttrs (a.signature.text != null || a.signature.command != null) {
+        signature = lib.optionalAttrs (a.signature.text != null || a.signature.command != null) {
           text = a.signature.text;
           command = a.signature.command;
           showSignature = a.signature.showSignature;
         };
       }
-    ) (filterAttrs (n: a: a.enable) config.communication.neomutt.accounts);
+    ) (lib.filterAttrs (n: a: a.enable) config.communication.neomutt.accounts);
   };
 }

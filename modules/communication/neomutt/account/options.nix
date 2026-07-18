@@ -1,6 +1,5 @@
 # Options - Email account option definitions (realName, address, folders, gpg, etc.)
 { lib, ... }:
-
 {
   options = {
     enable = lib.mkEnableOption "this email account" // {

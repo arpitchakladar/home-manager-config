@@ -5,7 +5,6 @@
   name,
   ...
 }:
-
 {
   config = lib.mkIf (config.flavor == "gmail.com") {
     folders = {

@@ -1,6 +1,5 @@
 # Assertions - Validates neomutt dependencies (less, bat, kitty) are enabled
 { config, ... }:
-
 {
   assertions = [
     {
