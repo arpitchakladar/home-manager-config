@@ -26,5 +26,7 @@
         HashKnownHosts = "yes";
       };
     };
+
+    services.ssh-agent.enable = lib.mkIf config.security.gpg.enable false;
   };
 }

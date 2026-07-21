@@ -34,10 +34,6 @@
       "inode/directory" = "lf.desktop";
     };
 
-    home.packages = with pkgs; [
-      busybox
-    ];
-
     programs.lf = {
       enable = true;
       package = config.file-management.lf.package;
@@ -48,7 +44,7 @@
         hidden = true;
         preview = true;
 
-        shell = "sh";
+        shell = config.home.sessionVariables.SHELL;
         ifs = "\n";
         scrolloff = "4";
         period = "1";
@@ -65,9 +61,7 @@
         source = lib.getExe config.scripts.file-preview.package;
       };
 
-      extraConfig = ''
-        ${builtins.readFile ./lfrc}
-      '';
+      extraConfig = builtins.readFile ./lfrc;
     };
 
     home.file.".config/lf/icons".source = ./icons;
