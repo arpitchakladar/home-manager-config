@@ -1,4 +1,4 @@
-# Assertions - Validates neomutt dependencies (less, bat, kitty) are enabled
+# Assertions - Validates neomutt dependencies (less, bat, kitty, w3m) are enabled
 { config, ... }:
 {
   assertions = [
@@ -21,6 +21,13 @@
       message = ''
         communication.neomutt is enabled but terminal.kitty.enable is not.
         neomutt's desktop entry requires kitty as the terminal launcher. Please enable terminal.kitty.
+      '';
+    }
+    {
+      assertion = !config.communication.neomutt.enable || config.web.w3m.enable;
+      message = ''
+        communication.neomutt is enabled but web.w3m.enable is not.
+        neomutt uses w3m for HTML email rendering. Please enable web.w3m.
       '';
     }
   ];

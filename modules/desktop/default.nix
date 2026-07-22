@@ -9,6 +9,7 @@
     ./i3
     ./gtk
     ./polybar
+    ./xdg
   ];
 
   options.desktop = {

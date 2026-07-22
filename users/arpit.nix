@@ -80,6 +80,7 @@
   # Web
   web.aria2.enable = true;
   web.brave.enable = true;
+  web.w3m.enable = true;
 
   development.git.signing.signByDefault = true;
 

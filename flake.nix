@@ -22,7 +22,6 @@
 
   outputs =
     {
-      self,
       nixpkgs,
       home-manager,
       base16,

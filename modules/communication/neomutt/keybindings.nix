@@ -304,5 +304,11 @@
       key = "g?";
       action = "help";
     }
+
+    {
+      map = [ "pager" ];
+      key = "H";
+      action = "display-toggle-weed";
+    }
   ];
 }

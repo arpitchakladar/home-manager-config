@@ -4,6 +4,7 @@
 # Each column in the index receives a distinct color to keep the UI organized.
 
 set menu_scroll = yes
+set pager_stop = yes
 
 # cancel any prompt/command-line entry with Esc, vim-style
 set abort_key = "<Esc>"
