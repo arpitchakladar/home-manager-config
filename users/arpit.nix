@@ -34,7 +34,7 @@
   development.vscodium.enable = true;
 
   # File Management
-  file-management.lf.enable = true;
+  file-management.yazi.enable = true;
   file-management.lsd.enable = true;
   file-management.ouch.enable = true;
 

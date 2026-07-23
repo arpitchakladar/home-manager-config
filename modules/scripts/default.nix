@@ -8,8 +8,6 @@
   imports = [
     ./aria2-run
     ./deep-clean
-    ./file-preview
-    ./file-preview-clean
     ./fzf-launcher
     ./i3-keybindings
     ./neomutt-sync
@@ -17,6 +15,7 @@
     ./system-monitor
     ./vpn-connect
     ./vpn-disconnect
+    ./yazi-file-chooser
   ];
 
   config = {

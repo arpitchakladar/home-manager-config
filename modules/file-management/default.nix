@@ -1,9 +1,9 @@
-# File Management - File manager and utility modules (lf, lsd, ouch)
+# File Management - File manager and utility modules (yazi, lsd, ouch)
 { ... }:
 
 {
   imports = [
-    ./lf
+    ./yazi
     ./lsd
     ./ouch
   ];

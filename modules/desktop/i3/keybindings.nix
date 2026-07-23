@@ -14,8 +14,8 @@ in
   "${mod}+Return" =
     lib.mkIf config.terminal.kitty.enable "exec ${lib.getExe config.terminal.kitty.package}";
   "${mod}+f" =
-    lib.mkIf (config.terminal.kitty.enable && config.file-management.lf.enable)
-      "exec ${lib.getExe config.terminal.kitty.package} --title 'File Manager' --class file-explorer -e ${lib.getExe config.file-management.lf.package}";
+    lib.mkIf (config.terminal.kitty.enable && config.file-management.yazi.enable)
+      "exec ${lib.getExe config.terminal.kitty.package} --title 'File Manager' --class file-explorer -e ${lib.getExe config.file-management.yazi.package}";
   "${mod}+s" =
     lib.mkIf config.terminal.kitty.enable "exec ${lib.getExe config.terminal.kitty.package} --title 'Keybindings' --class keybindings-viewer -e ${lib.getExe config.scripts.i3-keybindings.package}";
   "${mod}+q" = "kill";

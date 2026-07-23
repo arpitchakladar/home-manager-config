@@ -14,12 +14,17 @@
         xdg-desktop-portal-gtk
       ];
       config.common = {
+        "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
         default = [
           "gtk"
         ];
-        "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
       };
       xdgOpenUsePortal = true;
+    };
+
+    home.sessionVariables = {
+      GTK_USE_PORTAL = "1";
+      TERMCMD = lib.mkIf config.terminal.kitty.enable (lib.getExe config.terminal.kitty.package);
     };
   };
 }

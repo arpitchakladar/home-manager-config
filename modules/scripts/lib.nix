@@ -41,9 +41,13 @@ let
       env ? { },
       deps ? [ ],
       desktop ? null,
+      extraLinks ? [ ],
       config,
       description ? "",
     }:
+    let
+      scriptDrv = mkScript name path description env deps;
+    in
     {
       options.scripts.${name} = {
         enable = lib.mkOption {
@@ -73,10 +77,22 @@ let
       moduleConfig = {
         scripts.${name} = lib.mkIf config.scripts.${name}.enable (
           {
-            package = mkScript name path description env deps;
+            package = scriptDrv;
           }
           // lib.optionalAttrs (desktop != null) { inherit desktop; }
         );
+
+        home.file = lib.mkIf config.scripts.${name}.enable (
+          builtins.listToAttrs (
+            map (linkPath: {
+              name = lib.removePrefix "~/" linkPath;
+              value = {
+                source = "${scriptDrv}/bin/${name}";
+              };
+            }) extraLinks
+          )
+        );
+
         assertions = [
           {
             assertion =
