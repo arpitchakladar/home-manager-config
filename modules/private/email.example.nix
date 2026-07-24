@@ -2,7 +2,7 @@
 { ... }:
 {
   config.communication.neomutt.accounts = {
-    "example" = {
+    "example@gmail.com" = {
       realName = "Example User";
       address = "user@gmail.com";
       passwordGopassSecret = "mail/user@gmail.com";

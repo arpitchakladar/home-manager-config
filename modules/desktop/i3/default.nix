@@ -64,6 +64,10 @@
             command = "floating enable, resize set 1000 600, move position center";
             criteria.class = "keybindings-viewer";
           }
+          {
+            command = "if_floating_resize_set 1280 720";
+            criteria.class = ".*";
+          }
         ];
 
         focus.followMouse = true;
