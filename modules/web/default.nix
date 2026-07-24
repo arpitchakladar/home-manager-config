@@ -3,7 +3,7 @@
 {
   imports = [
     ./aria2
-    ./brave
+    ./chromium
     ./w3m
   ];
 }

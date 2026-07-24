@@ -18,6 +18,7 @@
       settings = {
         dir = "${config.home.homeDirectory}/Downloads";
       };
+      systemd.enable = true;
     };
   };
 }
