@@ -24,7 +24,7 @@
 
     home.sessionVariables = {
       GTK_USE_PORTAL = "1";
-      TERMCMD = lib.mkIf config.terminal.kitty.enable (lib.getExe config.terminal.kitty.package);
+      TERMCMD = lib.mkIf config.terminal.kitty.enable "${lib.getExe config.terminal.kitty.package} --class file-explorer --title 'Yazi'";
     };
   };
 }

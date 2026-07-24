@@ -53,15 +53,15 @@
 
         window.commands = [
           {
-            command = "floating enable, sticky enable, resize set 1400 800, move position center";
+            command = "floating enable, resize set 1400 800, move position center";
             criteria.class = "file-explorer";
           }
           {
-            command = "floating enable, sticky enable, resize set 1000 600, move position center";
+            command = "floating enable, resize set 800 600, move position center";
             criteria.class = "application-launcher";
           }
           {
-            command = "floating enable, sticky enable, resize set 1000 600, move position center";
+            command = "floating enable, resize set 1000 600, move position center";
             criteria.class = "keybindings-viewer";
           }
         ];
