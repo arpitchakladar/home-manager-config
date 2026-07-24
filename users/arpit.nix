@@ -57,6 +57,7 @@
   # Security
   security.enteauth.enable = true;
   security.gopass.enable = true;
+  security.gopass.ssh-agent.enable = true;
   security.gpg.enable = true;
   security.openvpn.enable = true;
   security.ssh.enable = true;
