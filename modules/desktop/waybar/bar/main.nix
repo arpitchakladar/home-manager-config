@@ -5,6 +5,9 @@ with config.scheme.withHashtag;
   position = "top";
   height = 30;
 
+  fixed-center = false;
+  expand-center = true;
+
   modules-left = [ "hyprland/workspaces" ];
   modules-center = [ "hyprland/window" ];
   modules-right = [

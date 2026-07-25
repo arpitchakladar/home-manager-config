@@ -1,8 +1,8 @@
-{ config }:
+{ config, iconColor }:
 with config.scheme.withHashtag;
 {
-  format-wifi = "{icon} {signalStrength}%";
-  format-ethernet = " {ipaddr}";
+  format-wifi = "<span foreground='${iconColor}'>{icon}</span> {signalStrength}%";
+  format-ethernet = "<span foreground='${iconColor}'></span> {ipaddr}";
   format-disconnected = "";
   tooltip-format = "{ifname}";
   tooltip-format-wifi = "{essid} ({signalStrength}%)";

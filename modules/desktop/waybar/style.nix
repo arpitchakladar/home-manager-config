@@ -7,23 +7,52 @@ with config.scheme.withHashtag;
     font-family: "${config.fonts.normal}";
     font-size: ${toString config.fonts.size}px;
     min-height: 0;
+    margin: 0;
+    padding: 0;
   }
 
-  window#waybar {
+  #workspaces, #window, #pulseaudio, #battery, #custom-vpn, #network,
+  #clock.time, #memory, #cpu, #clock.date {
     background: ${base00};
-    color: ${base05};
+    margin: 0 2px;
+  }
+
+  #workspaces {
+    border: none;
+    margin-left: 2.5px;
+  }
+
+  #clock.date {
+    margin-right: 4.5px;
+  }
+
+  #window, #pulseaudio, #battery, #custom-vpn, #network,
+  #clock.time, #memory, #cpu, #clock.date {
+    border: 1.5px solid ${base03};
+    color: ${base07};
+    padding: 0 8px;
   }
 
   #workspaces button {
-    padding: 0 4px;
-    color: ${base05};
+    padding: 3px;
+    color: ${base07};
+    border: 1.5px solid ${base03};
+    border-radius: 0;
+    min-width: 24px;
+    min-height: 24px;
+    margin: 0 2px;
   }
 
-  #workspaces button.focused {
-    border-bottom: 3px solid ${base0D};
+  #workspaces button:hover {
+    background: ${base01};
+  }
+
+  #workspaces button.active {
+    background: ${base03};
   }
 
   #workspaces button.urgent {
-    border-bottom: 3px solid ${base08};
+    background: ${base08};
+    border-color: ${base08};
   }
 ''

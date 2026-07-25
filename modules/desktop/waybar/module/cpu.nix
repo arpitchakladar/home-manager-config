@@ -1,6 +1,6 @@
-{ config }:
+{ config, iconColor }:
 with config.scheme.withHashtag;
 {
-  format = " {usage}%";
+  format = "<span foreground='${iconColor}'></span> {usage}%";
   interval = 2;
 }

@@ -1,8 +1,8 @@
-{ config }:
+{ config, iconColor }:
 with config.scheme.withHashtag;
 {
-  format = "{icon} {volume}%";
-  format-muted = "󰻨";
+  format = "<span foreground='${iconColor}'>{icon}</span> {volume}%";
+  format-muted = "<span foreground='${iconColor}'>󰝟</span>";
   format-icons = [
     ""
     ""
