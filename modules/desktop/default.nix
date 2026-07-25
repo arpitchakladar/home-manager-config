@@ -1,4 +1,4 @@
-# Desktop - Desktop environment configuration (i3, GTK, polybar)
+# Desktop - Desktop environment configuration (i3/Hyprland, GTK, polybar)
 {
   lib,
   config,
@@ -6,10 +6,10 @@
 }:
 {
   imports = [
-    ./i3
     ./gtk
     ./polybar
     ./xdg
+    ./hyprland
   ];
 
   options.desktop = {
@@ -18,19 +18,5 @@
 
   config = lib.mkIf config.desktop.enable {
     xdg.enable = true;
-    xsession.enable = true;
-
-    home.file.".xinitrc" = {
-      text = ''
-        #!/usr/bin/env sh
-
-        [ -f ~/.Xresources ] && xrdb -merge ~/.Xresources
-        [ -f ~/.profile ] && . ~/.profile
-        [ -f ~/.xsession ] && . ~/.xsession
-
-        exec ${config.xsession.windowManager.i3.package}/bin/i3
-      '';
-      executable = true;
-    };
   };
 }
