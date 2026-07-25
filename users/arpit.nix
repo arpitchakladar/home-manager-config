@@ -14,7 +14,6 @@
 
   # Desktop environment
   desktop.enable = true;
-  desktop.hyprland.enable = true;
 
   # Gaming
   gaming.heroic.enable = true;

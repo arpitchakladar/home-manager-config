@@ -9,14 +9,11 @@ let
 in
 {
   imports = [
+    ./hyprpaper.nix
     ./keybindings.nix
   ];
 
-  options.desktop.hyprland = {
-    enable = lib.mkEnableOption "Hyprland Wayland compositor";
-  };
-
-  config = lib.mkIf config.desktop.hyprland.enable {
+  config = lib.mkIf config.desktop.enable {
     wayland.windowManager.hyprland = {
       enable = true;
       configType = "lua";
@@ -35,10 +32,10 @@ in
             border_size = 1;
             col = {
               active_border = {
-                colors = [ (toHyprColor base07) ];
+                colors = [ (toHyprColor base03) ];
                 angle = 45;
               };
-              inactive_border = toHyprColor base03;
+              inactive_border = toHyprColor base00;
             };
             layout = "dwindle";
           };
@@ -50,6 +47,10 @@ in
           input = {
             follow_mouse = 1;
             kb_layout = "us";
+          };
+
+          cursor = {
+            enable_hyprcursor = true;
           };
 
           dwindle = {
@@ -109,12 +110,14 @@ in
       };
     };
 
-    services.hyprpaper = lib.mkIf config.media.feh.enable {
+    home.pointerCursor = {
       enable = true;
-      settings = {
-        preload = [ "${../../../assets/sapling.png}" ];
-        wallpaper = [ ",${../../../assets/sapling.png}" ];
-      };
+      package = pkgs.rose-pine-hyprcursor;
+      name = "rose-pine-hyprcursor";
+      size = 24;
+      hyprcursor.enable = true;
+      gtk.enable = false;
+      x11.enable = false;
     };
 
     home.packages = with pkgs; [

@@ -1,4 +1,4 @@
-# Desktop - Desktop environment configuration (i3/Hyprland, GTK, polybar)
+# Desktop - Desktop environment configuration (Hyprland, GTK, waybar)
 {
   lib,
   config,
@@ -7,9 +7,9 @@
 {
   imports = [
     ./gtk
-    ./polybar
     ./xdg
     ./hyprland
+    ./waybar
   ];
 
   options.desktop = {

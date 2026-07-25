@@ -23,10 +23,6 @@
     programs.chromium = {
       enable = true;
 
-      commandLineArgs = [
-        "--force-device-scale-factor=1.15"
-      ];
-
       extensions = [
         { id = "ddkjiahejlhfcafbddmgiahcphecmpfh"; } # uBlock Origin Lite
         { id = "naepdomgkenhinolocfifgehidddafch"; } # Browserpass

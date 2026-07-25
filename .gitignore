@@ -4,3 +4,6 @@
 # Private/secret configuration - track *.example.nix, ignore *.nix
 modules/private/*.nix
 !modules/private/*.example.nix
+
+# nix testing bulid directory
+result
