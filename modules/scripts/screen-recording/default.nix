@@ -9,10 +9,10 @@ let
   base = mkScriptModule {
     name = "screen-recording";
     path = ./script.sh;
-    description = "Screen recording script using FFmpeg and slop for region selection\nRecords X11 screen to MP4 with x264 encoding\nUsage: screen-recording.sh [-s|--select]\n  -s, --select  Launch slop to select recording region";
+    description = "Screen recording script using wf-recorder and slurp for region selection\nRecords Wayland screen to MP4\nUsage: screen-recording.sh [-s|--select]\n  -s, --select  Launch slurp to select recording region";
     deps = [
-      config.media.ffmpeg.package
-      config.media.slop.package
+      config.media.slurp.package
+      config.media.wf-recorder.package
     ];
     desktop = {
       enable = true;

@@ -1,14 +1,14 @@
-# Media - Multimedia tools (feh, ffmpeg, maim, pamixer, playerctl, slop, vlc)
+# Media - Multimedia tools (feh, grim, pamixer, playerctl, slurp, vlc, wf-recorder)
 { ... }:
 
 {
   imports = [
     ./feh
-    ./ffmpeg
-    ./maim
+    ./grim
     ./pamixer
     ./playerctl
-    ./slop
+    ./slurp
     ./vlc
+    ./wf-recorder
   ];
 }

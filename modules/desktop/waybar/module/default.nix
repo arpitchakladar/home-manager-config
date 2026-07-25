@@ -6,7 +6,7 @@
 with config.scheme.withHashtag;
 {
   mainBar = {
-    "hyprland/workspaces" = import ./workspaces.nix { inherit config; };
+    "hyprland/workspaces" = import ./workspaces.nix { inherit config lib; };
     "hyprland/window" = import ./window.nix { inherit config; };
     "pulseaudio" = import ./volume.nix {
       inherit config;

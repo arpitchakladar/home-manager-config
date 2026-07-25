@@ -42,15 +42,15 @@
     background-color:            transparent;
     foreground:                  @base07;
 
-    border-color:                @base03;
+    border-color:                @base07;
     separatorcolor:              @base02;
 
-    selected-normal-background:  @base02;
+    selected-normal-background:  @base00;
     selected-normal-foreground:  @base07;
-    selected-active-background:  @base0D;
-    selected-active-foreground:  @base00;
-    selected-urgent-background:  @base08;
-    selected-urgent-foreground:  @base00;
+    selected-active-background:  @base00;
+    selected-active-foreground:  @base07;
+    selected-urgent-background:  @base00;
+    selected-urgent-foreground:  @base0F;
 
     normal-background:           @base00;
     normal-foreground:           @base03;
@@ -78,8 +78,10 @@ mainbox {
 }
 
 inputbar {
-    background-color:   @base01;
+    background-color:   @background;
     text-color:         @foreground;
+    border:             1.5px;
+    border-color:       @border-color;
     padding:            10px 14px;
     spacing:            10px;
     children:           [ "prompt", "entry" ];
@@ -88,7 +90,7 @@ inputbar {
 prompt {
     background-color:   transparent;
     text-color:         @base04;
-    font:               "JetBrainsMono Nerd Font Bold 11";
+    font:               "FiraCode Nerd Font Bold 11";
 }
 
 entry {

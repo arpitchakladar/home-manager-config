@@ -9,7 +9,7 @@ let
   impalaDesktopItem = pkgs.makeDesktopItem {
     name = "impala";
     desktopName = "Impala";
-    exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.networking.impala.package}";
+    exec = "${lib.getExe config.terminal.kitty.package} --class impala -e ${lib.getExe config.networking.impala.package}";
     icon = "kitty";
     categories = [ "Network" ];
     comment = "TUI for managing wifi on Linux";

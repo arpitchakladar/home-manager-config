@@ -40,12 +40,12 @@
 
   # Media
   media.feh.enable = true;
-  media.ffmpeg.enable = true;
-  media.maim.enable = true;
+  media.grim.enable = true;
   media.pamixer.enable = true;
   media.playerctl.enable = true;
-  media.slop.enable = true;
+  media.slurp.enable = true;
   media.vlc.enable = true;
+  media.wf-recorder.enable = true;
 
   # Networking
   networking.impala.enable = true;

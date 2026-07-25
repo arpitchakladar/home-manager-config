@@ -9,7 +9,7 @@ let
   bluetuiDesktopItem = pkgs.makeDesktopItem {
     name = "bluetui";
     desktopName = "BlueTUI";
-    exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.networking.bluetui.package}";
+    exec = "${lib.getExe config.terminal.kitty.package} --class bluetui -e ${lib.getExe config.networking.bluetui.package}";
     icon = "kitty";
     categories = [ "Network" ];
     comment = "Bluetooth TUI client";

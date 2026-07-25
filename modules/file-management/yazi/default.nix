@@ -30,7 +30,7 @@
 
     xdg.desktopEntries."yazi" = {
       name = "Yazi";
-      exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.file-management.yazi.package}";
+      exec = "${lib.getExe config.terminal.kitty.package} --class yazi -e ${lib.getExe config.file-management.yazi.package}";
       icon = "kitty";
       categories = [ "Utility" ];
       comment = "Terminal file manager";

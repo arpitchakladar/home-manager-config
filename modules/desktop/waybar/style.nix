@@ -32,7 +32,7 @@ with config.scheme.withHashtag;
 
   #window, #pulseaudio, #battery, #custom-vpn, #network,
   #clock.time, #memory, #cpu, #clock.date {
-    border: 1.5px solid ${base03};
+    border: 1.5px solid ${base07};
     color: ${base07};
     padding: 0 8px;
   }
@@ -45,6 +45,7 @@ with config.scheme.withHashtag;
     min-width: 24px;
     min-height: 24px;
     margin: 0 2px;
+    font-size: 30px;
   }
 
   #workspaces button:hover {
@@ -52,7 +53,11 @@ with config.scheme.withHashtag;
   }
 
   #workspaces button.active {
-    background: ${base03};
+    border-color: ${base07};
+  }
+
+  #workspaces button.empty {
+    color: ${base03};
   }
 
   #workspaces button.urgent {

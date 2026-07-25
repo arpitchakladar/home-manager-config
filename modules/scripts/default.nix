@@ -8,7 +8,6 @@
   imports = [
     ./aria2-run
     ./deep-clean
-    ./i3-keybindings
     ./neomutt-sync
     ./screen-recording
     ./system-monitor
@@ -28,7 +27,7 @@
             pkgs.makeDesktopItem {
               name = name;
               desktopName = sc.desktop.displayName;
-              exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe sc.package}";
+              exec = "${lib.getExe config.terminal.kitty.package} --class ${name} -e ${lib.getExe sc.package}";
               icon = "kitty";
               categories = [ "Utility" ];
               terminal = false;

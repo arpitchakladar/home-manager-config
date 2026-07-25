@@ -9,7 +9,7 @@ let
   w3mDesktopItem = pkgs.makeDesktopItem {
     name = "w3m";
     desktopName = "w3m";
-    exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe' config.web.w3m.package "w3m"}";
+    exec = "${lib.getExe config.terminal.kitty.package} --class w3m -e ${lib.getExe' config.web.w3m.package "w3m"}";
     icon = "kitty";
     categories = [ "Network" ];
     comment = "Text-based web browser";

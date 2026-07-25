@@ -9,7 +9,7 @@ let
   neomuttDesktopItem = pkgs.makeDesktopItem {
     name = "neomutt";
     desktopName = "NeoMutt";
-    exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.programs.neomutt.package}";
+    exec = "${lib.getExe config.terminal.kitty.package} --class neomutt -e ${lib.getExe config.programs.neomutt.package}";
     icon = "kitty";
     categories = [
       "Network"
