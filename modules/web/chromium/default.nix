@@ -30,7 +30,7 @@
       extensions = [
         { id = "ddkjiahejlhfcafbddmgiahcphecmpfh"; } # uBlock Origin Lite
         { id = "naepdomgkenhinolocfifgehidddafch"; } # Browserpass
-        { id = "mpkodccbngfoacfalldjimigbofkhgjn"; } # Dark Reader
+        { id = "kioklelcojgbjoljlilalgdcppkiioge"; } # Quite Black
         { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark Reader
         { id = "hpejmncgbammabkkodflfeekpcicfjnk"; } # Aria2 Explorer
       ];

@@ -1,7 +1,10 @@
 # yazi - Terminal file manager with native previews
 { config, lib, ... }:
 {
-  imports = [ ./theme.nix ];
+  imports = [
+    ./theme.nix
+    ./assertions.nix
+  ];
 
   options.file-management.yazi = {
     enable = lib.mkEnableOption "Enables yazi.";
@@ -23,6 +26,16 @@
           show_hidden = true;
         };
       };
+    };
+
+    xdg.desktopEntries."yazi" = {
+      name = "Yazi";
+      exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.file-management.yazi.package}";
+      icon = "kitty";
+      categories = [ "Utility" ];
+      comment = "Terminal file manager";
+      terminal = false;
+      type = "Application";
     };
 
     xdg.mimeApps.defaultApplications = {

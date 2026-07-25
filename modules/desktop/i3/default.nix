@@ -53,7 +53,7 @@
 
         window.commands = [
           {
-            command = "floating enable, resize set 1400 800, move position center";
+            command = "floating enable, resize set 1280 720, move position center";
             criteria.class = "file-explorer";
           }
           {
@@ -61,12 +61,8 @@
             criteria.class = "application-launcher";
           }
           {
-            command = "floating enable, resize set 1000 600, move position center";
+            command = "floating enable, resize set 1280 720, move position center";
             criteria.class = "keybindings-viewer";
-          }
-          {
-            command = "if_floating_resize_set 1280 720";
-            criteria.class = ".*";
           }
         ];
 
