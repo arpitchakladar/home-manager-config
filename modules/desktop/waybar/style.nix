@@ -23,11 +23,11 @@ with config.scheme.withHashtag;
 
   #workspaces {
     border: none;
-    margin-left: 2.5px;
+    margin-left: 3px;
   }
 
   #clock.date {
-    margin-right: 4.5px;
+    margin-right: 5px;
   }
 
   #window, #pulseaudio, #battery, #custom-vpn, #network,

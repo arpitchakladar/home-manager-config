@@ -33,9 +33,6 @@ in
     ])
     (lib.optionals config.terminal.kitty.enable [
       (bind "Return" (execLua "${lib.getExe config.terminal.kitty.package}"))
-      (bind "S" (
-        execLua "${lib.getExe config.terminal.kitty.package} --title 'Keybindings' --class keybindings-viewer -e ${lib.getExe config.scripts.i3-keybindings.package}"
-      ))
     ])
     (lib.optionals (config.terminal.kitty.enable && config.file-management.yazi.enable) [
       (bind "F" (

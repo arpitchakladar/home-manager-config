@@ -90,22 +90,6 @@ in
             match.class = "^(rofi)$";
             center = true;
           }
-
-          {
-            name = "float-keybindings-viewer";
-            match.class = "^(keybindings-viewer)$";
-            float = true;
-          }
-          {
-            name = "size-keybindings-viewer";
-            match.class = "^(keybindings-viewer)$";
-            size = "1280 720";
-          }
-          {
-            name = "center-keybindings-viewer";
-            match.class = "^(keybindings-viewer)$";
-            center = true;
-          }
         ];
       };
     };
