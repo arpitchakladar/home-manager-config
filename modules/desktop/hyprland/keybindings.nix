@@ -27,7 +27,6 @@ let
 in
 {
   config.wayland.windowManager.hyprland.settings.bind = lib.flatten [
-    # --- General Applications ---
     (lib.optionals config.desktop.rofi.enable [
       (bind "R" (execLua "${lib.getExe config.desktop.rofi.package} -show drun"))
     ])
@@ -41,7 +40,6 @@ in
     ])
     (bind "Q" "hl.dsp.window.close()")
 
-    # --- Media / Hardware Keys ---
     (lib.optionals config.system.brightnessctl.enable [
       (bindRawFlags "XF86MonBrightnessDown"
         (execLuaSingle "${lib.getExe config.system.brightnessctl.package} set 5%-")
@@ -91,7 +89,6 @@ in
       )
     ])
 
-    # --- Window Management (Vim-style) ---
     (bind "H" "hl.dsp.focus({ direction = \"l\" })")
     (bind "J" "hl.dsp.focus({ direction = \"d\" })")
     (bind "K" "hl.dsp.focus({ direction = \"u\" })")
@@ -110,7 +107,6 @@ in
     (bind "D" "hl.dsp.window.float({ action = \"toggle\" })")
     (bind "M" "hl.dsp.window.fullscreen()")
 
-    # --- Workspaces ---
     (bind "1" "hl.dsp.focus({ workspace = 1 })")
     (bind "2" "hl.dsp.focus({ workspace = 2 })")
     (bind "3" "hl.dsp.focus({ workspace = 3 })")
@@ -133,7 +129,6 @@ in
     (bind "SHIFT + 9" "hl.dsp.window.move({ workspace = 9 })")
     (bind "SHIFT + 0" "hl.dsp.window.move({ workspace = 10 })")
 
-    # --- Screenshots ---
     (lib.optionals (config.media.grim.enable && config.media.slurp.enable) [
       (bind "P" (
         execLuaSingle "${lib.getExe config.media.grim.package} -g \"$(${lib.getExe config.media.slurp.package})\" - | wl-copy"

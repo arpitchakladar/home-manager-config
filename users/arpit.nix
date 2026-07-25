@@ -14,6 +14,12 @@
 
   # Desktop environment
   desktop.enable = true;
+  desktop.hardware.gpu = {
+    nvidia.enable = true;
+    amd.enable = true;
+    primaryCard = "/dev/dri/by-path/pci-0000:05:00.0-card";
+    secondaryCard = "/dev/dri/by-path/pci-0000:01:00.0-card";
+  };
 
   # Gaming
   gaming.heroic.enable = true;

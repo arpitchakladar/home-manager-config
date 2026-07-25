@@ -13,7 +13,57 @@ in
     ./keybindings.nix
   ];
 
+  options.desktop.hardware.gpu = {
+    nvidia.enable = lib.mkEnableOption "Nvidia GPU Wayland/Hyprland optimizations";
+
+    amd.enable = lib.mkEnableOption "AMD GPU Wayland/Hyprland optimizations";
+
+    primaryCard = lib.mkOption {
+      type = lib.types.str;
+      default = "/dev/dri/by-path/pci-0000:05:00.0-card";
+      description = "Path to primary DRM card device for Aquamarine/Hyprland rendering";
+    };
+
+    secondaryCard = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = "/dev/dri/by-path/pci-0000:01:00.0-card";
+      description = "Path to secondary DRM card device for offloading (null if single GPU)";
+    };
+  };
+
   config = lib.mkIf config.desktop.enable {
+
+    home.sessionVariables = lib.mkMerge [
+      {
+        NIXOS_OZONE_WL = "1";
+        QT_QPA_PLATFORM = "wayland;xcb";
+        SDL_VIDEODRIVER = "wayland";
+        CLUTTER_BACKEND = "wayland";
+
+        AQ_DRM_DEVICES =
+          if config.desktop.hardware.gpu.secondaryCard != null then
+            "${config.desktop.hardware.gpu.primaryCard}:${config.desktop.hardware.gpu.secondaryCard}"
+          else
+            config.desktop.hardware.gpu.primaryCard;
+      }
+
+      (lib.mkIf config.desktop.hardware.gpu.nvidia.enable {
+        LIBVA_DRIVER_NAME = "nvidia";
+        __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+        GBM_BACKEND = "nvidia-drm";
+        NVD_BACKEND = "direct";
+
+        AQ_NO_MODIFIERS = "1";
+        __GL_YIELD = "USLEEP";
+        __GL_VRR_ALLOWED = "0";
+      })
+
+      (lib.mkIf config.desktop.hardware.gpu.amd.enable {
+        AMD_VULKAN_ICD = "RADV";
+        MESA_VK_DEVICE_SELECT = "1002:";
+      })
+    ];
+
     wayland.windowManager.hyprland = {
       enable = true;
       configType = "lua";
@@ -40,8 +90,24 @@ in
             layout = "dwindle";
           };
 
+          debug = {
+            vfr = true;
+          };
+
+          misc = {
+            vrr = lib.mkIf config.desktop.hardware.gpu.amd.enable 1;
+            disable_hyprland_logo = true;
+            disable_splash_rendering = true;
+          };
+
           decoration = {
             rounding = 0;
+            blur = {
+              enabled = false;
+            };
+            shadow = {
+              enabled = false;
+            };
           };
 
           input = {
@@ -51,6 +117,7 @@ in
 
           cursor = {
             enable_hyprcursor = true;
+            no_hardware_cursors = config.desktop.hardware.gpu.nvidia.enable;
           };
 
           dwindle = {
@@ -87,11 +154,5 @@ in
       gtk.enable = false;
       x11.enable = false;
     };
-
-    home.packages = with pkgs; [
-      grim
-      slurp
-      wl-clipboard
-    ];
   };
 }
