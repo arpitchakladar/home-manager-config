@@ -4,41 +4,27 @@
   pkgs,
 }:
 with config.scheme.withHashtag;
+let
+  inherit (import ../lib.nix { inherit lib; }) mkIcon;
+in
 {
   mainBar = {
     "hyprland/workspaces" = import ./workspaces.nix { inherit config lib; };
     "hyprland/window" = import ./window.nix { inherit config; };
-    "pulseaudio" = import ./volume.nix {
-      inherit config;
-      iconColor = base0A;
-    };
-    "battery" = import ./battery.nix {
-      inherit config;
-      iconColor = base09;
-    };
+    "pulseaudio" = import ./volume.nix { inherit config mkIcon; };
+    "battery" = import ./battery.nix { inherit config mkIcon; };
     "custom/vpn" = import ./vpn.nix {
-      inherit config lib pkgs;
-      iconColor = base0C;
+      inherit
+        config
+        lib
+        pkgs
+        mkIcon
+        ;
     };
-    "network" = import ./network.nix {
-      inherit config;
-      iconColor = base0B;
-    };
-    "clock#time" = import ./time.nix {
-      inherit config;
-      iconColor = base08;
-    };
-    "memory" = import ./memory.nix {
-      inherit config;
-      iconColor = base0F;
-    };
-    "cpu" = import ./cpu.nix {
-      inherit config;
-      iconColor = base0D;
-    };
-    "clock#date" = import ./date.nix {
-      inherit config;
-      iconColor = base0E;
-    };
+    "network" = import ./network.nix { inherit config mkIcon; };
+    "clock#time" = import ./time.nix { inherit config mkIcon; };
+    "memory" = import ./memory.nix { inherit config mkIcon; };
+    "cpu" = import ./cpu.nix { inherit config mkIcon; };
+    "clock#date" = import ./date.nix { inherit config mkIcon; };
   };
 }

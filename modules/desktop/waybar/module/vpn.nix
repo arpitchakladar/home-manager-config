@@ -2,13 +2,14 @@
   config,
   lib,
   pkgs,
-  iconColor,
+  mkIcon,
 }:
 with config.scheme.withHashtag;
 let
+  iconColor = base0C;
   vpnCheckScript = pkgs.writeShellScript "vpn-check" ''
     if ${lib.getExe' pkgs.iproute2 "ip"} a | ${lib.getExe pkgs.gnugrep} -q tun0; then
-      printf '<span foreground="${iconColor}"></span>  VPN'
+      printf '${mkIcon iconColor ""}  VPN'
     fi
   '';
 in

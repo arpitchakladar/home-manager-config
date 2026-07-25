@@ -1,8 +1,11 @@
-{ config, iconColor }:
+{ config, mkIcon }:
 with config.scheme.withHashtag;
+let
+  iconColor = base0A;
+in
 {
-  format = "<span foreground='${iconColor}'>{icon}</span>  {volume}%";
-  format-muted = "<span foreground='${iconColor}'>󰝟</span>";
+  format = "${mkIcon iconColor "{icon}"}  {volume}%";
+  format-muted = mkIcon iconColor " ";
   format-icons = [
     ""
     ""

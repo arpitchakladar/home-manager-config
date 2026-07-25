@@ -1,11 +1,14 @@
-{ config, iconColor }:
+{ config, mkIcon }:
 with config.scheme.withHashtag;
+let
+  iconColor = base0B;
+in
 {
   interval = 2;
 
-  format-wifi = "<span foreground='${iconColor}'>{icon}</span>  󰁅{bandwidthDownBytes}  󰁝{bandwidthUpBytes}";
-  format-ethernet = "<span foreground='${iconColor}'></span>  󰁅{bandwidthDownBytes}  󰁝{bandwidthUpBytes}";
-  format-disconnected = "<span foreground='${iconColor}'>󰤮</span>  Disconnected";
+  format-wifi = "${mkIcon iconColor "{icon}"}  󰁅{bandwidthDownBytes}  󰁝{bandwidthUpBytes}";
+  format-ethernet = "${mkIcon iconColor ""}  󰁅{bandwidthDownBytes}  󰁝{bandwidthUpBytes}";
+  format-disconnected = "${mkIcon iconColor "󰤮"}  Disconnected";
 
   tooltip-format = "{ifname}";
   tooltip-format-wifi = "{essid} ({signalStrength}%)";
