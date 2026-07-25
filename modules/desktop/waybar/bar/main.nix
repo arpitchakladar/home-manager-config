@@ -15,9 +15,9 @@ with config.scheme.withHashtag;
     "battery"
     "custom/vpn"
     "network"
-    "clock#time"
     "memory"
     "cpu"
+    "clock#time"
     "clock#date"
   ];
 }
