@@ -76,18 +76,18 @@ in
           }
 
           {
-            name = "float-application-launcher";
-            match.class = "^(application-launcher)$";
+            name = "float-rofi";
+            match.class = "^(rofi)$";
             float = true;
           }
           {
-            name = "size-application-launcher";
-            match.class = "^(application-launcher)$";
+            name = "size-rofi";
+            match.class = "^(rofi)$";
             size = "800 600";
           }
           {
-            name = "center-application-launcher";
-            match.class = "^(application-launcher)$";
+            name = "center-rofi";
+            match.class = "^(rofi)$";
             center = true;
           }
 
@@ -114,7 +114,7 @@ in
       enable = true;
       package = pkgs.rose-pine-hyprcursor;
       name = "rose-pine-hyprcursor";
-      size = 24;
+      size = 20;
       hyprcursor.enable = true;
       gtk.enable = false;
       x11.enable = false;

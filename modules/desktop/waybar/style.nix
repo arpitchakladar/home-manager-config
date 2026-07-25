@@ -17,6 +17,10 @@ with config.scheme.withHashtag;
     margin: 0 2px;
   }
 
+  #window {
+    margin-right: 3px;
+  }
+
   #workspaces {
     border: none;
     margin-left: 2.5px;
@@ -52,7 +56,6 @@ with config.scheme.withHashtag;
   }
 
   #workspaces button.urgent {
-    background: ${base08};
-    border-color: ${base08};
+    color: ${base08};
   }
 ''

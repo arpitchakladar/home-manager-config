@@ -8,7 +8,6 @@
   imports = [
     ./aria2-run
     ./deep-clean
-    ./fzf-launcher
     ./i3-keybindings
     ./neomutt-sync
     ./screen-recording

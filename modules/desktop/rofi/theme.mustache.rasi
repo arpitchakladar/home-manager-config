@@ -1,0 +1,180 @@
+/**
+ * Rofi Theme — Base16 "OneDark Dark" (olimorris)
+ * Mustache template: render with a base16 color map to produce a .rasi file
+ *
+ * base00 - default background
+ * base01 - lighter background (status bar, line numbers)
+ * base02 - selection background
+ * base03 - comments, invisibles
+ * base04 - dark foreground (status bar)
+ * base05 - default foreground
+ * base06 - light foreground
+ * base07 - lightest foreground
+ * base08 - red      (errors, urgent)
+ * base09 - orange    (numbers)
+ * base0A - yellow    (search matches)
+ * base0B - green     (strings)
+ * base0C - cyan      (support, regex)
+ * base0D - blue      (functions, active/selected)
+ * base0E - purple/magenta (keywords)
+ * base0F - brown     (deprecated)
+ */
+
+* {
+    base00:                      #{{base00}};
+    base01:                      #{{base01}};
+    base02:                      #{{base02}};
+    base03:                      #{{base03}};
+    base04:                      #{{base04}};
+    base05:                      #{{base05}};
+    base06:                      #{{base06}};
+    base07:                      #{{base07}};
+    base08:                      #{{base08}};
+    base09:                      #{{base09}};
+    base0A:                      #{{base0A}};
+    base0B:                      #{{base0B}};
+    base0C:                      #{{base0C}};
+    base0D:                      #{{base0D}};
+    base0E:                      #{{base0E}};
+    base0F:                      #{{base0F}};
+
+    background:                  @base00;
+    background-color:            transparent;
+    foreground:                  @base07;
+
+    border-color:                @base03;
+    separatorcolor:              @base02;
+
+    selected-normal-background:  @base02;
+    selected-normal-foreground:  @base07;
+    selected-active-background:  @base0D;
+    selected-active-foreground:  @base00;
+    selected-urgent-background:  @base08;
+    selected-urgent-foreground:  @base00;
+
+    normal-background:           @base00;
+    normal-foreground:           @base03;
+    active-background:           @base00;
+    active-foreground:           @base07;
+    urgent-background:           @base00;
+    urgent-foreground:           @base08;
+}
+
+window {
+    background-color:   @background;
+    border:             1.5px;
+    border-color:       @border-color;
+    padding:            0;
+    width:              600px;
+    location:           center;
+    anchor:             center;
+}
+
+mainbox {
+    background-color:   transparent;
+    padding:            12px;
+    spacing:            12px;
+    children:           [ "inputbar", "listview" ];
+}
+
+inputbar {
+    background-color:   @base01;
+    text-color:         @foreground;
+    padding:            10px 14px;
+    spacing:            10px;
+    children:           [ "prompt", "entry" ];
+}
+
+prompt {
+    background-color:   transparent;
+    text-color:         @base04;
+    font:               "JetBrainsMono Nerd Font Bold 11";
+}
+
+entry {
+    background-color:   transparent;
+    text-color:         @foreground;
+    placeholder:        "Search…";
+    placeholder-color:  @base03;
+    cursor:             text;
+}
+
+listview {
+    background-color:   transparent;
+    columns:            1;
+    lines:              8;
+    spacing:            4px;
+    cycle:              true;
+    dynamic:            true;
+    scrollbar:          false;
+    fixed-height:       false;
+}
+
+element {
+    background-color:   transparent;
+    text-color:         @normal-foreground;
+    padding:            8px 10px;
+    spacing:            10px;
+    orientation:        horizontal;
+}
+
+element normal.normal {
+    background-color:   @normal-background;
+    text-color:         @normal-foreground;
+}
+
+element normal.active {
+    background-color:   @active-background;
+    text-color:         @active-foreground;
+}
+
+element normal.urgent {
+    background-color:   @urgent-background;
+    text-color:         @urgent-foreground;
+}
+
+element selected.normal {
+    background-color:   @selected-normal-background;
+    text-color:         @selected-normal-foreground;
+}
+
+element selected.active {
+    background-color:   @selected-active-background;
+    text-color:         @selected-active-foreground;
+}
+
+element selected.urgent {
+    background-color:   @selected-urgent-background;
+    text-color:         @selected-urgent-foreground;
+}
+
+element-icon {
+    background-color: transparent;
+    size:               24px;
+    vertical-align:     0.5;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:         inherit;
+    vertical-align:     0.5;
+    horizontal-align:   0.0;
+}
+
+message {
+    background-color: @base01;
+    padding:            8px 12px;
+}
+
+textbox {
+    background-color: transparent;
+    text-color:         @foreground;
+}
+
+error-message {
+    background-color: @base00;
+    text-color:         @base08;
+    border:             1.5px;
+    border-color:       @base08;
+    padding:            10px;
+}

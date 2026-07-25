@@ -28,10 +28,8 @@ in
 {
   config.wayland.windowManager.hyprland.settings.bind = lib.flatten [
     # --- General Applications ---
-    (lib.optionals (config.terminal.fzf.enable && config.terminal.kitty.enable) [
-      (bind "R" (
-        execLua "${lib.getExe config.terminal.kitty.package} --class application-launcher -e ${lib.getExe config.scripts.fzf-launcher.package}"
-      ))
+    (lib.optionals config.desktop.rofi.enable [
+      (bind "R" (execLua "${lib.getExe config.desktop.rofi.package} -show drun"))
     ])
     (lib.optionals config.terminal.kitty.enable [
       (bind "Return" (execLua "${lib.getExe config.terminal.kitty.package}"))

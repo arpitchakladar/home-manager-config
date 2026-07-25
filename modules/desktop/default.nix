@@ -7,6 +7,7 @@
 {
   imports = [
     ./gtk
+    ./rofi
     ./xdg
     ./hyprland
     ./waybar
