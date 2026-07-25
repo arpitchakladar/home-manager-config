@@ -1,6 +1,7 @@
 { config, iconColor }:
 with config.scheme.withHashtag;
 {
-  format = "<span foreground='${iconColor}'></span> {:%d/%m/%Y}";
+  format = "<span foreground='${iconColor}'></span>  {:%d/%m/%Y}";
+  tooltip-format = "{:%A, %d/%m/%Y}";
   interval = 60;
 }
