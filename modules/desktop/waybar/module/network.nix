@@ -2,12 +2,14 @@
 with config.scheme.withHashtag;
 let
   iconColor = base0B;
+  downloadIcon = mkIcon base0F "󰁅";
+  uploadIcon = mkIcon base0F "󰁝";
 in
 {
   interval = 2;
 
-  format-wifi = "${mkIcon iconColor "{icon}"}  󰁅{bandwidthDownBytes}  󰁝{bandwidthUpBytes}";
-  format-ethernet = "${mkIcon iconColor ""}  󰁅{bandwidthDownBytes}  󰁝{bandwidthUpBytes}";
+  format-wifi = "${mkIcon iconColor "{icon}"}  ${downloadIcon}{bandwidthDownBytes}  ${uploadIcon}{bandwidthUpBytes}";
+  format-ethernet = "${mkIcon iconColor ""}  ${downloadIcon}{bandwidthDownBytes}  ${uploadIcon}{bandwidthUpBytes}";
   format-disconnected = "${mkIcon iconColor "󰤮"}  Disconnected";
 
   tooltip-format = "{ifname}";

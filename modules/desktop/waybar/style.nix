@@ -14,38 +14,34 @@ with config.scheme.withHashtag;
   #workspaces, #window, #pulseaudio, #battery, #custom-vpn, #network,
   #clock.time, #memory, #cpu, #clock.date {
     background: ${base00};
-    margin: 0 2px;
-  }
-
-  #window {
-    margin-right: 3px;
+    margin: 0 5px;
   }
 
   #workspaces {
     border: none;
-    margin-left: 3px;
-  }
-
-  #clock.date {
-    margin-right: 5px;
+    margin-right: 0;
   }
 
   #window, #pulseaudio, #battery, #custom-vpn, #network,
   #clock.time, #memory, #cpu, #clock.date {
-    border: 1.5px solid ${base07};
+    border: 1px solid ${base07};
     color: ${base07};
-    padding: 0 8px;
+    padding: 0 10px;
+  }
+
+  #clock.date {
+    margin-right: 10px;
   }
 
   #workspaces button {
-    padding: 3px;
+    padding: 5px;
     color: ${base07};
-    border: 1.5px solid ${base03};
+    border: 1px solid ${base03};
     border-radius: 0;
-    min-width: 24px;
-    min-height: 24px;
-    margin: 0 2px;
-    font-size: 30px;
+    min-width: 0px;
+    min-height: 0px;
+    margin: 0 5px;
+    font-size: 24px;
   }
 
   #workspaces button:hover {

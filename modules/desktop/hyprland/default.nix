@@ -39,6 +39,8 @@ in
         QT_QPA_PLATFORM = "wayland;xcb";
         SDL_VIDEODRIVER = "wayland";
         CLUTTER_BACKEND = "wayland";
+        GDK_SCALE = "1";
+        QT_SCALE_FACTOR = "1";
 
         AQ_DRM_DEVICES =
           if config.desktop.hardware.gpu.secondaryCard != null then
@@ -71,6 +73,14 @@ in
       systemd.enable = true;
 
       settings = {
+        monitor = [
+          {
+            output = "";
+            mode = "preferred";
+            position = "auto";
+            scale = 1;
+          }
+        ];
         mainMod = {
           _var = "SUPER";
         };
@@ -78,16 +88,27 @@ in
         config = {
           general = with config.scheme.withHashtag; {
             gaps_in = 5;
-            gaps_out = 5;
+            gaps_out = 10;
             border_size = 1;
             col = {
               active_border = {
                 colors = [ (toHyprColor base07) ];
                 angle = 45;
               };
-              inactive_border = toHyprColor base00;
+              inactive_border = toHyprColor base03;
             };
-            layout = "dwindle";
+            layout = "scrolling";
+          };
+
+          xwayland = {
+            force_zero_scaling = true;
+          };
+
+          scrolling = {
+            column_width = 0.5;
+            explicit_column_widths = "0.5, 1.0";
+            focus_fit_method = 1;
+            follow_focus = true;
           };
 
           debug = {
@@ -132,11 +153,6 @@ in
             float = true;
           }
           {
-            name = "size-file-explorer";
-            match.class = "^(file-explorer)$";
-            size = "1000 600";
-          }
-          {
             name = "center-file-explorer";
             match.class = "^(file-explorer)$";
             center = true;
@@ -149,7 +165,7 @@ in
       enable = true;
       package = pkgs.rose-pine-hyprcursor;
       name = "rose-pine-hyprcursor";
-      size = 18;
+      size = 20;
       hyprcursor.enable = true;
       gtk.enable = false;
       x11.enable = false;

@@ -58,14 +58,16 @@
     active-foreground:           @base07;
     urgent-background:           @base00;
     urgent-foreground:           @base08;
+
+    font: "FiraCode Nerd Font Bold 18";
 }
 
 window {
     background-color:   @background;
-    border:             1.5px;
+    border:             1px;
     border-color:       @border-color;
     padding:            0;
-    width:              600px;
+    width:              800px;
     location:           center;
     anchor:             center;
 }
@@ -80,17 +82,18 @@ mainbox {
 inputbar {
     background-color:   @background;
     text-color:         @foreground;
-    border:             1.5px;
+    border:             1px;
     border-color:       @border-color;
     padding:            10px 14px;
     spacing:            10px;
     children:           [ "prompt", "entry" ];
+    font:               @font;
 }
 
 prompt {
     background-color:   transparent;
-    text-color:         @base04;
-    font:               "FiraCode Nerd Font Bold 11";
+    text-color:         @base0D;
+    font:               @font;
 }
 
 entry {
@@ -99,6 +102,7 @@ entry {
     placeholder:        "Search…";
     placeholder-color:  @base03;
     cursor:             text;
+    font:               @font;
 }
 
 listview {
@@ -151,30 +155,30 @@ element selected.urgent {
 }
 
 element-icon {
-    background-color: transparent;
-    size:               24px;
+    background-color:   transparent;
+    size:               36px;
     vertical-align:     0.5;
 }
 
 element-text {
-    background-color: transparent;
+    background-color:   transparent;
     text-color:         inherit;
     vertical-align:     0.5;
     horizontal-align:   0.0;
 }
 
 message {
-    background-color: @base01;
+    background-color:   @base01;
     padding:            8px 12px;
 }
 
 textbox {
-    background-color: transparent;
+    background-color:   transparent;
     text-color:         @foreground;
 }
 
 error-message {
-    background-color: @base00;
+    background-color:   @base00;
     text-color:         @base08;
     border:             1.5px;
     border-color:       @base08;

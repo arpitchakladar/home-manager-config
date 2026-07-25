@@ -38,7 +38,8 @@ in
         execLua "${lib.getExe config.terminal.kitty.package} --class file-explorer --title 'Yazi' -e ${lib.getExe config.file-management.yazi.package}"
       ))
     ])
-    (bind "Q" "hl.dsp.window.close()")
+    (bind "SHIFT + Q" "hl.dsp.window.close()")
+    (bind "Equal" (execLua "layoutmsg colresize +conf"))
 
     (lib.optionals config.system.brightnessctl.enable [
       (bindRawFlags "XF86MonBrightnessDown"

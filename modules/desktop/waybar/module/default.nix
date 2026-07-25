@@ -24,6 +24,6 @@ in
         ;
     };
     "hyprland/window" = import ./window.nix { inherit config; };
-    "hyprland/workspaces" = import ./workspaces.nix { inherit config lib; };
+    "hyprland/workspaces" = import ./workspaces.nix { inherit config lib mkIcon; };
   };
 }

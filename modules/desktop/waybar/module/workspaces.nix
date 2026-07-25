@@ -1,9 +1,13 @@
-{ config, lib }:
+{
+  config,
+  lib,
+  mkIcon,
+}:
 with config.scheme.withHashtag;
 let
   mkWindowRewrite =
     enable: color: icon:
-    lib.mkIf enable "<span font_size='150%' color='${color}'>${icon}</span>";
+    lib.mkIf enable (mkIcon color icon);
 in
 {
   format = "{windows} <span rise='-3000' font_size='small'>{id}</span>";
