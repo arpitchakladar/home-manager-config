@@ -45,7 +45,7 @@
   file-management.ouch.enable = true;
 
   # Media
-  media.feh.enable = true;
+  media.swayimg.enable = true;
   media.grim.enable = true;
   media.pamixer.enable = true;
   media.playerctl.enable = true;

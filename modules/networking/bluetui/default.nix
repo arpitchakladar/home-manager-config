@@ -17,8 +17,8 @@
 
   config = lib.mkIf config.networking.bluetui.enable {
     xdg.desktopEntries."bluetui" = {
-      name = "BlueTUI";
-      exec = "${lib.getExe config.terminal.kitty.package} --class bluetui -e ${lib.getExe config.networking.bluetui.package}";
+      name = "bluetui";
+      exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.networking.bluetui.package}";
       icon = "kitty";
       categories = [ "Network" ];
       comment = "Bluetooth TUI client";

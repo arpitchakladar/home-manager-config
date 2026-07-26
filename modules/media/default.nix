@@ -1,8 +1,8 @@
-# Media - Multimedia tools (feh, grim, pamixer, playerctl, slurp, vlc, wf-recorder)
+# Media - Multimedia tools (swayimg, grim, pamixer, playerctl, slurp, vlc, wf-recorder)
 { ... }:
 {
   imports = [
-    ./feh
+    ./swayimg
     ./grim
     ./pamixer
     ./playerctl

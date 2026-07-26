@@ -3,10 +3,10 @@
   ...
 }@input:
 let
-  inherit (import ../lib.nix { inherit lib; }) mkIcon;
+  inherit (import ../lib.nix { inherit lib; }) mkIcon icons;
 
   args = input // {
-    inherit mkIcon;
+    inherit mkIcon icons;
   };
 
   modules = {

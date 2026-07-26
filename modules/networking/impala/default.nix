@@ -17,8 +17,8 @@
 
   config = lib.mkIf config.networking.impala.enable {
     xdg.desktopEntries."impala" = {
-      name = "Impala";
-      exec = "${lib.getExe config.terminal.kitty.package} --class impala -e ${lib.getExe config.networking.impala.package}";
+      name = "impala";
+      exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.networking.impala.package}";
       icon = "kitty";
       categories = [ "Network" ];
       comment = "TUI for managing wifi on Linux";

@@ -26,6 +26,9 @@
         PASSWORD_STORE_DIR = "${config.home.homeDirectory}/.local/share/pass";
       };
     };
+    home.sessionVariables = {
+      PASSWORD_STORE_DIR = config.programs.password-store.settings.PASSWORD_STORE_DIR;
+    };
     systemd.user.services.gopass-ssh-load = lib.mkIf config.security.gopass.ssh-agent.enable {
       Unit = {
         Description = "Load SSH keys from gopass into SSH agent for git";
