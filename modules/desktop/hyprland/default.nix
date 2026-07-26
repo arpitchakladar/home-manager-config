@@ -72,6 +72,18 @@ in
       xwayland.enable = true;
       systemd.enable = true;
 
+      extraConfig = ''
+        ${lib.concatStringsSep "\n" (
+          lib.mapAttrsToList (
+            name: value:
+            let
+              escapedValue = lib.escape [ "\"" "\\" ] (toString value);
+            in
+            ''hl.env("${name}", "${escapedValue}")''
+          ) config.home.sessionVariables
+        )}
+      '';
+
       settings = {
         monitor = [
           {

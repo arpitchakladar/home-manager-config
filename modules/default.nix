@@ -1,5 +1,5 @@
 # Modules - Top-level module aggregator importing all submodules
-{ ... }:
+{ config, ... }:
 {
   imports = [
     ./communication
@@ -19,8 +19,11 @@
   ];
 
   config = {
-    xdg.mimeApps = {
+    xdg = {
       enable = true;
+      mimeApps = {
+        enable = true;
+      };
     };
   };
 }
