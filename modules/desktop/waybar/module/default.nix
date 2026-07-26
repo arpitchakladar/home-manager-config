@@ -3,7 +3,7 @@
   ...
 }@input:
 let
-  inherit (import ../lib.nix { inherit lib; }) mkIcon icons;
+  inherit (import ../lib.nix input) mkIcon icons;
 
   args = input // {
     inherit mkIcon icons;

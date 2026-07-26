@@ -20,7 +20,7 @@
       10
     ];
   };
-  window-rewrite-default = "";
+  window-rewrite-default = icons."Default";
   window-rewrite = {
     "class<chromium-browser>" = lib.mkIf config.web.chromium.enable icons."Chromium";
     "class<kitty>" = lib.mkIf config.terminal.kitty.enable icons."Kitty";

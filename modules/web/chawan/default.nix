@@ -52,7 +52,8 @@
           '';
         };
         display = {
-          image-mode = lib.mkIf config.terminal.kitty.enable "kitty";
+          image-mode = "auto";
+          set-title = false;
         };
         network = {
           allow-http-from-file = true;

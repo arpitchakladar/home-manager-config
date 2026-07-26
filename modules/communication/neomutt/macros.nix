@@ -28,14 +28,14 @@
       # for "open this in a browser-like view".
       map = [ "pager" ];
       key = "\\Cb";
-      action = "<enter-command>set my_pipe_decode=$pipe_decode pipe_decode=yes<enter><pipe-message>${lib.getExe config.web.chawan.package} -T text/html<enter><enter-command>set pipe_decode=$my_pipe_decode<enter>";
+      action = "<enter-command>set my_pipe_decode=$pipe_decode pipe_decode=yes<enter><pipe-message>${lib.getExe config.web.chawan.package} -o \"title='neomutt'\"<enter><enter-command>set pipe_decode=$my_pipe_decode<enter>";
     }
     {
       # Ctrl-B on a specific attachment (not just the top-level
       # message): pipe-entry sends the selected attachment instead.
       map = [ "attach" ];
       key = "\\Cb";
-      action = "<pipe-entry>${lib.getExe config.web.chawan.package} -cols 100 -T text/html<enter>";
+      action = "<pipe-entry>${lib.getExe config.web.chawan.package} -o \"title='neomutt'\" <enter>";
     }
     {
       # gF: clear the current limit/filter and show every message again,

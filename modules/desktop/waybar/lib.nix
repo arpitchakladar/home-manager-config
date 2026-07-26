@@ -1,7 +1,9 @@
-{ ... }:
+{ config, ... }:
+with config.scheme.withHashtag;
 let
   mkIcon = color: icon: "<span foreground='${color}' font_size='120%'>${icon}</span>";
   icons = {
+    "Default" = mkIcon base07 "";
     "Chromium" = mkIcon "#4285F4" "";
     "Kitty" = mkIcon "#F5A97F" "󰄛";
     "VLC" = mkIcon "#FF8800" "󰕼";
