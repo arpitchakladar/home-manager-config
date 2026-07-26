@@ -38,14 +38,6 @@
       action = "<pipe-entry>${lib.getExe' config.web.w3m.package "w3m"} -cols 100 -T text/html<enter>";
     }
     {
-      map = [
-        "index"
-        "pager"
-      ];
-      key = "gl";
-      action = "<shell-escape>less ~/.config/neomutt/flag_legend.txt<enter>";
-    }
-    {
       # gF: clear the current limit/filter and show every message again,
       # the counterpart to gf (interactive limit prompt) in binds.nix
       map = [ "index" ];

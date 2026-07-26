@@ -1,5 +1,10 @@
 # Neomutt - Email suite entry point (neomutt + mbsync + notmuch)
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [
     ./account
@@ -12,6 +17,24 @@
 
   options.communication.neomutt = {
     enable = lib.mkEnableOption "Email suite (neomutt + mbsync + notmuch)";
+
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.symlinkJoin {
+        name = "neomutt-wrapped";
+        paths = with pkgs; [
+          neomutt
+          urlscan
+        ];
+      };
+      defaultText = lib.literalExpression ''
+        pkgs.symlinkJoin {
+          name = "neomutt-wrapped";
+          paths = with pkgs; [ neomutt urlscan ];
+        }
+      '';
+      description = "The neomutt package to use, wrapped with urlscan in PATH.";
+    };
   };
 
   config = lib.mkIf config.communication.neomutt.enable {
