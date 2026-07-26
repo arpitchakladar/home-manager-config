@@ -1,5 +1,4 @@
-{ config }:
-with config.scheme.withHashtag;
+{ ... }:
 {
   layer = "top";
   position = "top";

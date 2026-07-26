@@ -32,7 +32,7 @@
         { id = "naepdomgkenhinolocfifgehidddafch"; } # Browserpass
         { id = "kioklelcojgbjoljlilalgdcppkiioge"; } # Quite Black
         { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; } # Dark Reader
-        { id = "hpejmncgbammabkkodflfeekpcicfjnk"; } # Aria2 Explorer
+        { id = "mpkodccbngfoacfalldjimigbofkhgjn"; } # Aria2 Explorer
       ];
     };
 
@@ -52,6 +52,16 @@
           theme = {
             follows_system_colors = true;
           };
+        };
+        search = {
+          suggest_enabled = false;
+        };
+        url_handling = {
+          show_full_urls = true;
+        };
+        autofill = {
+          profile_enabled = false;
+          credit_card_enabled = false;
         };
         vertical_tabs = {
           collapsed_state = true;

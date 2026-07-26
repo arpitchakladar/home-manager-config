@@ -21,12 +21,23 @@ let
     ];
   };
 
+  bindMouse = key: dispatcher: {
+    _args = [
+      (lua "mainMod .. \" + ${key}\"")
+      (lua dispatcher)
+      { mouse = true; }
+    ];
+  };
+
   execLua = cmd: "hl.dsp.exec_cmd(\"${cmd}\")";
 
   execLuaSingle = cmd: "hl.dsp.exec_cmd('${cmd}')";
 in
 {
   config.wayland.windowManager.hyprland.settings.bind = lib.flatten [
+    (bindMouse "mouse:272" "hl.dsp.window.drag()") # mainMod + LMB drag: move
+    (bindMouse "mouse:273" "hl.dsp.window.resize()") # mainMod + RMB drag: resize
+
     (lib.optionals config.desktop.rofi.enable [
       (bind "R" (execLua "${lib.getExe config.desktop.rofi.package} -show drun"))
     ])
@@ -35,11 +46,11 @@ in
     ])
     (lib.optionals (config.terminal.kitty.enable && config.file-management.yazi.enable) [
       (bind "F" (
-        execLua "${lib.getExe config.terminal.kitty.package} --class file-explorer --title 'Yazi' -e ${lib.getExe config.file-management.yazi.package}"
+        execLua "${lib.getExe config.terminal.kitty.package} --class yazi --title 'Yazi' -e ${lib.getExe config.file-management.yazi.package}"
       ))
     ])
     (bind "SHIFT + Q" "hl.dsp.window.close()")
-    (bind "Equal" (execLua "layoutmsg colresize +conf"))
+    (bind "Equal" "hl.dsp.layout(\"colresize +conf\")")
 
     (lib.optionals config.system.brightnessctl.enable [
       (bindRawFlags "XF86MonBrightnessDown"

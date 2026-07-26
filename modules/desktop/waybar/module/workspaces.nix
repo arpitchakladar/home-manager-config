@@ -2,8 +2,8 @@
   config,
   lib,
   mkIcon,
+  ...
 }:
-with config.scheme.withHashtag;
 let
   mkWindowRewrite =
     enable: color: icon:
@@ -39,7 +39,6 @@ in
     "class<.virt-manager-wrapped>" = mkWindowRewrite config.development.qemu.enable "#AD8AFF" "󰟀";
     "class<opencode>" = mkWindowRewrite config.development.opencode.enable "#98C379" "󰘦";
     "class<io.ente.auth>" = mkWindowRewrite config.security.enteauth.enable "#E5C07B" "󰍀";
-    "class<file-explorer>" = mkWindowRewrite config.file-management.yazi.enable "#56B6C2" "󰉋";
     "class<yazi>" = mkWindowRewrite config.file-management.yazi.enable "#56B6C2" "󰉋";
     "class<w3m>" = mkWindowRewrite config.web.w3m.enable "#8BE9FD" "󰖟";
     "class<bluetui>" = mkWindowRewrite config.networking.bluetui.enable "#BD93F9" "";

@@ -145,19 +145,6 @@ in
             preserve_split = true;
           };
         };
-
-        window_rule = [
-          {
-            name = "float-file-explorer";
-            match.class = "^(file-explorer)$";
-            float = true;
-          }
-          {
-            name = "center-file-explorer";
-            match.class = "^(file-explorer)$";
-            center = true;
-          }
-        ];
       };
     };
 

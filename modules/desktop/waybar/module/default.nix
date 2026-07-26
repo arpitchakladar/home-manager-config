@@ -1,30 +1,27 @@
 {
-  config,
   lib,
-  pkgs,
   ...
-}:
+}@input:
 let
   inherit (import ../lib.nix { inherit lib; }) mkIcon;
+
+  args = input // {
+    inherit mkIcon;
+  };
+
+  modules = {
+    "battery" = ./battery.nix;
+    "cpu" = ./cpu.nix;
+    "clock#date" = ./date.nix;
+    "memory" = ./memory.nix;
+    "network" = ./network.nix;
+    "clock#time" = ./time.nix;
+    "pulseaudio" = ./volume.nix;
+    "custom/vpn" = ./vpn.nix;
+    "hyprland/window" = ./window.nix;
+    "hyprland/workspaces" = ./workspaces.nix;
+  };
 in
 {
-  mainBar = {
-    "battery" = import ./battery.nix { inherit config mkIcon; };
-    "cpu" = import ./cpu.nix { inherit config mkIcon; };
-    "clock#date" = import ./date.nix { inherit config mkIcon; };
-    "memory" = import ./memory.nix { inherit config mkIcon; };
-    "network" = import ./network.nix { inherit config mkIcon; };
-    "clock#time" = import ./time.nix { inherit config mkIcon; };
-    "pulseaudio" = import ./volume.nix { inherit config mkIcon; };
-    "custom/vpn" = import ./vpn.nix {
-      inherit
-        config
-        lib
-        pkgs
-        mkIcon
-        ;
-    };
-    "hyprland/window" = import ./window.nix { inherit config; };
-    "hyprland/workspaces" = import ./workspaces.nix { inherit config lib mkIcon; };
-  };
+  mainBar = lib.mapAttrs (_name: path: import path args) modules;
 }
