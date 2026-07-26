@@ -34,7 +34,7 @@ with config.scheme.withHashtag;
   }
 
   #workspaces button {
-    padding: 5px;
+    padding: 0px 5px;
     color: ${base07};
     border: 1px solid ${base03};
     border-radius: 0;

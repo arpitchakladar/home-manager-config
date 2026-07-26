@@ -36,7 +36,7 @@
         font_family = config.fonts.normal;
         filter_notification = "all";
         update_check_interval = 0;
-        scrollback_indicator_opacity = "0.5";
+        scrollbar_indicator_opacity = "0.5";
 
         dynamic_background_opacity = false;
         enable_audio_bell = false;

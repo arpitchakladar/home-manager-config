@@ -49,5 +49,6 @@ in
     "class<aria2-run>" = mkWindowRewrite config.scripts.aria2-run.enable "#8BE9FD" "";
     "class<screen-recording>" = mkWindowRewrite config.scripts.screen-recording.enable "#FF5555" "";
     "class<system-monitor>" = mkWindowRewrite config.scripts.system-monitor.enable "#50FA7B" "󰄨";
+    "class<neovim>" = mkWindowRewrite config.development.nixvim.enable "#005900" "";
   };
 }

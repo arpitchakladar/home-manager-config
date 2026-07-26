@@ -5,18 +5,6 @@
   pkgs,
   ...
 }:
-let
-  w3mDesktopItem = pkgs.makeDesktopItem {
-    name = "w3m";
-    desktopName = "w3m";
-    exec = "${lib.getExe config.terminal.kitty.package} --class w3m -e ${lib.getExe' config.web.w3m.package "w3m"}";
-    icon = "kitty";
-    categories = [ "Network" ];
-    comment = "Text-based web browser";
-    terminal = false;
-    type = "Application";
-  };
-in
 {
   imports = [
     ./assertions.nix
@@ -33,10 +21,18 @@ in
   };
 
   config = lib.mkIf config.web.w3m.enable {
+    xdg.desktopEntries."w3m" = {
+      name = "w3m";
+      exec = "${lib.getExe config.terminal.kitty.package} --class w3m -e ${lib.getExe' config.web.w3m.package "w3m"}";
+      icon = "kitty";
+      categories = [ "Network" ];
+      comment = "Text-based web browser";
+      terminal = false;
+      type = "Application";
+    };
     programs.w3m.enable = true;
     home.packages = [
       config.web.w3m.package
-      w3mDesktopItem
     ];
   };
 }

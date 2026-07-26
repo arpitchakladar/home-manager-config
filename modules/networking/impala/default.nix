@@ -5,18 +5,6 @@
   pkgs,
   ...
 }:
-let
-  impalaDesktopItem = pkgs.makeDesktopItem {
-    name = "impala";
-    desktopName = "Impala";
-    exec = "${lib.getExe config.terminal.kitty.package} --class impala -e ${lib.getExe config.networking.impala.package}";
-    icon = "kitty";
-    categories = [ "Network" ];
-    comment = "TUI for managing wifi on Linux";
-    terminal = false;
-    type = "Application";
-  };
-in
 {
   imports = [
     ./assertions.nix
@@ -28,9 +16,17 @@ in
   };
 
   config = lib.mkIf config.networking.impala.enable {
+    xdg.desktopEntries."impala" = {
+      name = "Impala";
+      exec = "${lib.getExe config.terminal.kitty.package} --class impala -e ${lib.getExe config.networking.impala.package}";
+      icon = "kitty";
+      categories = [ "Network" ];
+      comment = "TUI for managing wifi on Linux";
+      terminal = false;
+      type = "Application";
+    };
     home.packages = [
       config.networking.impala.package
-      impalaDesktopItem
     ];
 
     xdg.mimeApps.defaultApplications = {

@@ -3,6 +3,7 @@
   lib,
   pkgs,
   mkIcon,
+  ...
 }:
 with config.scheme.withHashtag;
 let

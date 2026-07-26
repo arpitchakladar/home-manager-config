@@ -5,29 +5,25 @@
   pkgs,
   ...
 }:
-let
-  neomuttDesktopItem = pkgs.makeDesktopItem {
-    name = "neomutt";
-    desktopName = "NeoMutt";
-    exec = "${lib.getExe config.terminal.kitty.package} --class neomutt -e ${lib.getExe config.programs.neomutt.package}";
-    icon = "kitty";
-    categories = [
-      "Network"
-      "Email"
-    ];
-    comment = "Terminal email client";
-    terminal = false;
-    type = "Application";
-  };
-in
 {
   config = lib.mkIf config.communication.neomutt.enable {
+    xdg.desktopEntries."neomutt" = {
+      name = "NeoMutt";
+      exec = "${lib.getExe config.terminal.kitty.package} --class neomutt -e ${lib.getExe config.programs.neomutt.package}";
+      icon = "kitty";
+      categories = [
+        "Network"
+        "Email"
+      ];
+      comment = "Terminal email client";
+      terminal = false;
+      type = "Application";
+    };
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/mailto" = "neomutt.desktop";
     };
     home.packages = with pkgs; [
       urlscan
-      neomuttDesktopItem
     ];
     xdg.configFile."neomutt/mailcap".text = ''
       text/html; ${lib.getExe' config.web.w3m.package "w3m"} -dump -cols 100 -T text/html '%s'; copiousoutput; nametemplate=%s.html
