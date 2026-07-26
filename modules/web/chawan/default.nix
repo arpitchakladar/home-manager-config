@@ -1,0 +1,69 @@
+# Chawan - Text-based web browser and pager
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  imports = [
+    ./assertions.nix
+  ];
+
+  options.web.chawan = {
+    enable = lib.mkEnableOption "Enables chawan.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.chawan;
+      defaultText = lib.literalExpression "pkgs.chawan";
+      description = "Package to use for chawan.";
+    };
+  };
+
+  config = lib.mkIf config.web.chawan.enable {
+    xdg.desktopEntries."chawan" = {
+      name = "Chawan";
+      exec = "${lib.getExe config.terminal.kitty.package} --class chawan -e ${lib.getExe config.web.chawan.package}";
+      icon = "kitty";
+      categories = [ "Network" ];
+      comment = "Text-based web browser";
+      terminal = false;
+      type = "Application";
+    };
+    programs.chawan = {
+      enable = true;
+      package = config.web.chawan.package;
+      settings = {
+        buffer = {
+          images = true;
+          user-style = ''
+            html, body, div, section, article, main, header, footer, nav, aside, table, tr, td, th, ul, ol, li, span, p, pre, code {
+              background-color: black !important;
+              color: white !important;
+            }
+            a, a:link { color: #6bb6ff !important; }
+            a:visited { color: #d19aff !important; }
+            @media (prefers-color-scheme: light) {
+              html, body, div, section, article, main, header, footer, nav, aside, table, tr, td, th, ul, ol, li, span, p, pre, code {
+                background-color: black !important;
+                color: white !important;
+              }
+            }
+          '';
+        };
+        display = {
+          image-mode = lib.mkIf config.terminal.kitty.enable "kitty";
+        };
+        network = {
+          allow-http-from-file = true;
+        };
+        page = {
+          o = ''() => pager.extern('xdg-open "$CHA_HOVER_URL"', {env: {CHA_HOVER_URL: pager.hoverLink}})'';
+        };
+      };
+    };
+    home.packages = [
+      config.web.chawan.package
+    ];
+  };
+}

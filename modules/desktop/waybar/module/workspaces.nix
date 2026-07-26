@@ -36,7 +36,6 @@
     "title<OC \\| (.*)>" = lib.mkIf config.development.opencode.enable icons."Opencode";
     "title<Swayimg:(.*)>" = lib.mkIf config.media.swayimg.enable icons."Swayimg";
     "title<Yazi:(.*)>" = lib.mkIf config.file-management.yazi.enable icons."Yazi";
-    "title<(.*)w3m(.*)>" = lib.mkIf config.web.w3m.enable icons."W3M";
     "title<bluetui>" = lib.mkIf config.networking.bluetui.enable icons."bluetui";
     "title<impala>" = lib.mkIf config.networking.impala.enable icons."impala";
     "title<neomutt>" = lib.mkIf config.communication.neomutt.enable icons."neomutt";

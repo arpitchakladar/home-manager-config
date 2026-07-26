@@ -1,12 +1,10 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
   imports = [
-    ./aria2-run
     ./deep-clean
     ./neomutt-sync
     ./screen-recording

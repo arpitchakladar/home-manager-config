@@ -87,7 +87,7 @@
   # Web
   web.aria2.enable = true;
   web.chromium.enable = true;
-  web.w3m.enable = true;
+  web.chawan.enable = true;
 
   development.git.signing.signByDefault = true;
 

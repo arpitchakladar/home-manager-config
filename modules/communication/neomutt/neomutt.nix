@@ -18,7 +18,7 @@
       "x-scheme-handler/mailto" = "neomutt.desktop";
     };
     xdg.configFile."neomutt/mailcap".text = ''
-      text/html; ${lib.getExe' config.web.w3m.package "w3m"} -dump -cols 100 -T text/html '%s'; copiousoutput; nametemplate=%s.html
+      text/html; ${lib.getExe config.web.chawan.package} '%s'; nametemplate=%s.html
       image/*; xdg-open '%s' &
       application/pdf; xdg-open '%s'; nametemplate=%s.pdf
       video/*; xdg-open '%s' &

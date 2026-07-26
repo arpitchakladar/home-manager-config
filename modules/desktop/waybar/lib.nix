@@ -15,7 +15,7 @@ let
     "Opencode" = mkIcon "#98C379" "󰘦";
     "EnteAuth" = mkIcon "#E5C07B" "󰍀";
     "Yazi" = mkIcon "#56B6C2" "󰉋";
-    "W3M" = mkIcon "#8BE9FD" "󰖟";
+    "Chawan" = mkIcon "#8BE9FD" "󰖟";
     "bluetui" = mkIcon "#BD93F9" "";
     "impala" = mkIcon "#50FA7B" "󰤢";
     "neomutt" = mkIcon "#FFB86C" "󰇮";

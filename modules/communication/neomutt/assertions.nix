@@ -1,4 +1,4 @@
-# Assertions - Validates neomutt dependencies (less, bat, kitty, w3m) are enabled
+# Assertions - Validates neomutt dependencies (less, bat, kitty, chawan) are enabled
 { config, ... }:
 {
   assertions = [
@@ -24,10 +24,10 @@
       '';
     }
     {
-      assertion = !config.communication.neomutt.enable || config.web.w3m.enable;
+      assertion = !config.communication.neomutt.enable || config.web.chawan.enable;
       message = ''
-        communication.neomutt is enabled but web.w3m.enable is not.
-        neomutt uses w3m for HTML email rendering. Please enable web.w3m.
+        communication.neomutt is enabled but web.chawan.enable is not.
+        neomutt uses chawan for HTML email rendering. Please enable web.chawan.
       '';
     }
   ];

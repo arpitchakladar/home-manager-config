@@ -15,7 +15,6 @@
     "Ente Auth" = "${icons."EnteAuth"} Ente Auth";
     "Yazi:(.*)" = "${icons."Yazi"} $1";
     "Swayimg:(.*)" = "${icons."Swayimg"} $1";
-    "(.*)w3m(.*)" = "${icons."W3M"} $1$2";
     "bluetui" = "${icons."bluetui"} bluetui";
     "impala" = "${icons."impala"} impala";
     "neomutt" = "${icons."neomutt"} NeoMutt";

@@ -12,7 +12,8 @@ set abort_key = "<Esc>"
 # attachments: use our mailcap for dedicated openers,
 # and auto-render html/images inline where sensible
 set mailcap_path = "~/.config/neomutt/mailcap"
-auto_view text/html image/png image/jpeg image/gif application/pdf
+auto_view text/plain
+alternative_order text/html image/png image/jpeg image/gif application/pdf
 
 # Nerd Font icon-based flag/attachment/crypto indicators
 # order: new, old, deleted, flagged, replied, old(unused), tagged, encrypt, ...
