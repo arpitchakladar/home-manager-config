@@ -20,13 +20,13 @@ in
 
     primaryCard = lib.mkOption {
       type = lib.types.str;
-      default = "/dev/dri/by-path/pci-0000:05:00.0-card";
+      default = "/dev/dri/gpu-amd";
       description = "Path to primary DRM card device for Aquamarine/Hyprland rendering";
     };
 
     secondaryCard = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
-      default = "/dev/dri/by-path/pci-0000:01:00.0-card";
+      default = "/dev/dri/gpu-nvidia";
       description = "Path to secondary DRM card device for offloading (null if single GPU)";
     };
   };

@@ -1,4 +1,3 @@
-# Browserpass - browser extension providing it access to your password store
 {
   lib,
   config,
