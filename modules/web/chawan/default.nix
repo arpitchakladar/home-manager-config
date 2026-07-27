@@ -18,12 +18,17 @@
       defaultText = lib.literalExpression "pkgs.chawan";
       description = "Package to use for chawan.";
     };
+    homeUrl = lib.mkOption {
+      type = lib.types.str;
+      default = "https://searx.space";
+      description = "The first page to open when chawan is launched.";
+    };
   };
 
   config = lib.mkIf config.web.chawan.enable {
     xdg.desktopEntries."chawan" = {
       name = "Chawan";
-      exec = "${lib.getExe config.terminal.kitty.package} --class chawan -e ${lib.getExe config.web.chawan.package}";
+      exec = "${lib.getExe config.terminal.kitty.package} --class chawan -e ${lib.getExe config.web.chawan.package} ${config.web.chawan.homeUrl}";
       icon = "kitty";
       categories = [ "Network" ];
       comment = "Text-based web browser";

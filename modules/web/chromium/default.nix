@@ -69,6 +69,9 @@
       xdg.configFile."chromium/Default/Preferences" = {
         force = true;
         text = builtins.toJSON {
+          NewTabPage = {
+            FooterVisible = false;
+          };
           browser = {
             show_full_urls = true;
             theme = {
