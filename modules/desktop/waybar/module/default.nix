@@ -17,7 +17,6 @@ let
     "network" = ./network.nix;
     "clock#time" = ./time.nix;
     "pulseaudio" = ./volume.nix;
-    "custom/vpn" = ./vpn.nix;
     "hyprland/window" = ./window.nix;
     "hyprland/workspaces" = ./workspaces.nix;
   };

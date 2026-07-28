@@ -9,8 +9,7 @@
     ./neomutt-sync
     ./screen-recording
     ./system-monitor
-    ./vpn-connect
-    ./vpn-disconnect
+    ./usque-warp
     ./yazi-file-chooser
   ];
 

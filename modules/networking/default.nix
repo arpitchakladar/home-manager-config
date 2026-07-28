@@ -4,5 +4,6 @@
   imports = [
     ./bluetui
     ./impala
+    ./usque
   ];
 }

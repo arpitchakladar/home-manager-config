@@ -12,7 +12,6 @@
   modules-right = [
     "pulseaudio"
     "battery"
-    "custom/vpn"
     "network"
     "memory"
     "cpu"

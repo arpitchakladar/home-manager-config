@@ -1,4 +1,4 @@
-# Security - Security tools (enteauth, gopass, gpg, openvpn, ssh)
+# Security - Security tools (enteauth, gopass, gpg, ssh)
 { ... }:
 
 {
@@ -6,7 +6,6 @@
     ./enteauth
     ./gopass
     ./gpg
-    ./openvpn
     ./ssh
   ];
 }

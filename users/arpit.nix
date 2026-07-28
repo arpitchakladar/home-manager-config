@@ -56,6 +56,7 @@
   # Networking
   networking.impala.enable = true;
   networking.bluetui.enable = true;
+  networking.usque.enable = true;
 
   # Office
   office.zathura.enable = true;
@@ -65,7 +66,6 @@
   security.gopass.enable = true;
   security.gopass.ssh-agent.enable = true;
   security.gpg.enable = true;
-  security.openvpn.enable = true;
   security.ssh.enable = true;
 
   # System
