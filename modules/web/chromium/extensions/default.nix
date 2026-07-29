@@ -8,8 +8,9 @@ let
   mkExtension = path: import path { inherit lib pkgs extLib; };
 in
 {
-  ublockOrigin = mkExtension ./ublock-origin.nix;
-  darkMode = mkExtension ./dark-mode.nix;
-  browserpass = mkExtension ./browserpass.nix;
   aria2Explorer = mkExtension ./aria2-explorer.nix;
+  browserpass = mkExtension ./browserpass.nix;
+  darkMode = mkExtension ./dark-mode.nix;
+  searxngHome = mkExtension ./searxng-home.nix;
+  ublockOrigin = mkExtension ./ublock-origin.nix;
 }
