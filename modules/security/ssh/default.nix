@@ -15,7 +15,21 @@
   config = lib.mkIf config.security.ssh.enable {
     programs.ssh = {
       enable = true;
-      package = pkgs.openssh;
+
+      package =
+        if (config.security.gopass.enable or false && config.security.gopass.ssh-agent.enable or false) then
+          pkgs.symlinkJoin {
+            name = "openssh-gopass-wrapper";
+            paths = [ pkgs.openssh ];
+            buildInputs = [ pkgs.makeWrapper ];
+            postBuild = ''
+              wrapProgram $out/bin/ssh \
+                --run "${config.security.gopass.ssh-agent.script}/bin/gopass-ssh-load"
+            '';
+          }
+        else
+          pkgs.openssh;
+
       enableDefaultConfig = false;
       extraOptionOverrides = {
         AddKeysToAgent = "yes";
