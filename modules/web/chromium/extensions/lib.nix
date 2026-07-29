@@ -123,4 +123,21 @@ rec {
 
       installPhase = "true";
     };
+
+  # --- Package a local directory as an unpacked extension derivation. ---
+  mkLocalExtension =
+    {
+      pname,
+      srcDir,
+      version ? "1.0.0",
+    }:
+    pkgs.stdenv.mkDerivation {
+      inherit pname version;
+      src = srcDir;
+      phases = [ "installPhase" ];
+      installPhase = ''
+        mkdir -p $out
+        cp -r $src/* $out/
+      '';
+    };
 }

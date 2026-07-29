@@ -21,7 +21,7 @@ in
 {
   inherit pname;
   version = checkedVersion;
-  id = "nnpdegnhelmjgchicpfdigllmhgpndeg"; # unpacked, ID derives from manifest key at load time
+  id = "ojmlhihnkagpnkkkjngdngbiidmafdbm";
   drv = extLib.fetchUnpackedExtension {
     inherit pname;
     version = checkedVersion;

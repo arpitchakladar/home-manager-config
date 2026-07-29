@@ -20,5 +20,6 @@ in
   browserpass = mkExtension ./browserpass.nix;
   darkMode = mkExtension ./dark-mode.nix;
   searxngHome = mkExtension ./searxng-home.nix;
+  theme = mkExtension ./theme.nix;
   ublockOrigin = mkExtension ./ublock-origin.nix;
 }

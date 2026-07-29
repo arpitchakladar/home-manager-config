@@ -21,7 +21,7 @@ in
 {
   inherit pname;
   version = checkedVersion;
-  id = "dkcfilkhokojanlmgpbmjidiidoebnbm";
+  id = "jnnfdabjmnliapnhdbnljjlfamdkeohn";
   drv = extLib.fetchUnpackedExtension {
     inherit pname;
     version = checkedVersion;

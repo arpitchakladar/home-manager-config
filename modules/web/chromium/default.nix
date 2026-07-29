@@ -41,6 +41,7 @@
         exts.browserpass.drv
         exts.darkMode.drv
         exts.searxngHome.drv
+        exts.theme.drv
         exts.ublockOrigin.drv
       ];
 
