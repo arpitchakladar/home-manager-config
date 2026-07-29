@@ -6,6 +6,7 @@
 {
   imports = [
     ./deep-clean
+    ./gopass-ssh-load
     ./neomutt-sync
     ./screen-recording
     ./system-monitor

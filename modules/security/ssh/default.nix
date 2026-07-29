@@ -24,7 +24,7 @@
             buildInputs = [ pkgs.makeWrapper ];
             postBuild = ''
               wrapProgram $out/bin/ssh \
-                --run "${config.security.gopass.ssh-agent.script}/bin/gopass-ssh-load"
+                --run "${lib.getExe config.scripts.gopass-ssh-load.package}"
             '';
           }
         else
