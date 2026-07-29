@@ -7,6 +7,7 @@
 {
   imports = [
     ./browserpass.nix
+    ./extensions/assertions.nix
   ];
 
   options.web.chromium = {
@@ -31,7 +32,7 @@
   config = lib.mkIf config.web.chromium.enable (
     let
       exts = import ./extensions {
-        inherit lib pkgs;
+        inherit lib pkgs config;
         checkForUpdates = config.web.chromium.checkForUpdates;
       };
 
@@ -72,6 +73,9 @@
         text = builtins.toJSON {
           NewTabPage = {
             FooterVisible = false;
+          };
+          bookmark_bar = {
+            show_on_all_tabs = false;
           };
           browser = {
             show_full_urls = true;

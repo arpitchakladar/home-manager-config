@@ -1,10 +1,18 @@
 {
   lib,
   pkgs,
+  config,
   checkForUpdates ? true,
 }:
 let
-  extLib = import ./lib.nix { inherit lib pkgs checkForUpdates; };
+  extLib = import ./lib.nix {
+    inherit
+      lib
+      pkgs
+      config
+      checkForUpdates
+      ;
+  };
   mkExtension = path: import path { inherit lib pkgs extLib; };
 in
 {
