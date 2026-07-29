@@ -1,7 +1,6 @@
 {
-  lib,
-  pkgs,
   extLib,
+  ...
 }:
 let
   pname = "aria2-explorer";

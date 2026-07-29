@@ -36,10 +36,11 @@
       };
 
       extensionDirs = [
-        exts.ublockOrigin.drv
-        exts.darkMode.drv
-        exts.browserpass.drv
         exts.aria2Explorer.drv
+        exts.browserpass.drv
+        exts.darkMode.drv
+        exts.searxngHome.drv
+        exts.ublockOrigin.drv
       ];
 
       pinnedIds = lib.filter (id: id != null) [

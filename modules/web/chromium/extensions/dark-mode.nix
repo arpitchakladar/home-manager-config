@@ -1,7 +1,6 @@
 {
-  lib,
-  pkgs,
   extLib,
+  ...
 }:
 let
   pname = "dark-mode";
