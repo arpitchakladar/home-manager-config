@@ -13,6 +13,7 @@
     "pulseaudio"
     "battery"
     "network"
+    "custom/usque"
     "memory"
     "cpu"
     "clock#time"

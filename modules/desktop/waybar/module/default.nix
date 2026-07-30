@@ -16,6 +16,7 @@ let
     "memory" = ./memory.nix;
     "network" = ./network.nix;
     "clock#time" = ./time.nix;
+    "custom/usque" = ./usque.nix;
     "pulseaudio" = ./volume.nix;
     "hyprland/window" = ./window.nix;
     "hyprland/workspaces" = ./workspaces.nix;

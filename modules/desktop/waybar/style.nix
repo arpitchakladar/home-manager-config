@@ -12,7 +12,7 @@ with config.scheme.withHashtag;
   }
 
   #workspaces, #window, #pulseaudio, #battery, #network,
-  #clock.time, #memory, #cpu, #clock.date {
+  #clock.time, #custom-usque, #memory, #cpu, #clock.date {
     background: ${base00};
     margin: 0 5px;
   }
@@ -23,7 +23,7 @@ with config.scheme.withHashtag;
   }
 
   #window, #pulseaudio, #battery, #network,
-  #clock.time, #memory, #cpu, #clock.date {
+  #clock.time, #custom-usque, #memory, #cpu, #clock.date {
     border: 1px solid ${base07};
     color: ${base07};
     padding: 0 10px;
