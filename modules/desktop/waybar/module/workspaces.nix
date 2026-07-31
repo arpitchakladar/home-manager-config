@@ -34,6 +34,7 @@
 
     "title<Virtual Machine Manager>" = lib.mkIf config.development.qemu.enable icons."VirtManager";
     "title<OC \\| (.*)>" = lib.mkIf config.development.opencode.enable icons."Opencode";
+    "title<OpenCode>" = lib.mkIf config.development.opencode.enable icons."Opencode";
     "title<Swayimg:(.*)>" = lib.mkIf config.media.swayimg.enable icons."Swayimg";
     "title<Yazi:(.*)>" = lib.mkIf config.file-management.yazi.enable icons."Yazi";
     "title<bluetui>" = lib.mkIf config.networking.bluetui.enable icons."bluetui";

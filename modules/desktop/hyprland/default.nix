@@ -117,7 +117,7 @@ in
           };
 
           scrolling = {
-            column_width = 0.5;
+            column_width = 1;
             explicit_column_widths = "0.5, 1.0";
             focus_fit_method = 1;
             follow_focus = true;
