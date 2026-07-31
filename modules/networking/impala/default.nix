@@ -16,10 +16,14 @@
   };
 
   config = lib.mkIf config.networking.impala.enable {
+    home.file.".local/share/icons/hicolor/scalable/apps/network-wireless.svg" = {
+      source = ../../../assets/icons/network-wireless.svg;
+    };
+
     xdg.desktopEntries."impala" = {
       name = "impala";
       exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.networking.impala.package}";
-      icon = "kitty";
+      icon = "network-wireless";
       categories = [ "Network" ];
       comment = "TUI for managing wifi on Linux";
       terminal = false;

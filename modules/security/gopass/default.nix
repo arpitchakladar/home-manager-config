@@ -29,5 +29,19 @@
     home.sessionVariables = {
       PASSWORD_STORE_DIR = config.programs.password-store.settings.PASSWORD_STORE_DIR;
     };
+
+    home.file.".local/share/icons/hicolor/scalable/apps/gopass.svg" = {
+      source = ../../../assets/icons/gopass.svg;
+    };
+
+    xdg.desktopEntries."gopass" = {
+      name = "gopass";
+      exec = "${lib.getExe config.terminal.kitty.package} --class gopass -e ${lib.getExe config.security.gopass.package}";
+      icon = "gopass";
+      comment = "Standard Unix password manager (Go implementation)";
+      categories = [ "Utility" ];
+      terminal = false;
+      type = "Application";
+    };
   };
 }

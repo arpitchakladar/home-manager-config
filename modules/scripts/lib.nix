@@ -71,6 +71,11 @@ let
             default = name;
             description = "Display name for the .desktop entry.";
           };
+          icon = lib.mkOption {
+            type = lib.types.str;
+            default = "kitty";
+            description = "Icon for the .desktop entry.";
+          };
         };
       };
 

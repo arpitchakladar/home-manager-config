@@ -17,6 +17,7 @@ let
     desktop = {
       enable = true;
       displayName = "Screen Recording";
+      icon = "obs";
     };
     inherit config;
   };
@@ -25,5 +26,8 @@ in
   options = base.options;
   config = base.moduleConfig // {
     assertions = base.moduleConfig.assertions ++ (import ./assertions.nix { inherit config lib; });
+    home.file.".local/share/icons/hicolor/scalable/apps/obs.svg" = {
+      source = ../../../assets/icons/obs.svg;
+    };
   };
 }

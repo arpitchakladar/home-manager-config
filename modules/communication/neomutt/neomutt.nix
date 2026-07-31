@@ -5,7 +5,7 @@
     xdg.desktopEntries."neomutt" = {
       name = "NeoMutt";
       exec = "${lib.getExe config.terminal.kitty.package} --class neomutt -e ${lib.getExe config.programs.neomutt.package}";
-      icon = "kitty";
+      icon = "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
       categories = [
         "Network"
         "Email"

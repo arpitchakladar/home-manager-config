@@ -22,7 +22,7 @@
       lib.nameValuePair name {
         name = sc.desktop.displayName;
         exec = "${lib.getExe config.terminal.kitty.package} --class ${name} -e ${lib.getExe sc.package}";
-        icon = "kitty";
+        icon = sc.desktop.icon;
         categories = [ "Utility" ];
         terminal = false;
         type = "Application";

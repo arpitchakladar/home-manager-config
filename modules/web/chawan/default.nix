@@ -26,10 +26,14 @@
   };
 
   config = lib.mkIf config.web.chawan.enable {
+    home.file.".local/share/icons/hicolor/scalable/apps/internet-web-browser.svg" = {
+      source = ../../../assets/icons/internet-web-browser.svg;
+    };
+
     xdg.desktopEntries."chawan" = {
       name = "Chawan";
       exec = "${lib.getExe config.terminal.kitty.package} --class chawan -e ${lib.getExe config.web.chawan.package} ${config.web.chawan.homeUrl}";
-      icon = "kitty";
+      icon = "internet-web-browser";
       categories = [ "Network" ];
       comment = "Text-based web browser";
       terminal = false;

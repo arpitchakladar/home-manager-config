@@ -16,10 +16,14 @@
   };
 
   config = lib.mkIf config.networking.bluetui.enable {
+    home.file.".local/share/icons/hicolor/scalable/apps/bluetooth.svg" = {
+      source = ../../../assets/icons/bluetooth.svg;
+    };
+
     xdg.desktopEntries."bluetui" = {
       name = "bluetui";
       exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.networking.bluetui.package}";
-      icon = "kitty";
+      icon = "bluetooth";
       categories = [ "Network" ];
       comment = "Bluetooth TUI client";
       terminal = false;

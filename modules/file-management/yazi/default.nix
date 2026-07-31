@@ -28,10 +28,14 @@
       };
     };
 
+    home.file.".local/share/icons/hicolor/scalable/apps/yazi.png" = {
+      source = ../../../assets/icons/yazi.png;
+    };
+
     xdg.desktopEntries."yazi" = {
       name = "Yazi";
       exec = "${lib.getExe config.terminal.kitty.package} --class yazi -e ${lib.getExe config.file-management.yazi.package}";
-      icon = "kitty";
+      icon = "yazi";
       categories = [ "Utility" ];
       comment = "Terminal file manager";
       terminal = false;

@@ -20,6 +20,7 @@ let
     desktop = {
       enable = true;
       displayName = "System Monitor";
+      icon = "bottom-system-monitor";
     };
     inherit config;
   };
@@ -28,5 +29,8 @@ in
   options = base.options;
   config = base.moduleConfig // {
     assertions = base.moduleConfig.assertions ++ (import ./assertions.nix { inherit config lib; });
+    home.file.".local/share/icons/hicolor/scalable/apps/bottom-system-monitor.svg" = {
+      source = ../../../assets/icons/bottom-system-monitor.svg;
+    };
   };
 }
