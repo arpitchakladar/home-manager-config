@@ -15,18 +15,18 @@ let
       version
       ;
     tagPrefix = "v";
-    urlTemplate = "https://github.com/${owner}/${repo}/releases/download/v<version>/A2E-v<version>.crx";
+    urlTemplate = "https://github.com/${owner}/${repo}/archive/refs/tags/v<version>.zip";
   };
 in
 {
   inherit pname;
   version = checkedVersion;
-  id = "jnnfdabjmnliapnhdbnljjlfamdkeohn";
+  id = "hhndckjijagcbbljjhjcbnpjhamkkcjl";
   drv = extLib.fetchUnpackedExtension {
     inherit pname;
     version = checkedVersion;
-    url = "https://github.com/${owner}/${repo}/releases/download/v${checkedVersion}/A2E-v${checkedVersion}.crx";
-    hash = "sha256-ljTgKd9QJTRJ11rlNx+PTynlQvdLW3IEoYNnCeOU2K8=";
-    isCrx = true;
+    url = "https://github.com/${owner}/${repo}/archive/refs/tags/v${checkedVersion}.zip";
+    hash = "sha256-4+SkvgWrELcohpv724YEtvSQSDCmjphkk8bvYggxVag=";
+    extensionKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArOOLc1LawtEonls6j4P/KQyUAGO3KJcE9uAU9WV/tBIX6ulXivZypUAXC6Lokv56Bjnc08t/wUH8Xph0Gya4UzjSbZkdtR94yksY9mq5g/8df4p4v29SO+E6efQyXGyImEzFSHsNP4gu8akB5xT8O//51XRAXsMBVgUUTuUAlpnwd25Yy1tpQwqjbSV3gvAMo+a6+y0dBfXJ9fjwAYBwvx4cONSNjirIuyOG5r5FI5TaGMK+aV1xwNsDE59dyDkYL2f2mm1kN/2xMcayJrskVxtOcy18ijjXzyRJvNyhkLM2c5tEZHUkIlEgTjbJruF8EKrj2sCnodt1jknD0BSr1wIDAQAB";
   };
 }

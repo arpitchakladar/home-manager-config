@@ -15,7 +15,12 @@
         (import ./module { inherit config lib pkgs; })
       ];
 
-      style = import ./style.nix { inherit config; };
+      style = builtins.readFile (
+        config.scheme {
+          template = builtins.readFile ./style.mustache.css;
+          extension = ".css";
+        }
+      );
     };
   };
 }

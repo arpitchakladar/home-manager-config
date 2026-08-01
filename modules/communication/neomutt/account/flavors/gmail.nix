@@ -33,6 +33,7 @@
 
     neomutt.extraConfig = lib.mkDefault ''
       mailboxes =Inbox ="[Gmail]/Drafts" ="[Gmail]/Sent Mail" ="[Gmail]/Spam" ="[Gmail]/Trash"
+      unset record
     '';
 
     notmuch.neomutt.virtualMailboxes = lib.mkDefault [

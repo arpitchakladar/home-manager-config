@@ -15,20 +15,18 @@ let
       version
       ;
     tagPrefix = "";
-    urlTemplate = "https://github.com/${owner}/${repo}/releases/download/<version>/browserpass-webstore-<version>.crx";
+    urlTemplate = "https://github.com/${owner}/${repo}/releases/download/<version>/browserpass-chromium-<version>.zip";
   };
 in
 {
   inherit pname;
   version = checkedVersion;
-  # Stable webstore ID — only holds if the crx's manifest.json embeds "key".
-  # Verify at chrome://extensions after switching; update if it drifts.
-  id = "klfoddkbhleoaabpmiigbmpbjfljimgb";
+  id = "jbaodoonnfhdccelcpnekimkijgdfjhl";
   drv = extLib.fetchUnpackedExtension {
     inherit pname;
     version = checkedVersion;
-    url = "https://github.com/${owner}/${repo}/releases/download/${checkedVersion}/browserpass-webstore-${checkedVersion}.crx";
-    hash = "sha256-NfLbEe2EBctmntJqbsIpwm2WRFdo8q6yjWGjVK2MmFE=";
-    isCrx = true;
+    url = "https://github.com/${owner}/${repo}/releases/download/${checkedVersion}/browserpass-chromium-${checkedVersion}.zip";
+    hash = "sha256-WBpPTtec7zJPWM1xNKVxWWW/sB1aIuPecp5fUTWRE8c=";
+    extensionKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv8xL6YhF7YTUE57jhme0vyJi4FZGXDBLV93QYWv6yrYbmczkM4aEOp4FWm63NnkJ8aGZ/0uL0rHmB4qo36awso/1L9XGJaBbQAQuOv/uIPAE18STJ4EtXA1hYDMGbkkr4fZHYJTH3GmoeajZYfp/cu8qc0cK4P5FVq67qwYSD4uFQJRJKuX8jM4lzO8dLH/tJsN3KwlfeSA8xvS2jiIJHtCKc6XqMrOCCfSmI8uILfg06fv46VOoVDH91dlZguOYANAJDW69uCY9YcvyVEmmf6DUnvmkrziDtV2O4/Af6nt7R5JHOcVcqVScoXJG9sfd4KATMcgoZj3fy19+R/4GvwIDAQAB";
   };
 }

@@ -1,0 +1,85 @@
+/*
+ * Waybar Style — Base16 "OneDark Dark" (olimorris)
+ * Mustache template: render with a base16 color map to produce a .css file
+ *
+ * base00 - default background
+ * base01 - lighter background (status bar, line numbers)
+ * base02 - selection background
+ * base03 - comments, invisibles
+ * base04 - dark foreground (status bar)
+ * base05 - default foreground
+ * base06 - light foreground
+ * base07 - lightest foreground
+ * base08 - red      (errors, urgent)
+ * base09 - orange    (numbers)
+ * base0A - yellow    (search matches)
+ * base0B - green     (strings)
+ * base0C - cyan      (support, regex)
+ * base0D - blue      (functions, active/selected)
+ * base0E - purple/magenta (keywords)
+ * base0F - brown     (deprecated)
+ */
+
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "Fira Code Nerd Font";
+  font-size: 18px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+window#waybar {
+  background: transparent;
+}
+
+#workspaces, #window, #pulseaudio, #battery, #network,
+#clock.time, #custom-usque, #memory, #cpu, #clock.date {
+  background: #{{base00}};
+  margin: 0 5px;
+}
+
+#workspaces {
+  border: none;
+  margin-right: 0;
+}
+
+#window, #pulseaudio, #battery, #network,
+#clock.time, #custom-usque, #memory, #cpu, #clock.date {
+  border: 1px solid #{{base07}};
+  color: #{{base07}};
+  padding: 0 10px;
+}
+
+#clock.date {
+  margin-right: 10px;
+}
+
+#workspaces button {
+  padding: 0px 5px;
+  color: #{{base07}};
+  border: 1px solid #{{base03}};
+  border-radius: 0;
+  min-width: 0px;
+  min-height: 0px;
+  margin: 0 5px;
+  font-size: 24px;
+}
+
+#workspaces button:hover {
+  background: #{{base00}};
+  border-color: #{{base05}};
+}
+
+#workspaces button.active {
+  border-color: #{{base07}};
+}
+
+#workspaces button.empty {
+  color: #{{base03}};
+}
+
+#workspaces button.urgent {
+  color: #{{base08}};
+}

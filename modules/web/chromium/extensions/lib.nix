@@ -73,6 +73,7 @@ rec {
       url,
       hash,
       isCrx ? false,
+      extensionKey ? null, # NEW: Accept an optional public key
     }:
     pkgs.stdenv.mkDerivation {
       inherit pname version;
@@ -80,6 +81,7 @@ rec {
 
       nativeBuildInputs = [
         config.file-management.ouch.package
+        pkgs.jq # NEW: Required for safely editing manifest.json
       ];
       dontUnpack = true;
 
@@ -96,10 +98,7 @@ rec {
           fi
 
           # Extract header length (bytes 8-11, little-endian)
-          # -An (no address), -j8 (skip 8 bytes), -N4 (read 4 bytes), -tu1 (unsigned decimal 1-byte)
           bytes=$(od -An -j8 -N4 -tu1 "$src")
-
-          # Read into individual variables and calculate the length
           read b1 b2 b3 b4 <<< $bytes
           hlen=$(( b1 + (b2 << 8) + (b3 << 16) + (b4 << 24) ))
           offset=$(( 12 + hlen ))
@@ -118,13 +117,23 @@ rec {
           shopt -u dotglob
         fi
 
+        # NEW: Inject the public key into manifest.json if provided
+        ${lib.optionalString (extensionKey != null) ''
+          if [ -f "$out/manifest.json" ]; then
+            echo "Injecting extension key into manifest.json to lock the extension ID..."
+            jq '.key = "${extensionKey}"' "$out/manifest.json" > "$out/manifest.tmp.json"
+            mv "$out/manifest.tmp.json" "$out/manifest.json"
+          else
+            echo "Warning: No manifest.json found in $out to inject the key!" >&2
+          fi
+        ''}
+
         runHook postBuild
       '';
 
       installPhase = "true";
-    };
+    }; # --- Package a local directory as an unpacked extension derivation. ---
 
-  # --- Package a local directory as an unpacked extension derivation. ---
   mkLocalExtension =
     {
       pname,

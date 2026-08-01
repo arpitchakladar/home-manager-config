@@ -27,14 +27,11 @@ is_running() {
 }
 
 ensure_config() {
-  if [[ -f "$CONFIG" ]]; then
-    return
-  fi
   echo "usque config not found."
   echo "Creating $CONFIG_DIR..."
   mkdir -p "$CONFIG_DIR"
   echo "Registering Cloudflare WARP account..."
-  usque register
+  yes | usque register
   echo "Generating usque config..."
   usque generate -o "$CONFIG"
   if [[ ! -f "$CONFIG" ]]; then
