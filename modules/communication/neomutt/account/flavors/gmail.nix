@@ -31,7 +31,7 @@
       };
     };
 
-    neomutt.extraConfig = lib.mkDefault ''
+    neomutt.extraConfig = lib.mkBefore ''
       mailboxes =Inbox ="[Gmail]/Drafts" ="[Gmail]/Sent Mail" ="[Gmail]/Spam" ="[Gmail]/Trash"
       unset record
     '';

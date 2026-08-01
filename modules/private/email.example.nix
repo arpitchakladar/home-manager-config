@@ -8,6 +8,14 @@
       passwordGopassSecret = "mail/user@gmail.com";
       flavor = "gmail.com";
       primary = true;
+      neomutt.extraConfig = ''
+        set pgp_default_key = YOUR_GPG_KEY_FINGERPRINT
+      '';
+      gpg = {
+        key = "YOUR_GPG_KEY_ID";
+        signByDefault = true;
+        encryptByDefault = false; # set true only if you also want auto-encrypt
+      };
     };
   };
 }
