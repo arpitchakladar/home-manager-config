@@ -29,7 +29,7 @@
     };
 
     home.file.".local/share/icons/hicolor/scalable/apps/yazi.png" = {
-      source = ../../../assets/icons/yazi.png;
+      source = config.lib.file.mkOutOfStoreSymlink "${config.file-management.yazi.package}/share/pixmaps/yazi.png";
     };
 
     xdg.desktopEntries."yazi" = {
