@@ -2,7 +2,9 @@
 {
   description = "Home Manager configuration of arpit.";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # use nixpkgs from the local registry, saves disk space on
+    # duplicate derivations
+    nixpkgs.url = "nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -14,6 +14,7 @@
 
   # Desktop environment
   desktop.enable = true;
+  desktop.darkman.enable = true;
   desktop.hardware.gpu = {
     nvidia.enable = true;
     amd.enable = true;

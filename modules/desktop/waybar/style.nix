@@ -11,6 +11,10 @@ with config.scheme.withHashtag;
     padding: 0;
   }
 
+  window#waybar {
+    background: transparent;
+  }
+
   #workspaces, #window, #pulseaudio, #battery, #network,
   #clock.time, #custom-usque, #memory, #cpu, #clock.date {
     background: ${base00};

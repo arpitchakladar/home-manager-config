@@ -1,4 +1,4 @@
-# Desktop - Desktop environment configuration (Hyprland, GTK, waybar)
+# Desktop - Desktop environment configuration (Hyprland, darkman, waybar)
 {
   lib,
   config,
@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    ./gtk
+    ./darkman
     ./rofi
     ./xdg
     ./hyprland
