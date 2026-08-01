@@ -12,7 +12,6 @@
     "Virtual Machine Manager" = "${icons."VirtManager"} Virtual Machine Manager";
     "OC \\|(.*)" = "${icons."Opencode"} $1";
     "OpenCode" = "${icons."Opencode"}  OpenCode";
-    "Ente Auth" = "${icons."EnteAuth"} Ente Auth";
     "Yazi:(.*)" = "${icons."Yazi"} $1";
     "Swayimg:(.*)" = "${icons."Swayimg"} $1";
     "bluetui" = "${icons."bluetui"} bluetui";

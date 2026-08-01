@@ -15,7 +15,6 @@ let
     "VSCodium" = mkIcon "#3993EE" "";
     "VirtManager" = mkIcon "#AD8AFF" "󰟀";
     "Opencode" = mkIcon "#98C379" "󰘦";
-    "EnteAuth" = mkIcon "#E5C07B" "󰍀";
     "Yazi" = mkIcon "#56B6C2" "󰉋";
     "Chawan" = mkIcon "#8BE9FD" "󰖟";
     "bluetui" = mkIcon "#BD93F9" "";

@@ -62,7 +62,6 @@
   office.zathura.enable = true;
 
   # Security
-  security.enteauth.enable = true;
   security.gopass.enable = true;
   security.gopass.ssh-agent.enable = true;
   security.gpg.enable = true;

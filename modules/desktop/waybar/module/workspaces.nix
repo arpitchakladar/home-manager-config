@@ -30,7 +30,6 @@
     "class<Steam>" = lib.mkIf config.gaming.steam.enable icons."Steam";
     "class<bruno>" = lib.mkIf config.development.bruno.enable icons."Bruno";
     "class<codium>" = lib.mkIf config.development.vscodium.enable icons."VSCodium";
-    "class<io.ente.auth>" = lib.mkIf config.security.enteauth.enable icons."EnteAuth";
 
     "title<Virtual Machine Manager>" = lib.mkIf config.development.qemu.enable icons."VirtManager";
     "title<OC \\| (.*)>" = lib.mkIf config.development.opencode.enable icons."Opencode";
