@@ -3,6 +3,12 @@
 {
   options.file-management.lsd = {
     enable = lib.mkEnableOption "Enables lsd.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.lsd.package;
+      description = "The lsd package to use.";
+    };
   };
 
   config = lib.mkIf config.file-management.lsd.enable {

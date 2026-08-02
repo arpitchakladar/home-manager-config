@@ -1,5 +1,10 @@
 # neomutt - Terminal email client
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   config = lib.mkIf config.communication.neomutt.enable {
     xdg.desktopEntries."neomutt" = {
@@ -27,7 +32,16 @@
     '';
     programs.neomutt = {
       enable = true;
-      package = config.communication.neomutt.package;
+      package = pkgs.symlinkJoin {
+        name = "neomutt-wrapped";
+        paths = [ pkgs.neomutt ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/neomutt \
+            --prefix PATH : ${lib.makeBinPath [ pkgs.urlscan ]}
+        '';
+        meta.mainProgram = "neomutt";
+      };
       sidebar.enable = true;
       sort = "reverse-threads";
       vimKeys = true;

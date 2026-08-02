@@ -9,6 +9,12 @@
 
   options.development.nixvim = {
     enable = lib.mkEnableOption "Enables nixvim.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.nixvim.package;
+      description = "The nixvim package to use.";
+    };
   };
 
   config = lib.mkIf config.development.nixvim.enable {

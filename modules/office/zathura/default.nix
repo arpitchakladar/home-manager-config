@@ -7,6 +7,12 @@
 {
   options.office.zathura = {
     enable = lib.mkEnableOption "Enables zathura.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.zathura.package;
+      description = "The zathura package to use.";
+    };
   };
 
   config = lib.mkIf config.office.zathura.enable {

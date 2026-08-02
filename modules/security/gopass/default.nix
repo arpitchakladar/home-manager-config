@@ -10,8 +10,8 @@
     enable = lib.mkEnableOption "Enables gopass.";
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.gopass.override { passAlias = true; };
-      defaultText = lib.literalExpression "pkgs.gopass.override { passAlias = true; }";
+      readOnly = true;
+      default = config.programs.password-store.package;
       description = "The gopass package to use.";
     };
     ssh-agent.enable = lib.mkEnableOption "gopass-backed SSH keys for git";
@@ -20,7 +20,7 @@
   config = lib.mkIf config.security.gopass.enable {
     programs.password-store = {
       enable = true;
-      package = config.security.gopass.package;
+      package = pkgs.gopass.override { passAlias = true; };
       settings = {
         PASSWORD_STORE_DIR = "${config.home.homeDirectory}/.local/share/pass";
       };

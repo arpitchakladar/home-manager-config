@@ -8,6 +8,12 @@
 {
   options.development.vscodium = {
     enable = lib.mkEnableOption "Enables vscodium.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.vscodium.package;
+      description = "The vscodium package to use.";
+    };
   };
 
   config = lib.mkIf config.development.vscodium.enable {

@@ -2,19 +2,22 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
   options.system.bottom = {
     enable = lib.mkEnableOption "Enables bottom.";
-    package = lib.mkPackageOption pkgs "bottom" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.bottom.package;
+      description = "The bottom package to use.";
+    };
   };
 
   config = lib.mkIf config.system.bottom.enable {
     programs.bottom = {
       enable = true;
-      package = config.system.bottom.package;
     };
   };
 }

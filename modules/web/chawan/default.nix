@@ -2,7 +2,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
@@ -14,8 +13,8 @@
     enable = lib.mkEnableOption "Enables chawan.";
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.chawan;
-      defaultText = lib.literalExpression "pkgs.chawan";
+      readOnly = true;
+      default = config.programs.chawan.package;
       description = "Package to use for chawan.";
     };
     homeUrl = lib.mkOption {
@@ -41,7 +40,6 @@
     };
     programs.chawan = {
       enable = true;
-      package = config.web.chawan.package;
       settings = {
         buffer = {
           images = true;

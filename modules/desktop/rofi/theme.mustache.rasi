@@ -21,166 +21,161 @@
  */
 
 * {
-    base00:                      #{{base00}};
-    base01:                      #{{base01}};
-    base02:                      #{{base02}};
-    base03:                      #{{base03}};
-    base04:                      #{{base04}};
-    base05:                      #{{base05}};
-    base06:                      #{{base06}};
-    base07:                      #{{base07}};
-    base08:                      #{{base08}};
-    base09:                      #{{base09}};
-    base0A:                      #{{base0A}};
-    base0B:                      #{{base0B}};
-    base0C:                      #{{base0C}};
-    base0D:                      #{{base0D}};
-    base0E:                      #{{base0E}};
-    base0F:                      #{{base0F}};
+  base00:                      #{{base00}};
+  base01:                      #{{base01}};
+  base02:                      #{{base02}};
+  base03:                      #{{base03}};
+  base04:                      #{{base04}};
+  base05:                      #{{base05}};
+  base06:                      #{{base06}};
+  base07:                      #{{base07}};
+  base08:                      #{{base08}};
+  base09:                      #{{base09}};
+  base0A:                      #{{base0A}};
+  base0B:                      #{{base0B}};
+  base0C:                      #{{base0C}};
+  base0D:                      #{{base0D}};
+  base0E:                      #{{base0E}};
+  base0F:                      #{{base0F}};
 
-    background:                  @base00;
-    background-color:            transparent;
-    foreground:                  @base07;
+  background:                  @base00;
+  background-color:            transparent;
+  foreground:                  @base07;
 
-    border-color:                @base07;
-    separatorcolor:              @base02;
+  border-color:                @base07;
+  separatorcolor:              @base02;
 
-    selected-normal-background:  @base00;
-    selected-normal-foreground:  @base07;
-    selected-active-background:  @base00;
-    selected-active-foreground:  @base07;
-    selected-urgent-background:  @base00;
-    selected-urgent-foreground:  @base0F;
+  selected-normal-background:  @base00;
+  selected-normal-foreground:  @base07;
+  selected-active-background:  @base00;
+  selected-active-foreground:  @base07;
+  selected-urgent-background:  @base00;
+  selected-urgent-foreground:  @base0F;
 
-    normal-background:           @base00;
-    normal-foreground:           @base03;
-    active-background:           @base00;
-    active-foreground:           @base07;
-    urgent-background:           @base00;
-    urgent-foreground:           @base08;
+  normal-background:           @base00;
+  normal-foreground:           @base03;
+  active-background:           @base00;
+  active-foreground:           @base07;
+  urgent-background:           @base00;
+  urgent-foreground:           @base08;
 
-    font: "FiraCode Nerd Font Bold 18";
+  font: "FiraCode Nerd Font Bold 18";
 }
 
 window {
-    background-color:   @background;
-    border:             1px;
-    border-color:       @border-color;
-    padding:            0;
-    width:              800px;
-    location:           center;
-    anchor:             center;
+  background-color:   @background;
+  border:             1px;
+  border-color:       @border-color;
+  padding:            0;
+  width:              800px;
+  location:           center;
+  anchor:             center;
 }
 
 mainbox {
-    background-color:   transparent;
-    padding:            12px;
-    spacing:            12px;
-    children:           [ "inputbar", "listview" ];
+  background-color:   transparent;
+  padding:            12px;
+  spacing:            12px;
+  children:           [ "inputbar", "listview", "message" ];
 }
 
 inputbar {
-    background-color:   @background;
-    text-color:         @foreground;
-    border:             1px;
-    border-color:       @border-color;
-    padding:            10px 14px;
-    spacing:            10px;
-    children:           [ "prompt", "entry" ];
-    font:               @font;
-}
-
-prompt {
-    background-color:   transparent;
-    text-color:         @base0D;
-    font:               @font;
+  background-color:   @background;
+  text-color:         @foreground;
+  border:             1px;
+  border-color:       @border-color;
+  padding:            10px 14px;
+  spacing:            10px;
+  children:           [ "entry" ];
+  font:               @font;
 }
 
 entry {
-    background-color:   transparent;
-    text-color:         @foreground;
-    placeholder:        "Search…";
-    placeholder-color:  @base03;
-    cursor:             text;
-    font:               @font;
+  background-color:   transparent;
+  text-color:         @foreground;
+  placeholder:        "Search…";
+  placeholder-color:  @base03;
+  cursor:             text;
+  font:               @font;
 }
 
 listview {
-    background-color:   transparent;
-    columns:            1;
-    lines:              8;
-    spacing:            4px;
-    cycle:              true;
-    dynamic:            true;
-    scrollbar:          false;
-    fixed-height:       false;
+  background-color:   transparent;
+  columns:            1;
+  lines:              8;
+  spacing:            4px;
+  cycle:              true;
+  dynamic:            true;
+  scrollbar:          false;
+  fixed-height:       false;
 }
 
 element {
-    background-color:   transparent;
-    text-color:         @normal-foreground;
-    padding:            8px 10px;
-    spacing:            10px;
-    orientation:        horizontal;
+  background-color:   transparent;
+  text-color:         @normal-foreground;
+  padding:            8px 10px;
+  spacing:            10px;
+  orientation:        horizontal;
 }
 
 element normal.normal {
-    background-color:   @normal-background;
-    text-color:         @normal-foreground;
+  background-color:   @normal-background;
+  text-color:         @normal-foreground;
 }
 
 element normal.active {
-    background-color:   @active-background;
-    text-color:         @active-foreground;
+  background-color:   @active-background;
+  text-color:         @active-foreground;
 }
 
 element normal.urgent {
-    background-color:   @urgent-background;
-    text-color:         @urgent-foreground;
+  background-color:   @urgent-background;
+  text-color:         @urgent-foreground;
 }
 
 element selected.normal {
-    background-color:   @selected-normal-background;
-    text-color:         @selected-normal-foreground;
+  background-color:   @selected-normal-background;
+  text-color:         @selected-normal-foreground;
 }
 
 element selected.active {
-    background-color:   @selected-active-background;
-    text-color:         @selected-active-foreground;
+  background-color:   @selected-active-background;
+  text-color:         @selected-active-foreground;
 }
 
 element selected.urgent {
-    background-color:   @selected-urgent-background;
-    text-color:         @selected-urgent-foreground;
+  background-color:   @selected-urgent-background;
+  text-color:         @selected-urgent-foreground;
 }
 
 element-icon {
-    background-color:   transparent;
-    size:               36px;
-    vertical-align:     0.5;
+  background-color:   transparent;
+  size:               36px;
+  vertical-align:     0.5;
 }
 
 element-text {
-    background-color:   transparent;
-    text-color:         inherit;
-    vertical-align:     0.5;
-    horizontal-align:   0.0;
+  background-color:   transparent;
+  text-color:         inherit;
+  vertical-align:     0.5;
+  horizontal-align:   0.0;
 }
 
 message {
-    background-color:   @base01;
-    padding:            8px 12px;
+  background-color:   @base00;
+  padding:            8px 12px;
 }
 
 textbox {
-    background-color:   transparent;
-    text-color:         @foreground;
+  background-color:   transparent;
+  text-color:         @foreground;
+  font:               "FiraCode Nerd Font Bold 14";
 }
 
 error-message {
-    background-color:   @base00;
-    text-color:         @base08;
-    border:             1.5px;
-    border-color:       @base08;
-    padding:            10px;
+  background-color:   @base00;
+  text-color:         @base08;
+  border:             1.5px;
+  border-color:       @base08;
+  padding:            10px;
 }

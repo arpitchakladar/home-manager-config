@@ -1,6 +1,5 @@
 # Aria2 - command line download manager
 {
-  pkgs,
   lib,
   config,
   ...
@@ -8,13 +7,17 @@
 {
   options.web.aria2 = {
     enable = lib.mkEnableOption "Enables aria2.";
-    package = lib.mkPackageOption pkgs "aria2" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.aria2.package;
+      description = "The aria2 package to use.";
+    };
   };
 
   config = lib.mkIf config.web.aria2.enable {
     programs.aria2 = {
       enable = true;
-      package = config.web.aria2.package;
       settings = {
         dir = "${config.home.homeDirectory}/Downloads";
       };

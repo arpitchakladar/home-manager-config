@@ -7,6 +7,12 @@
 {
   options.development.delta = {
     enable = lib.mkEnableOption "Enables delta.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.delta.finalPackage;
+      description = "The delta package to use.";
+    };
   };
 
   config = lib.mkIf config.development.delta.enable {

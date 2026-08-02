@@ -2,7 +2,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
@@ -10,7 +9,12 @@
 
   options.terminal.fzf = {
     enable = lib.mkEnableOption "Enables fzf.";
-    package = lib.mkPackageOption pkgs "fzf" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.fzf.package;
+      description = "The fzf package to use.";
+    };
   };
 
   config =
@@ -22,7 +26,6 @@
     lib.mkIf config.terminal.fzf.enable {
       programs.fzf = {
         enable = true;
-        package = config.terminal.fzf.package;
         defaultOptions = [
           "--height 100%"
           "--layout=reverse"

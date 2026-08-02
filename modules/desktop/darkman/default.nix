@@ -7,12 +7,15 @@
 }:
 {
   options.desktop.darkman = {
-    enable = lib.mkEnableOption "Enables darkman automatic dark/light mode switching." // {
-      default = true;
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.services.darkman.package;
+      description = "The darkman package to use.";
     };
   };
 
-  config = lib.mkIf (config.desktop.enable && config.desktop.darkman.enable) {
+  config = lib.mkIf config.desktop.enable {
     services.darkman = {
       enable = true;
       settings = {
@@ -32,8 +35,21 @@
     };
 
     # Always dark by default
-    home.activation.forceDarkman = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      ${pkgs.darkman}/bin/darkman set dark || true
-    '';
+    systemd.user.services.darkman-set-theme = {
+      Unit = {
+        Description = "Set Darkman to dark on graphical session startup";
+        PartOf = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+
+      Service = {
+        Type = "oneshot";
+        ExecStart = "${lib.getExe config.desktop.darkman.package} set dark";
+      };
+
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
   };
 }

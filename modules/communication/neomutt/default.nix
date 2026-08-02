@@ -2,7 +2,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
@@ -20,28 +19,8 @@
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.symlinkJoin {
-        name = "neomutt-wrapped";
-        paths = [ pkgs.neomutt ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/neomutt \
-            --prefix PATH : ${lib.makeBinPath [ pkgs.urlscan ]}
-        '';
-        meta.mainProgram = "neomutt";
-      };
-      defaultText = lib.literalExpression ''
-        pkgs.symlinkJoin {
-          name = "neomutt-wrapped";
-          paths = [ pkgs.neomutt ];
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          postBuild = '''
-            wrapProgram $out/bin/neomutt \
-              --prefix PATH : ''${lib.makeBinPath [ pkgs.urlscan ]}
-          ''';
-          meta.mainProgram = "neomutt";
-        }
-      '';
+      readOnly = true;
+      default = config.programs.neomutt.package;
       description = "The neomutt package to use, wrapped with urlscan in PATH.";
     };
   };

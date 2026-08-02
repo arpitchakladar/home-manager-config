@@ -14,6 +14,13 @@
   options.development.git = {
     enable = lib.mkEnableOption "Enables git.";
 
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.git.package;
+      description = "The git package to use.";
+    };
+
     username = lib.mkOption {
       type = lib.types.str;
       description = "Git username.";

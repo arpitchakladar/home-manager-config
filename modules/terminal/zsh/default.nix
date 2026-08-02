@@ -2,13 +2,17 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
   options.terminal.zsh = {
     enable = lib.mkEnableOption "Enables zsh.";
-    package = lib.mkPackageOption pkgs "zsh" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.zsh.package;
+      description = "The zsh package to use.";
+    };
   };
 
   config =
@@ -18,7 +22,6 @@
     lib.mkIf config.terminal.zsh.enable {
       programs.zsh = {
         enable = true;
-        package = config.terminal.zsh.package;
         dotDir = "${config.xdg.configHome}/zsh";
         history.path = "${config.xdg.cacheHome}/zsh/history";
         enableCompletion = true;

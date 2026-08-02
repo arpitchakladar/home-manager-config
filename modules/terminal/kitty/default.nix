@@ -2,13 +2,17 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
   options.terminal.kitty = {
     enable = lib.mkEnableOption "Enables kitty.";
-    package = lib.mkPackageOption pkgs "kitty" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.kitty.package;
+      description = "The kitty package to use.";
+    };
   };
 
   config = lib.mkIf config.terminal.kitty.enable {
@@ -18,7 +22,6 @@
 
     programs.kitty = {
       enable = true;
-      package = config.terminal.kitty.package;
       extraConfig = ''
         # Keep normal clicks for selection and prompt placement; Ctrl+click opens links.
         mouse_map left click ungrabbed mouse_handle_click selection prompt

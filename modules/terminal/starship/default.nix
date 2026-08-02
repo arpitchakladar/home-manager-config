@@ -3,6 +3,12 @@
 {
   options.terminal.starship = {
     enable = lib.mkEnableOption "Enables starship.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.starship.package;
+      description = "The starship package to use.";
+    };
   };
 
   config = lib.mkIf config.terminal.starship.enable {

@@ -3,6 +3,12 @@
 {
   options.terminal.less = {
     enable = lib.mkEnableOption "Enables less.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.less.package;
+      description = "The less package to use.";
+    };
   };
 
   config = lib.mkIf config.terminal.less.enable {

@@ -14,6 +14,7 @@
     enable = lib.mkEnableOption "Enables chromium.";
     package = lib.mkOption {
       type = lib.types.package;
+      readOnly = true;
       default = config.programs.chromium.finalPackage;
       defaultText = lib.literalExpression "config.programs.chromium.finalPackage";
       description = "Package to use for chromium. Defaults to the wrapped finalPackage from programs.chromium.";

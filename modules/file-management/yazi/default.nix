@@ -10,6 +10,7 @@
     enable = lib.mkEnableOption "Enables yazi.";
     package = lib.mkOption {
       type = lib.types.package;
+      readOnly = true;
       default = config.programs.yazi.finalPackage;
       defaultText = lib.literalExpression "config.programs.yazi.finalPackage";
       description = "The yazi package to use. Defaults to the wrapped finalPackage from programs.yazi.";

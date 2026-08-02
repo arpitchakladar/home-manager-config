@@ -6,6 +6,12 @@
   ];
   options.development.lazygit = {
     enable = lib.mkEnableOption "Enables lazygit.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.lazygit.package;
+      description = "The lazygit package to use.";
+    };
   };
   config = {
     programs.lazygit = lib.mkIf config.development.lazygit.enable {

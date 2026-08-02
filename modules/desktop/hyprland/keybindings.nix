@@ -38,7 +38,7 @@ in
     (bindMouse "mouse:272" "hl.dsp.window.drag()") # mainMod + LMB drag: move
     (bindMouse "mouse:273" "hl.dsp.window.resize()") # mainMod + RMB drag: resize
 
-    (lib.optionals config.desktop.rofi.enable [
+    (lib.optionals config.desktop.enable [
       (bind "R" (execLua "${lib.getExe config.desktop.rofi.package} -show drun"))
     ])
     (lib.optionals config.terminal.kitty.enable [

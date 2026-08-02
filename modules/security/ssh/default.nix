@@ -10,6 +10,12 @@
 
   options.security.ssh = {
     enable = lib.mkEnableOption "Enables ssh.";
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.ssh.package;
+      description = "The ssh package to use.";
+    };
   };
 
   config = lib.mkIf config.security.ssh.enable {

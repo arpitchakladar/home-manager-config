@@ -1,19 +1,22 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
   options.media.swayimg = {
     enable = lib.mkEnableOption "Enables swayimg.";
-    package = lib.mkPackageOption pkgs "swayimg" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.swayimg.package;
+      description = "The swayimg package to use.";
+    };
   };
 
   config = lib.mkIf config.media.swayimg.enable {
     programs.swayimg = {
       enable = true;
-      package = config.media.swayimg.package;
       initLua = ''
         swayimg.viewer.on_key("h", function()
           local pos = swayimg.viewer.get_position()

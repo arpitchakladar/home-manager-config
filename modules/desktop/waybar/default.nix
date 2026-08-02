@@ -5,6 +5,15 @@
   ...
 }:
 {
+  options.desktop.waybar = {
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.waybar.package;
+      description = "The waybar package to use.";
+    };
+  };
+
   config = lib.mkIf config.desktop.enable {
     programs.waybar = {
       enable = true;

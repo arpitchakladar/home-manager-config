@@ -8,13 +8,17 @@
 {
   options.terminal.bat = {
     enable = lib.mkEnableOption "Enables bat.";
-    package = lib.mkPackageOption pkgs "bat" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.programs.bat.package;
+      description = "The bat package to use.";
+    };
   };
 
   config = lib.mkIf config.terminal.bat.enable {
     programs.bat = {
       enable = true;
-      package = config.terminal.bat.package;
       config = {
         theme = "base16";
       };
