@@ -8,31 +8,19 @@ let
       descLines = lib.filter (s: s != "") (lib.splitString "\n" description);
       descComment =
         if descLines == [ ] then "" else lib.concatMapStringsSep "\n" (line: "# ${line}") descLines + "\n";
-      envVars = lib.concatStringsSep "\n" (lib.mapAttrsToList (n: v: "${n}=\"${toString v}\"") env);
-      wrappedScript = pkgs.writeTextFile {
-        name = name;
-        executable = true;
-        destination = "/bin/${name}";
-        text = ''
-          #!${shell}
-          ${descComment}${envVars}
-          ${builtins.readFile path}
-        '';
-      };
+      envVars = lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (n: v: "export ${n}=${lib.escapeShellArg (toString v)}") env
+      );
     in
-    pkgs.runCommand name
-      {
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        meta.mainProgram = name;
-      }
-      ''
-        mkdir -p $out/bin
-        cp ${wrappedScript}/bin/${name} $out/bin/${name}
-        chmod +x $out/bin/${name}
-
-        wrapProgram $out/bin/${name} \
-          --prefix PATH : ${lib.makeBinPath deps}
+    pkgs.writeShellApplication {
+      inherit name;
+      runtimeInputs = deps;
+      text = ''
+        #!${shell}
+        ${descComment}${envVars}
+        ${builtins.readFile path}
       '';
+    };
 
   mkScriptModule =
     {

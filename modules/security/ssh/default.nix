@@ -16,6 +16,12 @@
       default = config.programs.ssh.package;
       description = "The ssh package to use.";
     };
+
+    extraGopassKeys = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "Additional SSH keys to load from the gopass store (entries under ssh/), in addition to the git platform keys.";
+    };
   };
 
   config = lib.mkIf config.security.ssh.enable {

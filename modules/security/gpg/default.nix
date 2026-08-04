@@ -21,6 +21,11 @@
   config = lib.mkIf config.security.gpg.enable {
     programs.gpg = {
       enable = true;
+      homedir = "${config.xdg.dataHome}/gnupg";
+    };
+
+    home.sessionVariables = {
+      GNUPGHOME = config.programs.gpg.homedir;
     };
 
     services.gpg-agent = {

@@ -1,7 +1,7 @@
-export DIALOGRC=$(mktemp)
+DIALOGRC=$(mktemp)
 NOTMUCH_LOG=$(mktemp)
 TITLE="[SYNCING MAIL]"
-BACK_TITLE=
+export DIALOGRC
 trap 'rm -f "$DIALOGRC" "$NOTMUCH_LOG"' EXIT # Clean up everything on exit
 
 cat << 'EOF' > "$DIALOGRC"

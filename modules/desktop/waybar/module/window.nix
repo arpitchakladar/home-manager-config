@@ -20,5 +20,6 @@
     "screen-recording" = "${icons."screen-recording"} Screen Recording";
     "system-monitor" = "${icons."system-monitor"} System Monitor";
     "nvim(.*)" = "${icons."neovim"} $1";
+    "gopass" = "${icons."gopass"} gopass";
   };
 }

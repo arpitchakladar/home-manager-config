@@ -1,14 +1,20 @@
 # Keybindings - Vim-style keyboard shortcuts for neomutt
+#
+# Covers the core menus: generic (fallback), index, pager, sidebar,
+# attach, browser, compose. Menus like pgp/smime/mix/postpone/alias/query
+# are intentionally left mostly on defaults - they're rarely touched and
+# not worth risking an incorrect binding for. Press `?` inside neomutt
+# in any menu to see the live, authoritative list of bound functions.
 { config, lib, ... }:
 {
   config.programs.neomutt.binds = lib.mkIf config.communication.neomutt.enable [
-    # --- sidebar navigation (vim: k=up, j=down) ---
+    # --- sidebar navigation (vim: Ctrl-k=up, Ctrl-j=down) ---
     {
       map = [
         "index"
         "pager"
       ];
-      key = "\\CK";
+      key = "\\Ck";
       action = "sidebar-prev";
     }
     {
@@ -16,86 +22,87 @@
         "index"
         "pager"
       ];
-      key = "\\CJ";
+      key = "\\Cj";
       action = "sidebar-next";
     }
     {
-      # select the highlighted mailbox directly, no Ctrl+O needed
+      # jump into the highlighted mailbox
       map = [
         "index"
         "pager"
       ];
-      key = "o";
+      key = "\\Co";
       action = "sidebar-open";
-    }
-
-    # --- open / go deeper (vim: l = right/forward) ---
-    {
-      map = [ "index" ];
-      key = "<Return>";
-      action = "display-message";
-    }
-    {
-      map = [ "index" ];
-      key = "l";
-      action = "display-message";
-    }
-    {
-      map = [ "browser" ];
-      key = "<Return>";
-      action = "select-entry";
-    }
-    {
-      map = [ "browser" ];
-      key = "l";
-      action = "select-entry";
-    }
-    {
-      map = [ "attach" ];
-      key = "<Return>";
-      action = "view-attach";
-    }
-    {
-      map = [ "attach" ];
-      key = "l";
-      action = "view-attach";
     }
     {
       map = [
-        "alias"
-        "query"
+        "index"
+        "pager"
       ];
-      key = "<Return>";
-      action = "select-entry";
+      key = "\\Cp";
+      action = "sidebar-prev-new";
+    }
+    {
+      map = [
+        "index"
+        "pager"
+      ];
+      key = "\\Cn";
+      action = "sidebar-next-new";
+    }
+    {
+      # show/hide the sidebar column entirely
+      map = [
+        "index"
+        "pager"
+      ];
+      key = "B";
+      action = "sidebar-toggle-visible";
     }
 
-    # --- back / exit / fold-close (vim: h = left/back) ---
+    # --- basic entry navigation (generic = fallback for every list-style menu) ---
     {
-      map = [ "pager" ];
-      key = "h";
-      action = "exit";
+      map = [ "generic" ];
+      key = "j";
+      action = "next-entry";
     }
     {
-      map = [ "browser" ];
-      key = "h";
-      action = "exit";
+      map = [ "generic" ];
+      key = "k";
+      action = "previous-entry";
     }
     {
-      map = [ "attach" ];
-      key = "h";
-      action = "exit";
+      map = [ "generic" ];
+      key = "gg";
+      action = "first-entry";
     }
     {
-      # in the index, h/l act as fold-close/fold-open on a thread
-      # rather than "back" (there's nowhere to go "back" to from the
-      # top-level index) -- same convention as fold/tree keybindings
-      # in tools like NERDTree or fugitive.
-      map = [ "index" ];
-      key = "h";
-      action = "collapse-thread";
+      map = [
+        "index"
+        "generic"
+      ];
+      key = "G";
+      action = "last-entry";
     }
 
-    # --- pager line scrolling (vim: j/k move by line) ---
+    # --- scroll-to-position, straight from vim (zt/zz/zb) ---
+    {
+      map = [ "generic" ];
+      key = "zt";
+      action = "current-top";
+    }
+    {
+      map = [ "generic" ];
+      key = "zz";
+      action = "current-middle";
+    }
+    {
+      map = [ "generic" ];
+      key = "zb";
+      action = "current-bottom";
+    }
+
+    # --- pager scrolling ---
     {
       map = [ "pager" ];
       key = "j";
@@ -105,26 +112,6 @@
       map = [ "pager" ];
       key = "k";
       action = "previous-line";
-    }
-    {
-      # kept from before: jump straight to the next unread message,
-      # extends the h/l "back/forward" metaphor already in use
-      map = [ "pager" ];
-      key = "l";
-      action = "next-unread";
-    }
-
-    # --- top/bottom of buffer (vim: gg/G -- NOT 0/$, which mean
-    #     start/end of *line* in vim and would be a false friend here) ---
-    {
-      map = [ "index" ];
-      key = "gg";
-      action = "first-entry";
-    }
-    {
-      map = [ "index" ];
-      key = "G";
-      action = "last-entry";
     }
     {
       map = [ "pager" ];
@@ -137,6 +124,199 @@
       action = "bottom";
     }
     {
+      map = [
+        "generic"
+        "index"
+        "pager"
+      ];
+      key = "\\Cd";
+      action = "half-down";
+    }
+    {
+      map = [
+        "generic"
+        "index"
+        "pager"
+      ];
+      key = "\\Cu";
+      action = "half-up";
+    }
+    {
+      map = [
+        "generic"
+        "index"
+        "pager"
+      ];
+      key = "\\Cf";
+      action = "next-page";
+    }
+    {
+      # NOTE: Ctrl-B is deliberately left unbound in the pager map here -
+      # macros.nix claims it there for the chawan browser-view macro.
+      map = [ "index" ];
+      key = "\\Cb";
+      action = "previous-page";
+    }
+
+    # --- h/l as "back / go into", vim left/right ---
+    {
+      map = [ "pager" ];
+      key = "h";
+      action = "exit";
+    }
+    {
+      map = [ "pager" ];
+      key = "l";
+      action = "view-attachments";
+    }
+    {
+      map = [ "index" ];
+      key = "l";
+      action = "display-message";
+    }
+
+    # --- search (mostly default already, restated for a complete reference) ---
+    {
+      map = [
+        "generic"
+        "index"
+        "pager"
+      ];
+      key = "/";
+      action = "search";
+    }
+    {
+      map = [
+        "generic"
+        "index"
+        "pager"
+      ];
+      key = "?";
+      action = "search-reverse";
+    }
+    {
+      map = [
+        "generic"
+        "index"
+        "pager"
+      ];
+      key = "n";
+      action = "search-next";
+    }
+    {
+      map = [
+        "generic"
+        "index"
+        "pager"
+      ];
+      key = "N";
+      action = "search-opposite";
+    }
+
+    # --- delete / undelete, vim dd ---
+    {
+      map = [
+        "index"
+        "pager"
+      ];
+      key = "dd";
+      action = "delete-message";
+    }
+    {
+      map = [ "index" ];
+      key = "dT";
+      action = "delete-thread";
+    }
+    {
+      map = [ "index" ];
+      key = "u";
+      action = "undelete-message";
+    }
+    {
+      map = [ "index" ];
+      key = "U";
+      action = "undelete-thread";
+    }
+    {
+      map = [ "attach" ];
+      key = "dd";
+      action = "delete-entry";
+    }
+    {
+      map = [ "attach" ];
+      key = "u";
+      action = "undelete-entry";
+    }
+
+    # --- limit / filter the index, gf = filter, gF = clear filter ---
+    {
+      # prompts for a limit pattern; macros.nix binds gF to clear it
+      map = [ "index" ];
+      key = "gf";
+      action = "limit";
+    }
+
+    # --- unread / new / flagged navigation ---
+    {
+      map = [ "index" ];
+      key = "]";
+      action = "next-unread";
+    }
+    {
+      map = [ "index" ];
+      key = "[";
+      action = "previous-unread";
+    }
+    {
+      map = [ "index" ];
+      key = "}";
+      action = "next-new";
+    }
+    {
+      map = [ "index" ];
+      key = "{";
+      action = "previous-new";
+    }
+    {
+      map = [ "index" ];
+      key = "gn";
+      action = "next-flagged";
+    }
+    {
+      map = [ "index" ];
+      key = "gp";
+      action = "previous-flagged";
+    }
+
+    # --- attach menu ---
+    {
+      map = [ "attach" ];
+      key = "l";
+      action = "view-attach";
+    }
+    {
+      map = [ "attach" ];
+      key = "s";
+      action = "save-entry";
+    }
+    {
+      map = [ "attach" ];
+      key = "p";
+      action = "print-entry";
+    }
+
+    # --- browser (folder / file picker) ---
+    {
+      map = [ "browser" ];
+      key = "j";
+      action = "next-entry";
+    }
+    {
+      map = [ "browser" ];
+      key = "k";
+      action = "previous-entry";
+    }
+    {
       map = [ "browser" ];
       key = "gg";
       action = "first-entry";
@@ -146,169 +326,34 @@
       key = "G";
       action = "last-entry";
     }
-
-    # --- page scrolling (vim: Ctrl-f/b full page, Ctrl-d/u half page) ---
     {
-      map = [ "pager" ];
-      key = "\\Cf";
-      action = "next-page";
+      # neomutt has no dedicated "go up a directory" function - the ".."
+      # row is a normal entry, so l/Enter on it goes up just fine
+      map = [ "browser" ];
+      key = "l";
+      action = "select-entry";
     }
     {
-      map = [ "pager" ];
-      key = "\\Cb";
-      action = "previous-page";
-    }
-    {
-      map = [ "pager" ];
+      map = [ "browser" ];
       key = "\\Cd";
       action = "half-down";
     }
     {
-      map = [ "pager" ];
-      key = "\\Cu";
-      action = "half-up";
-    }
-    {
-      # index has no half-page concept, so Ctrl-d/u fall back to
-      # the same full-page scroll as Ctrl-f/b
-      map = [ "index" ];
-      key = "\\Cf";
-      action = "next-page";
-    }
-    {
-      map = [ "index" ];
-      key = "\\Cb";
-      action = "previous-page";
-    }
-    {
-      map = [ "index" ];
-      key = "\\Cd";
-      action = "half-down";
-    }
-    {
-      map = [ "index" ];
+      map = [ "browser" ];
       key = "\\Cu";
       action = "half-up";
     }
 
-    # --- search (vim: / forward, ? backward, n/N repeat) ---
+    # --- compose menu ---
     {
-      map = [
-        "index"
-        "pager"
-      ];
-      key = "/";
-      action = "search";
+      map = [ "compose" ];
+      key = "j";
+      action = "next-entry";
     }
     {
-      map = [
-        "index"
-        "pager"
-      ];
-      key = "?";
-      action = "search-reverse";
-    }
-    {
-      map = [
-        "index"
-        "pager"
-      ];
-      key = "n";
-      action = "search-next";
-    }
-    {
-      map = [
-        "index"
-        "pager"
-      ];
-      key = "N";
-      action = "search-opposite";
-    }
-
-    # --- undelete ---
-    {
-      # capital D deletes the whole thread, mirroring the v/V
-      # (single vs. whole-thread) convention used below for tagging
-      map = [ "index" ];
-      key = "D";
-      action = "delete-thread";
-    }
-    {
-      map = [
-        "index"
-        "pager"
-      ];
-      key = "u";
-      action = "undelete-message";
-    }
-
-    # --- copy (vim: yy yank -- non-destructive, unlike save-message
-    #     which moves/deletes the original) ---
-    {
-      map = [
-        "index"
-        "pager"
-      ];
-      key = "y";
-      action = "noop";
-    }
-    {
-      map = [
-        "index"
-        "pager"
-      ];
-      key = "yy";
-      action = "copy-message";
-    }
-
-    # --- tagging (vim: v/V visual select single/whole block) ---
-    # NOTE: this overrides neomutt's default "v" (view-attachments).
-    # Attachments are still reachable from the pager/index via the
-    # mailcap auto-view or the attach menu, but if you want plain
-    # "v" back for view-attachments, just delete these two binds.
-    {
-      map = [ "index" ];
-      key = "v";
-      action = "tag-entry";
-    }
-    {
-      map = [ "index" ];
-      key = "V";
-      action = "tag-thread";
-    }
-
-    # --- mailbox switching ---
-    {
-      map = [ "index" ];
-      key = "gt";
-      action = "next-unread-mailbox";
-    }
-    # --- filter/limit (vim: gf to 'find'/'filter') ---
-    # gF is the "clear filter" counterpart, defined as a macro
-    # (see macros.nix) since resetting the limit needs a fixed
-    # pattern rather than an interactive prompt.
-    {
-      map = [ "index" ];
-      key = "gf";
-      action = "limit";
-    }
-
-    # --- help message to show functions and keybindings ---
-    {
-      map = [
-        "index"
-        "pager"
-        "browser"
-        "attach"
-      ];
-      key = "g?";
-      action = "help";
-    }
-
-    {
-      map = [ "pager" ];
-      key = "H";
-      action = "display-toggle-weed";
+      map = [ "compose" ];
+      key = "k";
+      action = "previous-entry";
     }
   ];
 }

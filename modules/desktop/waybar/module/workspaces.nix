@@ -44,5 +44,6 @@
         icons."screen-recording";
     "title<system-monitor>" = lib.mkIf config.scripts.system-monitor.enable icons."system-monitor";
     "title<nvim(.*)>" = lib.mkIf config.development.nixvim.enable icons."neovim";
+    "title<gopass>" = lib.mkIf config.development.nixvim.enable icons."gopass";
   };
 }

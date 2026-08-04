@@ -4,9 +4,9 @@
 # $4 = initial directory path
 # $5 = output path file (where portal expects selected paths)
 
-multiple="$1"
+# multiple="$1"
 directory="$2"
-save="$3"
+# save="$3"
 path="$4"
 out="$5"
 

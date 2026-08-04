@@ -25,6 +25,7 @@ let
     "screen-recording" = mkIcon "#FF5555" "";
     "system-monitor" = mkIcon "#50FA7B" "󰄨";
     "neovim" = mkIcon "#005900" "";
+    "gopass" = mkIcon "#FFD700" "";
   };
 in
 {

@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 set -euo pipefail
 CONFIG_DIR="$HOME/.cache/usque"
 CONFIG="$CONFIG_DIR/config.json"
@@ -23,13 +24,13 @@ is_running() {
   [[ -f "$PID_FILE" ]] || return 1
   local pid
   pid=$(cat "$PID_FILE" 2>/dev/null || true)
-  [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null
+  [[ -n "$pid" ]] || return 1
+  sudo kill -0 "$pid" 2>/dev/null
 }
 
 ensure_config() {
   echo "Creating $CONFIG_DIR..."
   mkdir -p "$CONFIG_DIR"
-  rm -f "$CONFIG"
   echo "Registering Cloudflare WARP account..."
   usque -c "$CONFIG" register < <(yes)
   if [[ ! -f "$CONFIG" ]]; then
@@ -44,7 +45,7 @@ remove_tun_default_routes() {
   while ip route show | grep -qE "^default .*dev $dev"; do
     ROUTE=$(ip route show | grep -E "^default .*dev $dev" | head -n1)
     echo "Removing route: $ROUTE"
-    sudo ip route del $ROUTE || true
+    sudo ip route del "$ROUTE" || break
   done
 }
 
@@ -52,7 +53,7 @@ connect() {
   ensure_config
   if [[ -f "$PID_FILE" ]]; then
     OLD_PID=$(cat "$PID_FILE")
-    if kill -0 "$OLD_PID" 2>/dev/null; then
+    if sudo kill -0 "$OLD_PID" 2>/dev/null; then
       echo "usque-warp is already running (PID $OLD_PID)"
       exit 1
     else
@@ -73,12 +74,12 @@ connect() {
   BEFORE_IFACES=$(list_tun_ifaces)
 
   echo "Starting usque..."
-  sudo usque nativetun -c "$CONFIG" >"$LOG_FILE" 2>&1 &
+  sudo usque nativetun -c "$CONFIG" 2>&1 | sudo tee "$LOG_FILE" >/dev/null &
   echo $! > "$PID_FILE"
 
   echo "Waiting for MASQUE connection..."
   MASQUE_IP=""
-  for i in {1..30}; do
+  for _ in {1..30}; do
     MASQUE_IP=$(grep -oP 'MASQUE connection to \K[0-9.]+(?=:443)' "$LOG_FILE" 2>/dev/null || true)
     if [[ -n "$MASQUE_IP" ]]; then
       break
@@ -87,14 +88,14 @@ connect() {
   done
   if [[ -z "$MASQUE_IP" ]]; then
     echo "Failed to detect MASQUE endpoint"
-    kill "$(cat "$PID_FILE")" 2>/dev/null || true
+    sudo kill "$(cat "$PID_FILE")" 2>/dev/null || true
     rm -f "$PID_FILE"
     exit 1
   fi
 
   echo "Waiting for usque interface..."
   TUN_DEV=""
-  for i in {1..30}; do
+  for _ in {1..30}; do
     AFTER_IFACES=$(list_tun_ifaces)
     TUN_DEV=$(comm -13 <(echo "$BEFORE_IFACES" | sort) <(echo "$AFTER_IFACES" | sort) | head -n1)
     [[ -n "$TUN_DEV" ]] && break
@@ -102,7 +103,7 @@ connect() {
   done
   if [[ -z "$TUN_DEV" ]]; then
     echo "Failed to detect usque interface"
-    kill "$(cat "$PID_FILE")" 2>/dev/null || true
+    sudo kill "$(cat "$PID_FILE")" 2>/dev/null || true
     rm -f "$PID_FILE"
     exit 1
   fi
@@ -115,7 +116,7 @@ connect() {
     echo "Cannot determine gateway/interface"
     exit 1
   fi
-  echo "$MASQUE_IP $GATEWAY $INTERFACE" >> "$STATE_FILE"
+  echo "MASQUE_IP=$MASQUE_IP GATEWAY=$GATEWAY INTERFACE=$INTERFACE" >> "$STATE_FILE"
 
   echo "Allowing MASQUE endpoint outside tunnel..."
   sudo ip route replace \
@@ -146,7 +147,7 @@ disconnect() {
   fi
 
   if [[ -f "$STATE_FILE" ]]; then
-    MASQUE_IP=$(grep -oP '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "$STATE_FILE" | head -n1 || true)
+    MASQUE_IP=$(grep -oP 'MASQUE_IP=\K[0-9.]+' "$STATE_FILE" || true)
     if [[ -n "$MASQUE_IP" ]]; then
         echo "Removing MASQUE route: $MASQUE_IP"
         sudo ip route del "$MASQUE_IP" 2>/dev/null || true
@@ -156,7 +157,7 @@ disconnect() {
 
   if [[ -f "$PID_FILE" ]]; then
     PID=$(cat "$PID_FILE")
-    if kill -0 "$PID" 2>/dev/null; then
+    if sudo kill -0 "$PID" 2>/dev/null; then
         echo "Stopping usque..."
         sudo kill "$PID" 2>/dev/null || true
     fi
