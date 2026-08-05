@@ -146,6 +146,16 @@ in
           input = {
             follow_mouse = 1;
             kb_layout = "us";
+            sensitivity = 0.5;
+            touchpad = {
+              natural_scroll = true;
+              clickfinger_behavior = true;
+              disable_while_typing = true;
+              tap_to_click = false;
+              tap_and_drag = false;
+              drag_lock = 2;
+              drag_3fg = 1;
+            };
           };
 
           cursor = {
