@@ -1,4 +1,4 @@
-# Gaming - Collection of game launchers and gaming utilities
+# Collection of game launchers and gaming utilities
 { ... }:
 {
   imports = [

@@ -1,4 +1,4 @@
-# Git - Distributed version control system
+# Distributed version control system
 {
   config,
   lib,

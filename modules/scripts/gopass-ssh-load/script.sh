@@ -16,8 +16,7 @@ if ssh-add -l 2>/dev/null | grep -qE "(ED25519|RSA|ECDSA)"; then
   exit 0
 fi
 
-# GOPASS_SSH_KEYS: space-separated list of gopass entry names under ssh/
-# e.g. GOPASS_SSH_KEYS="github gitlab work-server"
+# GOPASS_SSH_KEYS holds a space-separated list of gopass entry names under ssh
 if [ -z "${GOPASS_SSH_KEYS:-}" ]; then
   echo "Error: GOPASS_SSH_KEYS is not set. Example: GOPASS_SSH_KEYS=\"github gitlab\"" >&2
   exit 1

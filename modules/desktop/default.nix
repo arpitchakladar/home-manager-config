@@ -1,4 +1,4 @@
-# Desktop - Desktop environment configuration (Hyprland, darkman, waybar)
+# Desktop environment configuration
 {
   lib,
   config,

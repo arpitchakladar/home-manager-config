@@ -1,4 +1,4 @@
-# Assertions - Validates SSH is enabled when git.useSSH is set
+# Validates SSH is enabled when git.useSSH is set
 { config, ... }:
 {
   assertions = [

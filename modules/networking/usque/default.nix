@@ -1,4 +1,4 @@
-# Usque - Open-source reimplementation of the Cloudflare WARP client's MASQUE protocol
+# Open-source reimplementation of the Cloudflare WARP client's MASQUE protocol
 {
   config,
   pkgs,

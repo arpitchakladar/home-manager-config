@@ -1,4 +1,4 @@
-# VLC - Versatile multimedia player for audio/video playback
+# Versatile multimedia player for audio and video playback
 {
   config,
   lib,

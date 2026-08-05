@@ -1,4 +1,4 @@
-# Bruno - Open-source API client for testing HTTP endpoints
+# Open-source API client for testing HTTP endpoints
 {
   config,
   lib,

@@ -1,4 +1,4 @@
-# Office - Document viewer modules (zathura)
+# Document viewer modules
 { ... }:
 {
   imports = [

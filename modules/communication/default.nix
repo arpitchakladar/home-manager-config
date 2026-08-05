@@ -1,4 +1,4 @@
-# Communication - Email client modules
+# Email client modules
 { ... }:
 {
   imports = [

@@ -1,4 +1,4 @@
-# Nixvim - Neovim configured through Nix (home-manager integration)
+# Neovim configured through Nix
 { config, lib, ... }:
 {
   imports = [

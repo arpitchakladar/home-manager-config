@@ -1,4 +1,4 @@
-# Zsh - Z shell, extended bash with additional features and plugins
+# Z shell, extended bash with additional features and plugins
 {
   config,
   lib,

@@ -1,4 +1,4 @@
-# Steam - game store
+# Game store
 {
   config,
   pkgs,

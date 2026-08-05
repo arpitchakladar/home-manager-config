@@ -1,4 +1,4 @@
-# Lazygit - A simple terminal UI for git commands
+# A simple terminal UI for git commands
 { config, lib, ... }:
 {
   imports = [

@@ -1,4 +1,4 @@
-# System - System monitoring tools (bottom, brightnessctl, htop, nvtop, systemctl-tui)
+# System monitoring tools
 { ... }:
 {
   imports = [

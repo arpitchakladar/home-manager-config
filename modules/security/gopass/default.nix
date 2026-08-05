@@ -1,4 +1,4 @@
-# gopass - Standard Unix password manager (Go implementation)
+# Standard Unix password manager
 {
   config,
   lib,

@@ -1,4 +1,4 @@
-# Assertions - Validates neomutt dependencies (less, bat, kitty, chawan) are enabled
+# Validates neomutt dependencies are enabled
 { config, ... }:
 {
   assertions = [

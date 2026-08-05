@@ -1,4 +1,4 @@
-# Bottom - Cross-platform graphical process/system monitor (Rust-based)
+# Cross-platform graphical process and system monitor
 {
   config,
   lib,

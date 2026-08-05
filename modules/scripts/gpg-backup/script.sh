@@ -126,7 +126,7 @@ do_import() {
   echo "  Run 'gpg --list-secret-keys' to confirm."
 }
 
-# --- main ---
+# Main
 
 if [[ $# -ne 2 ]]; then
   usage

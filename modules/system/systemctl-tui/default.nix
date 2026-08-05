@@ -1,4 +1,4 @@
-# systemctl-tui - TUI for systemctl (systemd service management)
+# TUI for systemctl
 {
   config,
   pkgs,

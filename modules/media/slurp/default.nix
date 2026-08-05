@@ -1,4 +1,4 @@
-# Slurp - Region selector for wlroots Wayland compositors (used by grim)
+# Region selector for wlroots Wayland compositors
 {
   config,
   lib,

@@ -1,4 +1,4 @@
-# Zathura - Minimalistic document viewer (PDF, DJVU, etc.)
+# Minimalistic document viewer
 {
   config,
   lib,

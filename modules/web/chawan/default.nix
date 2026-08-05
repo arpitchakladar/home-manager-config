@@ -1,4 +1,4 @@
-# Chawan - Text-based web browser and pager
+# Text-based web browser and pager
 {
   config,
   lib,

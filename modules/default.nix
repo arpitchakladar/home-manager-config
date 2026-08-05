@@ -1,4 +1,4 @@
-# Modules - Top-level module aggregator importing all submodules
+# Top-level module aggregator importing all submodules
 { config, ... }:
 {
   imports = [

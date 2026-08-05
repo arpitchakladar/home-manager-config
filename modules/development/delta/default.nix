@@ -1,4 +1,4 @@
-# Delta - A syntax-highlighting pager for git, diff, and grep output
+# A syntax-highlighting pager for git, diff, and grep output
 {
   config,
   lib,

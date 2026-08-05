@@ -1,4 +1,4 @@
-# Playerctl - CLI for controlling media players (Spotify, MPRIS, etc.)
+# CLI for controlling media players
 {
   config,
   lib,

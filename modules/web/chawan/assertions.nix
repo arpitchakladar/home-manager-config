@@ -1,4 +1,4 @@
-# Assertions - Validates kitty is enabled for chawan desktop entry
+# Validates kitty is enabled for chawan desktop entry
 { config, ... }:
 {
   assertions = [

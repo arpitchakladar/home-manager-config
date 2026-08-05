@@ -1,4 +1,4 @@
-# LSP - Language Server Protocol configuration (nvim-lspconfig)
+# Language Server Protocol configuration
 { config, lib, ... }:
 {
   config.programs.nixvim.plugins.lsp = lib.mkIf config.development.nixvim.enable {
@@ -15,7 +15,7 @@
     };
 
     servers = {
-      # -- System & Configuration --
+      # System and configuration
       nixd = {
         enable = true;
         package = null;
@@ -23,7 +23,7 @@
       bashls = {
         enable = true;
         package = null;
-      }; # Bash/Shell
+      }; # Bash shell
       taplo = {
         enable = true;
         package = null;
@@ -41,7 +41,7 @@
         package = null;
       }; # Markdown
 
-      # -- Web Development (HTML/CSS/JS/TS) --
+      # Web development
       html = {
         enable = true;
         package = null;
@@ -49,17 +49,17 @@
       cssls = {
         enable = true;
         package = null;
-      }; # CSS/SCSS/LESS
+      }; # CSS, SCSS and LESS
       tailwindcss = {
         enable = true;
         package = null;
       }; # Tailwind CSS
       vtsls = {
-        # JS/TS (Modern fast wrapper for tsserver)
+        # JS and TS fast wrapper for tsserver
         enable = true;
         package = null;
         settings = {
-          # Optional but recommended: stops huge generic types from taking over your screen
+          # Limits huge generic type hints
           vtsls.experimental.maxInlayHintLength = 30;
 
           # TypeScript type inferences
@@ -72,7 +72,7 @@
             enumMemberValues.enabled = true;
           };
 
-          # JavaScript type inferences (via JSDoc)
+          # JavaScript type inferences
           javascript.inlayHints = {
             parameterNames.enabled = "all";
             parameterTypes.enabled = true;
@@ -86,9 +86,9 @@
       eslint = {
         enable = true;
         package = null;
-      }; # ESLint diagnostics/formatting
+      }; # ESLint diagnostics and formatting
 
-      # -- Web Frameworks --
+      # Web frameworks
       volar = {
         # Vue
         enable = true;
@@ -104,26 +104,26 @@
         package = null;
       }; # Astro
 
-      # -- Scripting & High-Level Languages --
+      # Scripting and high-level languages
       basedpyright = {
-        # Python (Modern, faster fork of Pyright)
+        # Python, modern faster fork of Pyright
         enable = true;
         package = null;
         settings.basedpyright.analysis.inlayHints = {
           variableTypes = true;
           callArgumentNames = true;
           functionReturnTypes = true;
-          genericTypes = false; # can get noisy, opt-in
+          genericTypes = false; # Opt in since these can get noisy
         };
       };
       ruff = {
         enable = true;
         package = null;
-      }; # Python (Ultra-fast linter/formatter)
+      }; # Python linter and formatter
       ruby_lsp = {
         enable = true;
         package = null;
-      }; # Ruby (Shopify's modern standard)
+      }; # Ruby
       lua_ls = {
         # Lua
         enable = true;
@@ -145,13 +145,13 @@
         package = null;
       }; # Elixir
 
-      # -- Systems, Compiled, & Enterprise --
+      # Systems, compiled and enterprise
       clangd = {
         enable = true;
         package = null;
-      }; # C/C++ (inlay hints on by default)
+      }; # C and C++ with inlay hints on by default
       rust_analyzer = {
-        # Rust (inlay hints on by default)
+        # Rust with inlay hints on by default
         enable = true;
         package = null;
         installCargo = false;
@@ -174,7 +174,7 @@
       zls = {
         enable = true;
         package = null;
-      }; # Zig (inlay hints on by default)
+      }; # Zig with inlay hints on by default
       jdtls = {
         # Java
         enable = true;
@@ -188,7 +188,7 @@
       csharp_ls = {
         enable = true;
         package = null;
-      }; # C# (.NET) — no inlay hint support
+      }; # C# without inlay hint support
       hls = {
         # Haskell
         enable = true;
@@ -201,7 +201,7 @@
         package = null;
       }; # OCaml
 
-      # -- Infrastructure & DevOps --
+      # Infrastructure and DevOps
       dockerls = {
         enable = true;
         package = null;
@@ -213,9 +213,9 @@
       terraformls = {
         enable = true;
         package = null;
-      }; # Terraform/HCL
+      }; # Terraform and HCL
 
-      # -- Data & APIs --
+      # Data and APIs
       sqlls = {
         enable = true;
         package = null;

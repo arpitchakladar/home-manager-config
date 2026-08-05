@@ -1,4 +1,4 @@
-# Heroic Games Launcher - Epic/GOG/Amazon game launcher
+# Epic, GOG and Amazon game launcher
 {
   config,
   pkgs,

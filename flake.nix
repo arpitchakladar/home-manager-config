@@ -1,9 +1,8 @@
-# Flake - Home Manager configuration for Arpit's NixOS system
+# Home Manager configuration for Arpit's NixOS system
 {
   description = "Home Manager configuration of arpit.";
   inputs = {
-    # use nixpkgs from the local registry, saves disk space on
-    # duplicate derivations
+    # Use nixpkgs from the local registry to save disk space on duplicate derivations
     nixpkgs.url = "nixpkgs";
     home-manager = {
       url = "github:nix-community/home-manager/master";

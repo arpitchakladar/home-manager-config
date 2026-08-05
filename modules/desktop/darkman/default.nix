@@ -1,4 +1,4 @@
-# Darkman - Automatic dark/light mode switching based on time of day
+# Automatic dark and light mode switching based on time of day
 {
   config,
   lib,

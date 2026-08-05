@@ -1,4 +1,4 @@
-# Wf-recorder - Screen recording utility for wlroots Wayland compositors
+# Screen recording utility for wlroots Wayland compositors
 {
   config,
   pkgs,

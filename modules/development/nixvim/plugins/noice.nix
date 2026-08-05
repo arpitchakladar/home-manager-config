@@ -1,4 +1,4 @@
-# Noice - Modern UI for Neovim (cmdline, popupmenu, messages)
+# Modern UI for Neovim
 { config, lib, ... }:
 {
   config.programs.nixvim.plugins.noice = lib.mkIf config.development.nixvim.enable {

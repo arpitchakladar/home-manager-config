@@ -1,4 +1,4 @@
-# yazi - Terminal file manager with native previews
+# Terminal file manager with native previews
 { config, lib, ... }:
 {
   imports = [

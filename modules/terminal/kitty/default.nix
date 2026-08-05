@@ -1,4 +1,4 @@
-# Kitty - GPU-accelerated terminal emulator
+# GPU-accelerated terminal emulator
 {
   config,
   lib,

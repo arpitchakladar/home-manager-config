@@ -1,4 +1,4 @@
-# Opencode - AI-powered coding assistant (opencode.ai)
+# AI-powered coding assistant
 {
   config,
   lib,

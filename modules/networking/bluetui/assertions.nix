@@ -1,4 +1,4 @@
-# Assertions - Validates kitty is enabled for bluetui desktop entry
+# Validates kitty is enabled for bluetui desktop entry
 { config, ... }:
 {
   assertions = [

@@ -1,4 +1,4 @@
-# Assertions - Validates kitty is enabled for yazi desktop entry
+# Validates kitty is enabled for yazi desktop entry
 { config, ... }:
 {
   assertions = [

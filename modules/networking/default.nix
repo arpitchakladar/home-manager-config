@@ -1,4 +1,4 @@
-# Networking - Network utility modules (bluetui, impala)
+# Network utility modules
 { ... }:
 {
   imports = [

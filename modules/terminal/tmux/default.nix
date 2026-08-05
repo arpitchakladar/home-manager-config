@@ -1,4 +1,4 @@
-# Tmux - Terminal multiplexer (window/pane management)
+# Terminal multiplexer
 {
   config,
   lib,

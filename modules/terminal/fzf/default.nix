@@ -1,4 +1,4 @@
-# FZF - Fuzzy finder, CLI fuzzy search tool
+# Fuzzy finder, CLI fuzzy search tool
 {
   config,
   lib,

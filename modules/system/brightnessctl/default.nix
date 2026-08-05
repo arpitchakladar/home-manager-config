@@ -1,4 +1,4 @@
-# brightnessctl - Backlight brightness control tool
+# Backlight brightness control tool
 {
   config,
   lib,

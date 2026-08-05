@@ -1,4 +1,4 @@
-# Security - Security tools (gopass, gpg, ssh)
+# Security tools
 { ... }:
 
 {

@@ -26,9 +26,9 @@ button_key_inactive_color = (YELLOW,BLACK,OFF)
 button_label_inactive_color = (YELLOW,BLACK,OFF)
 EOF
 
-# 2. Run the sync and indexing progress bar
+# Run the sync and indexing progress bar
 (
-  # --- PHASE 1: mbsync ---
+  # mbsync phase
   script -q -e -c "mbsync -a" /dev/null | awk -v RS='\r' '
   {
     c_str = ""
@@ -47,15 +47,15 @@ EOF
     fflush()
   }'
 
-  # --- PHASE 2: notmuch ---
+  # notmuch phase
   printf "XXX\n100\nIndexing new mail with notmuch...\nXXX\n"
   notmuch new > "$NOTMUCH_LOG" 2>&1
 ) | dialog --title "$TITLE" --gauge "Initializing..." 8 80 0
 
-# 3. Format the captured notmuch output into a single clean line
+# Format the captured notmuch output into a single clean line
 CLEAN_OUT=$(tr '\n' ' ' < "$NOTMUCH_LOG" | sed 's/  */ /g')
 
-# 4. Display final results and wait for user input (Enter/Esc) to dismiss
+# Display final results and wait for user input
 dialog --title "$TITLE" --msgbox "Done!\n$CLEAN_OUT" 8 80
 
 clear

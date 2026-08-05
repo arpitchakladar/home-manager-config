@@ -51,8 +51,7 @@ in
     '';
   };
 
-  # readOnly options get their actual value assigned here, in this same
-  # module's config — this is the one place allowed to set it.
+  # Readonly options get their actual value assigned here in this module
   config.web.chromium.extensions = {
     aria2Explorer = mkExtension ./aria2-explorer.nix;
     browserpass = mkExtension ./browserpass.nix;

@@ -1,4 +1,4 @@
-# Account - Converts neomutt account options into home-manager email config
+# Converts neomutt account options into home-manager email config
 { config, lib, ... }:
 {
   options.communication.neomutt.accounts = lib.mkOption {

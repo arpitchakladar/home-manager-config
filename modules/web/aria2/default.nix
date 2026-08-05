@@ -1,4 +1,4 @@
-# Aria2 - command line download manager
+# Command line download manager
 {
   lib,
   config,

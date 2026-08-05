@@ -1,4 +1,4 @@
-# Pamixer - PulseAudio command-line mixer (volume control)
+# PulseAudio command-line mixer
 {
   config,
   lib,

@@ -1,4 +1,4 @@
-# LSD - Ls alternative with icons and colors (Rust-based)
+# Ls alternative with icons and colors
 { config, lib, ... }:
 {
   options.file-management.lsd = {

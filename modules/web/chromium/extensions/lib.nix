@@ -5,9 +5,7 @@
   checkForUpdates ? true,
 }:
 rec {
-  # --- Hit the GitHub releases API and return the latest tag name. ---
-  # Impure: requires --impure since there's no fixed output hash for the API
-  # response itself. Optionally uses $GITHUB_TOKEN to dodge rate limits.
+  # Fetch the latest release tag from the GitHub releases API
   fetchLatestGithubReleaseTag =
     { owner, repo }:
     let
@@ -19,9 +17,7 @@ rec {
     in
     json.tag_name;
 
-  # --- Compare pinned version against upstream latest, abort with instructions if stale. ---
-  # Returns `version` unchanged on success so it can be threaded into the
-  # derivation below and force this check to actually run.
+  # Abort if the pinned version is older than the latest upstream release
   checkExtensionVersion =
     {
       pname,
@@ -61,11 +57,7 @@ rec {
       else
         version;
 
-  # --- Download + unpack a zip *or* crx into a plain unpacked-extension dir. ---
-  # A CRX3 file is just: "Cr24" magic (4B) + version (4B) + header length N (4B)
-  # + N bytes of protobuf header + a normal zip payload. We slice off the
-  # header when isCrx = true, then unzip exactly like any other release zip —
-  # so every extension, crx or not, goes through one identical pipeline.
+  # Download and unpack a zip or crx file into an unpacked extension directory
   fetchUnpackedExtension =
     {
       pname,
@@ -73,7 +65,7 @@ rec {
       url,
       hash,
       isCrx ? false,
-      extensionKey ? null, # NEW: Accept an optional public key
+      extensionKey ? null, # Accept an optional public key
     }:
     pkgs.stdenv.mkDerivation {
       inherit pname version;
@@ -81,7 +73,7 @@ rec {
 
       nativeBuildInputs = [
         config.file-management.ouch.package
-        pkgs.jq # NEW: Required for safely editing manifest.json
+        pkgs.jq # Required for safely editing manifest.json
       ];
       dontUnpack = true;
 
@@ -90,14 +82,14 @@ rec {
         mkdir -p $out
 
         if [ "${lib.boolToString isCrx}" = "true" ]; then
-          # Verify "Cr24" magic header
+          # Verify the Cr24 magic header
           magic=$(head -c 4 "$src")
           if [ "$magic" != "Cr24" ]; then
             echo "Error: $src is not a valid CRX file" >&2
             exit 1
           fi
 
-          # Extract header length (bytes 8-11, little-endian)
+          # Extract header length in bytes 8 to 11
           bytes=$(od -An -j8 -N4 -tu1 "$src")
           read b1 b2 b3 b4 <<< $bytes
           hlen=$(( b1 + (b2 << 8) + (b3 << 16) + (b4 << 24) ))
@@ -109,7 +101,7 @@ rec {
           ouch decompress $src --dir $out
         fi
 
-        # Flatten a single wrapping folder (common in GitHub release zips)
+        # Flatten a single wrapping folder
         if [ "$(ls -1 $out | wc -l)" -eq 1 ] && [ -d "$out"/* ]; then
           shopt -s dotglob
           mv "$out"/*/* "$out"/ 2>/dev/null || true
@@ -117,7 +109,7 @@ rec {
           shopt -u dotglob
         fi
 
-        # NEW: Inject the public key into manifest.json if provided
+        # Inject the public key into manifest.json if provided
         ${lib.optionalString (extensionKey != null) ''
           if [ -f "$out/manifest.json" ]; then
             echo "Injecting extension key into manifest.json to lock the extension ID..."
@@ -132,7 +124,7 @@ rec {
       '';
 
       installPhase = "true";
-    }; # --- Package a local directory as an unpacked extension derivation. ---
+    }; # Package a local directory as an unpacked extension
 
   mkLocalExtension =
     {

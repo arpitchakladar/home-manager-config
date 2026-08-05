@@ -1,4 +1,4 @@
-# Keymaps - Keyboard shortcut configuration for nixvim
+# Keyboard shortcut configuration for nixvim
 { config, lib, ... }:
 {
   config.programs.nixvim.keymaps = lib.mkIf config.development.nixvim.enable [

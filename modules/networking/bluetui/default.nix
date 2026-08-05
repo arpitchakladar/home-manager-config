@@ -1,4 +1,4 @@
-# Bluetui - Bluetooth TUI client
+# Bluetooth TUI client
 {
   config,
   lib,

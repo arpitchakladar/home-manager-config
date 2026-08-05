@@ -1,4 +1,4 @@
-# Options - Email account option definitions (realName, address, folders, gpg, etc.)
+# Email account option definitions
 { lib, ... }:
 {
   options = {

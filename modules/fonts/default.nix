@@ -1,4 +1,4 @@
-# Fonts - Font configuration (Fira Code Nerd Font)
+# Font configuration
 {
   lib,
   config,

@@ -1,4 +1,4 @@
-# Arpit - User-specific home-manager configuration
+# User-specific home-manager configuration
 { config, ... }:
 {
   imports = [

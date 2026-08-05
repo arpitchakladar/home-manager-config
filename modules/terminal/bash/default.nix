@@ -1,4 +1,4 @@
-# Bash - GNU Bourne Again SHell
+# GNU Bourne Again SHell
 { lib, ... }:
 {
   options.terminal.bash = {

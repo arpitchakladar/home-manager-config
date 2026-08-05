@@ -1,4 +1,4 @@
-# File Management - File manager and utility modules (yazi, lsd, ouch)
+# File manager and utility modules
 { ... }:
 {
   imports = [

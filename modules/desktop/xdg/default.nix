@@ -1,4 +1,4 @@
-# xdg - XDG Desktop Portal configuration
+# XDG Desktop Portal configuration
 {
   config,
   lib,

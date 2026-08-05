@@ -1,4 +1,4 @@
-# Media - Multimedia tools (swayimg, grim, pamixer, playerctl, slurp, vlc, wf-recorder)
+# Multimedia tools
 { ... }:
 {
   imports = [

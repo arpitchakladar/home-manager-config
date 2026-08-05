@@ -1,4 +1,4 @@
-# Treesitter - Syntax highlighting and parsing (nvim-treesitter)
+# Syntax highlighting and parsing
 { config, lib, ... }:
 {
   config.programs.nixvim.plugins.treesitter = lib.mkIf config.development.nixvim.enable {

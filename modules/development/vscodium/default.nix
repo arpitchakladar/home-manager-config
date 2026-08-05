@@ -1,4 +1,4 @@
-# VSCodium - Visual Studio Code fork
+# Visual Studio Code fork
 {
   config,
   lib,

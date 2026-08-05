@@ -1,4 +1,4 @@
-# Assertions - LazyGit only makes sense when Git is enabled
+# LazyGit only makes sense when Git is enabled
 { config, ... }:
 {
   assertions = [

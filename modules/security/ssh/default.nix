@@ -1,4 +1,4 @@
-# OpenSSH - Secure shell (SSH) client for encrypted remote connections
+# Secure shell client for encrypted remote connections
 {
   config,
   lib,

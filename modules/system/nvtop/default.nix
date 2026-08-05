@@ -1,4 +1,4 @@
-# Nvtop - GPU process monitor (NVIDIA/AMD/Intel GPUs)
+# GPU process monitor
 {
   config,
   pkgs,

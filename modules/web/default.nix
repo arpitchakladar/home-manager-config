@@ -1,4 +1,4 @@
-# Web - Web browser and downloader modules (aria2, brave, chawan)
+# Web browser and downloader modules
 { ... }:
 {
   imports = [

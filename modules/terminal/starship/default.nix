@@ -1,4 +1,4 @@
-# Starship - Minimal, blazing-fast shell prompt
+# Minimal, blazing-fast shell prompt
 { config, lib, ... }:
 {
   options.terminal.starship = {

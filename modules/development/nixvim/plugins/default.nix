@@ -1,4 +1,4 @@
-# Plugins - Collection of nixvim plugin configurations
+# Collection of nixvim plugin configurations
 { ... }:
 {
   imports = [

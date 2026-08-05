@@ -1,4 +1,4 @@
-# QEMU - generic and open source machine & userspace emulator and virtualizer.
+# generic and open source machine and userspace emulator and virtualizer
 {
   config,
   lib,

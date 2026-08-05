@@ -1,11 +1,11 @@
-# Telescope - Fuzzy finder
+# Fuzzy finder
 { config, lib, ... }:
 {
   config.programs.nixvim.plugins.telescope = lib.mkIf config.development.nixvim.enable {
     enable = true;
     extensions = {
-      fzf-native.enable = true; # faster fuzzy sorting
-      ui-select.enable = true; # use telescope for vim.ui.select (code actions etc.)
+      fzf-native.enable = true; # Faster fuzzy sorting
+      ui-select.enable = true; # Uses telescope for vim.ui.select
     };
     settings = {
       defaults = {

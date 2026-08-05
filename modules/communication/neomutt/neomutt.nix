@@ -1,4 +1,4 @@
-# neomutt - Terminal email client
+# Terminal email client
 {
   config,
   lib,
@@ -44,7 +44,7 @@
       };
       sidebar.enable = true;
       sort = "reverse-threads";
-      vimKeys = true;
+      vimKeys = false;
       unmailboxes = true;
       checkStatsInterval = 20;
       extraConfig = builtins.readFile ./.neomuttrc;

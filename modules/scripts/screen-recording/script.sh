@@ -7,7 +7,7 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-# --- 1. ARGUMENT PARSING ---
+# Argument parsing
 SELECT_MODE=false
 while [[ "$#" -gt 0 ]]; do
 	case $1 in
@@ -16,7 +16,7 @@ while [[ "$#" -gt 0 ]]; do
 	shift
 done
 
-# --- 2. GEOMETRY SELECTION ---
+# Geometry selection
 GEOMETRY=""
 
 if [ "$SELECT_MODE" = true ]; then
@@ -34,7 +34,7 @@ if [ "$SELECT_MODE" = true ]; then
 	fi
 fi
 
-# --- 3. START RECORDING ---
+# Start recording
 FILENAME="$OUT_DIR/recording-$(date +%Y%m%d-%H%M%S).mp4"
 
 echo -e "${GREEN}Recording started!${NC}"

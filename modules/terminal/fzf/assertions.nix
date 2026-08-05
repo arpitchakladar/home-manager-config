@@ -1,4 +1,4 @@
-# Assertions - Validates zsh or bash is enabled when fzf is enabled
+# Validates zsh or bash is enabled when fzf is enabled
 { config, ... }:
 {
   assertions = [

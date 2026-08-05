@@ -1,4 +1,4 @@
-# Htop - Interactive process viewer (using htop-vim version)
+# Interactive process viewer
 {
   pkgs,
   lib,

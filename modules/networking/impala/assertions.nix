@@ -1,4 +1,4 @@
-# Assertions - Validates kitty is enabled for impala desktop entry
+# Validates kitty is enabled for impala desktop entry
 { config, ... }:
 {
   assertions = [

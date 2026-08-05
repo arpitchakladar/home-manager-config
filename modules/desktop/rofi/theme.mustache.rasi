@@ -1,23 +1,5 @@
-/**
- * Rofi Theme — Base16 "OneDark Dark" (olimorris)
- * Mustache template: render with a base16 color map to produce a .rasi file
- *
- * base00 - default background
- * base01 - lighter background (status bar, line numbers)
- * base02 - selection background
- * base03 - comments, invisibles
- * base04 - dark foreground (status bar)
- * base05 - default foreground
- * base06 - light foreground
- * base07 - lightest foreground
- * base08 - red      (errors, urgent)
- * base09 - orange    (numbers)
- * base0A - yellow    (search matches)
- * base0B - green     (strings)
- * base0C - cyan      (support, regex)
- * base0D - blue      (functions, active/selected)
- * base0E - purple/magenta (keywords)
- * base0F - brown     (deprecated)
+/*
+ * Rofi theme based on the Base16 OneDark Dark theme, rendered from a mustache template
  */
 
 * {

@@ -1,4 +1,4 @@
-# Ouch! - CLI tool for compressing and decompressing various formats.
+# CLI tool for compressing and decompressing various formats
 {
   pkgs,
   lib,

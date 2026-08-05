@@ -1,4 +1,4 @@
-# Nix aliases - Wrappers for nix-shell and nix develop that auto-start $SHELL
+# Wrappers for nix-shell and nix develop that auto-start $SHELL
 nix-shell() {
   for arg in "$@"; do
     if [[ "$arg" == "--run" || "$arg" == "--command" ]]; then

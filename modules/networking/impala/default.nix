@@ -1,4 +1,4 @@
-# Impala - TUI for managing wifi on Linux
+# TUI for managing wifi on Linux
 {
   config,
   lib,

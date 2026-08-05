@@ -1,4 +1,4 @@
-# less - terminal pager
+# Terminal pager
 { config, lib, ... }:
 {
   options.terminal.less = {

@@ -1,4 +1,4 @@
-# Grim - Screenshot utility for wlroots Wayland compositors
+# Screenshot utility for wlroots Wayland compositors
 {
   config,
   lib,

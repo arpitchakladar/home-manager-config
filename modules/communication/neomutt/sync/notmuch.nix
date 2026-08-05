@@ -1,4 +1,4 @@
-# Notmuch - Mail indexer for fast email search
+# Mail indexer for fast email search
 { config, lib, ... }:
 {
   config = lib.mkIf config.communication.neomutt.enable {

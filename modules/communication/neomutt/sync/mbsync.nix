@@ -1,4 +1,4 @@
-# Mbsync - Mailbox synchronization (isync/mbsync)
+# Mailbox synchronization
 { config, lib, ... }:
 {
   config = lib.mkIf config.communication.neomutt.enable {

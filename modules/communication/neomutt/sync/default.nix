@@ -1,4 +1,4 @@
-# Sync - Mail synchronization modules (mbsync, notmuch)
+# Mail synchronization modules
 { ... }:
 {
   imports = [

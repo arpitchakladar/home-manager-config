@@ -1,4 +1,4 @@
-# bat - a cat clone with wings
+# A cat clone with wings
 {
   config,
   lib,

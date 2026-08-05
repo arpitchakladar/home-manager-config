@@ -5,7 +5,7 @@
   ...
 }:
 let
-  # Extension ID computed from the pinned "extensionKey" in
+  # Extension ID computed from the pinned extensionKey
   patchedHost =
     pkgs.runCommand "com.github.browserpass.native.json"
       {
