@@ -40,9 +40,10 @@
   development.vscodium.enable = true;
 
   # File Management
-  file-management.yazi.enable = true;
   file-management.lsd.enable = true;
   file-management.ouch.enable = true;
+  file-management.usb.enable = true;
+  file-management.yazi.enable = true;
 
   # Media
   media.swayimg.enable = true;

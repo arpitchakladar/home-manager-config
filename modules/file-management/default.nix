@@ -5,5 +5,6 @@
     ./yazi
     ./lsd
     ./ouch
+    ./usb
   ];
 }
