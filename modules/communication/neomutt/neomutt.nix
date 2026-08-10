@@ -38,7 +38,7 @@
         nativeBuildInputs = [ pkgs.makeWrapper ];
         postBuild = ''
           wrapProgram $out/bin/neomutt \
-            --prefix PATH : ${lib.makeBinPath [ pkgs.urlscan ]}
+            --prefix PATH : ${config.home.profileDirectory}/bin:${lib.makeBinPath [ pkgs.urlscan ]}
         '';
         meta.mainProgram = "neomutt";
       };
@@ -47,7 +47,16 @@
       vimKeys = false;
       unmailboxes = true;
       checkStatsInterval = 20;
-      extraConfig = builtins.readFile ./.neomuttrc;
+      extraConfig = ''
+        # Read messages in Neovim.  `-` makes Neovim read the message from
+        # stdin and -R prevents accidental edits to message content.
+        set pager = "nvim -R -n +'setlocal nolist | silent! 1,2g/^$/delete _ | nohlsearch | setlocal nomodified nomodifiable' -"
+        # Return directly to the index when Neovim exits and do not prepend
+        # NeoMutt’s pager status line to the message passed to Neovim.
+        set noprompt_after
+        set pager_format = ""
+      ''
+      + builtins.readFile ./.neomuttrc;
     };
   };
 }
