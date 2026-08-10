@@ -1,12 +1,12 @@
-# Validates neomutt dependencies are enabled
+# Validates NeoMutt dependencies.
 { config, ... }:
 {
   assertions = [
     {
-      assertion = !config.communication.neomutt.enable || config.terminal.less.enable;
+      assertion = !config.communication.neomutt.enable || config.development.nixvim.enable;
       message = ''
-        communication.neomutt is enabled but terminal.less.enable is not.
-        neomutt requires less as its pager. Please enable terminal.less.
+        communication.neomutt is enabled but development.nixvim.enable is not.
+        neomutt uses Neovim as its external pager. Please enable development.nixvim.
       '';
     }
     {

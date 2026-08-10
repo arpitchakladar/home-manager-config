@@ -21,12 +21,6 @@
       action = "<pipe-message>urlscan<enter>";
     }
     {
-      # Open the message body in interactive chawan with vim-style navigation
-      map = [ "pager" ];
-      key = "\\Cb";
-      action = "<enter-command>set my_pipe_decode=$pipe_decode pipe_decode=yes<enter><pipe-message>${lib.getExe config.web.chawan.package} -o \"title='neomutt'\"<enter><enter-command>set pipe_decode=$my_pipe_decode<enter>";
-    }
-    {
       # Pipe the selected attachment instead of the whole message
       map = [ "attach" ];
       key = "gx";
@@ -43,12 +37,6 @@
       map = [ "index" ];
       key = "ZZ";
       action = "<sync-mailbox><quit>";
-    }
-    {
-      # Quit without saving
-      map = [ "index" ];
-      key = "ZQ";
-      action = "<exit>";
     }
   ];
 }

@@ -1,485 +1,132 @@
+# NeoMutt keybindings, grouped by the menu in which they apply.
 { config, lib, ... }:
 
+let
+  bind = keyMap: key: action: {
+    map = keyMap;
+    inherit key action;
+  };
+in
 {
-  config.programs.neomutt.binds = lib.mkIf config.communication.neomutt.enable (
-    lib.mkMerge [
-      # Force noop bindings to the top of neomuttrc
-      (lib.mkBefore [
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-            "browser"
-            "attach"
-            "compose"
-          ];
-          key = "z";
-          action = "noop";
-        }
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-            "browser"
-            "attach"
-            "compose"
-          ];
-          key = "d";
-          action = "noop";
-        }
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-            "browser"
-            "attach"
-            "compose"
-          ];
-          key = "g";
-          action = "noop";
-        }
-      ])
+  config.programs.neomutt.binds = lib.mkIf config.communication.neomutt.enable [
+    # Index ------------------------------------------------------------------
+    (bind [ "index" ] "g" "noop")
+    (bind [ "index" ] "d" "noop")
+    (bind [ "index" ] "z" "noop")
+    (bind [ "index" ] ":" "noop")
+    (bind [ "index" ] "q" "noop")
+    (bind [ "index" ] ":q" "exit")
+    (bind [ "index" ] "j" "next-entry")
+    (bind [ "index" ] "k" "previous-entry")
+    (bind [ "index" ] "gg" "first-entry")
+    (bind [ "index" ] "G" "last-entry")
+    (bind [ "index" ] "l" "display-message")
+    (bind [ "index" ] "\\Cd" "half-down")
+    (bind [ "index" ] "\\Cu" "half-up")
+    (bind [ "index" ] "\\Cf" "next-page")
+    (bind [ "index" ] "\\Cb" "previous-page")
+    (bind [ "index" ] "/" "search")
+    (bind [ "index" ] "?" "search-reverse")
+    (bind [ "index" ] "n" "search-next")
+    (bind [ "index" ] "N" "search-opposite")
+    (bind [ "index" ] "gf" "limit")
+    (bind [ "index" ] "]" "next-unread")
+    (bind [ "index" ] "[" "previous-unread")
+    (bind [ "index" ] "}" "next-new")
+    (bind [ "index" ] "{" "previous-new")
+    (bind [ "index" ] "za" "collapse-thread")
+    (bind [ "index" ] "zA" "collapse-all")
+    (bind [ "index" ] "\\Ck" "sidebar-prev")
+    (bind [ "index" ] "\\Cj" "sidebar-next")
+    (bind [ "index" ] "\\Co" "sidebar-open")
+    (bind [ "index" ] "\\Cn" "sidebar-toggle-visible")
+    (bind [ "index" ] "m" "mail")
+    (bind [ "index" ] "r" "reply")
+    (bind [ "index" ] "R" "group-reply")
+    (bind [ "index" ] "f" "forward-message")
+    (bind [ "index" ] "c" "change-folder")
+    (bind [ "index" ] "s" "save-message")
+    (bind [ "index" ] "y" "copy-message")
+    (bind [ "index" ] "t" "tag-entry")
+    (bind [ "index" ] "T" "tag-thread")
+    (bind [ "index" ] "gh" "display-toggle-weed")
+    (bind [ "index" ] "dd" "delete-message")
+    (bind [ "index" ] "dT" "delete-thread")
+    (bind [ "index" ] "u" "undelete-message")
+    (bind [ "index" ] "U" "undelete-thread")
 
-      # Other bindings
-      [
-        # Sidebar navigation
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "\\Ck";
-          action = "sidebar-prev";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "\\Cj";
-          action = "sidebar-next";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "\\Co";
-          action = "sidebar-open";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "\\Cn";
-          action = "sidebar-toggle-visible";
-        }
+    # Pager ------------------------------------------------------------------
+    # Messages open in Neovim via $pager.  These bindings remain useful for
+    # NeoMutt's internal pager, e.g. when it is used by a mailcap viewer.
+    (bind [ "pager" ] "g" "noop")
+    (bind [ "pager" ] "d" "noop")
+    (bind [ "pager" ] ":" "noop")
+    (bind [ "pager" ] "q" "noop")
+    (bind [ "pager" ] ":q" "exit")
+    (bind [ "pager" ] "j" "next-line")
+    (bind [ "pager" ] "k" "previous-line")
+    (bind [ "pager" ] "gg" "top")
+    (bind [ "pager" ] "G" "bottom")
+    (bind [ "pager" ] "\\Cd" "half-down")
+    (bind [ "pager" ] "\\Cu" "half-up")
+    (bind [ "pager" ] "\\Cf" "next-page")
+    (bind [ "pager" ] "\\Cb" "previous-page")
+    (bind [ "pager" ] "/" "search")
+    (bind [ "pager" ] "?" "search-reverse")
+    (bind [ "pager" ] "n" "search-next")
+    (bind [ "pager" ] "N" "search-opposite")
+    (bind [ "pager" ] "\\Ck" "sidebar-prev")
+    (bind [ "pager" ] "\\Cj" "sidebar-next")
+    (bind [ "pager" ] "\\Co" "sidebar-open")
+    (bind [ "pager" ] "\\Cn" "sidebar-toggle-visible")
+    (bind [ "pager" ] "m" "mail")
+    (bind [ "pager" ] "r" "reply")
+    (bind [ "pager" ] "R" "group-reply")
+    (bind [ "pager" ] "f" "forward-message")
+    (bind [ "pager" ] "c" "change-folder")
+    (bind [ "pager" ] "s" "save-message")
+    (bind [ "pager" ] "y" "copy-message")
+    (bind [ "pager" ] "t" "tag-message")
+    (bind [ "pager" ] "gh" "display-toggle-weed")
+    (bind [ "pager" ] "dd" "delete-message")
+    (bind [ "pager" ] "u" "undelete-message")
 
-        # Basic movement
-        {
-          map = [ "generic" ];
-          key = "j";
-          action = "next-entry";
-        }
-        {
-          map = [ "generic" ];
-          key = "k";
-          action = "previous-entry";
-        }
-        {
-          map = [ "generic" ];
-          key = "gg";
-          action = "first-entry";
-        }
-        {
-          map = [
-            "index"
-            "generic"
-          ];
-          key = "G";
-          action = "last-entry";
-        }
-        {
-          map = [ "pager" ];
-          key = "h";
-          action = "exit";
-        }
-        {
-          map = [ "pager" ];
-          key = "l";
-          action = "view-attachments";
-        }
-        {
-          map = [ "index" ];
-          key = "l";
-          action = "display-message";
-        }
+    # Attachment menu --------------------------------------------------------
+    (bind [ "attach" ] "g" "noop")
+    (bind [ "attach" ] "d" "noop")
+    (bind [ "attach" ] ":" "noop")
+    (bind [ "attach" ] "q" "noop")
+    (bind [ "attach" ] ":q" "exit")
+    (bind [ "attach" ] "j" "next-entry")
+    (bind [ "attach" ] "k" "previous-entry")
+    (bind [ "attach" ] "l" "view-attach")
+    (bind [ "attach" ] "s" "save-entry")
+    (bind [ "attach" ] "p" "print-entry")
+    (bind [ "attach" ] "dd" "delete-entry")
+    (bind [ "attach" ] "u" "undelete-entry")
 
-        # Scrolling
-        {
-          map = [ "generic" ];
-          key = "zt";
-          action = "current-top";
-        }
-        {
-          map = [ "generic" ];
-          key = "zz";
-          action = "current-middle";
-        }
-        {
-          map = [ "generic" ];
-          key = "zb";
-          action = "current-bottom";
-        }
-        {
-          map = [ "pager" ];
-          key = "j";
-          action = "next-line";
-        }
-        {
-          map = [ "pager" ];
-          key = "k";
-          action = "previous-line";
-        }
-        {
-          map = [ "pager" ];
-          key = "gg";
-          action = "top";
-        }
-        {
-          map = [ "pager" ];
-          key = "G";
-          action = "bottom";
-        }
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-          ];
-          key = "\\Cd";
-          action = "half-down";
-        }
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-          ];
-          key = "\\Cu";
-          action = "half-up";
-        }
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-          ];
-          key = "\\Cf";
-          action = "next-page";
-        }
-        {
-          map = [ "index" ];
-          key = "\\Cb";
-          action = "previous-page";
-        }
+    # Mailbox browser --------------------------------------------------------
+    (bind [ "browser" ] "g" "noop")
+    (bind [ "browser" ] ":" "noop")
+    (bind [ "browser" ] "q" "noop")
+    (bind [ "browser" ] ":q" "exit")
+    (bind [ "browser" ] "j" "next-entry")
+    (bind [ "browser" ] "k" "previous-entry")
+    (bind [ "browser" ] "gg" "first-entry")
+    (bind [ "browser" ] "G" "last-entry")
+    (bind [ "browser" ] "l" "select-entry")
+    (bind [ "browser" ] "\\Cd" "half-down")
+    (bind [ "browser" ] "\\Cu" "half-up")
 
-        # Searching and limiting
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-          ];
-          key = "/";
-          action = "search";
-        }
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-          ];
-          key = "?";
-          action = "search-reverse";
-        }
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-          ];
-          key = "n";
-          action = "search-next";
-        }
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-          ];
-          key = "N";
-          action = "search-opposite";
-        }
-        {
-          map = [ "index" ];
-          key = "gf";
-          action = "limit";
-        }
-
-        # Message states and threads
-        {
-          map = [ "index" ];
-          key = "]";
-          action = "next-unread";
-        }
-        {
-          map = [ "index" ];
-          key = "[";
-          action = "previous-unread";
-        }
-        {
-          map = [ "index" ];
-          key = "}";
-          action = "next-new";
-        }
-        {
-          map = [ "index" ];
-          key = "{";
-          action = "previous-new";
-        }
-        {
-          map = [ "index" ];
-          key = "za";
-          action = "collapse-thread";
-        }
-        {
-          map = [ "index" ];
-          key = "zA";
-          action = "collapse-all";
-        }
-
-        # Core email actions
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "m";
-          action = "mail";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "r";
-          action = "reply";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "R";
-          action = "group-reply";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "f";
-          action = "forward-message";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "c";
-          action = "change-folder";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "s";
-          action = "save-message";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "y";
-          action = "copy-message";
-        }
-        {
-          map = [ "index" ];
-          key = "t";
-          action = "tag-entry";
-        }
-        {
-          map = [ "pager" ];
-          key = "t";
-          action = "tag-message";
-        }
-        {
-          map = [ "index" ];
-          key = "T";
-          action = "tag-thread";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "gh";
-          action = "display-toggle-weed";
-        }
-
-        # Deletion and undeletion
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "dd";
-          action = "delete-message";
-        }
-        {
-          map = [ "index" ];
-          key = "dT";
-          action = "delete-thread";
-        }
-        {
-          map = [
-            "index"
-            "pager"
-          ];
-          key = "u";
-          action = "undelete-message";
-        }
-        {
-          map = [ "index" ];
-          key = "U";
-          action = "undelete-thread";
-        }
-        {
-          map = [ "attach" ];
-          key = "dd";
-          action = "delete-entry";
-        }
-        {
-          map = [ "attach" ];
-          key = "u";
-          action = "undelete-entry";
-        }
-
-        # Menu specific
-        {
-          map = [ "attach" ];
-          key = "l";
-          action = "view-attach";
-        }
-        {
-          map = [ "attach" ];
-          key = "s";
-          action = "save-entry";
-        }
-        {
-          map = [ "attach" ];
-          key = "p";
-          action = "print-entry";
-        }
-
-        {
-          map = [ "browser" ];
-          key = "j";
-          action = "next-entry";
-        }
-        {
-          map = [ "browser" ];
-          key = "k";
-          action = "previous-entry";
-        }
-        {
-          map = [ "browser" ];
-          key = "gg";
-          action = "first-entry";
-        }
-        {
-          map = [ "browser" ];
-          key = "G";
-          action = "last-entry";
-        }
-        {
-          map = [ "browser" ];
-          key = "l";
-          action = "select-entry";
-        }
-        {
-          map = [ "browser" ];
-          key = "\\Cd";
-          action = "half-down";
-        }
-        {
-          map = [ "browser" ];
-          key = "\\Cu";
-          action = "half-up";
-        }
-
-        {
-          map = [ "compose" ];
-          key = "j";
-          action = "next-entry";
-        }
-        {
-          map = [ "compose" ];
-          key = "k";
-          action = "previous-entry";
-        }
-        {
-          map = [ "compose" ];
-          key = "y";
-          action = "send-message";
-        }
-        {
-          map = [ "compose" ];
-          key = "a";
-          action = "attach-file";
-        }
-        {
-          map = [ "compose" ];
-          key = "e";
-          action = "edit-message";
-        }
-        {
-          map = [ "compose" ];
-          key = "p";
-          action = "postpone-message";
-        }
-
-        # Global exit
-        {
-          map = [
-            "generic"
-            "index"
-            "pager"
-            "browser"
-            "attach"
-            "compose"
-          ];
-          key = "q";
-          action = "exit";
-        }
-      ]
-    ]
-  );
+    # Compose menu -----------------------------------------------------------
+    (bind [ "compose" ] ":" "noop")
+    (bind [ "compose" ] "q" "noop")
+    (bind [ "compose" ] ":q" "exit")
+    (bind [ "compose" ] "j" "next-entry")
+    (bind [ "compose" ] "k" "previous-entry")
+    (bind [ "compose" ] "y" "send-message")
+    (bind [ "compose" ] "a" "attach-file")
+    (bind [ "compose" ] "e" "edit-message")
+    (bind [ "compose" ] "p" "postpone-message")
+  ];
 }
