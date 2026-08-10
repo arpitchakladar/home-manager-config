@@ -1,29 +1,29 @@
 DIALOGRC=$(mktemp)
 NOTMUCH_LOG=$(mktemp)
-TITLE="[SYNCING MAIL]"
+TITLE="[󰇮  SYNCING MAIL]"
 export DIALOGRC
 trap 'rm -f "$DIALOGRC" "$NOTMUCH_LOG"' EXIT # Clean up everything on exit
 
 cat << 'EOF' > "$DIALOGRC"
-use_shadow = OFF
+use_shadow = ON
 use_colors = ON
 screen_color = (WHITE,BLACK,OFF)
-dialog_color = (WHITE,BLACK,OFF)
-title_color = (CYAN,BLACK,ON)
-gauge_color = (WHITE,BLACK,ON)
-border_color = (WHITE,BLACK,OFF)
-border2_color = (WHITE,BLACK,OFF)
-shadow_color = (BLACK,BLACK,OFF)
+dialog_color = (WHITE,BLACK,ON)
+title_color = (YELLOW,BLACK,ON)
+gauge_color = (GREEN,BLACK,ON)
+border_color = (CYAN,BLACK,ON)
+border2_color = (BLUE,BLACK,ON)
+shadow_color = (BLACK,BLACK,ON)
 
-# Active buttons: Blue text and border with no background
-button_active_color = (BLUE,BLACK,ON)
-button_key_active_color = (BLUE,BLACK,ON)
-button_label_active_color = (BLUE,BLACK,ON)
+# Active buttons: magenta emphasis, matching Base16 base0E
+button_active_color = (MAGENTA,BLACK,ON)
+button_key_active_color = (MAGENTA,BLACK,ON)
+button_label_active_color = (MAGENTA,BLACK,ON)
 
-# Inactive buttons: Yellow text and border with no background
-button_inactive_color = (YELLOW,BLACK,OFF)
-button_key_inactive_color = (YELLOW,BLACK,OFF)
-button_label_inactive_color = (YELLOW,BLACK,OFF)
+# Inactive buttons: cyan secondary emphasis, matching Base16 base0C
+button_inactive_color = (CYAN,BLACK,OFF)
+button_key_inactive_color = (CYAN,BLACK,OFF)
+button_label_inactive_color = (CYAN,BLACK,OFF)
 EOF
 
 # Run the sync and indexing progress bar
