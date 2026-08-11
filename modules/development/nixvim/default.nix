@@ -12,7 +12,7 @@
     package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      default = config.programs.nixvim.package;
+      default = config.programs.nixvim.build.package;
       description = "The nixvim package to use.";
     };
   };
