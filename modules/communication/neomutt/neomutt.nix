@@ -50,7 +50,7 @@
       extraConfig = ''
         # Read messages in Neovim.  `-` makes Neovim read the message from
         # stdin and -R prevents accidental edits to message content.
-        set pager = "nvim -R -n +'setlocal nolist | silent! 1,2g/^$/delete _ | nohlsearch | setlocal nomodified nomodifiable' -"
+        set pager = "${lib.getExe config.development.nixvim.package} -R -n +'setlocal nolist | silent! 1,2g/^$/delete _ | nohlsearch | setlocal nomodified nomodifiable' -"
         # Return directly to the index when Neovim exits and do not prepend
         # NeoMutt’s pager status line to the message passed to Neovim.
         set noprompt_after
