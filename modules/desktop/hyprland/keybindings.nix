@@ -143,7 +143,7 @@ in
 
     (lib.optionals (config.media.grim.enable && config.media.slurp.enable) [
       (bind "P" (
-        execLuaSingle "${lib.getExe config.media.grim.package} -g \"$(${lib.getExe config.media.slurp.package})\" - | wl-copy"
+        execLuaSingle "${lib.getExe config.media.grim.package} -g \"$(${lib.getExe config.media.slurp.package})\" - | ${lib.getExe' config.desktop.wl-clipboard.package "wl-copy"}"
       ))
       (bind "SHIFT + P" (
         execLuaSingle "mkdir -p ~/Pictures/Screenshots && ${lib.getExe config.media.grim.package} -g \"$(${lib.getExe config.media.slurp.package})\" ~/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"

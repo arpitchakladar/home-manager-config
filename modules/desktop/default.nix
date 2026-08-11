@@ -8,6 +8,7 @@
   imports = [
     ./darkman
     ./rofi
+    ./wl-clipboard
     ./xdg
     ./hyprland
     ./waybar
