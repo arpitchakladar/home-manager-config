@@ -55,7 +55,7 @@ in
   config.web.chromium.extensions = {
     aria2Explorer = mkExtension ./aria2-explorer.nix;
     browserpass = mkExtension ./browserpass.nix;
-    darkMode = mkExtension ./dark-mode.nix;
+    darkreader = mkExtension ./darkreader.nix;
     searxngHome = mkExtension ./searxng-home.nix;
     theme = mkExtension ./theme.nix;
     ublockOrigin = mkExtension ./ublock-origin.nix;
