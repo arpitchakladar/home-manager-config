@@ -7,7 +7,7 @@
 {
   imports = [
     ./account
-    ./sync
+    ./mail
     ./assertions.nix
     ./keybindings.nix
     ./macros.nix
