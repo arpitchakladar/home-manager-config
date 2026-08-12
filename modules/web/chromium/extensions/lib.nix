@@ -5,7 +5,7 @@
   checkForUpdates ? true,
 }:
 rec {
-  # Fetch the latest release tag from the GitHub releases API
+  # Fetch using the Releases API (Finds the latest official GitHub Release)
   fetchLatestGithubReleaseTag =
     { owner, repo }:
     let
@@ -17,45 +17,135 @@ rec {
     in
     json.tag_name;
 
-  # Abort if the pinned version is older than the latest upstream release
+  # Fetch using the Tags API (Finds the newest tag matching a prefix/regex)
+  fetchLatestGithubTag =
+    {
+      owner,
+      repo,
+      tagPrefix ? "",
+      tagRegex ? null,
+    }:
+    let
+      raw = builtins.fetchurl {
+        url = "https://api.github.com/repos/${owner}/${repo}/tags";
+        name = "${repo}-tags.json";
+      };
+      tags = builtins.fromJSON (builtins.readFile raw);
+
+      isValidTag =
+        t:
+        let
+          matchesPrefix = tagPrefix == "" || lib.hasPrefix tagPrefix t.name;
+          matchesRegex = tagRegex == null || builtins.match tagRegex t.name != null;
+        in
+        matchesPrefix && matchesRegex;
+
+      matchingTags = builtins.filter isValidTag tags;
+    in
+    if builtins.length matchingTags > 0 then
+      (builtins.head matchingTags).name
+    else
+      throw "No tags found for ${owner}/${repo} matching prefix '${tagPrefix}' and regex '${toString tagRegex}'";
+
+  # Internal helper to handle the version comparison and error message
+  _verifyAndThrow =
+    {
+      pname,
+      version,
+      latestTag,
+      tagPrefix,
+      urlTemplate,
+      updateType,
+    }:
+    let
+      latestVersion =
+        if lib.hasPrefix tagPrefix latestTag then lib.removePrefix tagPrefix latestTag else latestTag;
+    in
+    if latestVersion != version then
+      throw ''
+        [${pname}] A newer ${updateType} is available upstream — refusing to build a stale extension.
+
+          pinned version : ${version}
+          latest version : ${latestVersion}  (tag: ${latestTag})
+
+        To upgrade, edit extensions/${pname}.nix:
+          1. Set   version = "${latestVersion}";
+          2. Point the url at the new release asset:
+               ${urlTemplate}
+          3. Set   hash = lib.fakeHash;
+             then re-run your switch — it'll fail with a hash mismatch showing
+             the real sha256. Paste that in as the final hash.
+          4. Re-run once more. This check passes once pinned == latest.
+
+        To skip this check for now (e.g. offline / pure eval), set:
+          web.chromium.checkForUpdates = false;
+      ''
+    else
+      version;
+
   checkExtensionVersion =
     {
       pname,
       owner,
       repo,
       version,
-      urlTemplate, # human-readable template shown in the error message
-      tagPrefix ? "", # e.g. "v" if tags look like "v1.2.3"
+      urlTemplate,
+      tagPrefix ? "",
     }:
     if !checkForUpdates then
       version
     else
       let
         latestTag = fetchLatestGithubReleaseTag { inherit owner repo; };
-        latestVersion =
-          if lib.hasPrefix tagPrefix latestTag then lib.removePrefix tagPrefix latestTag else latestTag;
       in
-      if latestVersion != version then
-        throw ''
-          [${pname}] A newer release is available upstream — refusing to build a stale extension.
+      _verifyAndThrow {
+        inherit
+          pname
+          version
+          latestTag
+          tagPrefix
+          urlTemplate
+          ;
+        updateType = "release";
+      };
 
-            pinned version : ${version}
-            latest version : ${latestVersion}  (tag: ${latestTag})
+  checkExtensionVersionByTag =
+    {
+      pname,
+      owner,
+      repo,
+      version,
+      urlTemplate,
+      tagPrefix ? "",
+      tagRegex ? null,
+    }:
+    if !checkForUpdates then
+      version
+    else
+      let
+        latestTag = fetchLatestGithubTag {
+          inherit
+            owner
+            repo
+            tagPrefix
+            tagRegex
+            ;
+        };
+      in
+      _verifyAndThrow {
+        inherit
+          pname
+          version
+          latestTag
+          tagPrefix
+          urlTemplate
+          ;
+        updateType = "tag";
+      };
 
-          To upgrade, edit extensions/${pname}.nix:
-            1. Set   version = "${latestVersion}";
-            2. Point the url at the new release asset:
-                 ${urlTemplate}
-            3. Set   hash = lib.fakeHash;
-               then re-run your switch — it'll fail with a hash mismatch showing
-               the real sha256. Paste that in as the final hash.
-            4. Re-run once more. This check passes once pinned == latest.
-
-          To skip this check for now (e.g. offline / pure eval), set:
-            web.chromium.checkForUpdates = false;
-        ''
-      else
-        version;
+  # ==========================================
+  # 3. EXTENSION BUILDERS
+  # ==========================================
 
   # Download and unpack a zip or crx file into an unpacked extension directory
   fetchUnpackedExtension =
@@ -65,7 +155,7 @@ rec {
       url,
       hash,
       isCrx ? false,
-      extensionKey ? null, # Accept an optional public key
+      extensionKey ? null,
     }:
     pkgs.stdenv.mkDerivation {
       inherit pname version;
@@ -73,7 +163,7 @@ rec {
 
       nativeBuildInputs = [
         config.file-management.ouch.package
-        pkgs.jq # Required for safely editing manifest.json
+        pkgs.python3
       ];
       dontUnpack = true;
 
@@ -111,20 +201,40 @@ rec {
 
         # Inject the public key into manifest.json if provided
         ${lib.optionalString (extensionKey != null) ''
-          if [ -f "$out/manifest.json" ]; then
-            echo "Injecting extension key into manifest.json to lock the extension ID..."
-            jq '.key = "${extensionKey}"' "$out/manifest.json" > "$out/manifest.tmp.json"
-            mv "$out/manifest.tmp.json" "$out/manifest.json"
-          else
-            echo "Warning: No manifest.json found in $out to inject the key!" >&2
-          fi
+                    if [ -f "$out/manifest.json" ]; then
+                      echo "Injecting extension key into manifest.json to lock the extension ID..."
+                      python3 -c '
+          import json, sys, re
+
+          manifest_path = sys.argv[1]
+          ext_key = sys.argv[2]
+
+          with open(manifest_path, "r", encoding="utf-8", errors="ignore") as f:
+              content = f.read()
+
+          # 1. Strip JS comments without corrupting URLs inside strings
+          pattern = r"(\"[^\"]*?\")|//.*?$|/\*.*?\*/"
+          clean = re.sub(pattern, lambda m: m.group(1) if m.group(1) else "", content, flags=re.DOTALL | re.MULTILINE)
+
+          # 2. Strip trailing commas in JSON objects/arrays
+          clean = re.sub(r",\s*([\]}])", r"\1", clean)
+
+          data = json.loads(clean)
+          data["key"] = ext_key
+
+          with open(manifest_path, "w", encoding="utf-8") as f:
+              json.dump(data, f, indent=2)
+          ' "$out/manifest.json" "${extensionKey}"
+                    else
+                      echo "Warning: No manifest.json found in $out to inject the key!" >&2
+                    fi
         ''}
 
         runHook postBuild
       '';
 
       installPhase = "true";
-    }; # Package a local directory as an unpacked extension
+    };
 
   mkLocalExtension =
     {
