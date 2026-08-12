@@ -92,6 +92,7 @@
             config.web.chromium.extensions.browserpass.id
             config.web.chromium.extensions.darkreader.id
             config.web.chromium.extensions.ublockOrigin.id
+            config.web.chromium.extensions.vimium.id
           ];
           ui = {
             developer_mode = true;

@@ -59,5 +59,6 @@ in
     searxngHome = mkExtension ./searxng-home.nix;
     theme = mkExtension ./theme.nix;
     ublockOrigin = mkExtension ./ublock-origin.nix;
+    vimium = mkExtension ./vimium.nix;
   };
 }
