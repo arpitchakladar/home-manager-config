@@ -90,7 +90,7 @@
         extensions = {
           pinned_extensions = [
             config.web.chromium.extensions.browserpass.id
-            config.web.chromium.extensions.darkMode.id
+            config.web.chromium.extensions.darkreader.id
             config.web.chromium.extensions.ublockOrigin.id
           ];
           ui = {
