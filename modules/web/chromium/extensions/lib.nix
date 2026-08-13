@@ -201,33 +201,12 @@ rec {
 
         # Inject the public key into manifest.json if provided
         ${lib.optionalString (extensionKey != null) ''
-                    if [ -f "$out/manifest.json" ]; then
-                      echo "Injecting extension key into manifest.json to lock the extension ID..."
-                      python3 -c '
-          import json, sys, re
-
-          manifest_path = sys.argv[1]
-          ext_key = sys.argv[2]
-
-          with open(manifest_path, "r", encoding="utf-8", errors="ignore") as f:
-              content = f.read()
-
-          # 1. Strip JS comments without corrupting URLs inside strings
-          pattern = r"(\"[^\"]*?\")|//.*?$|/\*.*?\*/"
-          clean = re.sub(pattern, lambda m: m.group(1) if m.group(1) else "", content, flags=re.DOTALL | re.MULTILINE)
-
-          # 2. Strip trailing commas in JSON objects/arrays
-          clean = re.sub(r",\s*([\]}])", r"\1", clean)
-
-          data = json.loads(clean)
-          data["key"] = ext_key
-
-          with open(manifest_path, "w", encoding="utf-8") as f:
-              json.dump(data, f, indent=2)
-          ' "$out/manifest.json" "${extensionKey}"
-                    else
-                      echo "Warning: No manifest.json found in $out to inject the key!" >&2
-                    fi
+          if [ -f "$out/manifest.json" ]; then
+            echo "Injecting extension key into manifest.json to lock the extension ID..."
+            python3 ${./inject_extension_key.py} "$out/manifest.json" "${extensionKey}"
+          else
+            echo "Warning: No manifest.json found in $out to inject the key!" >&2
+          fi
         ''}
 
         runHook postBuild
