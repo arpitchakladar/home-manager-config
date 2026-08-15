@@ -2,9 +2,9 @@
 { ... }:
 {
   imports = [
-    ./yazi
-    ./lsd
+    ./eza
     ./ouch
     ./usb
+    ./yazi
   ];
 }

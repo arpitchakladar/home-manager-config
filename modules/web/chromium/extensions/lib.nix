@@ -4,7 +4,7 @@
   config,
   checkForUpdates ? true,
 }:
-rec {
+let
   # Fetch using the Releases API (Finds the latest official GitHub Release)
   fetchLatestGithubReleaseTag =
     { owner, repo }:
@@ -48,7 +48,7 @@ rec {
       throw "No tags found for ${owner}/${repo} matching prefix '${tagPrefix}' and regex '${toString tagRegex}'";
 
   # Internal helper to handle the version comparison and error message
-  _verifyAndThrow =
+  verifyAndThrow =
     {
       pname,
       version,
@@ -82,7 +82,8 @@ rec {
       ''
     else
       version;
-
+in
+{
   checkExtensionVersion =
     {
       pname,
@@ -98,7 +99,7 @@ rec {
       let
         latestTag = fetchLatestGithubReleaseTag { inherit owner repo; };
       in
-      _verifyAndThrow {
+      verifyAndThrow {
         inherit
           pname
           version
@@ -132,7 +133,7 @@ rec {
             ;
         };
       in
-      _verifyAndThrow {
+      verifyAndThrow {
         inherit
           pname
           version
@@ -143,10 +144,7 @@ rec {
         updateType = "tag";
       };
 
-  # ==========================================
-  # 3. EXTENSION BUILDERS
-  # ==========================================
-
+  # EXTENSION BUILDERS
   # Download and unpack a zip or crx file into an unpacked extension directory
   fetchUnpackedExtension =
     {

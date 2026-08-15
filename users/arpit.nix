@@ -40,7 +40,7 @@
   development.vscodium.enable = true;
 
   # File Management
-  file-management.lsd.enable = true;
+  file-management.eza.enable = true;
   file-management.ouch.enable = true;
   file-management.usb.enable = true;
   file-management.yazi.enable = true;
