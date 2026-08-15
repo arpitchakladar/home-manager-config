@@ -1,6 +1,5 @@
 {
   extLib,
-  lib,
   ...
 }:
 let
