@@ -32,6 +32,14 @@
         map ctrl+shift+j neighboring_window bottom
         map ctrl+shift+k neighboring_window top
         map ctrl+shift+l neighboring_window right
+
+        # Line scrolling
+        map ctrl+shift+j scroll_line_down
+        map ctrl+shift+k scroll_line_up
+
+        # Page scrolling (half-page / full-page)
+        map ctrl+shift+u scroll_page_up
+        map ctrl+shift+d scroll_page_down
       '';
       settings = with config.scheme.withHashtag; {
         window_padding_width = 10;

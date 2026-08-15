@@ -67,6 +67,8 @@
         };
         page = {
           o = ''() => pager.extern('xdg-open "$CHA_HOVER_URL"', {env: {CHA_HOVER_URL: pager.hoverLink}})'';
+          ":q" = "() => pager.quit()";
+          q = "";
         };
       };
     };
