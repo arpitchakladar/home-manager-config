@@ -46,48 +46,8 @@
 
   config = lib.mkIf config.development.git.enable {
     home.packages = with pkgs; [
-      git-graph
       gawk
     ];
-
-    xdg.configFile."git-graph/models/custom.toml".text = ''
-      persistence = [
-        '^(master|main|trunk)$',
-        '^(develop|dev)$',
-        '^feature.*$',
-        '^release.*$',
-        '^hotfix.*$',
-        '^bugfix.*$',
-      ]
-
-      order = [
-        '^(master|main|trunk)$',
-        '^(hotfix|release).*$',
-        '^(develop|dev)$',
-      ]
-
-      [terminal_colors]
-      matches = [
-        ['^(master|main|trunk)$', ['bright_blue']],
-        ['^(develop|dev)$', ['bright_yellow']],
-        ['^(feature|fork/).*$', ['bright_magenta', 'bright_cyan']],
-        ['^release.*$', ['bright_green']],
-        ['^(bugfix|hotfix).*$', ['bright_red']],
-        ['^tags/.*$', ['bright_green']],
-      ]
-      unknown = ['bright_white', 'bright_red', 'bright_green', 'bright_yellow', 'bright_blue', 'bright_magenta', 'bright_cyan']
-
-      [svg_colors]
-      matches = [
-        ['^(master|main|trunk)$', ['blue']],
-        ['^(develop|dev)$', ['orange']],
-        ['^(feature|fork/).*$', ['magenta', 'cyan']],
-        ['^release.*$', ['green']],
-        ['^(bugfix|hotfix).*$', ['red']],
-        ['^tags/.*$', ['gray', 'purple', 'teal', 'brown']]
-      ]
-      unknown = ['gray', 'purple', 'teal', 'brown']
-    '';
 
     programs.git = {
       enable = true;
@@ -103,9 +63,8 @@
               email = config.development.git.email;
             };
             core.askPass = "";
-            alias = {
-              log-graph = "!git-log-graph";
-              log-graph-embed = "!GIT_LOG_GRAPH_EMBED=1 git-log-graph";
+            log = {
+              showSignature = true;
             };
           }
           (
