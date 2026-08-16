@@ -8,7 +8,6 @@
     ./deep-clean
     ./gopass-ssh-load
     ./gpg-backup
-    ./git-log-graph
     ./neomutt-sync
     ./screen-recording
     ./system-monitor
