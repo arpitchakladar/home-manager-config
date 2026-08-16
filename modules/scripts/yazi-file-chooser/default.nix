@@ -11,6 +11,7 @@ let
     path = ./script.sh;
     description = "Yazi-based file chooser for XDG Desktop Portal";
     deps = [
+      pkgs.bash
       config.file-management.yazi.package
       config.terminal.kitty.package
     ];

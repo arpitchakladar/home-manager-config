@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 DIALOGRC=$(mktemp)
 NOTMUCH_LOG=$(mktemp)
 TITLE="[󰇮  SYNCING MAIL]"

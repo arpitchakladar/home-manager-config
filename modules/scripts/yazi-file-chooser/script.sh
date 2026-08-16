@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # $1 toggles multiple selection
 # $2 toggles directory select mode
 # $3 toggles save file mode

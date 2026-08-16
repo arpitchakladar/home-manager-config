@@ -13,7 +13,6 @@ let
         inherit name;
         runtimeInputs = deps;
         text = ''
-          #!/usr/bin/env bash
           ${descComment}${envVars}
           ${builtins.readFile path}
         '';

@@ -11,9 +11,11 @@ let
     path = ./script.sh;
     description = "Screen recording script using wf-recorder and slurp for region selection\nRecords Wayland screen to MP4\nUsage: screen-recording.sh [-s|--select]\n  -s, --select  Launch slurp to select recording region";
     deps = [
+      pkgs.bash
       config.media.slurp.package
       config.media.wf-recorder.package
     ];
+    completion = builtins.readFile ./completion.zsh;
     desktop = {
       enable = true;
       displayName = "Screen Recording";
