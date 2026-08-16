@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 OUT_DIR="$HOME/Videos/Recordings"
 mkdir -p "$OUT_DIR"
 

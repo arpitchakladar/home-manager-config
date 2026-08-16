@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 SESSION="system-monitor"
 
 kitty @ set-font-size -- -5

@@ -30,6 +30,7 @@ let
       config.security.gopass.package
       gnupg
       openssh
+      bash
     ];
     inherit config;
   };

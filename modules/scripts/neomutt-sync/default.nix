@@ -11,6 +11,7 @@ let
     path = ./script.sh;
     description = "Neomutt-sync - Interactive mail sync with dialog progress bar";
     deps = [
+      pkgs.bash
       pkgs.dialog
       pkgs.coreutils
       pkgs.gawk
