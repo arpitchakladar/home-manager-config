@@ -14,6 +14,7 @@ let
       config.networking.usque.package
       pkgs.bash
     ];
+    completion = builtins.readFile ./completion.zsh;
     inherit config;
   };
 in

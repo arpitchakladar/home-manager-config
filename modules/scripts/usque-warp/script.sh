@@ -50,6 +50,7 @@ remove_tun_default_routes() {
 }
 
 connect() {
+  sudo -v
   ensure_config
   if [[ -f "$PID_FILE" ]]; then
     OLD_PID=$(cat "$PID_FILE")
@@ -133,6 +134,7 @@ connect() {
 }
 
 disconnect() {
+  sudo -v
   echo "Disconnecting..."
   local dev
   if [[ -f "$IFACE_FILE" ]]; then
@@ -141,28 +143,49 @@ disconnect() {
     dev=$(list_tun_ifaces | head -n1)
   fi
 
+  # Kill usque FIRST so the kernel tears down tun0 (and every route
+  # bound to it) as a single atomic operation, instead of us racing
+  # it by pulling routes out from under a device that's still up.
+  if [[ -f "$PID_FILE" ]]; then
+    PID=$(cat "$PID_FILE")
+    if sudo kill -0 "$PID" 2>/dev/null; then
+      echo "Stopping usque..."
+      sudo kill "$PID" 2>/dev/null || true
+      for _ in {1..20}; do
+        sudo kill -0 "$PID" 2>/dev/null || break
+        sleep 0.2
+      done
+    fi
+    rm -f "$PID_FILE"
+  fi
+
+  # Belt-and-braces: if the interface (or any of its routes) somehow
+  # survived, clean them up explicitly. No-ops if tun0 is already gone.
   if [[ -n "${dev:-}" ]]; then
-    echo "Removing $dev routes..."
+    echo "Flushing $dev routes..."
+    sudo ip route flush dev "$dev" 2>/dev/null || true
     remove_tun_default_routes "$dev"
   fi
 
   if [[ -f "$STATE_FILE" ]]; then
     MASQUE_IP=$(grep -oP 'MASQUE_IP=\K[0-9.]+' "$STATE_FILE" || true)
     if [[ -n "$MASQUE_IP" ]]; then
-        echo "Removing MASQUE route: $MASQUE_IP"
-        sudo ip route del "$MASQUE_IP" 2>/dev/null || true
+      echo "Removing MASQUE route: $MASQUE_IP"
+      sudo ip route del "$MASQUE_IP" 2>/dev/null || true
     fi
+
+    # Explicitly restore the pre-connect default route rather than
+    # assuming it's still intact. 'replace' is idempotent.
+    ORIGINAL_DEFAULT=$(head -n1 "$STATE_FILE")
+    if [[ "$ORIGINAL_DEFAULT" == default* ]]; then
+      echo "Restoring original default route..."
+      sudo ip route replace "$ORIGINAL_DEFAULT" \
+        || echo "Warning: could not restore original default route"
+    fi
+
     rm -f "$STATE_FILE"
   fi
 
-  if [[ -f "$PID_FILE" ]]; then
-    PID=$(cat "$PID_FILE")
-    if sudo kill -0 "$PID" 2>/dev/null; then
-        echo "Stopping usque..."
-        sudo kill "$PID" 2>/dev/null || true
-    fi
-    rm -f "$PID_FILE"
-  fi
   rm -f "$IFACE_FILE"
   echo "Disconnected"
 }
