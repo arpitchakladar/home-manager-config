@@ -6,8 +6,6 @@
   ...
 }:
 {
-  imports = [ ./git.nix ];
-
   options.security.ssh = {
     enable = lib.mkEnableOption "Enables ssh.";
     package = lib.mkOption {
@@ -17,10 +15,10 @@
       description = "The ssh package to use.";
     };
 
-    extraGopassKeys = lib.mkOption {
+    gopassKeys = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
-      description = "Additional SSH keys to load from the gopass store (entries under ssh/), in addition to the git platform keys.";
+      description = "SSH keys to load from the gopass store (entries under ssh/).";
     };
   };
 
@@ -28,19 +26,7 @@
     programs.ssh = {
       enable = true;
 
-      package =
-        if (config.security.gopass.enable or false && config.security.gopass.ssh-agent.enable or false) then
-          pkgs.symlinkJoin {
-            name = "openssh-gopass-wrapper";
-            paths = [ pkgs.openssh ];
-            buildInputs = [ pkgs.makeWrapper ];
-            postBuild = ''
-              wrapProgram $out/bin/ssh \
-                --run "${lib.getExe config.scripts.gopass-ssh-load.package}"
-            '';
-          }
-        else
-          pkgs.openssh;
+      package = pkgs.openssh;
 
       enableDefaultConfig = false;
       extraOptionOverrides = {

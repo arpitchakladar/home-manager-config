@@ -64,7 +64,7 @@
 
   # Security
   security.gopass.enable = true;
-  security.gopass.ssh-agent.enable = true;
+  security.gopass.ssh-agent.enable = false;
   security.gpg.enable = true;
   security.ssh.enable = true;
 

@@ -21,8 +21,8 @@
       enableNushellIntegration = config.programs.nushell.enable;
       enableZshIntegration = config.terminal.zsh.enable;
       settings = {
-        gui = {
-          theme = with config.scheme.withHashtag; {
+        gui = with config.scheme.withHashtag; {
+          theme = {
             lightTheme = false;
             activeBorderColor = [
               base0D
@@ -44,11 +44,11 @@
             ];
           };
           authorColors = {
-            "*" = (with config.scheme.withHashtag; base0E);
+            "*" = base0E;
           };
           branchColors = {
-            "master" = (with config.scheme.withHashtag; base08);
-            "main" = (with config.scheme.withHashtag; base08);
+            "master" = base08;
+            "main" = base08;
           };
           showIcons = true;
           scrollHeight = 2;

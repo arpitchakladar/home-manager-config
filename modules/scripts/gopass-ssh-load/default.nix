@@ -7,16 +7,7 @@
 let
   inherit ((import ../lib.nix { inherit lib pkgs; })) mkScriptModule;
 
-  gitPlatformKeys = [
-    "github"
-    "gitlab"
-    "bitbucket"
-    "codeberg"
-    "srht"
-  ];
-
-  gopassKeys =
-    lib.optionals config.development.git.useSSH gitPlatformKeys ++ config.security.ssh.extraGopassKeys;
+  gopassKeys = config.security.ssh.gopassKeys;
 
   base = mkScriptModule {
     name = "gopass-ssh-load";
