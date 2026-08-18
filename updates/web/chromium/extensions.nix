@@ -24,8 +24,6 @@ in
               "https://api.github.com/repos/${ext.owner}/${ext.repo}/tags"
             else
               "https://api.github.com/repos/${ext.owner}/${ext.repo}/releases/latest";
-
-          # jq filter: grab the newest tag name from the tags array, or the tag_name from the release object
           jqFilter = if isTag then ".[0].name" else ".tag_name";
         in
         ''
@@ -35,9 +33,8 @@ in
           if [ -z "$LATEST_RAW" ] || [ "$LATEST_RAW" == "null" ]; then
             echo "FAIL [${ext.pname}] Failed to fetch data from GitHub API."
           else
-            # Strip prefix if one is specified
             PREFIX="${ext.tagPrefix}"
-            LATEST_STRIPPED="''${LATEST_RAW#$PREFIX}"
+            LATEST_STRIPPED="''${LATEST_RAW#"$PREFIX"}"
 
             if [ "$LATEST_STRIPPED" != "${ext.version}" ]; then
               echo "UPDATE [${ext.pname}] ${ext.version} -> $LATEST_STRIPPED"
