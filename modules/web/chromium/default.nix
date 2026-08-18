@@ -19,15 +19,14 @@
       defaultText = lib.literalExpression "config.programs.chromium.finalPackage";
       description = "Package to use for chromium. Defaults to the wrapped finalPackage from programs.chromium.";
     };
-    checkForUpdates = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = ''
-        Check GitHub for newer extension releases before building, and abort
-        with upgrade instructions if the pinned version is stale. Requires
-        network access during evaluation (pass --impure to nix/home-manager).
-      '';
-    };
+    checkForUpdates = lib.mkEnableOption ''
+      Check GitHub for newer extension releases before building, and abort
+      with upgrade instructions if the pinned version is stale. Requires
+      network access during evaluation (pass --impure to nix/home-manager).
+    '';
+    useOpenGL = lib.mkEnableOption ''
+      Use OpenGL APIs for graphics acceleration
+    '';
   };
 
   config = lib.mkIf config.web.chromium.enable {
@@ -43,6 +42,10 @@
         [
           "--force-device-scale-factor=1.15"
           "--load-extension=${extensionDirs}"
+        ]
+        ++ lib.optionals config.web.chromium.useOpenGL [
+          "--use-angle=opengl"
+          "--use-cmd-decoder=passthrough"
         ];
     };
 

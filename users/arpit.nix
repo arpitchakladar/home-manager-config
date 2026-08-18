@@ -33,6 +33,7 @@
   development.delta.enable = true;
   development.git.enable = true;
   development.git.useSSH = true;
+  development.git.signing.signByDefault = true;
   development.lazygit.enable = true;
   development.nixvim.enable = true;
   development.opencode.enable = true;
@@ -86,10 +87,9 @@
 
   # Web
   web.aria2.enable = true;
-  web.chromium.enable = true;
   web.chawan.enable = true;
-
-  development.git.signing.signByDefault = true;
+  web.chromium.enable = true;
+  web.chromium.useOpenGL = false;
 
   programs.home-manager.enable = true;
 }
