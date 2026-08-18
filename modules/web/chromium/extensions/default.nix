@@ -9,7 +9,6 @@ let
 
   extLib = import ./lib.nix {
     inherit lib pkgs config;
-    checkForUpdates = cfg.checkForUpdates;
   };
 
   mkExtension = path: import path { inherit lib pkgs extLib; };
@@ -53,12 +52,12 @@ in
 
   # Readonly options get their actual value assigned here in this module
   config.web.chromium.extensions = {
-    aria2Explorer = mkExtension ./aria2-explorer.nix;
-    browserpass = mkExtension ./browserpass.nix;
-    darkreader = mkExtension ./darkreader.nix;
-    searxngHome = mkExtension ./searxng-home.nix;
-    theme = mkExtension ./theme.nix;
-    ublockOrigin = mkExtension ./ublock-origin.nix;
-    vimium = mkExtension ./vimium.nix;
+    aria2Explorer = mkExtension ./aria2-explorer;
+    browserpass = mkExtension ./browserpass;
+    darkreader = mkExtension ./darkreader;
+    searxngHome = mkExtension ./searxng-home;
+    theme = mkExtension ./theme;
+    ublockOrigin = mkExtension ./ublock-origin;
+    vimium = mkExtension ./vimium;
   };
 }
