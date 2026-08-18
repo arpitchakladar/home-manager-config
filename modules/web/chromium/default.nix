@@ -19,11 +19,6 @@
       defaultText = lib.literalExpression "config.programs.chromium.finalPackage";
       description = "Package to use for chromium. Defaults to the wrapped finalPackage from programs.chromium.";
     };
-    checkForUpdates = lib.mkEnableOption ''
-      Check GitHub for newer extension releases before building, and abort
-      with upgrade instructions if the pinned version is stale. Requires
-      network access during evaluation (pass --impure to nix/home-manager).
-    '';
     useOpenGL = lib.mkEnableOption ''
       Use OpenGL APIs for graphics acceleration
     '';

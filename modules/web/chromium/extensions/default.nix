@@ -9,7 +9,6 @@ let
 
   extLib = import ./lib.nix {
     inherit lib pkgs config;
-    checkForUpdates = cfg.checkForUpdates;
   };
 
   mkExtension = path: import path { inherit lib pkgs extLib; };
