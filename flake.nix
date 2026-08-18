@@ -33,8 +33,16 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      updates = import ./updates {
+        inherit pkgs;
+        lib = pkgs.lib;
+      };
     in
     {
+      apps.${system}.updates = {
+        type = "app";
+        program = "${updates}/bin/updates";
+      };
       formatter.${system} = pkgs.nixfmt-tree;
       devShells.${system}.default = devenv.lib.mkShell {
         inherit inputs pkgs;

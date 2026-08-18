@@ -6,12 +6,14 @@ let
   meta = import ./metadata.nix;
 in
 {
-  inherit (meta) pname version;
-  id = "ojbnfglfbelfbgfjlkehclgfkdkkjkdj";
+  inherit (meta) pname version id;
   drv = extLib.fetchUnpackedExtension {
-    inherit (meta) pname version;
-    url = "https://github.com/${meta.owner}/${meta.repo}/archive/refs/tags/v${meta.version}.zip";
-    hash = "sha256-Q+Tus7nl7TiuVJ4hn8vYg9L2cC4NhqWSOr5WKD0RSq0=";
-    extensionKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqUw4MXlUYAqIQqJ1Gb/RH7RdgVjekKed1aoJS1OPM5C9EFfvVlj0/eIf8dVbCMKc7ThRYYJkZPqFNN38T0LtnBJbvdiJztL/nGueJT7GupXisIzJ9s17X+HpogODouDY7qHldQRw/7qnrBe0NeNxWVeUOH9PmHi8nBTZ3JRygS9svZ1BvY0ZkPZyNDTEsXCbb+fkSOOkjqDNqtt98eFJhPGZ0W+cn3KgTdr+rC0rqfacwfu41dpmQPEirOFtshs8DywoI+L66UtqVfwhBNdb3+JN7oeDs4HNFjCPbqOTSKKCng+nNndpIen2CKYUuYztvmrrRdQeEv5i3l7/MFrRXQIDAQAB";
+    inherit (meta)
+      pname
+      version
+      url
+      hash
+      extensionKey
+      ;
   };
 }

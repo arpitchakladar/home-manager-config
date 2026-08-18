@@ -11,6 +11,6 @@ in
   id = null;
   drv = extLib.mkLocalExtension {
     inherit (meta) pname;
-    srcDir = ./theme;
+    srcDir = ./.;
   };
 }
