@@ -56,7 +56,6 @@ in
     browserpass = mkExtension ./browserpass;
     darkreader = mkExtension ./darkreader;
     searxngHome = mkExtension ./searxng-home;
-    theme = mkExtension ./theme;
     ublockOrigin = mkExtension ./ublock-origin;
     vimium = mkExtension ./vimium;
   };

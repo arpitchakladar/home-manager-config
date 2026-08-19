@@ -46,5 +46,9 @@
     xdg.mimeApps.defaultApplications = {
       "inode/directory" = "yazi.desktop";
     };
+
+    home.sessionVariables = {
+      TERMCMD = lib.mkIf config.terminal.kitty.enable "${lib.getExe config.terminal.kitty.package} --class file-explorer --title 'Yazi'";
+    };
   };
 }
