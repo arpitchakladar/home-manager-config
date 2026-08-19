@@ -63,6 +63,12 @@
         };
         git = {
           overrideGpg = true;
+          diffRenderers = [
+            {
+              colorArg = "always";
+              command = "delta --paging=never {{diffArgs}}";
+            }
+          ];
         };
         update.method = "never";
       };

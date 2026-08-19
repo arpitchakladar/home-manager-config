@@ -26,20 +26,5 @@
         line-numbers-right-format = "{np}│ ";
       };
     };
-
-    programs.git.settings = lib.mkIf config.development.git.enable {
-      core.pager = "delta";
-      interactive.diffFilter = "delta --color-only";
-      delta.navigate = true;
-    };
-
-    programs.lazygit.settings = lib.mkIf config.development.lazygit.enable {
-      git.pagers = [
-        {
-          colorArg = "always";
-          pager = "delta --paging=never {{diffArgs}}";
-        }
-      ];
-    };
   };
 }
