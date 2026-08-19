@@ -35,6 +35,7 @@
           );
         in
         [
+          "--force-dark-mode"
           "--force-device-scale-factor=1.15"
           "--load-extension=${extensionDirs}"
         ]
@@ -64,6 +65,8 @@
         browser = {
           show_full_urls = true;
           theme = {
+            color_scheme = 2;
+            color_scheme2 = 2; # Used by recent versions
             follows_system_colors = true;
           };
         };
