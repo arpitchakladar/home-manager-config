@@ -41,7 +41,7 @@ in
         CLUTTER_BACKEND = "wayland";
         GDK_SCALE = "1";
         QT_SCALE_FACTOR = "1";
-        GTK_THEME = "Adwaita:dark";
+        GTK_THEME = "Adwaita:dark"; # Keeping for any that still use gtk
 
         AQ_DRM_DEVICES =
           if config.desktop.hardware.gpu.secondaryCard != null then
@@ -179,13 +179,6 @@ in
       hyprcursor.enable = true;
       gtk.enable = false;
       x11.enable = false;
-    };
-
-    home.dconf.settings = lib.mkIf config.desktop.enable {
-      "org/gnome/desktop/interface" = {
-        color-scheme = "prefer-dark";
-        gtk-theme = "Adwaita-dark";
-      };
     };
   };
 }
