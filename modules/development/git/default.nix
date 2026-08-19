@@ -45,37 +45,36 @@
   };
 
   config = lib.mkIf config.development.git.enable {
-    home.packages = with pkgs; [
-      gawk
-    ];
-
     programs.git = {
       enable = true;
       signing = {
         key = config.development.git.signing.key;
         signByDefault = config.development.git.signing.signByDefault;
       };
-      settings =
-        lib.recursiveUpdate
-          {
-            user = {
-              name = config.development.git.username;
-              email = config.development.git.email;
-            };
-            core.askPass = "";
-            log = {
-              showSignature = true;
-            };
-          }
-          (
-            lib.optionalAttrs config.development.git.useSSH {
-              url."git@github.com:".insteadOf = "https://github.com/";
-              url."git@gitlab.com:".insteadOf = "https://gitlab.com/";
-              url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
-              url."git@codeberg.org:".insteadOf = "https://codeberg.org/";
-              url."git@git.sr.ht:".insteadOf = "https://git.sr.ht/";
-            }
-          );
+      settings = lib.mkMerge [
+        {
+          user = {
+            name = config.development.git.username;
+            email = config.development.git.email;
+          };
+          core.askPass = "";
+          log.showSignature = true;
+        }
+
+        (lib.optionalAttrs config.development.git.useSSH {
+          url."git@github.com:".insteadOf = "https://github.com/";
+          url."git@gitlab.com:".insteadOf = "https://gitlab.com/";
+          url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
+          url."git@codeberg.org:".insteadOf = "https://codeberg.org/";
+          url."git@git.sr.ht:".insteadOf = "https://git.sr.ht/";
+        })
+
+        (lib.optionalAttrs config.development.git.enable {
+          core.pager = "delta";
+          interactive.diffFilter = "delta --color-only";
+          delta.navigate = true;
+        })
+      ];
     };
   };
 }
