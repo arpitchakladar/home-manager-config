@@ -6,7 +6,6 @@
 }:
 {
   imports = [
-    ./darkman
     ./rofi
     ./wl-clipboard
     ./xdg

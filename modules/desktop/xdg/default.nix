@@ -19,9 +19,5 @@
       };
       xdgOpenUsePortal = true;
     };
-
-    home.sessionVariables = {
-      TERMCMD = lib.mkIf config.terminal.kitty.enable "${lib.getExe config.terminal.kitty.package} --class file-explorer --title 'Yazi'";
-    };
   };
 }
