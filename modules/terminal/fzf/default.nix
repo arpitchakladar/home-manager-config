@@ -29,10 +29,10 @@
         defaultOptions = [
           "--height 100%"
           "--layout=reverse"
-          ''--pointer=\" \"''
-          ''--header=\" \"''
-          ''--prompt=\" \"''
-          ''--marker=\"✓ \"''
+          "--pointer=\"󰠁 \""
+          "--header=\" \""
+          "--prompt=\"󰎕 \""
+          "--marker=\"✓ \""
           "--border=none"
           "--cycle"
           "--no-info"
