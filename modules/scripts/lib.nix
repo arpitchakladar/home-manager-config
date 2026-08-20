@@ -1,5 +1,10 @@
 { lib, pkgs }:
 let
+  shellArgs = {
+    zsh = name: file: "--zsh --name _${name} ${file}";
+    bash = name: file: "--bash --name ${name}.bash ${file}";
+  };
+
   mkScript =
     name: path: description: env: deps: completion:
     let
@@ -22,11 +27,16 @@ let
           {
             nativeBuildInputs = [ pkgs.installShellFiles ];
           }
-          ''
-            installShellCompletion --zsh --name _${name} ${pkgs.writeText "_${name}" completion}
-          '';
+          (
+            "mkdir -p $out\n"
+            + lib.concatStringsSep "\n" (
+              lib.mapAttrsToList (shell: content: ''
+                installShellCompletion ${shellArgs.${shell} name (pkgs.writeText "_${name}.${shell}" content)}
+              '') completion
+            )
+          );
     in
-    if completion == null then
+    if completion == { } then
       base
     else
       pkgs.symlinkJoin {
@@ -47,7 +57,7 @@ let
       extraLinks ? [ ],
       config,
       description ? "",
-      completion ? null,
+      completion ? { },
     }:
     let
       scriptDrv = mkScript name path description env deps completion;
@@ -67,8 +77,8 @@ let
         completion = {
           enable = lib.mkOption {
             type = lib.types.bool;
-            default = completion != null;
-            description = "Whether to install a zsh completion for the ${name} script.";
+            default = completion != { };
+            description = "Whether to install completions for the ${name} script.";
           };
         };
         desktop = {
@@ -115,7 +125,7 @@ let
             message = "scripts.${name}.desktop.enable requires terminal.kitty.enable because desktop entries launch scripts in kitty.";
           }
           {
-            assertion = !config.scripts.${name}.completion.enable || completion != null;
+            assertion = !config.scripts.${name}.completion.enable || completion != { };
             message = "scripts.${name}.completion.enable is true but no completion text was provided to mkScriptModule.";
           }
         ];

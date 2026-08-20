@@ -17,7 +17,7 @@ let
       pkgs.coreutils
       pkgs.findutils
     ];
-    completion = builtins.readFile ./completion.zsh;
+    completion.zsh = builtins.readFile ./completion.zsh;
     inherit config;
   };
 in

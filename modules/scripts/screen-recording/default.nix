@@ -15,7 +15,7 @@ let
       config.media.slurp.package
       config.media.wf-recorder.package
     ];
-    completion = builtins.readFile ./completion.zsh;
+    completion.zsh = builtins.readFile ./completion.zsh;
     desktop = {
       enable = true;
       displayName = "Screen Recording";
