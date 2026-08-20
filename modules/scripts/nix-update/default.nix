@@ -16,6 +16,7 @@ let
       config.programs.home-manager.package
       pkgs.bash
     ];
+    completion.zsh = builtins.readFile ./completion.zsh;
     inherit config;
   };
 in
