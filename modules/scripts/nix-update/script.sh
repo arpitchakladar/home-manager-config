@@ -4,11 +4,12 @@ set -euo pipefail
 
 HM_DIR="$HOME/.config/home-manager"
 NIXOS_DIR="/etc/nixos"
-FLAKE_ONLY=false
+ONLY_FLAKE=false
+ONLY_SWITCH=false
 TARGET=""
 
 usage() {
-  echo "Usage: nix-update <home-manager|nixos|both> [--flake-only]"
+  echo "Usage: nix-update <home-manager|nixos|both> [--only-flake|--only-switch]"
   echo ""
   echo "Options:"
   echo "  home-manager   Update and switch home-manager configuration"
@@ -16,7 +17,8 @@ usage() {
   echo "  both           Update and switch both configurations"
   echo ""
   echo "Flags:"
-  echo "  --flake-only   Only run nix flake update, skip switch commands"
+  echo "  --only-flake   Only run nix flake update, skip switch commands"
+  echo "  --only-switch  Only run switch commands, skip nix flake update"
   exit 1
 }
 
@@ -31,8 +33,12 @@ parse_args() {
         TARGET="$1"
         shift
         ;;
-      --flake-only)
-        FLAKE_ONLY=true
+      --only-flake)
+        ONLY_FLAKE=true
+        shift
+        ;;
+      --only-switch)
+        ONLY_SWITCH=true
         shift
         ;;
       -h | --help)
@@ -58,16 +64,20 @@ update_home_manager() {
   echo "    Staging modules/private..."
   git add modules/private -f
 
-  echo "    Running nix flake update..."
-  nix flake update
+  if [[ "$ONLY_SWITCH" == false ]]; then
+    echo "    Running nix flake update..."
+    nix flake update
+  fi
 
-  if [[ "$FLAKE_ONLY" == false ]]; then
+  if [[ "$ONLY_FLAKE" == false ]]; then
     echo "    Running home-manager switch..."
     home-manager switch --flake "$HM_DIR#arpit"
   fi
 
   echo "    Unstaging modules/private..."
-  git rm --cached -r modules/private
+  for f in modules/private/*.nix; do
+    [[ "$f" == *.example.nix ]] || git rm --cached "$f"
+  done
 
   echo "==> home-manager update complete"
 }
@@ -80,10 +90,12 @@ update_nixos() {
   echo "    Staging hardware-configuration.nix..."
   git add hardware-configuration.nix -f
 
-  echo "    Running nix flake update..."
-  nix flake update
+  if [[ "$ONLY_SWITCH" == false ]]; then
+    echo "    Running nix flake update..."
+    nix flake update
+  fi
 
-  if [[ "$FLAKE_ONLY" == false ]]; then
+  if [[ "$ONLY_FLAKE" == false ]]; then
     echo "    Running nixos-rebuild switch..."
     sudo nixos-rebuild switch
   fi

@@ -16,6 +16,7 @@ case $state in
     ;;
   flags)
     _arguments \
-      '--flake-only[Only run nix flake update, skip switch commands]'
+      '--only-flake[Only run nix flake update, skip switch commands]' \
+      '--only-switch[Only run switch commands, skip nix flake update]'
     ;;
 esac
