@@ -57,7 +57,10 @@
             name = config.development.git.username;
             email = config.development.git.email;
           };
-          core.askPass = "";
+          core = {
+            askPass = "";
+            logallrefupdates = true;
+          };
           log.showSignature = true;
         }
 
