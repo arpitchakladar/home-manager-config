@@ -29,14 +29,14 @@
         defaultOptions = [
           "--height 100%"
           "--layout=reverse"
-          "--pointer=\"󰠁 \""
-          "--header=\" \""
-          "--prompt=\"󰎕 \""
-          "--marker=\"✓ \""
+          "--pointer='󰠁 '"
+          "--header=' '"
+          "--prompt='󰎕 '"
+          "--marker='✓ '"
           "--border=none"
           "--cycle"
           "--no-info"
-          "--margin=\"1,2\""
+          "--margin='1,2'"
         ];
 
         colors = with config.scheme.withHashtag; {
