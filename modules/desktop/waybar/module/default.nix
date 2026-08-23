@@ -18,8 +18,8 @@ let
     "clock#time" = ./time.nix;
     "custom/usque" = ./usque.nix;
     "pulseaudio" = ./volume.nix;
-    "hyprland/window" = ./window.nix;
-    "hyprland/workspaces" = ./workspaces.nix;
+    "niri/window" = ./window.nix;
+    "niri/workspaces" = ./workspaces.nix;
   };
 in
 {

@@ -7,8 +7,8 @@
   fixed-center = false;
   expand-center = true;
 
-  modules-left = [ "hyprland/workspaces" ];
-  modules-center = [ "hyprland/window" ];
+  modules-left = [ "niri/workspaces" ];
+  modules-center = [ "niri/window" ];
   modules-right = [
     "pulseaudio"
     "battery"

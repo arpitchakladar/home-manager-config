@@ -6,20 +6,8 @@
 }:
 {
   format = "{windows} <span rise='-3000' font_size='small'>{id}</span>";
-  persistent-workspaces = {
-    "*" = [
-      1
-      2
-      3
-      4
-      5
-      6
-      7
-      8
-      9
-      10
-    ];
-  };
+  sort-by-name = true;
+  all-outputs = false;
   window-rewrite-default = icons."Default";
   window-rewrite = {
     "class<chromium-browser>" = lib.mkIf config.web.chromium.enable icons."Chromium";

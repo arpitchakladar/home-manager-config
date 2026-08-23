@@ -11,11 +11,13 @@
       enable = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-termfilechooser
-        xdg-desktop-portal-hyprland
       ];
       config.common = {
         "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
-        default = [ "hyprland" ];
+        default = [
+          "gnome"
+          "gtk"
+        ];
       };
       xdgOpenUsePortal = true;
     };
