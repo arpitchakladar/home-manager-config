@@ -17,8 +17,6 @@
   desktop.hardware.gpu = {
     nvidia.enable = true;
     amd.enable = true;
-    primaryCard = "/dev/dri/gpu-amd";
-    secondaryCard = "/dev/dri/gpu-nvidia";
   };
 
   # Gaming

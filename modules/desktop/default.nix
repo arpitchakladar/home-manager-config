@@ -9,7 +9,7 @@
     ./rofi
     ./wl-clipboard
     ./xdg
-    ./hyprland
+    ./niri
     ./waybar
   ];
 
