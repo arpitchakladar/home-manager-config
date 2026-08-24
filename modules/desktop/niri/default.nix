@@ -21,7 +21,6 @@
         CLUTTER_BACKEND = "wayland";
         GDK_SCALE = "1";
         QT_SCALE_FACTOR = "1";
-        GTK_THEME = "Adwaita:dark";
       }
 
       (lib.mkIf config.desktop.hardware.gpu.nvidia.enable {
@@ -41,6 +40,8 @@
     wayland.windowManager.niri = {
       enable = true;
       systemd.enable = true;
+      # Portals are declared centrally in ../xdg.
+      portalPackage = null;
     };
 
     # Niri does not paint wallpapers itself, so start swaybg with the existing wallpaper.

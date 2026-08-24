@@ -1,0 +1,32 @@
+@define-color theme_bg_color #{{base00}};
+@define-color theme_fg_color #{{base05}};
+@define-color theme_base_color #{{base00}};
+@define-color theme_text_color #{{base05}};
+@define-color theme_selected_bg_color #{{base0D}};
+@define-color theme_selected_fg_color #{{base00}};
+@define-color borders #{{base03}};
+@define-color accent_color #{{base0D}};
+@define-color warning_color #{{base0A}};
+@define-color error_color #{{base08}};
+
+window, dialog, .background {
+  background-color: @theme_bg_color;
+  color: @theme_fg_color;
+}
+
+button, entry, textview, .view, list, row {
+  background-color: @theme_base_color;
+  color: @theme_text_color;
+  border-color: @borders;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+button:hover, entry:focus {
+  border-color: @accent_color;
+}
+
+selection, row:selected, flowboxchild:selected {
+  background-color: @theme_selected_bg_color;
+  color: @theme_selected_fg_color;
+}
