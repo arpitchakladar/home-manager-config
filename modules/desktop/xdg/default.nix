@@ -21,15 +21,12 @@ in
       enable = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-termfilechooser
-        xdg-desktop-portal-gnome
+        xdg-desktop-portal-gtk
       ];
       configPackages = [ pkgs.niri ];
       config.common = {
         "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
-        default = [
-          "gnome"
-          "gtk"
-        ];
+        default = [ "gtk" ];
       };
       xdgOpenUsePortal = true;
     };

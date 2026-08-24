@@ -40,11 +40,10 @@
     wayland.windowManager.niri = {
       enable = true;
       systemd.enable = true;
-      # Portals are declared centrally in ../xdg.
-      portalPackage = null;
+      # Let Niri register its recommended GNOME portal implementation.
+      portalPackage = pkgs.xdg-desktop-portal-gnome;
     };
 
-    # Niri does not paint wallpapers itself, so start swaybg with the existing wallpaper.
     home.packages = [ pkgs.swaybg ];
 
     home.pointerCursor = {
