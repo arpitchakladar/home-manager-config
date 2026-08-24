@@ -37,6 +37,8 @@
         [
           "--force-dark-mode"
           "--force-device-scale-factor=1.15"
+          # Don't use the gnome password store
+          "--password-store=basic"
           "--load-extension=${extensionDirs}"
         ]
         ++ lib.optionals config.web.chromium.useOpenGL [
@@ -95,6 +97,7 @@
             config.web.chromium.extensions.ublockOrigin.id
             config.web.chromium.extensions.vimium.id
           ];
+          system_theme = 1;
           ui = {
             developer_mode = true;
           };

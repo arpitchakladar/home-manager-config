@@ -44,6 +44,7 @@
       portalPackage = pkgs.xdg-desktop-portal-gnome;
     };
 
+    # For setting the desktop wallpaper
     home.packages = [ pkgs.swaybg ];
 
     home.pointerCursor = {
@@ -55,56 +56,52 @@
       x11.enable = true;
     };
 
-    wayland.windowManager.niri.extraConfigEarly = ''
-      input {
-        keyboard {
-          xkb {
-            layout "us"
-          }
-        }
-        touchpad {
-          natural-scroll
-          tap
-          dwt
-          click-method "clickfinger"
-          accel-speed 0.5
-        }
-      }
+    wayland.windowManager.niri.settings = {
+      input = {
+        keyboard.xkb.layout = "us";
+        touchpad = {
+          natural-scroll = { };
+          tap = { };
+          dwt = { };
+          click-method = "clickfinger";
+          accel-speed = 0.5;
+        };
+      };
+      layout = {
+        gaps = 5;
+        center-focused-column = "on-overflow";
+        default-column-width = {
+          proportion = 1.0;
+        };
+        focus-ring = {
+          width = 1;
+          active-color = config.scheme.withHashtag.base07;
+          inactive-color = config.scheme.withHashtag.base03;
+        };
+        border.off = { };
+        shadow.off = { };
+      };
+      prefer-no-csd = true;
+      screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
+      animations.on = { };
+      spawn-at-startup = [
+        "${lib.getExe pkgs.swaybg}"
+        "-i"
+        "${../../../assets/sapling.png}"
+        "-m"
+        "fill"
+      ];
 
-      layout {
-        gaps 5
-        center-focused-column "on-overflow"
-        default-column-width { proportion 1.0; }
-        preset-column-widths {
-          proportion 0.5
-          proportion 1.0
-        }
-        focus-ring {
-          width 1
-          active-color "${config.scheme.withHashtag.base07}"
-          inactive-color "${config.scheme.withHashtag.base03}"
-        }
-        border { off; }
-        shadow { off; }
-      }
-
-      prefer-no-csd
-      screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-      animations { off; }
-
-      spawn-at-startup "${lib.getExe pkgs.swaybg}" "-i" "${../../../assets/sapling.png}" "-m" "fill"
-
-      // Keep the familiar numbered workspaces persistent; Niri otherwise uses dynamic workspaces.
-      workspace "1"
-      workspace "2"
-      workspace "3"
-      workspace "4"
-      workspace "5"
-      workspace "6"
-      workspace "7"
-      workspace "8"
-      workspace "9"
-      workspace "10"
-    '';
+      # only create upto workspace 9, niri creates a trailing workspace
+      "workspace \"1\"" = { };
+      "workspace \"2\"" = { };
+      "workspace \"3\"" = { };
+      "workspace \"4\"" = { };
+      "workspace \"5\"" = { };
+      "workspace \"6\"" = { };
+      "workspace \"7\"" = { };
+      "workspace \"8\"" = { };
+      "workspace \"9\"" = { };
+    };
   };
 }
