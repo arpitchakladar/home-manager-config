@@ -69,6 +69,9 @@
       };
       layout = {
         gaps = 5;
+        struts = {
+          right = 60;
+        };
         center-focused-column = "on-overflow";
         default-column-width = {
           proportion = 1.0;
@@ -91,17 +94,6 @@
         "-m"
         "fill"
       ];
-
-      # only create upto workspace 9, niri creates a trailing workspace
-      "workspace \"1\"" = { };
-      "workspace \"2\"" = { };
-      "workspace \"3\"" = { };
-      "workspace \"4\"" = { };
-      "workspace \"5\"" = { };
-      "workspace \"6\"" = { };
-      "workspace \"7\"" = { };
-      "workspace \"8\"" = { };
-      "workspace \"9\"" = { };
     };
   };
 }
