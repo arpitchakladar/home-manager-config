@@ -10,7 +10,7 @@
     ./wl-clipboard
     ./xdg
     ./niri
-    ./waybar
+    ./eww
   ];
 
   options.desktop = {
