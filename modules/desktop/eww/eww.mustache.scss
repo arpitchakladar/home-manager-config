@@ -42,7 +42,12 @@ window#eww-bar {
 .workspace-button .workspace-idx {
   font-size: 14px;
   background: #{{base00}};
+  opacity: 0.7;
   color: #{{base07}};
   border-radius: 4px;
   margin: 20px 0 0 20px; /* nudges the label into the bottom-right corner over the icon */
+}
+
+.workspace-button.active .workspace-idx {
+  opacity: 1;
 }

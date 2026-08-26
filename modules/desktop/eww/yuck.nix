@@ -88,10 +88,13 @@
           (bar-content))
 
         (defwidget bar-content []
-          (box :orientation "v" :space-evenly false :class "bar-container"
-            (box :orientation "v" :space-evenly false :valign "start" :class "top-section"
-              (workspaces-widget)
-              (windows-widget))))
+          (box :orientation "v"
+               :space-evenly false
+               :class "bar-container"
+               :vexpand true
+            (workspaces-widget)
+            (box :vexpand true)
+            (windows-widget)))
 
         (defwidget workspaces-widget []
           (box :orientation "v" :space-evenly false :spacing 4 :halign "fill" :class "workspaces"
