@@ -3,5 +3,5 @@
   ...
 }:
 config.scheme {
-  template = builtins.readFile ./eww.scss.mustache;
+  template = builtins.readFile ./eww.mustache.scss;
 }
