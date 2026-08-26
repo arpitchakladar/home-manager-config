@@ -45,6 +45,10 @@ window#eww-bar {
   border: none;
 }
 
+.system-item .system-label.small {
+  font-size: 12px;
+}
+
 .workspace-button.active, .window-button.focused {
   border-color: #{{base07}};
 }
