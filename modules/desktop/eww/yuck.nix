@@ -79,14 +79,19 @@
               (eventbox :onclick "niri msg action focus-workspace ''${ws.idx}"
                         :cursor "pointer"
                         :halign "fill"
-                (box :halign "fill" :class "workspace-btn ''${ws.is_active ? 'active' : '''}"
+                (box :halign "fill" :class "workspace-button ''${ws.is_active ? 'active' : '''}"
                   (label :text "''${ws.idx}"))))))
 
         (defwidget windows-widget []
           (box :orientation "v" :space-evenly false :spacing 4 :halign "center" :class "windows"
 
             (for w in active-windows
-              (image :class "win-icon" :path "''${w.icon != ''' ? w.icon : '${../../../assets/icons/obs.svg}'}" :image-width 20 :image-height 20))))
+              (eventbox :onclick "niri msg action focus-window --id ''${w.id}"
+                        :cursor "pointer"
+                        :halign "fill"
+                        :tooltip "''${w.app_id}: ''${w.title != ''' ? ' ' : '''}''${w.title}"
+                (box :halign "fill" :class "window-button ''${w.is_focused ? 'focused' : '''}"
+                  (image :class "window-icon" :path "''${w.icon != ''' ? w.icon : '${../../../assets/icons/obs.svg}'}" :image-width 20 :image-height 20))))))
       '';
   };
 }

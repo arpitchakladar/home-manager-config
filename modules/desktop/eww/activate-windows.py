@@ -66,6 +66,17 @@ def emit_active_windows():
     active_ws = next((w for w in workspaces if w.get("is_active")), None)
     active_id = active_ws["id"] if active_ws else None
 
+    on_workspace = [w for w in windows if w.get("workspace_id") == active_id]
+
+    def sort_key(w):
+        pos = (w.get("layout") or {}).get("pos_in_scrolling_layout")
+        if pos is not None:
+            return (0, pos[0], pos[1])
+        # floating / positionless windows: push to the end, stable by id
+        return (1, w["id"], 0)
+
+    on_workspace.sort(key=sort_key)
+
     result = [
         {
             "id": w["id"],
@@ -74,8 +85,7 @@ def emit_active_windows():
             "is_focused": w.get("is_focused", False),
             "icon": resolve_icon_path(w.get("app_id") or ""),
         }
-        for w in windows
-        if w.get("workspace_id") == active_id
+        for w in on_workspace
     ]
     print(json.dumps(result), flush=True)
 

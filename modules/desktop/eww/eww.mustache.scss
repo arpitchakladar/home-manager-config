@@ -13,16 +13,14 @@ window#eww-bar {
   margin: 3px 5px;
   border: 1px solid #{{base07}};
   color: #{{base07}};
+}
+
+.workspaces, .windows {
   padding: 5px;
+  border-bottom: 1px solid #{{base07}};
 }
 
-.workspaces {
-  background: #{{base00}};
-  padding: 0;
-  margin: 0;
-}
-
-.workspace-btn {
+.workspace-button, .window-button {
   padding: 8px;
   color: #{{base07}};
   font-size: 24px;
@@ -34,6 +32,6 @@ window#eww-bar {
   outline: none;
 }
 
-.workspace-btn.active {
+.workspace-button.active, .window-button.focused {
   border-color: #{{base07}};
 }
