@@ -8,15 +8,35 @@
   config = lib.mkIf config.desktop.enable {
     programs.eww.yuckConfig =
       let
-        workspaces = pkgs.writeShellApplication {
-          name = "eww-workspaces";
-          runtimeInputs = with pkgs; [
-            config.desktop.niri.package
-            jq
-          ];
+        workspaces =
+          let
+            pythonEnv = pkgs.python3.withPackages (ps: [ ps.pygobject3 ]);
+          in
+          pkgs.stdenv.mkDerivation {
+            pname = "eww-workspaces";
+            version = "0.1.0";
+            src = ./workspaces.py;
+            dontUnpack = true;
+            meta.mainProgram = "eww-workspaces";
 
-          text = builtins.readFile ./workspaces.sh;
-        };
+            nativeBuildInputs = [
+              pkgs.wrapGAppsHook3
+              pkgs.gobject-introspection
+            ];
+            buildInputs = [ pkgs.gtk3 ];
+
+            installPhase = ''
+              mkdir -p $out/bin
+              install -m755 $src $out/bin/eww-workspaces
+              patchShebangs $out/bin/eww-workspaces
+            '';
+
+            # wrapGAppsHook3 wraps every executable in $out/bin automatically,
+            # setting GI_TYPELIB_PATH etc. from buildInputs' closure.
+            preFixup = ''
+              gappsWrapperArgs+=(--prefix PATH : "${pythonEnv}/bin")
+            '';
+          };
 
         activate-windows =
           let
@@ -77,10 +97,13 @@
           (box :orientation "v" :space-evenly false :spacing 4 :halign "fill" :class "workspaces"
             (for ws in workspaces
               (eventbox :onclick "niri msg action focus-workspace ''${ws.idx}"
-                        :cursor "pointer"
-                        :halign "fill"
-                (box :halign "fill" :class "workspace-button ''${ws.is_active ? 'active' : '''}"
-                  (label :text "''${ws.idx}"))))))
+                        :cursor "pointer" :halign "fill"
+                (box :class "workspace-button ''${ws.is_active ? 'active' : '''}" :halign "fill"
+                  (overlay :halign "fill"
+                    (image :class "workspace-icon"
+                           :path "''${ws.icon != ''' ? ws.icon : '${../../../assets/icons/obs.svg}'}"
+                           :image-width 20 :image-height 20)
+                    (label :class "workspace-idx" :text "''${ws.idx}" :halign "end" :valign "end")))))))
 
         (defwidget windows-widget []
           (box :orientation "v" :space-evenly false :spacing 4 :halign "center" :class "windows"

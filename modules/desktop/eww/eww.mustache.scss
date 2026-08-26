@@ -9,15 +9,13 @@ window#eww-bar {
 }
 
 .bar-container {
-  background: #{{base00}};
-  margin: 3px 5px;
-  border: 1px solid #{{base07}};
-  color: #{{base07}};
+  background: transparent;
 }
 
 .workspaces, .windows {
   padding: 5px;
-  border-bottom: 1px solid #{{base07}};
+  border: 1px solid #{{base07}};
+  margin: 5px;
 }
 
 .workspace-button, .window-button {
@@ -34,4 +32,17 @@ window#eww-bar {
 
 .workspace-button.active, .window-button.focused {
   border-color: #{{base07}};
+}
+
+.workspace-button .workspace-icon {
+  padding: 0;
+  margin: 0;
+}
+
+.workspace-button .workspace-idx {
+  font-size: 14px;
+  background: #{{base00}};
+  color: #{{base07}};
+  border-radius: 4px;
+  margin: 20px 0 0 20px; /* nudges the label into the bottom-right corner over the icon */
 }
