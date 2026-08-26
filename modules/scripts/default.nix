@@ -5,7 +5,6 @@
 }:
 {
   imports = [
-    ./activate-windows
     ./deep-clean
     ./gopass-ssh-load
     ./gpg-backup
@@ -14,7 +13,6 @@
     ./screen-recording
     ./system-monitor
     ./usque-warp
-    ./workspaces
     ./yazi-file-chooser
   ];
 

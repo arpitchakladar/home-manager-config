@@ -1,0 +1,39 @@
+* {
+  font-family: "Fira Code Nerd Font";
+  font-size: 18px;
+  min-height: 0;
+}
+
+window#eww-bar {
+  background: transparent;
+}
+
+.bar-container {
+  background: #{{base00}};
+  margin: 3px 5px;
+  border: 1px solid #{{base07}};
+  color: #{{base07}};
+  padding: 5px;
+}
+
+.workspaces {
+  background: #{{base00}};
+  padding: 0;
+  margin: 0;
+}
+
+.workspace-btn {
+  padding: 8px;
+  color: #{{base07}};
+  font-size: 24px;
+  background-color: #{{base00}};
+  border: 1px solid #{{base03}};
+  background-image: none;
+  box-shadow: none;
+  text-shadow: none;
+  outline: none;
+}
+
+.workspace-btn.active {
+  border-color: #{{base07}};
+}

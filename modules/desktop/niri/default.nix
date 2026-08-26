@@ -7,9 +7,17 @@
 {
   imports = [ ./keybindings.nix ];
 
-  options.desktop.hardware.gpu = {
-    nvidia.enable = lib.mkEnableOption "Nvidia GPU Wayland optimizations";
-    amd.enable = lib.mkEnableOption "AMD GPU Wayland optimizations";
+  options.desktop = {
+    niri.package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = config.wayland.windowManager.niri.package;
+      description = "The niri package to use.";
+    };
+    hardware.gpu = {
+      nvidia.enable = lib.mkEnableOption "Nvidia GPU Wayland optimizations";
+      amd.enable = lib.mkEnableOption "AMD GPU Wayland optimizations";
+    };
   };
 
   config = lib.mkIf config.desktop.enable {
