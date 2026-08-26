@@ -94,7 +94,9 @@
                :vexpand true
             (workspaces-widget)
             (box :vexpand true)
-            (windows-widget)))
+            (windows-widget)
+            (box :vexpand true)
+            (system-widget)))
 
         (defwidget workspaces-widget []
           (box :orientation "v" :space-evenly false :spacing 4 :halign "fill" :class "workspaces"
@@ -118,6 +120,11 @@
                         :tooltip "''${w.app_id}: ''${w.title != ''' ? ' ' : '''}''${w.title}"
                 (box :halign "fill" :class "window-button ''${w.is_focused ? 'focused' : '''}"
                   (image :class "window-icon" :path "''${w.icon != ''' ? w.icon : '${../../../assets/icons/unknown.svg}'}" :image-width 20 :image-height 20))))))
+
+        (defwidget system-widget []
+          (box :orientation "v" :space-evenly false :spacing 6 :halign "fill" :class "system"
+            (label :class "system-item" :text time)
+            (label :class "system-item" :text date)))
       '';
   };
 }

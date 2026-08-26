@@ -12,22 +12,37 @@ window#eww-bar {
   background: transparent;
 }
 
-.workspaces, .windows {
-  padding: 5px;
+.workspaces, .windows, .system {
   border: 1px solid #{{base07}};
   margin: 5px;
 }
 
-.workspace-button, .window-button {
-  padding: 8px;
+.workspaces, .windows {
+  padding: 5px;
+}
+
+.workspace-button, .window-button, .system-item {
   color: #{{base07}};
   font-size: 24px;
   background-color: #{{base00}};
-  border: 1px solid #{{base03}};
   background-image: none;
   box-shadow: none;
   text-shadow: none;
   outline: none;
+}
+
+.workspace-button, .window-button {
+  padding: 8px;
+  border: 1px solid #{{base03}};
+}
+
+.system-item {
+  font-size: 12px;
+  border-bottom: 1px solid #{{base07}};
+}
+
+.system-item:last-child {
+  border: none;
 }
 
 .workspace-button.active, .window-button.focused {
