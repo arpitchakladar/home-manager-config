@@ -12,16 +12,22 @@ icon_theme = Gtk.IconTheme.get_default()
 _icon_cache: dict[str, str] = {}
 
 
+def try_desktop_app_info(desktop_id: str):
+    try:
+        return Gio.DesktopAppInfo.new(desktop_id)
+    except TypeError:
+        return None
+
+
 def resolve_icon_path(app_id: str) -> str:
     if not app_id:
         return ""
     if app_id in _icon_cache:
         return _icon_cache[app_id]
 
-    app_info = Gio.DesktopAppInfo.new(f"{app_id}.desktop") \
-        or Gio.DesktopAppInfo.new(f"{app_id.lower()}.desktop")
+    app_info = try_desktop_app_info(f"{app_id}.desktop") \
+        or try_desktop_app_info(f"{app_id.lower()}.desktop")
 
-    # fall back: scan installed .desktop files for a matching StartupWMClass
     if app_info is None:
         for info in Gio.AppInfo.get_all():
             if isinstance(info, Gio.DesktopAppInfo):
@@ -33,17 +39,11 @@ def resolve_icon_path(app_id: str) -> str:
     icon_path = ""
     gicon = app_info.get_icon() if app_info else None
     if gicon is not None:
-        lookup = icon_theme.lookup_by_gicon(gicon,
-                                            32,
-                                            Gtk.IconLookupFlags.FORCE_SIZE)
+        lookup = icon_theme.lookup_by_gicon(gicon, 24, Gtk.IconLookupFlags.FORCE_SIZE)
         if lookup:
             icon_path = lookup.get_filename() or ""
-
     if not icon_path:
-        # last resort: treat app_id itself as an icon-theme name
-        lookup = icon_theme.lookup_icon(app_id,
-                                        32,
-                                        Gtk.IconLookupFlags.FORCE_SIZE)
+        lookup = icon_theme.lookup_icon(app_id, 24, Gtk.IconLookupFlags.FORCE_SIZE)
         if lookup:
             icon_path = lookup.get_filename() or ""
 

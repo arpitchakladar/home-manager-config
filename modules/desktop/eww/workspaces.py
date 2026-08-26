@@ -11,14 +11,21 @@ icon_theme = Gtk.IconTheme.get_default()
 _icon_cache: dict[str, str] = {}
 
 
+def try_desktop_app_info(desktop_id: str):
+    try:
+        return Gio.DesktopAppInfo.new(desktop_id)
+    except TypeError:
+        return None
+
+
 def resolve_icon_path(app_id: str) -> str:
     if not app_id:
         return ""
     if app_id in _icon_cache:
         return _icon_cache[app_id]
 
-    app_info = Gio.DesktopAppInfo.new(f"{app_id}.desktop") \
-        or Gio.DesktopAppInfo.new(f"{app_id.lower()}.desktop")
+    app_info = try_desktop_app_info(f"{app_id}.desktop") \
+        or try_desktop_app_info(f"{app_id.lower()}.desktop")
 
     if app_info is None:
         for info in Gio.AppInfo.get_all():

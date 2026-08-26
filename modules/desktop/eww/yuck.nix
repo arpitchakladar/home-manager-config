@@ -101,7 +101,7 @@
                 (box :class "workspace-button ''${ws.is_active ? 'active' : '''}" :halign "fill"
                   (overlay :halign "fill"
                     (image :class "workspace-icon"
-                           :path "''${ws.icon != ''' ? ws.icon : '${../../../assets/icons/obs.svg}'}"
+                           :path "''${ws.icon != ''' ? ws.icon : '${../../../assets/icons/unknown.svg}'}"
                            :image-width 20 :image-height 20)
                     (label :class "workspace-idx" :text "''${ws.idx}" :halign "end" :valign "end")))))))
 
@@ -114,7 +114,7 @@
                         :halign "fill"
                         :tooltip "''${w.app_id}: ''${w.title != ''' ? ' ' : '''}''${w.title}"
                 (box :halign "fill" :class "window-button ''${w.is_focused ? 'focused' : '''}"
-                  (image :class "window-icon" :path "''${w.icon != ''' ? w.icon : '${../../../assets/icons/obs.svg}'}" :image-width 20 :image-height 20))))))
+                  (image :class "window-icon" :path "''${w.icon != ''' ? w.icon : '${../../../assets/icons/unknown.svg}'}" :image-width 20 :image-height 20))))))
       '';
   };
 }
