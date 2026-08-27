@@ -35,13 +35,22 @@ net is an object: {
     ]
 }
 
-Requires `iw` (for wifi link speed) and `iproute2` (for route/ip lookup) on PATH.
+sound is an object: {
+    "percent": 58,             # default sink volume, 0-100
+    "mute": false,             # whether the default sink is muted
+    "sink": "Rockerz 430",     # description of the default sink, or null
+    "tooltip": "Volume: 58%\\nSink: Rockerz 430"
+}
+
+Requires `iw` (for wifi link speed), `iproute2` (for route/ip lookup)
+and `pamixer` (for volume/mute) on PATH.
 RAM speed detection requires `dmidecode`, which typically needs root privileges
 (run as root, grant CAP_SYS_RAWIO, or add a passwordless sudo rule) — if it's
 unavailable or unreadable, "speed_mhz" is simply reported as null.
 """
 import json
 import os
+import re
 import subprocess
 import threading
 import time
@@ -70,6 +79,12 @@ STATE = {
         "status": "down",
         "tooltip": "Network Offline",
         "routes": [],
+    },
+    "sound": {
+        "percent": None,
+        "mute": False,
+        "sink": None,
+        "tooltip": "Volume: unknown",
     },
 }
 
@@ -242,6 +257,52 @@ def build_ram_tooltip(ram_pct, used, total, available, swap_pct, swap_used, swap
     lines.append(f"Swap: {swap_pct}% ({swap_used} / {swap_total})")
     lines.append(f"Speed: {speed_mhz} MHz" if speed_mhz is not None else "Speed: unknown")
     return "\n".join(lines)
+
+
+def build_sound_tooltip(percent, mute, sink):
+    vol = f"{percent}%" if percent is not None else "unknown"
+    lines = [f"Muted ({vol})" if mute else f"Volume: {vol}"]
+    if sink:
+        lines.append(f"Sink: {sink}")
+    return "\n".join(lines)
+
+
+def get_sound_state():
+    """Query the default sink's volume, mute state, and description via
+    pamixer. Any unavailable field is reported as None/False."""
+    def pamixer_flag(flag):
+        try:
+            return subprocess.check_output(
+                ["pamixer", flag], text=True, stderr=subprocess.DEVNULL
+            ).strip()
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            return None
+
+    percent, mute, sink = None, None, None
+
+    out = pamixer_flag("--get-volume")
+    if out:
+        try:
+            percent = max(0, min(100, int(out)))
+        except ValueError:
+            percent = None
+
+    out = pamixer_flag("--get-mute")
+    if out is not None:
+        mute = out.lower() == "true"
+
+    out = pamixer_flag("--get-default-sink")
+    if out:
+        # Output ends with: INDEX "name" "description"
+        names = re.findall(r'"([^"]*)"', out)
+        sink = names[-1] if names else out.splitlines()[-1]
+
+    return {
+        "percent": percent,
+        "mute": mute,
+        "sink": sink,
+        "tooltip": build_sound_tooltip(percent, mute, sink),
+    }
 
 
 def cpu_ram_loop(interval=2.0):
@@ -497,6 +558,15 @@ def net_loop():
         emit()
 
 
+def sound_loop(interval=1.0):
+    """Poll the default audio sink for volume/mute changes."""
+    while True:
+        time.sleep(interval)
+        with STATE_LOCK:
+            STATE["sound"] = get_sound_state()
+        emit()
+
+
 def emit():
     with STATE_LOCK:
         print(json.dumps(STATE), flush=True)
@@ -509,6 +579,7 @@ def main():
 
     threading.Thread(target=cpu_ram_loop, daemon=True).start()
     threading.Thread(target=net_loop, daemon=True).start()
+    threading.Thread(target=sound_loop, daemon=True).start()
     threading.Event().wait()
 
 

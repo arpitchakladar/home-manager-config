@@ -18,6 +18,7 @@
 
           nativeBuildInputs = [
             pkgs.iw
+            pkgs.pamixer
             pkgs.wrapGAppsHook3
             pkgs.gobject-introspection
           ];
@@ -95,7 +96,7 @@
         (deflisten workspaces :initial "[]" "${lib.getExe workspaces}")
         (deflisten active-windows :initial "[]" "${lib.getExe activate-windows}")
         (deflisten system_stats
-          :initial "{\"cpu\":{\"percent\":0,\"per_core\":[],\"freq_mhz\":null,\"load_avg\":null,\"tooltip\":\"CPU: 0%\"},\"ram\":{\"percent\":0,\"used\":\"0B\",\"total\":\"0B\",\"available\":\"0B\",\"swap_percent\":0,\"swap_used\":\"0B\",\"swap_total\":\"0B\",\"speed_mhz\":null,\"tooltip\":\"RAM: 0%\"},\"net\":{\"status\":\"down\",\"tooltip\":\"Network Offline\",\"routes\":[]}}"
+          :initial "{\"cpu\":{\"percent\":0,\"per_core\":[],\"freq_mhz\":null,\"load_avg\":null,\"tooltip\":\"CPU: 0%\"},\"ram\":{\"percent\":0,\"used\":\"0B\",\"total\":\"0B\",\"available\":\"0B\",\"swap_percent\":0,\"swap_used\":\"0B\",\"swap_total\":\"0B\",\"speed_mhz\":null,\"tooltip\":\"RAM: 0%\"},\"net\":{\"status\":\"down\",\"tooltip\":\"Network Offline\",\"routes\":[]},\"sound\":{\"percent\":0,\"mute\":true,\"sink\":null,\"tooltip\":\"Volume: unknown\"}}"
           "${lib.getExe system-stats}")
 
         (defwindow bar
@@ -162,6 +163,11 @@
                  :tooltip "''${system_stats.ram.tooltip}"
               (image :class "system-icon" :path "${../../../assets/icons/bar/ram.svg}" :image-width 24 :image-height 24)
               (label :class "system-label" :text "''${system_stats.ram.percent}%"))
+            (eventbox :onclick "pamixer --toggle-mute" :cursor "pointer" :halign "fill"
+              (box :orientation "v" :space-evenly false :spacing 4 :class "system-item"
+                   :tooltip "''${system_stats.sound.tooltip}"
+                (image :class "system-icon" :path "${../../../assets/icons/bar/audio.svg}" :image-width 24 :image-height 24)
+                (label :class "system-label" :text "''${system_stats.sound.mute ? '-' : (system_stats.sound.percent + '%')}")))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
                  :tooltip "''${full_date} ''${time} (''${date})"
               (image :class "system-icon" :path "${../../../assets/icons/bar/calendar.svg}" :image-width 24 :image-height 24)
