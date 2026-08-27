@@ -17,6 +17,10 @@ window#eww-bar {
   margin: 5px;
 }
 
+.windows {
+  margin: 15px 5px;
+}
+
 .workspaces, .windows {
   padding: 5px;
 }
@@ -43,6 +47,10 @@ window#eww-bar {
 
 .system-item:last-child {
   border: none;
+}
+
+.system-item .system-icon {
+  color: #{{base07}};
 }
 
 .system-item .system-label.small {

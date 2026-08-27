@@ -113,9 +113,7 @@
                :class "bar-container"
                :vexpand true
             (workspaces-widget)
-            (box :vexpand true)
             (windows-widget)
-            (box :vexpand true)
             (system-widget)))
 
         (defwidget workspaces-widget []
@@ -131,7 +129,7 @@
                     (label :class "workspace-idx" :text "''${ws.idx}" :halign "end" :valign "end")))))))
 
         (defwidget windows-widget []
-          (box :orientation "v" :space-evenly false :spacing 4 :halign "center" :class "windows"
+          (box :orientation "v" :space-evenly false :spacing 4 :halign "center" :class "windows" :vexpand true
 
             (for w in active-windows
               (eventbox :onclick "niri msg action focus-window --id ''${w.id}"
@@ -143,20 +141,17 @@
 
         (defwidget system-widget []
           (box :orientation "v" :space-evenly false :spacing 6 :halign "fill" :class "system"
+            (box :orientation "v" :class "system-item" :halign "fill" :space-evenly false :spacing 4
+              (image :class "system-icon" :path "${../../../assets/icons/bar/wifi.svg}" :image-width 24 :image-height 24))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
-              (label :class "system-icon" :text "''${system_stats.net == "up" ? "󰤨 " : "󰤭 "}")
-              (label :class "system-label" :text ""))
-            (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
-              (label :class "system-icon" :text " ")
+              (image :class "system-icon" :path "${../../../assets/icons/bar/cpu.svg}" :image-width 24 :image-height 24)
               (label :class "system-label" :text "''${system_stats.cpu}%"))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
-              (label :class "system-icon" :text " ")
+              (image :class "system-icon" :path "${../../../assets/icons/bar/ram.svg}" :image-width 24 :image-height 24)
               (label :class "system-label" :text "''${system_stats.ram}%"))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
-              (label :class "system-icon" :text "󰥔 ")
-              (label :class "system-label small" :text time))
-            (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
-              (label :class "system-icon" :text "")
+              (image :class "system-icon" :path "${../../../assets/icons/bar/calendar.svg}" :image-width 24 :image-height 24)
+              (label :class "system-label small" :text time)
               (label :class "system-label small" :text date))))
       '';
   };
