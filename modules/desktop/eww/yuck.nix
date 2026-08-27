@@ -17,6 +17,7 @@
           meta.mainProgram = "eww-system-stats";
 
           nativeBuildInputs = [
+            pkgs.iw
             pkgs.wrapGAppsHook3
             pkgs.gobject-introspection
           ];
@@ -92,7 +93,7 @@
         (defpoll date :interval "60s" "date '+%d/%m'")
         (deflisten workspaces :initial "[]" "${lib.getExe workspaces}")
         (deflisten active-windows :initial "[]" "${lib.getExe activate-windows}")
-        (deflisten system_stats :initial "{\"cpu\":0,\"ram\":0,\"net\":\"down\"}" "${lib.getExe system-stats}")
+        (deflisten system_stats :initial "{\"cpu\":0,\"ram\":0,\"net\":{\"status\":\"down\",\"type\":\"\",\"iface\":\"\",\"speed\":\"\"}}" "${lib.getExe system-stats}")
 
         (defwindow bar
           :monitor 0
@@ -142,7 +143,13 @@
         (defwidget system-widget []
           (box :orientation "v" :space-evenly false :spacing 6 :halign "fill" :class "system"
             (box :orientation "v" :class "system-item" :halign "fill" :space-evenly false :spacing 4
-              (image :class "system-icon" :path "${../../../assets/icons/bar/wifi.svg}" :image-width 24 :image-height 24))
+              (image :class "system-icon"
+                     :path "''${system_stats.net.status == 'down' ? '${../../../assets/icons/bar/offline.svg}' : system_stats.net.type == 'wifi' ? '${../../../assets/icons/bar/wifi.svg}' : system_stats.net.type == 'ethernet' ? '${../../../assets/icons/bar/ethernet.svg}' : '${../../../assets/icons/bar/offline.svg}'}"
+                     :image-width 24 :image-height 24)
+              (label :class "system-label small"
+                     :text "''${system_stats.net.tx != ''' ? system_stats.net.tx : '-'}")
+              (label :class "system-label small"
+                     :text "''${system_stats.net.rx != ''' ? system_stats.net.rx : '-'}"))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
               (image :class "system-icon" :path "${../../../assets/icons/bar/cpu.svg}" :image-width 24 :image-height 24)
               (label :class "system-label" :text "''${system_stats.cpu}%"))
