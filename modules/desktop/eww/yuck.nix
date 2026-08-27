@@ -91,9 +91,10 @@
       ''
         (defpoll time :interval "10s" "date '+%H:%M'")
         (defpoll date :interval "60s" "date '+%d/%m'")
+        (defpoll full_date :interval "60s" "date '+%A, %d %B %Y'")
         (deflisten workspaces :initial "[]" "${lib.getExe workspaces}")
         (deflisten active-windows :initial "[]" "${lib.getExe activate-windows}")
-        (deflisten system_stats :initial "{\"cpu\":0,\"ram\":0,\"net\":{\"status\":\"down\",\"type\":\"\",\"iface\":\"\",\"speed\":\"\"}}" "${lib.getExe system-stats}")
+        (deflisten system_stats :initial "{\"cpu\":0,\"ram\":0,\"net\":{\"status\":\"down\",\"tooltip\":\"Network Offline\",\"routes\":[]}}" "${lib.getExe system-stats}")
 
         (defwindow bar
           :monitor 0
@@ -143,20 +144,24 @@
         (defwidget system-widget []
           (box :orientation "v" :space-evenly false :spacing 6 :halign "fill" :class "system"
             (box :orientation "v" :class "system-item" :halign "fill" :space-evenly false :spacing 4
+                 :tooltip "''${system_stats.net.tooltip}"
               (image :class "system-icon"
-                     :path "''${system_stats.net.status == 'down' ? '${../../../assets/icons/bar/offline.svg}' : system_stats.net.type == 'wifi' ? '${../../../assets/icons/bar/wifi.svg}' : system_stats.net.type == 'ethernet' ? '${../../../assets/icons/bar/ethernet.svg}' : '${../../../assets/icons/bar/offline.svg}'}"
+                     :path "''${system_stats.net.status == 'down' ? '${../../../assets/icons/bar/offline.svg}' : system_stats.net.routes[0].type == 'wifi' ? '${../../../assets/icons/bar/wifi.svg}' : system_stats.net.routes[0].type == 'ethernet' ? '${../../../assets/icons/bar/ethernet.svg}' : '${../../../assets/icons/bar/offline.svg}'}"
                      :image-width 24 :image-height 24)
               (label :class "system-label small"
-                     :text "''${system_stats.net.tx != ''' ? system_stats.net.tx : '-'}")
+                     :text "''${system_stats.net.status == 'down' ? '-' : system_stats.net.routes[0].tx}")
               (label :class "system-label small"
-                     :text "''${system_stats.net.rx != ''' ? system_stats.net.rx : '-'}"))
+                     :text "''${system_stats.net.status == 'down' ? '-' : system_stats.net.routes[0].rx}"))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
+                 :tooltip "CPU: ''${system_stats.cpu}%"
               (image :class "system-icon" :path "${../../../assets/icons/bar/cpu.svg}" :image-width 24 :image-height 24)
               (label :class "system-label" :text "''${system_stats.cpu}%"))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
+                 :tooltip "RAM: ''${system_stats.ram}%"
               (image :class "system-icon" :path "${../../../assets/icons/bar/ram.svg}" :image-width 24 :image-height 24)
               (label :class "system-label" :text "''${system_stats.ram}%"))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
+                 :tooltip "''${full_date} ''${time} (''${date})"
               (image :class "system-icon" :path "${../../../assets/icons/bar/calendar.svg}" :image-width 24 :image-height 24)
               (label :class "system-label small" :text time)
               (label :class "system-label small" :text date))))

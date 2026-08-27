@@ -3,14 +3,21 @@
 
 net is now an object: {
     "status": "up"|"limited"|"down",
-    "type": "wifi"|"ethernet"|None,
-    "iface": "wlan0"|None,
-    "speed": 866|None,       # link speed in Mbps
-    "rx": "12.5M"|None,      # formatted download throughput rate (B/K/M/G)
-    "tx": "540K"|None        # formatted upload throughput rate (B/K/M/G)
+    "tooltip": "↓12M ↑5M\\nwlan0: 192.168.1.5",
+    "routes": [
+        {
+            "iface": "wlan0",
+            "ip": "192.168.1.5",
+            "type": "wifi",
+            "speed": 866,        # link speed in Mbps
+            "rx": "12.5M",       # formatted download rate
+            "tx": "540K"         # formatted upload rate
+        },
+        ...
+    ]
 }
 
-Requires `iw` (for wifi link speed) and `iproute2` (for route lookup) on PATH.
+Requires `iw` (for wifi link speed) and `iproute2` (for route/ip lookup) on PATH.
 """
 import json
 import os
@@ -24,21 +31,18 @@ STATE = {
     "ram": 0,
     "net": {
         "status": "down",
-        "type": None,
-        "iface": None,
-        "speed": None,
-        "rx": None,
-        "tx": None,
+        "tooltip": "Network Offline",
+        "routes": [],
     },
 }
 
-# Module-level counters for network byte delta calculations
+# Module-level tracking for throughput calculations
 NET_LAST_TIME = None
 NET_LAST_BYTES = {}  # {iface: (rx_bytes, tx_bytes)}
 
 
 def format_rate(bytes_per_sec):
-    """Format bytes/sec into a ultra-compact 3-5 character string (e.g., '500B', '1.2M')."""
+    """Format bytes/sec into an ultra-compact 3-5 character string (e.g., '500B', '1.2M')."""
     if bytes_per_sec is None or bytes_per_sec < 0:
         return "0B"
     
@@ -54,8 +58,6 @@ def format_rate(bytes_per_sec):
     
     if val >= 100 or unit == "B":
         return f"{int(val)}{unit}"
-    elif val >= 10:
-        return f"{val:.1f}{unit}"
     else:
         return f"{val:.1f}{unit}"
 
@@ -82,7 +84,7 @@ def read_cpu_times():
     with open("/proc/stat") as f:
         parts = f.readline().split()[1:]
     vals = list(map(int, parts))
-    idle = vals[3] + vals[4]  # idle + iowait
+    idle = vals[3] + vals[4]
     total = sum(vals)
     return idle, total
 
@@ -92,14 +94,14 @@ def cpu_ram_loop(interval=2.0):
     while True:
         time.sleep(interval)
         
-        # Calculate CPU usage
+        # CPU
         idle, total = read_cpu_times()
         d_idle = idle - prev_idle
         d_total = total - prev_total
         prev_idle, prev_total = idle, total
         cpu_pct = round((1 - d_idle / d_total) * 100) if d_total else 0
 
-        # Calculate RAM usage
+        # RAM
         with open("/proc/meminfo") as f:
             meminfo = {}
             for line in f:
@@ -109,7 +111,7 @@ def cpu_ram_loop(interval=2.0):
         avail_kb = meminfo["MemAvailable"]
         ram_pct = round((1 - avail_kb / total_kb) * 100) if total_kb else 0
 
-        # Refresh network metrics on the main ticker (for live throughput)
+        # Network update
         net_status = check_net_status()
 
         with STATE_LOCK:
@@ -119,19 +121,42 @@ def cpu_ram_loop(interval=2.0):
         emit()
 
 
-def get_default_iface():
-    """Interface carrying the default route, or None."""
+def get_all_default_ifaces():
+    """Returns a list of unique interfaces carrying default routes."""
     try:
         out = subprocess.check_output(
             ["ip", "-o", "route", "show", "default"],
             text=True, stderr=subprocess.DEVNULL,
         )
     except (subprocess.CalledProcessError, FileNotFoundError):
-        return None
+        return []
+    
+    ifaces = []
     for line in out.splitlines():
         parts = line.split()
         if "dev" in parts:
-            return parts[parts.index("dev") + 1]
+            iface = parts[parts.index("dev") + 1]
+            if iface not in ifaces:
+                ifaces.append(iface)
+    return ifaces
+
+
+def get_iface_ip(iface):
+    """Get the primary IPv4 address for a given interface."""
+    if not iface:
+        return None
+    try:
+        out = subprocess.check_output(
+            ["ip", "-o", "-4", "addr", "show", "dev", iface],
+            text=True, stderr=subprocess.DEVNULL,
+        )
+        for line in out.splitlines():
+            parts = line.split()
+            if "inet" in parts:
+                cidr = parts[parts.index("inet") + 1]
+                return cidr.split("/")[0]
+    except (subprocess.CalledProcessError, FileNotFoundError, IndexError):
+        pass
     return None
 
 
@@ -181,59 +206,79 @@ def get_speed_mbps(iface, iftype):
 def check_net_status():
     global NET_LAST_TIME, NET_LAST_BYTES
 
-    iface = get_default_iface()
+    ifaces = get_all_default_ifaces()
     now = time.monotonic()
 
-    if not iface:
+    if not ifaces:
         NET_LAST_TIME = now
         NET_LAST_BYTES = {}
-        return {
-            "status": "down",
-            "type": None,
-            "iface": None,
-            "speed": None,
-            "rx": None,
-            "tx": None,
-        }
+        return {"status": "down", "tooltip": "Network Offline", "routes": []}
 
-    oper = get_operstate(iface)
-    if oper == "up":
-        status = "up"
-    elif oper == "dormant":
-        status = "limited"
-    else:
-        status = "down"
+    routes = []
+    any_up = False
+    any_limited = False
 
-    iftype = get_iface_type(iface)
-    speed = get_speed_mbps(iface, iftype) if status != "down" else None
+    for iface in ifaces:
+        oper = get_operstate(iface)
+        if oper == "up":
+            any_up = True
+        elif oper == "dormant":
+            any_limited = True
 
-    # Calculate throughput rate (bytes/sec)
-    rx_bytes, tx_bytes = get_iface_io_bytes(iface)
-    rx_str, tx_str = "0B", "0B"
+        iftype = get_iface_type(iface)
+        ip_addr = get_iface_ip(iface)
+        speed = get_speed_mbps(iface, iftype) if oper == "up" else None
 
-    if status != "down" and rx_bytes is not None and tx_bytes is not None:
-        if NET_LAST_TIME is not None and iface in NET_LAST_BYTES:
-            dt = now - NET_LAST_TIME
-            if dt > 0:
-                prev_rx, prev_tx = NET_LAST_BYTES[iface]
-                rx_rate = max(0, (rx_bytes - prev_rx) / dt)
-                tx_rate = max(0, (tx_bytes - prev_tx) / dt)
-                rx_str = format_rate(rx_rate)
-                tx_str = format_rate(tx_rate)
-        NET_LAST_BYTES[iface] = (rx_bytes, tx_bytes)
-    else:
-        rx_str, tx_str = None, None
+        # Live throughput delta calculation per interface
+        rx_bytes, tx_bytes = get_iface_io_bytes(iface)
+        rx_str, tx_str = "0B", "0B"
+
+        if oper != "down" and rx_bytes is not None and tx_bytes is not None:
+            if NET_LAST_TIME is not None and iface in NET_LAST_BYTES:
+                dt = now - NET_LAST_TIME
+                if dt > 0:
+                    prev_rx, prev_tx = NET_LAST_BYTES[iface]
+                    rx_rate = max(0, (rx_bytes - prev_rx) / dt)
+                    tx_rate = max(0, (tx_bytes - prev_tx) / dt)
+                    rx_str = format_rate(rx_rate)
+                    tx_str = format_rate(tx_rate)
+            NET_LAST_BYTES[iface] = (rx_bytes, tx_bytes)
+        else:
+            rx_str, tx_str = None, None
+
+        routes.append({
+            "iface": iface,
+            "ip": ip_addr,
+            "type": iftype,
+            "speed": speed,
+            "rx": rx_str,
+            "tx": tx_str,
+        })
 
     NET_LAST_TIME = now
+    
+    # Global status aggregate
+    if any_up:
+        overall_status = "up"
+    elif any_limited:
+        overall_status = "limited"
+    else:
+        overall_status = "down"
 
-    return {
-        "status": status,
-        "type": iftype,
-        "iface": iface,
-        "speed": speed,
-        "rx": rx_str,
-        "tx": tx_str,
-    }
+    # Build tooltip: first line with speed (rx/tx), then each iface: ip
+    if overall_status == "down" or not routes:
+        tooltip = "Network Offline"
+    else:
+        first = routes[0]
+        rx = first.get("rx") or "-"
+        tx = first.get("tx") or "-"
+        tooltip = f"↓{rx} ↑{tx}"
+        for r in routes:
+            iface = r.get("iface") or "unknown"
+            ip = r.get("ip") or "no ip"
+            tooltip += f"\n{iface}: {ip}"
+
+    return {"status": overall_status, "tooltip": tooltip, "routes": routes}
 
 
 def net_loop():
@@ -254,7 +299,6 @@ def emit():
 
 
 def main():
-    # Initial state calculation before loop
     with STATE_LOCK:
         STATE["net"] = check_net_status()
     emit()
