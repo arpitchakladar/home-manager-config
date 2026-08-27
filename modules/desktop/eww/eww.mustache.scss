@@ -15,6 +15,7 @@ window#eww-bar {
 .workspaces, .windows, .system {
   border: 1px solid #{{base07}};
   margin: 5px;
+  min-width: 40px;
 }
 
 .windows {
@@ -41,20 +42,24 @@ window#eww-bar {
 }
 
 .system-item {
-  font-size: 12px;
+  padding: 5px 0;
   border-bottom: 1px solid #{{base07}};
+}
+
+.system-item .system-label.small {
+  font-size: 12px;
 }
 
 .system-item:last-child {
   border: none;
 }
 
-.system-item .system-icon {
-  color: #{{base07}};
+.system-item .system-label {
+  font-size: 16px;
 }
 
-.system-item .system-label.small {
-  font-size: 12px;
+.system-item .system-icon {
+  color: #{{base07}};
 }
 
 .workspace-button.active, .window-button.focused {
