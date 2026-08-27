@@ -126,6 +126,7 @@
             (for ws in workspaces
               (eventbox :onclick "niri msg action focus-workspace ''${ws.idx}"
                         :cursor "pointer" :halign "fill"
+                        :tooltip "''${ws.tooltip}"
                 (box :class "workspace-button ''${ws.is_active ? 'active' : '''}" :halign "fill"
                   (overlay :halign "fill"
                     (image :class "workspace-icon"

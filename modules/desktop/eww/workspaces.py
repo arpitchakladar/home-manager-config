@@ -59,15 +59,36 @@ def emit_workspaces():
     workspaces = niri_json("workspaces")
     windows = {w["id"]: w for w in niri_json("windows")}
 
+    def window_sort_key(w):
+        # order windows as they appear in the columns; floating windows last
+        pos = (w.get("layout") or {}).get("pos_in_scrolling_layout")
+        if pos is not None:
+            return (0, pos[0], pos[1])
+        return (1, w["id"], 0)
+
     result = []
     for ws in sorted(workspaces, key=lambda w: w["idx"]):
         active_win = windows.get(ws.get("active_window_id"))
         app_id = (active_win or {}).get("app_id") or ""
+
+        ws_name = ws.get("name") or f"Workspace {ws['idx']}"
+
+        ws_windows = sorted(
+            (w for w in windows.values() if w.get("workspace_id") == ws["id"]),
+            key=window_sort_key,
+        )
+        lines = [ws_name] + [
+            f"{i}. {(w.get('app_id') or 'unknown')}: {w.get('title') or '(untitled)'}"
+            for i, w in enumerate(ws_windows, start=1)
+        ]
+        tooltip = "\n".join(lines) if ws_windows else ws_name
+
         result.append({
             "idx": ws["idx"],
             "id": ws["id"],
             "is_active": ws.get("is_active", False),
             "icon": resolve_icon_path(app_id),
+            "tooltip": tooltip,
         })
     print(json.dumps(result), flush=True)
 
