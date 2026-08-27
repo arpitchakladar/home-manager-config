@@ -94,7 +94,9 @@
         (defpoll full_date :interval "60s" "date '+%A, %d %B %Y'")
         (deflisten workspaces :initial "[]" "${lib.getExe workspaces}")
         (deflisten active-windows :initial "[]" "${lib.getExe activate-windows}")
-        (deflisten system_stats :initial "{\"cpu\":0,\"ram\":0,\"net\":{\"status\":\"down\",\"tooltip\":\"Network Offline\",\"routes\":[]}}" "${lib.getExe system-stats}")
+        (deflisten system_stats
+          :initial "{\"cpu\":{\"percent\":0,\"per_core\":[],\"freq_mhz\":null,\"load_avg\":null,\"tooltip\":\"CPU: 0%\"},\"ram\":{\"percent\":0,\"used\":\"0B\",\"total\":\"0B\",\"available\":\"0B\",\"swap_percent\":0,\"swap_used\":\"0B\",\"swap_total\":\"0B\",\"speed_mhz\":null,\"tooltip\":\"RAM: 0%\"},\"net\":{\"status\":\"down\",\"tooltip\":\"Network Offline\",\"routes\":[]}}"
+          "${lib.getExe system-stats}")
 
         (defwindow bar
           :monitor 0
@@ -153,13 +155,13 @@
               (label :class "system-label small"
                      :text "''${system_stats.net.status == 'down' ? '-' : system_stats.net.routes[0].rx}"))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
-                 :tooltip "CPU: ''${system_stats.cpu}%"
+                 :tooltip "''${system_stats.cpu.tooltip}"
               (image :class "system-icon" :path "${../../../assets/icons/bar/cpu.svg}" :image-width 24 :image-height 24)
-              (label :class "system-label" :text "''${system_stats.cpu}%"))
+              (label :class "system-label" :text "''${system_stats.cpu.percent}%"))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
-                 :tooltip "RAM: ''${system_stats.ram}%"
+                 :tooltip "''${system_stats.ram.tooltip}"
               (image :class "system-icon" :path "${../../../assets/icons/bar/ram.svg}" :image-width 24 :image-height 24)
-              (label :class "system-label" :text "''${system_stats.ram}%"))
+              (label :class "system-label" :text "''${system_stats.ram.percent}%"))
             (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
                  :tooltip "''${full_date} ''${time} (''${date})"
               (image :class "system-icon" :path "${../../../assets/icons/bar/calendar.svg}" :image-width 24 :image-height 24)
