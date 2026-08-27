@@ -19,7 +19,7 @@ window#eww-bar {
 }
 
 .windows {
-  margin: 15px 5px;
+  margin: 2.5px 5px;
 }
 
 .workspaces, .windows {
@@ -50,7 +50,7 @@ window#eww-bar {
   font-size: 12px;
 }
 
-.system-item:last-child {
+.system > .system-item:last-child {
   border: none;
 }
 
