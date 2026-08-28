@@ -47,7 +47,6 @@ in
           "@@workspaces-script@@"
           "@@windows-script@@"
           "@@systemstats-script@@"
-          "@@icon-unknown@@"
           "@@icon-offline@@"
           "@@icon-wifi@@"
           "@@icon-ethernet@@"
@@ -60,7 +59,6 @@ in
           (lib.getExe workspaces)
           (lib.getExe activate-windows)
           (lib.getExe system-stats)
-          (toString ../../../assets/icons/unknown.svg)
           (toString ../../../assets/icons/bar/offline.svg)
           (toString ../../../assets/icons/bar/wifi.svg)
           (toString ../../../assets/icons/bar/ethernet.svg)
