@@ -6,24 +6,35 @@
   ...
 }:
 let
-  inherit ((import ../../lib/script.nix { inherit lib pkgs; })) mkScriptModule;
-  gpgBackup = mkScriptModule {
-    scope = [
-      "security"
-      "gpg"
-    ];
+  gpgBackupScript = pkgs.writeShellApplication {
     name = "gpg-backup";
-    path = ./gpg-backup.sh;
-    description = "Export/import all GPG keys as a single passphrase-protected file with maximum S2K iteration count\nUsage: gpg-backup export filename.gpg | gpg-backup import filename.gpg";
-    deps = [
+    runtimeInputs = [
       pkgs.bash
       pkgs.gnupg
       pkgs.gnutar
       pkgs.coreutils
       pkgs.findutils
     ];
-    completion.zsh = builtins.readFile ./gpg-backup.zsh;
-    inherit config;
+    text = builtins.readFile ./gpg-backup.sh;
+  };
+
+  gpgBackupCompletion =
+    pkgs.runCommand "gpg-backup-completion"
+      {
+        nativeBuildInputs = [ pkgs.installShellFiles ];
+      }
+      ''
+        mkdir -p $out/share/zsh/site-functions
+        installShellCompletion --zsh --name _gpg-backup ${pkgs.writeText "gpg-backup.zsh" (builtins.readFile ./gpg-backup.zsh)}
+      '';
+
+  gpgBackupScriptPkg = pkgs.symlinkJoin {
+    name = "gpg-backup";
+    paths = [
+      gpgBackupScript
+      gpgBackupCompletion
+    ];
+    meta = gpgBackupScript.meta or { };
   };
 in
 {
@@ -37,8 +48,17 @@ in
       defaultText = lib.literalExpression "config.programs.gpg.package";
       description = "The gpg package to use.";
     };
-  }
-  // gpgBackup.options.security.gpg;
+
+    backup = {
+      enable = lib.mkEnableOption "Enable the gpg-backup script";
+      package = lib.mkOption {
+        type = lib.types.package;
+        readOnly = true;
+        default = gpgBackupScriptPkg;
+        description = "The package for the gpg-backup script";
+      };
+    };
+  };
 
   config = lib.mkMerge [
     (lib.mkIf config.security.gpg.enable {
@@ -60,6 +80,8 @@ in
         pinentry.package = pkgs.pinentry-rofi;
       };
     })
-    gpgBackup.config
+    (lib.mkIf config.security.gpg.backup.enable {
+      home.packages = [ config.security.gpg.backup.package ];
+    })
   ];
 }

@@ -6,13 +6,25 @@
   ...
 }:
 let
-  inherit ((import ../../lib/script.nix { inherit lib pkgs; })) mkScriptModule;
+  deepCleanScript = pkgs.writeShellApplication {
+    name = "deep-clean";
+    runtimeInputs = [ pkgs.bash ];
+    text = builtins.readFile ./deep-clean.sh;
+  };
 in
-mkScriptModule {
-  scope = [ "system" ];
-  name = "deep-clean";
-  path = ./deep-clean.sh;
-  description = "Deep clean script for Nix systems\nRemoves old generations, garbage, and optimizes store\nWARNING: Do NOT run with sudo - run as normal user";
-  deps = [ pkgs.bash ];
-  inherit config;
+{
+  options.system.deep-clean = {
+    enable = lib.mkEnableOption "Enables the deep-clean script.";
+
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = deepCleanScript;
+      description = "The deep-clean script package.";
+    };
+  };
+
+  config = lib.mkIf config.system.deep-clean.enable {
+    home.packages = [ config.system.deep-clean.package ];
+  };
 }

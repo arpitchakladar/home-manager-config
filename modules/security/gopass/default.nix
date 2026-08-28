@@ -6,29 +6,21 @@
   ...
 }:
 let
-  inherit ((import ../../lib/script.nix { inherit lib pkgs; })) mkScriptModule;
-
   gopassKeys = config.security.ssh.gopassKeys;
 
-  gopassSshLoad = mkScriptModule {
-    scope = [
-      "security"
-      "gopass"
-    ];
+  gopassSshLoadScript = pkgs.writeShellApplication {
     name = "gopass-ssh-load";
-    path = ./gopass-ssh-load.sh;
-    description = "Load SSH keys from gopass password store";
-    env = {
-      GNUPGHOME = config.home.sessionVariables.GNUPGHOME;
-      GOPASS_SSH_KEYS = lib.concatStringsSep " " gopassKeys;
-    };
-    deps = with pkgs; [
+    runtimeInputs = with pkgs; [
       config.security.gopass.package
       gnupg
       openssh
       bash
     ];
-    inherit config;
+    text = ''
+      export GNUPGHOME="${config.home.sessionVariables.GNUPGHOME}"
+      export GOPASS_SSH_KEYS="${lib.concatStringsSep " " gopassKeys}"
+      ${builtins.readFile ./gopass-ssh-load.sh}
+    '';
   };
 in
 {
@@ -40,9 +32,16 @@ in
       default = config.programs.password-store.package;
       description = "The gopass package to use.";
     };
-    ssh-agent.enable = lib.mkEnableOption "gopass-backed SSH keys for git";
-  }
-  // gopassSshLoad.options.security.gopass;
+    ssh-agent = {
+      enable = lib.mkEnableOption "gopass-backed SSH keys for git";
+      package = lib.mkOption {
+        type = lib.types.package;
+        readOnly = true;
+        default = gopassSshLoadScript;
+        description = "The gopass-ssh-load script package.";
+      };
+    };
+  };
 
   config = lib.mkMerge [
     (lib.mkIf config.security.gopass.enable {
@@ -72,6 +71,8 @@ in
         type = "Application";
       };
     })
-    gopassSshLoad.config
+    (lib.mkIf config.security.gopass.ssh-agent.enable {
+      home.packages = [ config.security.gopass.ssh-agent.package ];
+    })
   ];
 }

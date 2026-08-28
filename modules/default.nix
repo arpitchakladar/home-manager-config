@@ -8,7 +8,6 @@
     ./file-management
     ./fonts
     ./gaming
-    ./lib
     ./media
     ./networking
     ./office

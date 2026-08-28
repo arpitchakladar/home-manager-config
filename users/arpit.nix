@@ -43,6 +43,7 @@
   file-management.ouch.enable = true;
   file-management.usb.enable = true;
   file-management.yazi.enable = true;
+  file-management.yazi.file-chooser.enable = true;
 
   # Media
   media.swayimg.enable = true;
@@ -57,6 +58,7 @@
   networking.impala.enable = true;
   networking.bluetui.enable = true;
   networking.usque.enable = true;
+  networking.usque.warp.enable = true;
 
   # Office
   office.zathura.enable = true;
@@ -65,12 +67,15 @@
   security.gopass.enable = true;
   security.gopass.ssh-agent.enable = false;
   security.gpg.enable = true;
+  security.gpg.backup.enable = true;
   security.ssh.enable = true;
 
   # System
-  system.btop.enable = true;
   system.brightnessctl.enable = true;
+  system.btop.enable = true;
+  system.deep-clean.enable = true;
   system.htop.enable = true;
+  system.nix-update.enable = true;
   system.nvtop.enable = true;
   system.systemctl-tui.enable = true;
 

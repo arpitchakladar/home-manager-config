@@ -3,13 +3,13 @@
 {
   config.programs.neomutt.macros = lib.mkIf config.communication.neomutt.enable [
     {
-      # Sync the mailbox and run the external sync script
+      # Sync the mailbox and run the external neomutt-sync script
       map = [
         "index"
         "pager"
       ];
       key = "gs";
-      action = "<enter-command>set my_wait_key=$wait_key wait_key=no<enter><sync-mailbox><shell-escape>${lib.getExe config.communication.neomutt.neomutt-sync.package}<enter><sync-mailbox><enter-command>set wait_key=$my_wait_key<enter>";
+      action = "<enter-command>set my_wait_key=$wait_key wait_key=no<enter><sync-mailbox><shell-escape>neomutt-sync<enter><sync-mailbox><enter-command>set wait_key=$my_wait_key<enter>";
     }
     {
       # Extract every URL from the message via urlscan into a picker menu

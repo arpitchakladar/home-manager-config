@@ -6,22 +6,14 @@
   ...
 }:
 let
-  inherit ((import ../../lib/script.nix { inherit lib pkgs; })) mkScriptModule;
-  yaziFileChooser = mkScriptModule {
-    scope = [
-      "file-management"
-      "yazi"
-    ];
+  yaziFileChooserScript = pkgs.writeShellApplication {
     name = "yazi-file-chooser";
-    path = ./yazi-file-chooser.sh;
-    description = "Yazi-based file chooser for XDG Desktop Portal";
-    deps = [
+    runtimeInputs = [
       pkgs.bash
       config.file-management.yazi.package
       config.terminal.kitty.package
     ];
-    extraLinks = [ "~/.config/xdg-desktop-portal-termfilechooser/config" ];
-    inherit config;
+    text = builtins.readFile ./file-chooser.sh;
   };
 in
 {
@@ -39,8 +31,17 @@ in
       defaultText = lib.literalExpression "config.programs.yazi.finalPackage";
       description = "The yazi package to use. Defaults to the wrapped finalPackage from programs.yazi.";
     };
-  }
-  // yaziFileChooser.options.file-management.yazi;
+
+    file-chooser = {
+      enable = lib.mkEnableOption "Enables the yazi-file-chooser script.";
+      package = lib.mkOption {
+        type = lib.types.package;
+        readOnly = true;
+        default = yaziFileChooserScript;
+        description = "The yazi-file-chooser script package.";
+      };
+    };
+  };
 
   config = lib.mkMerge [
     (lib.mkIf config.file-management.yazi.enable {
@@ -77,6 +78,10 @@ in
         TERMCMD = lib.mkIf config.terminal.kitty.enable "${lib.getExe config.terminal.kitty.package} --class file-explorer --title 'Yazi'";
       };
     })
-    yaziFileChooser.config
+    (lib.mkIf config.file-management.yazi.file-chooser.enable {
+      home.file.".config/xdg-desktop-portal-termfilechooser/config" = {
+        source = lib.getExe config.file-management.yazi.file-chooser.package;
+      };
+    })
   ];
 }
