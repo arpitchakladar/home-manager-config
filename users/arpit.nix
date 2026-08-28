@@ -68,7 +68,7 @@
   security.ssh.enable = true;
 
   # System
-  system.bottom.enable = true;
+  system.btop.enable = true;
   system.brightnessctl.enable = true;
   system.htop.enable = true;
   system.nvtop.enable = true;

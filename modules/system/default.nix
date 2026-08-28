@@ -2,13 +2,12 @@
 { ... }:
 {
   imports = [
-    ./bottom
     ./brightnessctl
+    ./btop
     ./deep-clean
     ./htop
     ./nix-update
     ./nvtop
-    ./system-monitor
     ./systemctl-tui
   ];
 }
