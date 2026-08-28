@@ -35,7 +35,7 @@ in
       enable = true;
       font = {
         name = config.fonts.normal;
-        size = config.fonts.size;
+        size = config.fonts.uiSize;
       };
       theme = {
         name = "Adwaita-dark";

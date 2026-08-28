@@ -66,6 +66,7 @@
         };
         browser = {
           show_full_urls = true;
+          custom_chrome_frame = false;
           theme = {
             color_scheme = 2;
             color_scheme2 = 2; # Used by recent versions
@@ -97,7 +98,11 @@
             config.web.chromium.extensions.ublockOrigin.id
             config.web.chromium.extensions.vimium.id
           ];
-          system_theme = 1;
+          theme = {
+            id = "";
+            system_theme = 1;
+            use_system = true;
+          };
           ui = {
             developer_mode = true;
           };

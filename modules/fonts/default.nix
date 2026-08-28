@@ -29,6 +29,12 @@
       description = "Default font size.";
       default = 18;
     };
+
+    uiSize = lib.mkOption {
+      type = lib.types.int;
+      description = "Default desktop UI (GTK) font size.";
+      default = 11;
+    };
   };
 
   config = {
