@@ -26,7 +26,7 @@
 
   config = lib.mkIf config.web.chawan.enable {
     home.file.".local/share/icons/hicolor/scalable/apps/internet-web-browser.svg" = {
-      source = ../../../assets/icons/internet-web-browser.svg;
+      source = ../../../assets/icons/apps/internet-web-browser.svg;
     };
 
     xdg.desktopEntries."chawan" = {

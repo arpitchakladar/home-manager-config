@@ -59,7 +59,7 @@ in
       };
 
       home.file.".local/share/icons/hicolor/scalable/apps/gopass.svg" = {
-        source = ../../../assets/icons/gopass.svg;
+        source = ../../../assets/icons/apps/gopass.svg;
       };
 
       xdg.desktopEntries."gopass" = {

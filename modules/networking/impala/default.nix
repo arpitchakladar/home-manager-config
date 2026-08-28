@@ -17,7 +17,7 @@
 
   config = lib.mkIf config.networking.impala.enable {
     home.file.".local/share/icons/hicolor/scalable/apps/network-wireless.svg" = {
-      source = ../../../assets/icons/network-wireless.svg;
+      source = ../../../assets/icons/apps/network-wireless.svg;
     };
 
     xdg.desktopEntries."impala" = {

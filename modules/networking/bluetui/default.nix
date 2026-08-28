@@ -17,7 +17,7 @@
 
   config = lib.mkIf config.networking.bluetui.enable {
     home.file.".local/share/icons/hicolor/scalable/apps/bluetooth.svg" = {
-      source = ../../../assets/icons/bluetooth.svg;
+      source = ../../../assets/icons/apps/bluetooth.svg;
     };
 
     xdg.desktopEntries."bluetui" = {
