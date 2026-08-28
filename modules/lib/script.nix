@@ -52,6 +52,59 @@ let
         meta = base.meta or { };
       };
 
+  mkPythonScript =
+    {
+      name,
+      path,
+      description ? "",
+      python ? pkgs.python3,
+      pythonPackages ? (ps: [ ]),
+      deps ? [ ],
+      gobjectIntrospection ? false,
+    }:
+    let
+      pythonEnv = python.withPackages pythonPackages;
+      pathPrefix = lib.concatStringsSep ":" (
+        [ "${pythonEnv}/bin" ] ++ map (p: "${lib.getBin p}/bin") deps
+      );
+    in
+    pkgs.stdenv.mkDerivation {
+      pname = name;
+      version = "0.1.0";
+      src = path;
+      dontUnpack = true;
+      meta = lib.optionalAttrs (description != "") { inherit description; } // {
+        mainProgram = name;
+      };
+
+      nativeBuildInputs =
+        lib.optionals gobjectIntrospection [
+          pkgs.wrapGAppsHook3
+          pkgs.gobject-introspection
+        ]
+        ++ lib.optional (!gobjectIntrospection) pkgs.makeWrapper;
+      buildInputs = lib.optionals gobjectIntrospection [ pkgs.gtk3 ];
+
+      installPhase = ''
+        mkdir -p $out/bin
+        install -m755 $src $out/bin/${name}
+        patchShebangs $out/bin/${name}
+      '';
+
+      # wrapGAppsHook3 wraps every executable in $out/bin automatically,
+      # setting GI_TYPELIB_PATH etc. from buildInputs' closure. With
+      # gobjectIntrospection = false a plain wrapProgram only extends PATH.
+      preFixup =
+        if gobjectIntrospection then
+          ''
+            gappsWrapperArgs+=(--prefix PATH : "${pathPrefix}")
+          ''
+        else
+          ''
+            wrapProgram $out/bin/${name} --prefix PATH : "${pathPrefix}"
+          '';
+    };
+
   mkScriptModule =
     {
       scope ? [ ],
@@ -142,5 +195,5 @@ let
     };
 in
 {
-  inherit mkScript mkScriptModule;
+  inherit mkPythonScript mkScript mkScriptModule;
 }

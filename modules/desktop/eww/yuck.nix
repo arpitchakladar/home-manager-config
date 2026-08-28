@@ -4,89 +4,42 @@
   pkgs,
   ...
 }:
+let
+  inherit ((import ../../lib/script.nix { inherit lib pkgs; })) mkPythonScript;
+in
 {
   config = lib.mkIf config.desktop.enable {
     programs.eww.yuckConfig =
       let
-        pythonEnv = pkgs.python3.withPackages (ps: [ ps.pygobject3 ]);
-        system-stats = pkgs.stdenv.mkDerivation {
-          pname = "eww-system-stats";
-          version = "0.1.0";
-          src = ./system-stats.py;
-          dontUnpack = true;
-          meta.mainProgram = "eww-system-stats";
-
-          nativeBuildInputs = [
+        system-stats = mkPythonScript {
+          name = "eww-system-stats";
+          path = ./system-stats.py;
+          description = "Emit {cpu, ram, net} as JSON.";
+          deps = [
             pkgs.iw
+            pkgs.iproute2
             pkgs.pamixer
-            pkgs.wrapGAppsHook3
-            pkgs.gobject-introspection
+            pkgs.inotify-tools
+            pkgs.dmidecode
           ];
-          buildInputs = [ pkgs.gtk3 ];
-
-          installPhase = ''
-            mkdir -p $out/bin
-            install -m755 $src $out/bin/eww-system-stats
-            patchShebangs $out/bin/eww-system-stats
-          '';
-
-          # wrapGAppsHook3 wraps every executable in $out/bin automatically,
-          # setting GI_TYPELIB_PATH etc. from buildInputs' closure.
-          preFixup = ''
-            gappsWrapperArgs+=(--prefix PATH : "${pythonEnv}/bin")
-          '';
         };
 
-        workspaces = pkgs.stdenv.mkDerivation {
-          pname = "eww-workspaces";
-          version = "0.1.0";
-          src = ./workspaces.py;
-          dontUnpack = true;
-          meta.mainProgram = "eww-workspaces";
-
-          nativeBuildInputs = [
-            pkgs.wrapGAppsHook3
-            pkgs.gobject-introspection
-          ];
-          buildInputs = [ pkgs.gtk3 ];
-
-          installPhase = ''
-            mkdir -p $out/bin
-            install -m755 $src $out/bin/eww-workspaces
-            patchShebangs $out/bin/eww-workspaces
-          '';
-
-          # wrapGAppsHook3 wraps every executable in $out/bin automatically,
-          # setting GI_TYPELIB_PATH etc. from buildInputs' closure.
-          preFixup = ''
-            gappsWrapperArgs+=(--prefix PATH : "${pythonEnv}/bin")
-          '';
+        workspaces = mkPythonScript {
+          name = "eww-workspaces";
+          path = ./workspaces.py;
+          description = "Emit workspace list with each focused-app icon, driven by niri's event-stream.";
+          pythonPackages = (ps: [ ps.pygobject3 ]);
+          deps = [ config.desktop.niri.package ];
+          gobjectIntrospection = true;
         };
 
-        activate-windows = pkgs.stdenv.mkDerivation {
-          pname = "eww-activate-windows";
-          version = "0.1.0";
-          src = ./activate-windows.py;
-          dontUnpack = true;
-          meta.mainProgram = "eww-activate-windows";
-
-          nativeBuildInputs = [
-            pkgs.wrapGAppsHook3
-            pkgs.gobject-introspection
-          ];
-          buildInputs = [ pkgs.gtk3 ];
-
-          installPhase = ''
-            mkdir -p $out/bin
-            install -m755 $src $out/bin/eww-activate-windows
-            patchShebangs $out/bin/eww-activate-windows
-          '';
-
-          # wrapGAppsHook3 wraps every executable in $out/bin automatically,
-          # setting GI_TYPELIB_PATH etc. from buildInputs' closure.
-          preFixup = ''
-            gappsWrapperArgs+=(--prefix PATH : "${pythonEnv}/bin")
-          '';
+        activate-windows = mkPythonScript {
+          name = "eww-activate-windows";
+          path = ./activate-windows.py;
+          description = "Emit icons for windows on the active niri workspace via event-stream.";
+          pythonPackages = (ps: [ ps.pygobject3 ]);
+          deps = [ config.desktop.niri.package ];
+          gobjectIntrospection = true;
         };
       in
       builtins.replaceStrings
