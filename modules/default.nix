@@ -1,5 +1,5 @@
 # Top-level module aggregator importing all submodules
-{ config, ... }:
+{ ... }:
 {
   imports = [
     ./communication
@@ -8,10 +8,10 @@
     ./file-management
     ./fonts
     ./gaming
+    ./lib
     ./media
     ./networking
     ./office
-    ./scripts
     ./security
     ./system
     ./terminal

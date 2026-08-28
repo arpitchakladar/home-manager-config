@@ -1,4 +1,8 @@
-{ lib, pkgs }:
+# Library for creating script modules
+{
+  lib,
+  pkgs,
+}:
 let
   shellArgs = {
     zsh = name: file: "--zsh --name _${name} ${file}";
@@ -47,8 +51,10 @@ let
         ];
         meta = base.meta or { };
       };
+
   mkScriptModule =
     {
+      scope ? [ ],
       name,
       path,
       env ? { },
@@ -60,10 +66,13 @@ let
       completion ? { },
     }:
     let
+      scriptAttrs = scope ++ [ name ];
+      dottedName = lib.concatStringsSep "." scriptAttrs;
+      c = lib.getAttrFromPath scriptAttrs config;
       scriptDrv = mkScript name path description env deps completion;
     in
     {
-      options.scripts.${name} = {
+      options = lib.setAttrByPath scriptAttrs {
         enable = lib.mkOption {
           type = lib.types.bool;
           default = true;
@@ -74,12 +83,10 @@ let
           readOnly = true;
           description = "The derivation for the ${name} script.";
         };
-        completion = {
-          enable = lib.mkOption {
-            type = lib.types.bool;
-            default = completion != { };
-            description = "Whether to install completions for the ${name} script.";
-          };
+        completion.enable = lib.mkOption {
+          type = lib.types.bool;
+          default = completion != { };
+          description = "Whether to install completions for the ${name} script.";
         };
         desktop = {
           enable = lib.mkOption {
@@ -99,37 +106,39 @@ let
           };
         };
       };
-      moduleConfig = {
-        scripts.${name} = lib.mkIf config.scripts.${name}.enable (
-          {
-            package = scriptDrv;
-          }
-          // lib.optionalAttrs (desktop != null) { inherit desktop; }
-        );
-        home.file = lib.mkIf config.scripts.${name}.enable (
-          builtins.listToAttrs (
-            map (linkPath: {
-              name = lib.removePrefix "~/" linkPath;
-              value = {
-                source = "${scriptDrv}/bin/${name}";
-              };
-            }) extraLinks
+
+      config =
+        lib.setAttrByPath scriptAttrs (
+          lib.mkIf c.enable (
+            {
+              package = scriptDrv;
+            }
+            // lib.optionalAttrs (desktop != null) { inherit desktop; }
           )
-        );
-        assertions = [
-          {
-            assertion =
-              !config.scripts.${name}.enable
-              || !config.scripts.${name}.desktop.enable
-              || config.terminal.kitty.enable;
-            message = "scripts.${name}.desktop.enable requires terminal.kitty.enable because desktop entries launch scripts in kitty.";
-          }
-          {
-            assertion = !config.scripts.${name}.completion.enable || completion != { };
-            message = "scripts.${name}.completion.enable is true but no completion text was provided to mkScriptModule.";
-          }
-        ];
-      };
+        )
+        // {
+          home.file = lib.mkIf c.enable (
+            builtins.listToAttrs (
+              map (linkPath: {
+                name = lib.removePrefix "~/" linkPath;
+                value = {
+                  source = "${scriptDrv}/bin/${name}";
+                };
+              }) extraLinks
+            )
+          );
+          assertions = [
+            {
+              assertion = !c.enable || !c.desktop.enable || config.terminal.kitty.enable;
+              message = "${dottedName}.desktop.enable requires terminal.kitty.enable because desktop entries launch scripts in kitty.";
+            }
+            {
+              assertion = !c.completion.enable || completion != { };
+              message = "${dottedName}.completion.enable is true but no completion text was provided to mkScriptModule.";
+            }
+          ];
+          scriptPaths = [ scriptAttrs ];
+        };
     };
 in
 {
