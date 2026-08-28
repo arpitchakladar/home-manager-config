@@ -41,7 +41,7 @@
   urgent-background:           @base00;
   urgent-foreground:           @base08;
 
-  font: "FiraCode Nerd Font Bold 18";
+  font: @@rofi-font@@;
 }
 
 window {
@@ -151,7 +151,7 @@ message {
 textbox {
   background-color:   transparent;
   text-color:         @foreground;
-  font:               "FiraCode Nerd Font Bold 14";
+  font:               @@rofi-font-message@@;
 }
 
 error-message {
