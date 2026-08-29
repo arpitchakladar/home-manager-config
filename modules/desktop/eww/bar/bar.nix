@@ -108,14 +108,14 @@
         [
           (lib.getExe niri-status)
           (lib.getExe system-stats)
-          (toString ../../../assets/icons/bar/offline.svg)
-          (toString ../../../assets/icons/bar/wifi.svg)
-          (toString ../../../assets/icons/bar/ethernet.svg)
-          (toString ../../../assets/icons/bar/proxy.svg)
-          (toString ../../../assets/icons/bar/cpu.svg)
-          (toString ../../../assets/icons/bar/ram.svg)
-          (toString ../../../assets/icons/bar/audio.svg)
-          (toString ../../../assets/icons/bar/calendar.svg)
+          (toString ../../../../assets/icons/bar/offline.svg)
+          (toString ../../../../assets/icons/bar/wifi.svg)
+          (toString ../../../../assets/icons/bar/ethernet.svg)
+          (toString ../../../../assets/icons/bar/proxy.svg)
+          (toString ../../../../assets/icons/bar/cpu.svg)
+          (toString ../../../../assets/icons/bar/ram.svg)
+          (toString ../../../../assets/icons/bar/audio.svg)
+          (toString ../../../../assets/icons/bar/calendar.svg)
         ]
         (builtins.readFile ./bar.yuck);
   };

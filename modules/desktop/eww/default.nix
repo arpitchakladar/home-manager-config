@@ -5,7 +5,7 @@
 }:
 {
   imports = [
-    ./bar.nix
+    ./bar/bar.nix
   ];
 
   options.desktop.eww = {
