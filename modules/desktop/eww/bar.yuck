@@ -58,7 +58,7 @@
     (box :orientation "v" :class "system-item" :halign "fill" :space-evenly false :spacing 4
          :tooltip "${system_stats.net.tooltip}"
       (image :class "system-icon"
-             :path "${system_stats.net.status == 'down' ? '@@icon-offline@@' : system_stats.net.routes[0].type == 'wifi' ? '@@icon-wifi@@' : system_stats.net.routes[0].type == 'ethernet' ? '@@icon-ethernet@@' : '@@icon-offline@@'}"
+             :path "${system_stats.net.status == 'down' ? '@@icon-offline@@' : system_stats.net.routes[0].type == 'wifi' ? '@@icon-wifi@@' : system_stats.net.routes[0].type == 'ethernet' ? '@@icon-ethernet@@' : system_stats.net.routes[0].type == 'tun' ? '@@icon-proxy@@' : '@@icon-offline@@'}"
              :image-width 24 :image-height 24)
       (label :class "system-label small"
              :text "${system_stats.net.status == 'down' ? '-' : system_stats.net.routes[0].tx}")

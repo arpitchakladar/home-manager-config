@@ -6,4 +6,4 @@ modules/private/*.nix
 !modules/private/*.example.nix
 
 # nix testing bulid directory
-result
+result*

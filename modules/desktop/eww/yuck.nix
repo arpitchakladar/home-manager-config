@@ -100,6 +100,7 @@
           "@@icon-offline@@"
           "@@icon-wifi@@"
           "@@icon-ethernet@@"
+          "@@icon-proxy@@"
           "@@icon-cpu@@"
           "@@icon-ram@@"
           "@@icon-audio@@"
@@ -112,6 +113,7 @@
           (toString ../../../assets/icons/bar/offline.svg)
           (toString ../../../assets/icons/bar/wifi.svg)
           (toString ../../../assets/icons/bar/ethernet.svg)
+          (toString ../../../assets/icons/bar/proxy.svg)
           (toString ../../../assets/icons/bar/cpu.svg)
           (toString ../../../assets/icons/bar/ram.svg)
           (toString ../../../assets/icons/bar/audio.svg)
