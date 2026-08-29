@@ -7,7 +7,12 @@
 }:
 {
   options.desktop.wl-clipboard = {
-    package = lib.mkPackageOption pkgs "wl-clipboard" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = pkgs.wl-clipboard;
+      description = "The wl-clipboard package to use.";
+    };
   };
 
   config = lib.mkIf config.desktop.enable {

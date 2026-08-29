@@ -8,7 +8,12 @@
 {
   options.media.vlc = {
     enable = lib.mkEnableOption "Enables vlc.";
-    package = lib.mkPackageOption pkgs "vlc" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = pkgs.vlc;
+      description = "The vlc package to use.";
+    };
   };
 
   config = lib.mkIf config.media.vlc.enable {

@@ -12,7 +12,12 @@
 
   options.networking.bluetui = {
     enable = lib.mkEnableOption "Enables bluetui.";
-    package = lib.mkPackageOption pkgs "bluetui" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = pkgs.bluetui;
+      description = "The bluetui package to use.";
+    };
   };
 
   config = lib.mkIf config.networking.bluetui.enable {

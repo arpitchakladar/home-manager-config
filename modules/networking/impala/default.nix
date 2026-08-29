@@ -12,7 +12,12 @@
 
   options.networking.impala = {
     enable = lib.mkEnableOption "Enables impala.";
-    package = lib.mkPackageOption pkgs "impala" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = pkgs.impala;
+      description = "The impala package to use.";
+    };
   };
 
   config = lib.mkIf config.networking.impala.enable {

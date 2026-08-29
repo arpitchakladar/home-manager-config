@@ -8,7 +8,12 @@
 {
   options.media.pamixer = {
     enable = lib.mkEnableOption "Enables pamixer.";
-    package = lib.mkPackageOption pkgs "pamixer" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+      readOnly = true;
+      default = pkgs.pamixer;
+      description = "The pamixer package to use.";
+    };
   };
 
   config = lib.mkIf config.media.pamixer.enable {
