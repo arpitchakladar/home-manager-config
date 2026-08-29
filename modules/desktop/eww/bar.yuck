@@ -2,11 +2,10 @@
 (defpoll ampm :interval "10s" "date '+%p'")
 (defpoll date :interval "60s" "date '+%d/%m'")
 (defpoll full_date :interval "60s" "date '+%A, %d %B %Y'")
-(deflisten workspaces :initial "[]" "@@workspaces-script@@")
-(deflisten active-windows :initial "[]" "@@windows-script@@")
+(deflisten niri_status :initial "{\"workspaces\":[],\"active_windows\":[]}" "@@niri-status-script@@")
 (deflisten system_stats
   :initial "{\"cpu\":{\"percent\":0,\"per_core\":[],\"freq_mhz\":null,\"load_avg\":null,\"tooltip\":\"CPU: 0%\"},\"ram\":{\"percent\":0,\"used\":\"0B\",\"total\":\"0B\",\"available\":\"0B\",\"swap_percent\":0,\"swap_used\":\"0B\",\"swap_total\":\"0B\",\"speed_mhz\":null,\"tooltip\":\"RAM: 0%\"},\"net\":{\"status\":\"down\",\"tooltip\":\"Network Offline\",\"routes\":[]},\"sound\":{\"percent\":0,\"mute\":true,\"sink\":null,\"tooltip\":\"Volume: unknown\"}}"
-  "@@systemstats-script@@")
+  "@@system-stats-script@@")
 
 (defwindow bar
   :monitor 0
@@ -26,11 +25,11 @@
        :space-evenly false
        :class "bar-container"
        :vexpand true
-    (workspaces-widget)
-    (windows-widget)
+    (workspaces-widget :workspaces "${niri_status.workspaces}")
+    (windows-widget :windows "${niri_status.active_windows}")
     (system-widget)))
 
-(defwidget workspaces-widget []
+(defwidget workspaces-widget [workspaces]
   (box :orientation "v" :space-evenly false :spacing 4 :halign "fill" :class "workspaces"
     (for ws in workspaces
       (eventbox :onclick "niri msg action focus-workspace ${ws.idx}"
@@ -43,10 +42,9 @@
                    :image-width 20 :image-height 20)
             (label :class "workspace-idx" :text "${ws.idx}" :halign "end" :valign "end")))))))
 
-(defwidget windows-widget []
+(defwidget windows-widget [windows]
   (box :orientation "v" :space-evenly false :spacing 4 :halign "center" :class "windows" :vexpand true
-
-    (for w in active-windows
+    (for w in windows
       (eventbox :onclick "niri msg action focus-window --id ${w.id}"
                 :cursor "pointer"
                 :halign "fill"

@@ -21,7 +21,7 @@
 
       nativeBuildInputs = [
         config.file-management.ouch.package
-        pkgs.python3
+        (pkgs.luajit.withPackages (ps: [ ps.dkjson ]))
       ];
       dontUnpack = true;
 
@@ -61,7 +61,7 @@
         ${lib.optionalString (extensionKey != null) ''
           if [ -f "$out/manifest.json" ]; then
             echo "Injecting extension key into manifest.json to lock the extension ID..."
-            python3 ${./inject_extension_key.py} "$out/manifest.json" "${extensionKey}"
+            luajit ${./inject_extension_key.lua} "$out/manifest.json" "${extensionKey}"
           else
             echo "Warning: No manifest.json found in $out to inject the key!" >&2
           fi

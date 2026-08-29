@@ -9,10 +9,12 @@ let
   patchedHost =
     pkgs.runCommand "com.github.browserpass.native.json"
       {
-        nativeBuildInputs = [ pkgs.python3 ];
+        nativeBuildInputs = [
+          (pkgs.luajit.withPackages (ps: [ ps.dkjson ]))
+        ];
       }
       ''
-        python3 ${./patch_native_host.py} \
+        luajit ${./patch_native_host.lua} \
           ${config.web.chromium.extensions.browserpass.id} \
           ${config.programs.browserpass.package}/lib/browserpass/hosts/chromium/com.github.browserpass.native.json \
           $out
