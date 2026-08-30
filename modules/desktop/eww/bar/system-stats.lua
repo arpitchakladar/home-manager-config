@@ -337,20 +337,6 @@ local function build_ram_tooltip(ram_pct, used, total, available, swap_pct, swap
   return table.concat(lines, "\n")
 end
 
-local function build_sound_tooltip(percent, mute, sink)
-  local vol = tostring(percent) .. "%"
-  local lines = {}
-  if mute then
-    lines[#lines + 1] = string.format("Muted (%s)", vol)
-  else
-    lines[#lines + 1] = "Volume: " .. vol
-  end
-  if sink then
-    lines[#lines + 1] = "Sink: " .. sink
-  end
-  return table.concat(lines, "\n")
-end
-
 -- ------------------------------------------------ state collectors
 -- get_all_default_ifaces (`ip route`), get_iface_ip (`ip addr`), and the
 -- wifi branch of get_speed_mbps (`iw dev link`) each spawn a subprocess.
@@ -390,7 +376,7 @@ local function check_net_status(force)
 
   local ifaces = net_slow_ifaces
 
-  if #ifaces == 0 then
+  if ifaces == nil or #ifaces == 0 then
     return { status = "down", tooltip = "Network Offline", routes = {} }
   end
 

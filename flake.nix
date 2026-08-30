@@ -69,9 +69,29 @@
                 excludes = [ "\\.example\\.nix$" ];
               };
 
-              packages = with pkgs; [
-                nixd
-              ];
+              languages = {
+                lua = {
+                  enable = true;
+                  lsp = {
+                    enable = true;
+                    package = pkgs.lua-language-server;
+                  };
+                };
+                nix = {
+                  enable = true;
+                  lsp = {
+                    enable = true;
+                    package = pkgs.nixd;
+                  };
+                };
+                shell = {
+                  enable = true;
+                  lsp = {
+                    enable = true;
+                    package = pkgs.bash-language-server;
+                  };
+                };
+              };
             }
           )
         ];
