@@ -26,7 +26,7 @@
               ]
               [
                 ''"${config.fonts.normal} Bold ${toString config.fonts.size}"''
-                ''"${config.fonts.normal} Bold ${toString (config.fonts.size - 4)}"''
+                ''"${config.fonts.normal} Bold ${toString config.fonts.idxSize}"''
               ]
               (builtins.readFile ./theme.mustache.rasi);
         in

@@ -35,6 +35,30 @@
       description = "Default desktop UI (GTK) font size.";
       default = 11;
     };
+
+    iconSize = lib.mkOption {
+      type = lib.types.int;
+      description = "Font size for icons (base size + 6).";
+      default = 24;
+    };
+
+    labelSize = lib.mkOption {
+      type = lib.types.int;
+      description = "Font size for labels (base size - 2).";
+      default = 16;
+    };
+
+    smallSize = lib.mkOption {
+      type = lib.types.int;
+      description = "Font size for small text (base size - 6).";
+      default = 12;
+    };
+
+    idxSize = lib.mkOption {
+      type = lib.types.int;
+      description = "Font size for index numbers (base size - 4).";
+      default = 14;
+    };
   };
 
   config = {

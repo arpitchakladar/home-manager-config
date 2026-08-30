@@ -40,10 +40,10 @@
                 [
                   config.fonts.normal
                   (toString baseSize)
-                  (toString (baseSize + 6))
-                  (toString (baseSize - 2))
-                  (toString (baseSize - 6))
-                  (toString (baseSize - 4))
+                  (toString config.fonts.iconSize)
+                  (toString config.fonts.labelSize)
+                  (toString config.fonts.smallSize)
+                  (toString config.fonts.idxSize)
                 ]
                 (builtins.readFile ./eww.mustache.scss);
           }
@@ -61,9 +61,6 @@
         RemainAfterExit = true;
         ExecStart = "${lib.getExe config.desktop.eww.package} open bar";
         ExecStop = "${lib.getExe config.desktop.eww.package} close bar";
-      };
-      Install = {
-        WantedBy = [ config.programs.eww.systemd.target ];
       };
     };
   };
