@@ -59,6 +59,8 @@
       "image/avif" = "swayimg.desktop";
       "image/bmp" = "swayimg.desktop";
       "image/gif" = "swayimg.desktop";
+      "image/heic" = "swayimg.desktop";
+      "image/heif" = "swayimg.desktop";
       "image/jpeg" = "swayimg.desktop";
       "image/jpg" = "swayimg.desktop";
       "image/png" = "swayimg.desktop";
@@ -68,6 +70,7 @@
       "image/x-bmp" = "swayimg.desktop";
       "image/x-png" = "swayimg.desktop";
       "image/x-tga" = "swayimg.desktop";
+      "image/x-icon" = "swayimg.desktop";
     };
   };
 }

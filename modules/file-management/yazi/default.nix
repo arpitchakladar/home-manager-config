@@ -72,6 +72,11 @@ in
 
       xdg.mimeApps.defaultApplications = {
         "inode/directory" = "yazi.desktop";
+        "application/zip" = "yazi.desktop";
+        "application/x-gzip" = "yazi.desktop";
+        "application/x-tar" = "yazi.desktop";
+        "application/x-7z-compressed" = "yazi.desktop";
+        "application/x-rar-compressed" = "yazi.desktop";
       };
 
       home.sessionVariables = {
