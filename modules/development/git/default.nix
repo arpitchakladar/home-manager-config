@@ -2,7 +2,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 {
@@ -62,6 +61,7 @@
             logallrefupdates = true;
           };
           log.showSignature = true;
+          pull.rebase = true;
         }
 
         (lib.optionalAttrs config.development.git.useSSH {
@@ -72,7 +72,7 @@
           url."git@git.sr.ht:".insteadOf = "https://git.sr.ht/";
         })
 
-        (lib.optionalAttrs config.development.git.enable {
+        (lib.optionalAttrs config.development.delta.enable {
           core.pager = "delta";
           interactive.diffFilter = "delta --color-only";
           delta.navigate = true;

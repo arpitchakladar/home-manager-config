@@ -17,8 +17,6 @@
     programs.lazygit = lib.mkIf config.development.lazygit.enable {
       enable = true;
       enableBashIntegration = config.terminal.bash.enable;
-      enableFishIntegration = config.programs.fish.enable;
-      enableNushellIntegration = config.programs.nushell.enable;
       enableZshIntegration = config.terminal.zsh.enable;
       settings = {
         gui = with config.scheme.withHashtag; {
@@ -62,8 +60,8 @@
           autoFetch = false;
         };
         git = {
-          overrideGpg = true;
-          diffRenderers = [
+          overrideGpg = config.security.gpg.enable;
+          diffRenderers = lib.mkIf config.development.delta.enable [
             {
               colorArg = "always";
               command = "delta --paging=never {{diffArgs}}";
