@@ -16,11 +16,17 @@ let
       openssh
       bash
     ];
-    text = ''
-      export GNUPGHOME="${config.home.sessionVariables.GNUPGHOME}"
-      export GOPASS_SSH_KEYS="${lib.concatStringsSep " " gopassKeys}"
-      ${builtins.readFile ./gopass-ssh-load.sh}
-    '';
+    text =
+      builtins.replaceStrings
+        [
+          "@@GOPASS_SSH_KEYS@@"
+          "@@GNUPGHOME@@"
+        ]
+        [
+          (lib.concatStringsSep " " gopassKeys)
+          config.home.sessionVariables.GNUPGHOME
+        ]
+        (builtins.readFile ./gopass-ssh-load.sh);
   };
 in
 {
