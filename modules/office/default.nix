@@ -2,7 +2,7 @@
 { ... }:
 {
   imports = [
-    ./calcaurse
+    ./calcurse
     ./zathura
   ];
 }

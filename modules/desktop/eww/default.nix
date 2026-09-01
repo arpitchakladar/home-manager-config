@@ -55,6 +55,7 @@
         Description = "Open Eww Bar";
         After = [ "eww.service" ];
         Requires = [ "eww.service" ];
+        BindsTo = [ "eww.service" ];
       };
       Service = {
         Type = "oneshot";

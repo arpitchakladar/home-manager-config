@@ -61,7 +61,7 @@
   networking.usque.warp.enable = true;
 
   # Office
-  office.calcaurse.enable = true;
+  office.calcurse.enable = true;
   office.zathura.enable = true;
 
   # Security

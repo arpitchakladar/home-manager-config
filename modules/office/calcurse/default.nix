@@ -6,7 +6,7 @@
   ...
 }:
 {
-  options.office.calcaurse = {
+  options.office.calcurse = {
     enable = lib.mkEnableOption "Enables calcurse.";
     package = lib.mkOption {
       type = lib.types.package;
@@ -16,7 +16,7 @@
     };
   };
 
-  config = lib.mkIf config.office.calcaurse.enable {
-    home.packages = [ config.office.calcaurse.package ];
+  config = lib.mkIf config.office.calcurse.enable {
+    home.packages = [ config.office.calcurse.package ];
   };
 }
