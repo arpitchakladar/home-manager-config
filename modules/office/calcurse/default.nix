@@ -6,21 +6,34 @@
   ...
 }:
 let
-  calcursePackage =
-    if config.development.nixvim.enable then
-      pkgs.symlinkJoin {
-        name = "calcurse-wrapped";
-        paths = [ pkgs.calcurse ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/calcurse --set PAGER "nvim"
-        '';
-        meta = pkgs.calcurse.meta // {
-          mainProgram = "calcurse";
-        };
-      }
-    else
-      pkgs.calcurse;
+  calcurseSync = pkgs.writeShellScriptBin "calcurse-sync" (builtins.readFile ./calcurse-sync.sh);
+
+  calcursePackage = pkgs.symlinkJoin {
+    name = "calcurse-wrapped";
+    paths = [
+      pkgs.bash
+      pkgs.calcurse
+      calcurseSync
+    ]
+    ++ lib.optionals config.development.nixvim.enable [ config.development.nixvim.package ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      ${lib.optionalString config.development.nixvim.enable ''
+        wrapProgram $out/bin/calcurse --set PAGER "nvim"
+      ''}
+      wrapProgram $out/bin/calcurse-sync \
+        --prefix PATH : ${
+          lib.makeBinPath [
+            config.development.git.package
+            pkgs.coreutils
+            pkgs.gnused
+          ]
+        }
+    '';
+    meta = {
+      mainProgram = "calcurse";
+    };
+  };
 in
 {
   options.office.calcurse = {
