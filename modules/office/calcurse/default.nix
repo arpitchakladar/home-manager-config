@@ -23,5 +23,10 @@
       source = ./conf;
       force = true;
     };
+
+    xdg.configFile."calcurse/keys" = {
+      source = ./keys;
+      force = true;
+    };
   };
 }
