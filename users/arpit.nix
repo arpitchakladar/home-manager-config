@@ -69,6 +69,7 @@
   security.gopass.ssh-agent.enable = false;
   security.gpg.enable = true;
   security.gpg.backup.enable = true;
+  security.gpg-tui.enable = true;
   security.ssh.enable = true;
 
   # System

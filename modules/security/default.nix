@@ -5,6 +5,7 @@
   imports = [
     ./gopass
     ./gpg
+    ./gpg-tui
     ./ssh
   ];
 }
