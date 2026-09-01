@@ -18,5 +18,10 @@
 
   config = lib.mkIf config.office.calcurse.enable {
     home.packages = [ config.office.calcurse.package ];
+
+    xdg.configFile."calcurse/conf" = {
+      source = ./conf;
+      force = true;
+    };
   };
 }

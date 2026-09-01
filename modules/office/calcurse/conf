@@ -1,0 +1,42 @@
+# Appearance
+appearance.calendarview=monthly
+appearance.compactpanels=no
+appearance.defaultpanel=calendar
+appearance.layout=1
+appearance.headerline=yes
+appearance.eventseparator=yes
+appearance.dayseparator=yes
+appearance.emptyline=yes
+appearance.emptyday=--
+appearance.notifybar=yes
+appearance.sidebarwidth=0
+appearance.theme=green on black
+appearance.todoview=hide-completed
+appearance.headingpos=right-justified
+
+# Daemon
+daemon.enable=no
+daemon.log=no
+
+# Format
+format.inputdate=1
+format.notifydate=%a %F
+format.notifytime=%T
+format.appointmenttime=%H:%M
+format.outputdate=%D
+format.dayheading=%B %e, %Y
+
+# General
+general.autogc=no
+general.autosave=yes
+general.confirmdelete=yes
+general.confirmquit=yes
+general.firstdayofweek=monday
+general.multipledays=yes
+general.periodicsave=0
+general.systemevents=yes
+
+# Notification
+notification.warning=300
+notification.command=printf '\a'
+notification.notifyall=flagged-only
