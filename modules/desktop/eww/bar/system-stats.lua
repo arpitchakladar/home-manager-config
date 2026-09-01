@@ -530,6 +530,84 @@ local function get_sound_state()
   }
 end
 
+-- ------------------------------------------------ battery
+local function find_battery_path()
+  local handle = io.popen("ls /sys/class/power_supply/ 2>/dev/null")
+  if not handle then
+    return nil
+  end
+  local out = handle:read("*a")
+  handle:close()
+  for name in out:gmatch("[^\n]+") do
+    if posix.stat("/sys/class/power_supply/" .. name .. "/capacity") then
+      return "/sys/class/power_supply/" .. name
+    end
+  end
+  return nil
+end
+
+local function get_battery_state(path)
+  if not path then
+    return { percent = 0, present = false, charging = false, tooltip = "No battery", status = "none" }
+  end
+
+  local function read_file(subpath)
+    local f = io.open(path .. "/" .. subpath)
+    if not f then
+      return nil
+    end
+    local s = f:read("*l")
+    f:close()
+    return s and s:match("^%s*(.-)%s*$")
+  end
+
+  local capacity_str = read_file("capacity")
+  local capacity = capacity_str and tonumber(capacity_str)
+  if not capacity then
+    return { percent = 0, present = false, charging = false, tooltip = "No battery", status = "none" }
+  end
+
+  local status_str = read_file("status")
+  local charging = (status_str == "Charging" or status_str == "Full")
+
+  local time_to_empty = read_file("time_to_empty_now")
+  local time_to_full = read_file("time_to_full_now")
+  local time_str = nil
+  if not charging and time_to_empty then
+    local secs = tonumber(time_to_empty)
+    if secs and secs > 0 then
+      local h = math.floor(secs / 3600)
+      local m = math.floor((secs % 3600) / 60)
+      time_str = string.format("%dh%dm remaining", h, m)
+    end
+  elseif charging and time_to_full then
+    local secs = tonumber(time_to_full)
+    if secs and secs > 0 then
+      local h = math.floor(secs / 3600)
+      local m = math.floor((secs % 3600) / 60)
+      time_str = string.format("%dh%dm until full", h, m)
+    end
+  end
+
+  local lines = { string.format("Battery: %d%%", capacity) }
+  if status_str then
+    lines[#lines + 1] = "Status: " .. status_str
+  end
+  if time_str then
+    lines[#lines + 1] = time_str
+  end
+
+  return {
+    percent = capacity,
+    present = true,
+    charging = charging,
+    status = nonnull(status_str),
+    tooltip = table.concat(lines, "\n"),
+  }
+end
+
+local battery_path = find_battery_path()
+
 -- ------------------------------------------------ state + emit
 local state = {
   cpu = {
@@ -560,6 +638,13 @@ local state = {
     mute = false,
     sink = NULL,
     tooltip = "Volume: unknown",
+  },
+  battery = {
+    percent = 0,
+    present = false,
+    charging = false,
+    status = "none",
+    tooltip = "No battery",
   },
 }
 
@@ -744,6 +829,7 @@ local function main()
 
       state.cpu = cpu_state
       state.ram = ram_state
+      state.battery = get_battery_state(battery_path)
       -- Net status is always refreshed here too, so even with inotify
       -- permanently unavailable we still pick up link changes within
       -- CPU_INTERVAL seconds.

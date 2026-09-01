@@ -4,17 +4,16 @@
 (defpoll full_date :interval "60s" "date '+%A, %d %B %Y'")
 (deflisten niri_status :initial "{\"workspaces\":[],\"active_windows\":[]}" "@@niri-status-script@@")
 (deflisten system_stats
-  :initial "{\"cpu\":{\"percent\":0,\"per_core\":[],\"freq_mhz\":null,\"load_avg\":null,\"tooltip\":\"CPU: 0%\"},\"ram\":{\"percent\":0,\"used\":\"0B\",\"total\":\"0B\",\"available\":\"0B\",\"swap_percent\":0,\"swap_used\":\"0B\",\"swap_total\":\"0B\",\"speed_mhz\":null,\"tooltip\":\"RAM: 0%\"},\"net\":{\"status\":\"down\",\"tooltip\":\"Network Offline\",\"routes\":[]},\"sound\":{\"percent\":0,\"mute\":true,\"sink\":null,\"tooltip\":\"Volume: unknown\"}}"
+  :initial "{\"cpu\":{\"percent\":0,\"per_core\":[],\"freq_mhz\":null,\"load_avg\":null,\"tooltip\":\"CPU: 0%\"},\"ram\":{\"percent\":0,\"used\":\"0B\",\"total\":\"0B\",\"available\":\"0B\",\"swap_percent\":0,\"swap_used\":\"0B\",\"swap_total\":\"0B\",\"speed_mhz\":null,\"tooltip\":\"RAM: 0%\"},\"net\":{\"status\":\"down\",\"tooltip\":\"Network Offline\",\"routes\":[]},\"sound\":{\"percent\":0,\"mute\":true,\"sink\":null,\"tooltip\":\"Volume: unknown\"},\"battery\":{\"percent\":0,\"present\":false,\"charging\":false,\"status\":\"none\",\"tooltip\":\"No battery\"}}"
   "@@system-stats-script@@")
 
 (defwindow bar
   :monitor 0
-  :geometry (geometry
-              :x "0px"
-              :y "0px"
-              :width "60px"
-              :height "100%"
-              :anchor "top right")
+  :geometry (geometry :x "0px"
+                      :y "0px"
+                      :width "60px"
+                      :height "100%"
+                      :anchor "top right")
   :stacking "fg"
   :focusable "none"
   :reserve (struts :distance "60px" :side "right")
@@ -71,6 +70,10 @@
          :tooltip "${system_stats.ram.tooltip}"
       (image :class "system-icon" :path "@@icon-ram@@" :image-width 24 :image-height 24)
       (label :class "system-label" :text "${system_stats.ram.percent}%"))
+    (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
+         :tooltip "${system_stats.battery.tooltip}"
+      (image :class "system-icon" :path "@@icon-battery@@" :image-width 24 :image-height 24)
+      (label :class "system-label" :text "${system_stats.battery.present ? (system_stats.battery.percent + '%') : '-'}"))
     (eventbox :onclick "pamixer --toggle-mute"
               :onscroll "bash -c '[ \"{}\" = \"up\" ] && pamixer --increase 5 --unmute || pamixer --decrease 5'"
               :cursor "pointer" :halign "fill"

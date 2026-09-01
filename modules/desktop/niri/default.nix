@@ -84,6 +84,7 @@
         default-column-width = {
           proportion = 1.0;
         };
+        background-color = "transparent";
         focus-ring = {
           width = 1;
           active-color = config.scheme.withHashtag.base07;
@@ -103,5 +104,12 @@
         "fill"
       ];
     };
+
+    wayland.windowManager.niri.extraConfig = ''
+      layer-rule {
+        match namespace="^wallpaper$"
+        place-within-backdrop true
+      }
+    '';
   };
 }

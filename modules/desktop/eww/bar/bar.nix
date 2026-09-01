@@ -104,6 +104,7 @@
           "@@icon-ram@@"
           "@@icon-audio@@"
           "@@icon-calendar@@"
+          "@@icon-battery@@"
         ]
         [
           (lib.getExe niri-status)
@@ -116,6 +117,7 @@
           (toString ../../../../assets/icons/bar/ram.svg)
           (toString ../../../../assets/icons/bar/audio.svg)
           (toString ../../../../assets/icons/bar/calendar.svg)
+          (toString ../../../../assets/icons/bar/battery.svg)
         ]
         (builtins.readFile ./bar.yuck);
   };
