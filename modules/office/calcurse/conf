@@ -11,7 +11,7 @@ appearance.emptyday=--
 appearance.notifybar=yes
 appearance.sidebarwidth=0
 appearance.theme=green on black
-appearance.todoview=hide-completed
+appearance.todoview=show-completed
 appearance.headingpos=right-justified
 
 # Daemon
