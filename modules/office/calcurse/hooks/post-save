@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Commits and pushes the calcurse data dir after every save.
+#
+# Hooks hand calcurse's terminal over to whatever they run and calcurse
+# waits for them to exit before redrawing, so this backgrounds the actual
+# sync instead of blocking the UI on a git push. Output goes to a log
+# file rather than stdout/stderr, since hooks aren't meant to be
+# interactive.
+
+log="${XDG_DATA_HOME:-$HOME/.local/share}/calcurse/hooks.log"
+
+(
+  printf '[%s] post-save\n' "$(date '+%Y-%m-%d %H:%M:%S')"
+  calcurse-sync sync
+) >>"$log" 2>&1 &
+disown

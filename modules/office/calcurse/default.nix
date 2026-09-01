@@ -55,5 +55,15 @@ in
       source = ./keys;
       force = true;
     };
+    xdg.configFile."calcurse/hooks/pre-load" = {
+      source = ./hooks/pre-load;
+      executable = true;
+      force = true;
+    };
+    xdg.configFile."calcurse/hooks/post-save" = {
+      source = ./hooks/post-save;
+      executable = true;
+      force = true;
+    };
   };
 }
