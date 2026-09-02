@@ -5,6 +5,7 @@
     ../modules/private/calcurse.nix
     ../modules/private/email.nix
     ../modules/private/git.nix
+    ../modules/private/gopass.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

@@ -47,6 +47,26 @@ in
         description = "The gopass-ssh-load script package.";
       };
     };
+    sync = {
+      enable = lib.mkEnableOption "Enables git-backed syncing of the gopass data directory.";
+      remote = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "Git remote URL for the gopass data directory. Use an https:// URL if 'credential' is configured.";
+      };
+      credential = {
+        username = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "Username for HTTPS git authentication against the gopass remote.";
+        };
+        passwordGopassPath = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "gopass entry path holding the password or token used.";
+        };
+      };
+    };
   };
 
   config = lib.mkMerge [
@@ -75,6 +95,9 @@ in
             tag = {
               gpgSign = false;
             };
+          }
+          // lib.optionalAttrs (config.security.gopass.sync.credential.passwordGopassPath != null) {
+            credential.helper = "!f() { echo username=${lib.escapeShellArg config.security.gopass.sync.credential.username}; echo password=\"$(${config.security.gopass.package}/bin/gopass show -o ${lib.escapeShellArg config.security.gopass.sync.credential.passwordGopassPath})\"; }; f";
           };
         }
       ];
