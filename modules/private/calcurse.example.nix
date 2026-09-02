@@ -2,6 +2,12 @@
 { ... }:
 {
   config = {
-    office.calcurse.sync.remote = "YOUR_REPOSITORY_URL";
+    office.calcurse.sync = {
+      remote = "YOUR_REPOSITORY_URL";
+      credential = {
+        username = "example";
+        passwordGopassPath = "websites/github.com/example/tokens/calendar";
+      };
+    };
   };
 }

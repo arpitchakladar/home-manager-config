@@ -54,7 +54,19 @@ in
       remote = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
         default = null;
-        description = "Git remote URL for the calcurse data directory. When set, calcurse-sync uses it automatically on first init instead of prompting.";
+        description = "Git remote URL for the calcurse data directory. Use an https:// URL if 'credential' is configured. When set, calcurse-sync uses it automatically on first init instead of prompting.";
+      };
+      credential = {
+        username = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "Username for HTTPS git authentication against the calcurse remote.";
+        };
+        passwordGopassPath = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "gopass entry path holding the password or token used for HTTPS git authentication against the calcurse remote. E.g. 'git/calcurse-sync'.";
+        };
       };
     };
   };
@@ -94,6 +106,9 @@ in
               };
               commit.gpgSign = false;
               tag.gpgSign = false;
+            }
+            // lib.optionalAttrs (config.office.calcurse.sync.credential.passwordGopassPath != null) {
+              credential.helper = "!f() { echo username=${lib.escapeShellArg config.office.calcurse.sync.credential.username}; echo password=\"$(${config.security.gopass.package}/bin/gopass show -o ${lib.escapeShellArg config.office.calcurse.sync.credential.passwordGopassPath})\"; }; f";
             };
           }
         ];
