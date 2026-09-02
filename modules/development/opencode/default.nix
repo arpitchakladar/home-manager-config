@@ -17,6 +17,22 @@
   };
 
   config = lib.mkIf config.development.opencode.enable {
+    home.file.".local/share/icons/hicolor/scalable/apps/opencode.svg" =
+      lib.mkIf config.development.opencode.enable
+        {
+          source = ../../../assets/icons/apps/opencode.svg;
+        };
+
+    xdg.desktopEntries."opencode" = {
+      name = "opencode";
+      exec = "${lib.getExe config.terminal.kitty.package} --class opencode -e ${lib.getExe config.development.opencode.package}";
+      icon = "opencode";
+      categories = [ "Development" ];
+      comment = "AI-powered coding assistant";
+      terminal = false;
+      type = "Application";
+    };
+
     programs.opencode = {
       enable = true;
       package = pkgs.opencode;
