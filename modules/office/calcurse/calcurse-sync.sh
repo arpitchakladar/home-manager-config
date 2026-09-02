@@ -6,7 +6,8 @@
 # Usage:
 #   calcurse-sync init            Turn the calcurse data dir into a git repo
 #                                  and (optionally) attach a remote.
-#   calcurse-sync sync            Commit any changes and push.
+#   calcurse-sync sync            Commit any changes and push. Initializes
+#                                  the repo automatically on first run.
 #   calcurse-sync pull            Pull down changes from the remote.
 #   calcurse-sync status          Show git status of the data directory.
 #   calcurse-sync remote <url>    Add/update the remote after the fact.
@@ -45,6 +46,10 @@ Run 'calcurse-sync init' first to set one up."
   fi
 }
 
+repo_exists() {
+  [ -d "$DATA_DIR/.git" ]
+}
+
 has_remote() {
   git -C "$DATA_DIR" remote get-url origin >/dev/null 2>&1
 }
@@ -71,16 +76,11 @@ readable_timestamp() {
   printf '%s%s %s at %s' "$day" "$suffix" "$month_year" "$time_part"
 }
 
-cmd_init() {
-  require_git
-  require_data_dir
-
-  if [ -d "$DATA_DIR/.git" ]; then
-    die "a git repository already exists in $DATA_DIR
-If you meant to reconfigure the remote, use 'calcurse-sync remote <url>' instead."
-  fi
-
-  info "Initializing git repo in $DATA_DIR"
+# Initializes the git repo, makes an initial commit if there's anything to
+# commit, and prompts for a remote to push to. Shared by `init` (explicit,
+# manual) and `sync` (automatic, first-run-on-a-new-device).
+do_init() {
+  info "No git repository found in $DATA_DIR — initializing one."
   git -C "$DATA_DIR" init -b "$BRANCH" >/dev/null
 
   # calcurse sometimes drops lock/swap files in here; keep them out of git
@@ -88,18 +88,20 @@ If you meant to reconfigure the remote, use 'calcurse-sync remote <url>' instead
     cat > "$DATA_DIR/.gitignore" <<'EOF'
 *.lock
 *.swp
+*.pid
+*.log
 EOF
   fi
 
-  git -C "$DATA_DIR" add -A
-  if ! git -C "$DATA_DIR" diff --cached --quiet; then
-    git -C "$DATA_DIR" commit -m "sync: $(readable_timestamp)" >/dev/null
-    info "Created initial commit."
+  local remote_url=""
+  if [ -t 0 ]; then
+    read -r -p "Remote URL to push to (leave blank to skip): " remote_url
   else
-    warn "Nothing to commit yet (data directory is empty)."
+    warn "Running non-interactively (e.g. from a calcurse hook) — skipping"
+    warn "the remote-URL prompt. Run 'calcurse-sync remote <url>' once you're"
+    warn "at a terminal to enable pushing."
   fi
 
-  read -r -p "Remote URL to push to (leave blank to skip): " remote_url
   if [ -n "$remote_url" ]; then
     git -C "$DATA_DIR" remote add origin "$remote_url"
     info "Pushing initial commit to $remote_url"
@@ -110,10 +112,22 @@ EOF
       error "credentials, then try 'calcurse-sync sync' again."
       exit 1
     fi
-  else
+  elif [ -t 0 ]; then
     warn "No remote configured. This repo will only track history locally"
     warn "until you run 'calcurse-sync remote <url>'."
   fi
+}
+
+cmd_init() {
+  require_git
+  require_data_dir
+
+  if repo_exists; then
+    die "a git repository already exists in $DATA_DIR
+If you meant to reconfigure the remote, use 'calcurse-sync remote <url>' instead."
+  fi
+
+  do_init
 }
 
 cmd_remote() {
@@ -135,7 +149,11 @@ cmd_remote() {
 cmd_sync() {
   require_git
   require_data_dir
-  require_repo
+
+  if ! repo_exists; then
+    do_init
+    return 0
+  fi
 
   cd "$DATA_DIR"
   git add -A
