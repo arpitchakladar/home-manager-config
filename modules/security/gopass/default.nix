@@ -96,9 +96,15 @@ in
               gpgSign = false;
             };
           }
-          // lib.optionalAttrs (config.security.gopass.sync.credential.passwordGopassPath != null) {
-            credential.helper = "!f() { echo username=${lib.escapeShellArg config.security.gopass.sync.credential.username}; echo password=\"$(${config.security.gopass.package}/bin/gopass show -o ${lib.escapeShellArg config.security.gopass.sync.credential.passwordGopassPath})\"; }; f";
-          };
+          //
+            lib.optionalAttrs
+              (
+                config.security.gopass.sync.enable
+                && config.security.gopass.sync.credential.passwordGopassPath != null
+              )
+              {
+                credential.helper = "!f() { echo username=${lib.escapeShellArg config.security.gopass.sync.credential.username}; echo password=\"$(${config.security.gopass.package}/bin/gopass show -o ${lib.escapeShellArg config.security.gopass.sync.credential.passwordGopassPath})\"; }; f";
+              };
         }
       ];
 
@@ -120,8 +126,30 @@ in
         type = "Application";
       };
     })
+
     (lib.mkIf config.security.gopass.ssh-agent.enable {
       home.packages = [ config.security.gopass.ssh-agent.package ];
+    })
+
+    (lib.mkIf config.security.gopass.sync.enable {
+      home.activation.gopassSyncInit =
+        let
+          gopassSyncInit = pkgs.writeShellApplication {
+            name = "gopass-sync-init";
+            runtimeInputs = [
+              pkgs.bash
+              config.development.git.package
+            ];
+            text =
+              builtins.replaceStrings
+                [ "@@PASSWORD_STORE_DIR@@" "@@REMOTE_REPO_URL@@" ]
+                [ config.programs.password-store.settings.PASSWORD_STORE_DIR config.security.gopass.sync.remote ]
+                (builtins.readFile ./gopass-sync-init.sh);
+          };
+        in
+        lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          run ${lib.getExe gopassSyncInit} || true
+        '';
     })
   ];
 }
