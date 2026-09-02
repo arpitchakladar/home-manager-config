@@ -41,7 +41,7 @@ CALCURSE_DATA_DIR to point at the right location."
 require_repo() {
   if [ ! -d "$DATA_DIR/.git" ]; then
     die "no git repository found in $DATA_DIR
-Run '$(basename "$0") init' first to set one up."
+Run 'calcurse-sync init' first to set one up."
   fi
 }
 
@@ -77,7 +77,7 @@ cmd_init() {
 
   if [ -d "$DATA_DIR/.git" ]; then
     die "a git repository already exists in $DATA_DIR
-If you meant to reconfigure the remote, use '$(basename "$0") remote <url>' instead."
+If you meant to reconfigure the remote, use 'calcurse-sync remote <url>' instead."
   fi
 
   info "Initializing git repo in $DATA_DIR"
@@ -107,12 +107,12 @@ EOF
       info "Repo initialized and pushed."
     else
       error "Push failed. The remote was still added — check the URL and your"
-      error "credentials, then try '$(basename "$0") sync' again."
+      error "credentials, then try 'calcurse-sync sync' again."
       exit 1
     fi
   else
     warn "No remote configured. This repo will only track history locally"
-    warn "until you run '$(basename "$0") remote <url>'."
+    warn "until you run 'calcurse-sync remote <url>'."
   fi
 }
 
@@ -121,7 +121,7 @@ cmd_remote() {
   require_repo
 
   local url="${1:-}"
-  [ -n "$url" ] || die "usage: $(basename "$0") remote <url>"
+  [ -n "$url" ] || die "usage: calcurse-sync remote <url>"
 
   if has_remote; then
     git -C "$DATA_DIR" remote set-url origin "$url"
@@ -149,7 +149,7 @@ cmd_sync() {
 
   if ! has_remote; then
     warn "No remote configured for this repo — commit saved locally only."
-    warn "Run '$(basename "$0") remote <url>' to enable pushing."
+    warn "Run 'calcurse-sync remote <url>' to enable pushing."
     return 0
   fi
 
@@ -171,7 +171,7 @@ cmd_sync() {
     status=$?
     error "Push failed."
     error "This usually means the remote has commits you don't have locally"
-    error "(e.g. synced from another machine). Run '$(basename "$0") pull'"
+    error "(e.g. synced from another machine). Run 'calcurse-sync pull'"
     error "to merge them in, then sync again. If that's not it, check your"
     error "network connection and git credentials."
     exit "$status"
@@ -185,14 +185,14 @@ cmd_pull() {
 
   if ! has_remote; then
     die "no remote configured for this repo.
-Run '$(basename "$0") remote <url>' first."
+Run 'calcurse-sync remote <url>' first."
   fi
 
   cd "$DATA_DIR"
 
   if [ -n "$(git status --porcelain)" ]; then
     warn "You have uncommitted changes in $DATA_DIR."
-    warn "Run '$(basename "$0") sync' first so a pull can't clobber them."
+    warn "Run 'calcurse-sync sync' first so a pull can't clobber them."
     die "aborting pull to avoid data loss."
   fi
 
@@ -231,7 +231,7 @@ main() {
     status) cmd_status "$@" ;;
     remote) cmd_remote "$@" ;;
     help|-h|--help) cmd_help ;;
-    *) die "unknown command: $sub (try '$(basename "$0") help')" ;;
+    *) die "unknown command: $sub (try 'calcurse-sync help')" ;;
   esac
 }
 
