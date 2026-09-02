@@ -30,8 +30,6 @@
       description = "Git email.";
     };
 
-    useSSH = lib.mkEnableOption "Use SSH instead of HTTPS for common git platforms.";
-
     signing = {
       key = lib.mkOption {
         type = lib.types.nullOr lib.types.str;
@@ -63,14 +61,6 @@
           log.showSignature = true;
           pull.rebase = true;
         }
-
-        (lib.optionalAttrs config.development.git.useSSH {
-          url."git@github.com:".insteadOf = "https://github.com/";
-          url."git@gitlab.com:".insteadOf = "https://gitlab.com/";
-          url."git@bitbucket.org:".insteadOf = "https://bitbucket.org/";
-          url."git@codeberg.org:".insteadOf = "https://codeberg.org/";
-          url."git@git.sr.ht:".insteadOf = "https://git.sr.ht/";
-        })
 
         (lib.optionalAttrs config.development.delta.enable {
           core.pager = "delta";

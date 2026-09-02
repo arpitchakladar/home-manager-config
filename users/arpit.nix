@@ -31,7 +31,6 @@
   development.bruno.enable = true;
   development.delta.enable = true;
   development.git.enable = true;
-  development.git.useSSH = true;
   development.git.signing.signByDefault = true;
   development.lazygit.enable = true;
   development.nixvim.enable = true;
