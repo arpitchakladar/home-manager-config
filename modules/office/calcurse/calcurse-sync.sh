@@ -25,6 +25,7 @@ set -euo pipefail
 
 DATA_DIR="${CALCURSE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/calcurse}"
 BRANCH="main"
+SYNC_TIMEOUT="8"   # seconds before a network op gives up
 
 info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
 warn()  { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
@@ -188,15 +189,20 @@ cmd_sync() {
 
   info "Pushing to remote..."
   if has_upstream; then
-    push_cmd=(git push)
+    push_cmd=(timeout "$SYNC_TIMEOUT" git push)
   else
-    push_cmd=(git push -u origin "$BRANCH")
+    push_cmd=(timeout "$SYNC_TIMEOUT" git push -u origin "$BRANCH")
   fi
 
   if "${push_cmd[@]}"; then
     info "Sync complete."
   else
     status=$?
+    if [ "$status" -eq 124 ]; then
+      warn "Push timed out after ${SYNC_TIMEOUT}s — commit saved locally, will"
+      warn "retry on next sync."
+      return 0
+    fi
     error "Push failed."
     error "This usually means the remote has commits you don't have locally"
     error "(e.g. synced from another machine). Run 'calcurse-sync pull'"
@@ -212,8 +218,8 @@ cmd_pull() {
   require_repo
 
   if ! has_remote; then
-    die "no remote configured for this repo.
-Run 'calcurse-sync remote <url>' first."
+    warn "no remote configured for this repo — skipping pull."
+    return 0
   fi
 
   cd "$DATA_DIR"
@@ -224,10 +230,17 @@ Run 'calcurse-sync remote <url>' first."
     die "aborting pull to avoid data loss."
   fi
 
-  info "Pulling from remote..."
-  if git pull --rebase origin "$BRANCH"; then
+  info "Pulling from remote (timeout ${SYNC_TIMEOUT}s)..."
+  if timeout "$SYNC_TIMEOUT" git pull --rebase origin "$BRANCH"; then
     info "Up to date."
   else
+    status=$?
+    if [ "$status" -eq 124 ]; then
+      warn "Pull timed out after ${SYNC_TIMEOUT}s — continuing with local data."
+      warn "Set \$CALCURSE_SYNC_TIMEOUT to a higher value if your connection"
+      warn "is just slow, not down."
+      return 0
+    fi
     error "Pull failed — likely a merge conflict."
     error "Resolve conflicts manually in $DATA_DIR, then run:"
     error "  git -C \"$DATA_DIR\" rebase --continue"
