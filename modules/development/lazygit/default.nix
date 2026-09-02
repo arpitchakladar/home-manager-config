@@ -14,6 +14,22 @@
     };
   };
   config = {
+    home.file.".local/share/icons/hicolor/scalable/apps/git.svg" =
+      lib.mkIf config.development.lazygit.enable
+        {
+          source = ../../../assets/icons/apps/git.svg;
+        };
+
+    xdg.desktopEntries."lazygit" = lib.mkIf config.development.lazygit.enable {
+      name = "lazygit";
+      exec = "${lib.getExe config.terminal.kitty.package} --class lazygit -e ${lib.getExe config.development.lazygit.package}";
+      icon = "git";
+      categories = [ "Development" ];
+      comment = "A simple terminal UI for git commands";
+      terminal = false;
+      type = "Application";
+    };
+
     programs.lazygit = lib.mkIf config.development.lazygit.enable {
       enable = true;
       enableBashIntegration = config.terminal.bash.enable;

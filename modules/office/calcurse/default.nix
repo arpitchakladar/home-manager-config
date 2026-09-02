@@ -74,6 +74,23 @@ in
   config = lib.mkIf config.office.calcurse.enable (
     lib.mkMerge [
       {
+        home.file.".local/share/icons/hicolor/scalable/apps/calcurse.svg" = {
+          source = ../../../assets/icons/apps/calcurse.svg;
+        };
+
+        xdg.desktopEntries."calcurse" = {
+          name = "calcurse";
+          exec = "${lib.getExe config.terminal.kitty.package} --class calcurse -e ${lib.getExe config.office.calcurse.package}";
+          icon = "calcurse";
+          categories = [
+            "Office"
+            "Calendar"
+          ];
+          comment = "Text-based calendar and scheduling application";
+          terminal = false;
+          type = "Application";
+        };
+
         home.packages = [ config.office.calcurse.package ];
         xdg.configFile."calcurse/conf" = {
           source = ./conf;
