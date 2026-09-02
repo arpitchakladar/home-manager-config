@@ -5,6 +5,7 @@
     ../modules/private/calcurse.nix
     ../modules/private/email.nix
     ../modules/private/git.nix
+    ../modules/private/gopass.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -31,7 +32,6 @@
   development.bruno.enable = true;
   development.delta.enable = true;
   development.git.enable = true;
-  development.git.useSSH = true;
   development.git.signing.signByDefault = true;
   development.lazygit.enable = true;
   development.nixvim.enable = true;
@@ -68,7 +68,8 @@
 
   # Security
   security.gopass.enable = true;
-  security.gopass.ssh-agent.enable = false;
+  security.gopass.ssh-agent.enable = true;
+  security.gopass.sync.enable = true;
   security.gpg.enable = true;
   security.gpg.backup.enable = true;
   security.gpg-tui.enable = true;

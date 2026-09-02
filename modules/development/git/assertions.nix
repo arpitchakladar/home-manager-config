@@ -3,14 +3,6 @@
 {
   assertions = [
     {
-      assertion =
-        !config.development.git.useSSH || (config.development.git.enable && config.security.ssh.enable);
-      message = ''
-        development.git.useSSH is enabled but security.ssh.enable is not.
-        SSH must be enabled (security.ssh.enable = true) to use SSH for git.
-      '';
-    }
-    {
       assertion = !config.development.git.signing.signByDefault || config.development.git.enable;
       message = ''
         development.git.signing.signByDefault is enabled but development.git.enable is not.

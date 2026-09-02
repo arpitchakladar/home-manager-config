@@ -1,8 +1,8 @@
-# Calcurse - Template for configuring calcurse, specially syncing
+# Gopass - Template for configuring gopass, specially syncing
 { ... }:
 {
   config = {
-    office.calcurse.sync = {
+    security.gopass.sync = {
       remote = "YOUR_REPOSITORY_URL";
       credential = {
         username = "example";

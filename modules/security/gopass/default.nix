@@ -10,11 +10,11 @@ let
 
   gopassSshLoadScript = pkgs.writeShellApplication {
     name = "gopass-ssh-load";
-    runtimeInputs = with pkgs; [
+    runtimeInputs = [
       config.security.gopass.package
-      gnupg
-      openssh
-      bash
+      config.security.gpg.package
+      config.security.ssh.package
+      pkgs.bash
     ];
     text =
       builtins.replaceStrings
@@ -47,6 +47,26 @@ in
         description = "The gopass-ssh-load script package.";
       };
     };
+    sync = {
+      enable = lib.mkEnableOption "Enables git-backed syncing of the gopass data directory.";
+      remote = lib.mkOption {
+        type = lib.types.nullOr lib.types.str;
+        default = null;
+        description = "Git remote URL for the gopass data directory. Use an https:// URL if 'credential' is configured.";
+      };
+      credential = {
+        username = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "Username for HTTPS git authentication against the gopass remote.";
+        };
+        passwordGopassPath = lib.mkOption {
+          type = lib.types.nullOr lib.types.str;
+          default = null;
+          description = "gopass entry path holding the password or token used.";
+        };
+      };
+    };
   };
 
   config = lib.mkMerge [
@@ -75,7 +95,16 @@ in
             tag = {
               gpgSign = false;
             };
-          };
+          }
+          //
+            lib.optionalAttrs
+              (
+                config.security.gopass.sync.enable
+                && config.security.gopass.sync.credential.passwordGopassPath != null
+              )
+              {
+                credential.helper = "!f() { echo username=${lib.escapeShellArg config.security.gopass.sync.credential.username}; echo password=\"$(${config.security.gopass.package}/bin/gopass show -o ${lib.escapeShellArg config.security.gopass.sync.credential.passwordGopassPath})\"; }; f";
+              };
         }
       ];
 
@@ -97,8 +126,30 @@ in
         type = "Application";
       };
     })
+
     (lib.mkIf config.security.gopass.ssh-agent.enable {
       home.packages = [ config.security.gopass.ssh-agent.package ];
+    })
+
+    (lib.mkIf config.security.gopass.sync.enable {
+      home.activation.gopassSyncInit =
+        let
+          gopassSyncInit = pkgs.writeShellApplication {
+            name = "gopass-sync-init";
+            runtimeInputs = [
+              pkgs.bash
+              config.development.git.package
+            ];
+            text =
+              builtins.replaceStrings
+                [ "@@PASSWORD_STORE_DIR@@" "@@REMOTE_REPO_URL@@" ]
+                [ config.programs.password-store.settings.PASSWORD_STORE_DIR config.security.gopass.sync.remote ]
+                (builtins.readFile ./gopass-sync-init.sh);
+          };
+        in
+        lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          run ${lib.getExe gopassSyncInit} || true
+        '';
     })
   ];
 }
