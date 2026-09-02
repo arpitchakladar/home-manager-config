@@ -65,5 +65,23 @@ in
       executable = true;
       force = true;
     };
+
+    programs.git.includes = lib.mkIf config.development.git.enable [
+      {
+        condition = "gitdir:${config.xdg.dataHome}/calcurse/";
+        contents = {
+          user = {
+            name = "Calcurse of ${config.home.username}";
+            email = "${config.home.username}@calcurse.localhost";
+          };
+          commit = {
+            gpgSign = false;
+          };
+          tag = {
+            gpgSign = false;
+          };
+        };
+      }
+    ];
   };
 }
