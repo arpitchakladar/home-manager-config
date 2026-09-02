@@ -4,7 +4,8 @@ set -o nounset
 set -o pipefail
 
 # Load SSH keys from gopass password store
-export GNUPGHOME="${GNUPGHOME:-$HOME/.local/share/gnupg}"
+export GNUPGHOME="@@GNUPGHOME@@"
+export GOPASS_SSH_KEYS="@@GOPASS_SSH_KEYS@@"
 
 SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 export SSH_AUTH_SOCK
