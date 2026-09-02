@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
+# gopass-sync-init
+#
+# Prepare the gopass password store directory for git-backed syncing.
+#
+# This runs during home-manager activation. It ensures the store directory
+# exists, initializes it as a git repository if it is not already one, and adds
+# the configured git remote as `origin` if no remote is set yet. It is a no-op
+# (and thus safe to rerun) when the store is already set up.
+
 STORE_DIR="@@PASSWORD_STORE_DIR@@"
 
 mkdir -p "$STORE_DIR"

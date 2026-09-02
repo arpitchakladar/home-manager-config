@@ -10,11 +10,11 @@ let
 
   gopassSshLoadScript = pkgs.writeShellApplication {
     name = "gopass-ssh-load";
-    runtimeInputs = with pkgs; [
+    runtimeInputs = [
       config.security.gopass.package
-      gnupg
-      openssh
-      bash
+      config.security.gpg.package
+      config.security.ssh.package
+      pkgs.bash
     ];
     text =
       builtins.replaceStrings

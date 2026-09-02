@@ -60,6 +60,7 @@
           };
           log.showSignature = true;
           pull.rebase = true;
+          init.defaultBranch = "master";
         }
 
         (lib.optionalAttrs config.development.delta.enable {
