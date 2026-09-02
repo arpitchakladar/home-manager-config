@@ -2,6 +2,7 @@
 { config, ... }:
 {
   imports = [
+    ../modules/private/calcurse.nix
     ../modules/private/email.nix
     ../modules/private/git.nix
   ];
@@ -62,6 +63,7 @@
 
   # Office
   office.calcurse.enable = true;
+  office.calcurse.sync.enable = true;
   office.zathura.enable = true;
 
   # Security

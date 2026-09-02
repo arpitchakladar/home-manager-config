@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# Pulls the latest calcurse data before calcurse reads it, so a fresh
+# session (or a ^R reload) starts from wherever you last left off on
+# another machine.
+#
+# Runs synchronously, unlike post-save, since the point is to have
+# up-to-date data before it's loaded. Never fails calcurse's startup,
+# though: if the pull can't complete (offline, no remote configured
+# yet, a conflict), calcurse just opens with whatever's on disk.
+
+log="${XDG_DATA_HOME:-$HOME/.local/share}/calcurse/hooks.log"
+
+{
+  printf '[%s] pre-load\n' "$(date '+%Y-%m-%d %H:%M:%S')"
+  calcurse-sync pull
+} >>"$log" 2>&1 || true
