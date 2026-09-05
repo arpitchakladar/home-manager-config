@@ -12,6 +12,9 @@
     };
 
     # SSH keys to load from gopass (entries under ssh/ in the gopass store)
-    security.ssh.gopassKeys = [ "github" ];
+    security.ssh.gopassKeys = [
+      "github"
+      "gitlab"
+    ];
   };
 }
