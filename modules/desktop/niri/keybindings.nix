@@ -7,43 +7,43 @@ let
   workspaces = [
     {
       key = "1";
-      workspace = "1";
+      workspace = 1;
     }
     {
       key = "2";
-      workspace = "2";
+      workspace = 2;
     }
     {
       key = "3";
-      workspace = "3";
+      workspace = 3;
     }
     {
       key = "4";
-      workspace = "4";
+      workspace = 4;
     }
     {
       key = "5";
-      workspace = "5";
+      workspace = 5;
     }
     {
       key = "6";
-      workspace = "6";
+      workspace = 6;
     }
     {
       key = "7";
-      workspace = "7";
+      workspace = 7;
     }
     {
       key = "8";
-      workspace = "8";
+      workspace = 8;
     }
     {
       key = "9";
-      workspace = "9";
+      workspace = 9;
     }
     {
       key = "0";
-      workspace = "10";
+      workspace = 10;
     }
   ];
 
@@ -72,7 +72,7 @@ in
   }
   // workspaceBinds
   // (lib.optionalAttrs config.desktop.enable {
-    "Mod+R" = {
+    "Mod+D" = {
       _props.hotkey-overlay-title = "Run an Application: rofi";
       spawn = [
         (lib.getExe config.desktop.rofi.package)
@@ -86,18 +86,6 @@ in
       _props.hotkey-overlay-title = "Open a Terminal: kitty";
       spawn = [ (lib.getExe config.terminal.kitty.package) ];
     };
-    "Mod+T".spawn = [ (lib.getExe config.terminal.kitty.package) ];
-  })
-  // (lib.optionalAttrs (config.terminal.kitty.enable && config.file-management.yazi.enable) {
-    "Mod+F".spawn = [
-      (lib.getExe config.terminal.kitty.package)
-      "--class"
-      "yazi"
-      "--title"
-      "Yazi"
-      "-e"
-      (lib.getExe config.file-management.yazi.package)
-    ];
   })
   // {
     # Column-aware directional navigation.
@@ -116,11 +104,11 @@ in
     "Mod+Shift+J".move-column-to-workspace-down = { };
     "Mod+Shift+K".move-column-to-workspace-up = { };
 
-    "Mod+D".toggle-window-floating = { };
     "Mod+V".toggle-window-floating = { };
     "Mod+M".fullscreen-window = { };
     "Mod+Equal".set-column-width = [ "+10%" ];
     "Mod+Minus".set-column-width = [ "-10%" ];
+    "Mod+R".switch-preset-column-width = { };
     "Mod+U".focus-workspace-down = { };
     "Mod+I".focus-workspace-up = { };
     "Mod+Ctrl+U".move-column-to-workspace-down = { };

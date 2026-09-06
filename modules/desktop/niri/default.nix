@@ -65,6 +65,9 @@
     };
 
     wayland.windowManager.niri.settings = {
+      hotkey-overlay = {
+        skip-at-startup = { };
+      };
       input = {
         keyboard.xkb.layout = "us";
         touchpad = {
@@ -75,6 +78,10 @@
           accel-speed = 0.5;
         };
       };
+      layer-rule._children = [
+        { "match namespace=\"^wallpaper$\"" = { }; }
+        { place-within-backdrop = true; }
+      ];
       layout = {
         gaps = 5;
         struts = {
@@ -92,6 +99,10 @@
         };
         border.off = { };
         shadow.off = { };
+        preset-column-widths._children = [
+          { proportion = 0.5; }
+          { proportion = 1.0; }
+        ];
       };
       prefer-no-csd = true;
       screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
@@ -104,12 +115,5 @@
         "fill"
       ];
     };
-
-    wayland.windowManager.niri.extraConfig = ''
-      layer-rule {
-        match namespace="^wallpaper$"
-        place-within-backdrop true
-      }
-    '';
   };
 }
