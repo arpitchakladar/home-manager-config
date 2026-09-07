@@ -19,7 +19,7 @@ daemon.enable=no
 daemon.log=no
 
 # Format
-format.inputdate=1
+format.inputdate=2
 format.notifydate=%a %F
 format.notifytime=%T
 format.appointmenttime=%H:%M
@@ -27,10 +27,10 @@ format.outputdate=%D
 format.dayheading=%B %e, %Y
 
 # General
-general.autogc=no
+general.autogc=yes
 general.autosave=yes
 general.confirmdelete=yes
-general.confirmquit=yes
+general.confirmquit=no
 general.firstdayofweek=monday
 general.multipledays=yes
 general.periodicsave=0
