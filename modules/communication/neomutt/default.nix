@@ -9,7 +9,7 @@ let
   neomuttSyncScript = pkgs.writeShellApplication {
     name = "neomutt-sync";
     runtimeInputs = [
-      pkgs.bash
+      config.terminal.bash.package
       pkgs.dialog
       pkgs.coreutils
       pkgs.gawk

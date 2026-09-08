@@ -32,7 +32,7 @@
 
     programs.lazygit = lib.mkIf config.development.lazygit.enable {
       enable = true;
-      enableBashIntegration = config.terminal.bash.enable;
+      enableBashIntegration = false;
       enableZshIntegration = config.terminal.zsh.enable;
       settings = {
         gui = with config.scheme.withHashtag; {

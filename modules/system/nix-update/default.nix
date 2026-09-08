@@ -12,7 +12,7 @@ let
       pkgs.git
       pkgs.nix
       config.programs.home-manager.package
-      pkgs.bash
+      config.terminal.bash.package
     ];
     text = builtins.readFile ./nix-update.sh;
   };

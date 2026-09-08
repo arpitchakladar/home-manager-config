@@ -10,7 +10,7 @@ let
     name = "usque-warp";
     runtimeInputs = [
       config.networking.usque.package
-      pkgs.bash
+      config.terminal.bash.package
     ];
     text = builtins.readFile ./usque-warp.sh;
   };

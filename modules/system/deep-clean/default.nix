@@ -8,7 +8,7 @@
 let
   deepCleanScript = pkgs.writeShellApplication {
     name = "deep-clean";
-    runtimeInputs = [ pkgs.bash ];
+    runtimeInputs = [ config.terminal.bash.package ];
     text = builtins.readFile ./deep-clean.sh;
   };
 in
