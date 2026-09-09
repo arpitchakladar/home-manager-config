@@ -1,6 +1,8 @@
-# Home Manager configuration for Arpit's NixOS system
+# Home Manager configuration for Arpit's NixOS system.
+# The module set is also exposed as `homeManagerModules.default` so other
+# configurations can import this repo as a flake input.
 {
-  description = "Home Manager configuration of arpit.";
+  description = "Home Manager configuration of arpit, exposing a reusable homeManagerModules.default.";
   inputs = {
     # Use nixpkgs from the local registry to save disk space on duplicate derivations
     nixpkgs.url = "nixpkgs";
@@ -31,6 +33,7 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       home-manager,
       base16,
@@ -45,8 +48,28 @@
         inherit pkgs;
         lib = pkgs.lib;
       };
+      # The module set, bundled with the prerequisites it relies on: the
+      # base16 module (provides `config.scheme`) and the nixvim module
+      # (provides `programs.nixvim`). A default `scheme` is set so it works
+      # out of the box; consumers can override it with their own path.
+      homeManagerModule =
+        {
+          lib,
+          ...
+        }:
+        {
+          imports = [
+            base16.homeManagerModule
+            nixvim.homeModules.nixvim
+            ./modules
+          ];
+          scheme = lib.mkDefault ./assets/onedark-dark.yml;
+        };
     in
     {
+      homeManagerModules = {
+        default = homeManagerModule;
+      };
       apps.${system}.updates = {
         type = "app";
         program = "${updates}/bin/updates";
@@ -107,12 +130,7 @@
             inherit pkgs;
             modules = [
               ./users/arpit
-              ./modules
-              base16.homeManagerModule
-              {
-                scheme = ./assets/onedark-dark.yml;
-              }
-              nixvim.homeModules.nixvim
+              self.homeManagerModules.default
             ];
           };
       };
