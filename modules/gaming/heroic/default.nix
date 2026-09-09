@@ -12,11 +12,11 @@
       type = lib.types.package;
       default = pkgs.symlinkJoin {
         name = "heroic-wrapped";
-        paths = with pkgs; [
-          winetricks
-          xdg-user-dirs
-          gamemode
-          heroic
+        paths = [
+          pkgs.winetricks
+          pkgs.xdg-user-dirs
+          pkgs.gamemode
+          pkgs.heroic
         ];
         buildInputs = [ pkgs.makeWrapper ];
         postBuild = ''

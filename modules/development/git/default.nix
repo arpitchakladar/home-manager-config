@@ -61,6 +61,7 @@
           log.showSignature = true;
           pull.rebase = true;
           init.defaultBranch = "master";
+          merge.ff = false;
         }
 
         (lib.optionalAttrs config.development.delta.enable {

@@ -64,8 +64,8 @@
   config = {
     fonts.normal = lib.mkDefault "Fira Code Nerd Font";
 
-    home.packages = with pkgs; [
-      nerd-fonts.fira-code
+    home.packages = [
+      pkgs.nerd-fonts.fira-code
     ];
   };
 }

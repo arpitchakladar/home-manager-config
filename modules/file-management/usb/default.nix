@@ -12,10 +12,10 @@
 
   config = lib.mkIf config.file-management.usb.enable {
     # Tools for manual mounting of usb devices
-    home.packages = with pkgs; [
-      udisks
+    home.packages = [
+      pkgs.udisks
       # For MTP devices (like phones)
-      simple-mtpfs
+      pkgs.simple-mtpfs
     ];
   };
 }

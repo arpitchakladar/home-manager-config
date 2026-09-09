@@ -19,9 +19,9 @@ in
 
     xdg.portal = {
       enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-termfilechooser
-        xdg-desktop-portal-gtk
+      extraPortals = [
+        pkgs.xdg-desktop-portal-termfilechooser
+        pkgs.xdg-desktop-portal-gtk
       ];
       configPackages = [ pkgs.niri ];
       config.common = {

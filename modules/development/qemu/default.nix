@@ -12,11 +12,11 @@
       type = lib.types.package;
       default = pkgs.symlinkJoin {
         name = "qemu-bundle";
-        paths = with pkgs; [
-          qemu
-          libvirt
-          virtiofsd
-          virt-manager
+        paths = [
+          pkgs.qemu
+          pkgs.libvirt
+          pkgs.virtiofsd
+          pkgs.virt-manager
         ];
       };
       description = "Bundle of QEMU-related packages.";

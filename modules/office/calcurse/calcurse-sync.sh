@@ -24,7 +24,7 @@
 set -euo pipefail
 
 DATA_DIR="${CALCURSE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/calcurse}"
-BRANCH="main"
+BRANCH="master"
 SYNC_TIMEOUT="8"   # seconds before a network op gives up
 
 info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
