@@ -78,8 +78,12 @@ connect() {
   BEFORE_IFACES=$(list_tun_ifaces)
 
   info "Starting usque..."
-  sudo usque nativetun -c "$CONFIG" 2>&1 | sudo tee "$LOG_FILE" >/dev/null &
-  echo $! > "$PID_FILE"
+  # sudo does not affect redirects — the outer shell would open "$LOG_FILE"
+  # as the unprivileged user. Run the redirection inside sudo (via sh) so the
+  # log is opened as root. $$ inside sh is usque's PID (sh exec's usque, keeping
+  # the PID stable regardless of how sudo forks internally), written up front.
+  sudo sh -c 'echo $$ > "$1"; exec usque nativetun -c "$2" > "$3" 2>&1' \
+    _ "$PID_FILE" "$CONFIG" "$LOG_FILE" &
 
   info "Waiting for MASQUE connection..."
   MASQUE_IP=""
@@ -153,20 +157,31 @@ disconnect() {
     if sudo kill -0 "$PID" 2>/dev/null; then
       info "Stopping usque..."
       sudo kill "$PID" 2>/dev/null || true
-      for _ in {1..20}; do
+      for _ in {1..25}; do
         sudo kill -0 "$PID" 2>/dev/null || break
         sleep 0.2
       done
+      if sudo kill -0 "$PID" 2>/dev/null; then
+        warn "usque did not stop on SIGTERM, forcing kill..."
+        sudo kill -9 "$PID" 2>/dev/null || true
+      fi
     fi
     rm -f "$PID_FILE"
   fi
 
-  # Belt-and-braces: if the interface (or any of its routes) somehow
-  # survived, clean them up explicitly. No-ops if tun0 is already gone.
+  # Give the kernel a moment to tear the tunnel device down; only touch
+  # routes manually if it is not disappearing on its own.
   if [[ -n "${dev:-}" ]]; then
-    info "Flushing $dev routes..."
-    sudo ip route flush dev "$dev" 2>/dev/null || true
-    remove_tun_default_routes "$dev"
+    info "Waiting for tunnel interface to go down..."
+    for _ in {1..25}; do
+      list_tun_ifaces | grep -qx "$dev" || break
+      sleep 0.2
+    done
+    if list_tun_ifaces | grep -qx "$dev"; then
+      warn "interface $dev is still up, cleaning its routes manually..."
+      sudo ip route flush dev "$dev" 2>/dev/null || true
+      remove_tun_default_routes "$dev"
+    fi
   fi
 
   if [[ -f "$STATE_FILE" ]]; then
