@@ -9,7 +9,7 @@ let
   screenRecordingScript = pkgs.writeShellApplication {
     name = "screen-recording";
     runtimeInputs = [
-      pkgs.bash
+      config.terminal.bash.package
       config.media.slurp.package
       config.media.wf-recorder.package
     ];

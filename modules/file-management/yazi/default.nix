@@ -9,7 +9,7 @@ let
   yaziFileChooserScript = pkgs.writeShellApplication {
     name = "yazi-file-chooser";
     runtimeInputs = [
-      pkgs.bash
+      config.terminal.bash.package
       config.file-management.yazi.package
       config.terminal.kitty.package
     ];

@@ -9,7 +9,7 @@ let
   gpgBackupScript = pkgs.writeShellApplication {
     name = "gpg-backup";
     runtimeInputs = [
-      pkgs.bash
+      config.terminal.bash.package
       pkgs.gnupg
       pkgs.gnutar
       pkgs.coreutils

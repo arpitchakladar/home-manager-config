@@ -14,7 +14,7 @@ let
       config.security.gopass.package
       config.security.gpg.package
       config.security.ssh.package
-      pkgs.bash
+      config.terminal.bash.package
     ];
     text =
       builtins.replaceStrings
@@ -137,7 +137,7 @@ in
           gopassSyncInit = pkgs.writeShellApplication {
             name = "gopass-sync-init";
             runtimeInputs = [
-              pkgs.bash
+              config.terminal.bash.package
               config.development.git.package
             ];
             text =

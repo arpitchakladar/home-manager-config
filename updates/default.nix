@@ -5,7 +5,10 @@ let
 in
 pkgs.writeShellApplication {
   name = "updates";
-  runtimeInputs = [ chromiumExtensions ];
+  runtimeInputs = [
+    chromiumExtensions
+    pkgs.bash
+  ];
   text = ''
     echo "Running all update checks..."
     echo ""

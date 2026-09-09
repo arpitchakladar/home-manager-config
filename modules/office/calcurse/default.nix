@@ -11,7 +11,7 @@ let
   calcursePackage = pkgs.symlinkJoin {
     name = "calcurse-wrapped";
     paths = [
-      pkgs.bash
+      config.terminal.bash.package
       pkgs.calcurse
     ]
     ++ lib.optionals config.development.nixvim.enable [ config.development.nixvim.package ]

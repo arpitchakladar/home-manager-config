@@ -43,8 +43,6 @@
         '';
       };
 
-      programs.bash.initExtra = lib.mkIf config.terminal.bash.enable (lib.mkAfter nixCommandWrappers);
-
       home.sessionVariables.SHELL = "${lib.getExe config.terminal.zsh.package}";
     };
 }

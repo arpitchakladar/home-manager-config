@@ -60,6 +60,5 @@
       };
 
       programs.zsh.initContent = lib.mkIf config.terminal.zsh.enable (lib.mkAfter shellIntegration);
-      programs.bash.initExtra = lib.mkIf config.terminal.bash.enable (lib.mkAfter shellIntegration);
     };
 }
