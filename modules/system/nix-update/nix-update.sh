@@ -61,8 +61,8 @@ update_home_manager() {
   echo "==> Updating home-manager..."
   cd "$HM_DIR"
 
-  echo "    Staging modules/private..."
-  git add modules/private -f
+  echo "    Staging users/arpit/private.nix..."
+  git add users/arpit/private.nix -f
 
   if [[ "$ONLY_SWITCH" == false ]]; then
     echo "    Running nix flake update..."
@@ -74,10 +74,8 @@ update_home_manager() {
     home-manager switch --flake "$HM_DIR#arpit"
   fi
 
-  echo "    Unstaging modules/private..."
-  for f in modules/private/*.nix; do
-    [[ "$f" == *.example.nix ]] || git rm --cached "$f"
-  done
+  echo "    Unstaging users/arpit/private.nix..."
+  git rm --cached users/arpit/private.nix
 
   echo "==> home-manager update complete"
 }

@@ -2,10 +2,7 @@
 { config, ... }:
 {
   imports = [
-    ../modules/private/calcurse.nix
-    ../modules/private/email.nix
-    ../modules/private/git.nix
-    ../modules/private/gopass.nix
+    ./private.nix
   ];
 
   nixpkgs.config.allowUnfree = true;

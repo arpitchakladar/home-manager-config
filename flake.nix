@@ -63,10 +63,9 @@
               git-hooks.hooks.forbid-private = {
                 enable = true;
                 name = "Forbid committing private files";
-                entry = "found private file in staging! Do not commit files under modules/private/ (except .example.nix files).";
+                entry = "found private file in staging! Do not commit users/arpit/private.nix.";
                 language = "fail";
-                files = "modules/private/";
-                excludes = [ "\\.example\\.nix$" ];
+                files = "users/arpit/private\\.nix$";
               };
 
               languages = {
@@ -107,7 +106,7 @@
           home-manager.lib.homeManagerConfiguration {
             inherit pkgs;
             modules = [
-              ./users/arpit.nix
+              ./users/arpit
               ./modules
               base16.homeManagerModule
               {

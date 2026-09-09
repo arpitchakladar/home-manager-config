@@ -1,9 +1,8 @@
 .pre-commit-config.yaml
 .devenv
 
-# Private/secret configuration - track *.example.nix, ignore *.nix
-modules/private/*.nix
-!modules/private/*.example.nix
+# Private/secret configuration - track example, ignore actual
+users/*/private.nix
 
 # nix testing bulid directory
 result*
