@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn()  { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
+error() { printf '\033[1;31m==> error:\033[0m %s\n' "$*" >&2; }
+die()   { error "$*"; exit 1; }
+
 WORKDIR="$(mktemp -d)"
 
 cleanup() {
@@ -12,9 +17,11 @@ cleanup() {
 trap cleanup EXIT
 
 usage() {
-  echo "Usage:"
-  echo "  $0 export <filename>   Export all GPG keys to an encrypted file"
-  echo "  $0 import <filename>   Decrypt and import keys from a backup file"
+  echo "Usage: $0 <export|import> <filename>"
+  echo ""
+  echo "Commands:"
+  echo "  export    Export all GPG keys to an encrypted file"
+  echo "  import    Decrypt and import keys from a backup file"
   exit 1
 }
 
@@ -22,29 +29,28 @@ do_export() {
   local outfile="$1"
 
   if [[ -e "$outfile" ]]; then
-    echo "!! Refusing to overwrite existing file: $outfile" >&2
-    exit 1
+    die "Refusing to overwrite existing file: $outfile"
   fi
 
-  echo "==> Exporting public keys..."
+  info "Exporting public keys..."
   gpg --export --armor > "$WORKDIR/public-keys.asc"
 
-  echo "==> Exporting secret keys..."
+  info "Exporting secret keys..."
   gpg --export-secret-keys --armor > "$WORKDIR/secret-keys.asc"
 
-  echo "==> Exporting secret subkeys (if any)..."
+  info "Exporting secret subkeys (if any)..."
   gpg --export-secret-subkeys --armor > "$WORKDIR/secret-subkeys.asc" || true
 
-  echo "==> Exporting owner trust database..."
+  info "Exporting owner trust database..."
   gpg --export-ownertrust > "$WORKDIR/ownertrust.txt"
 
-  echo "==> Exporting revocation certificates..."
+  info "Exporting revocation certificates..."
   mkdir -p "$WORKDIR/revocation-certs"
   if [[ -d "$HOME/.gnupg/openpgp-revocs.d" ]]; then
     cp "$HOME"/.gnupg/openpgp-revocs.d/*.rev "$WORKDIR/revocation-certs/" 2>/dev/null || true
   fi
 
-  echo "==> Bundling everything into a single archive..."
+  info "Bundling everything into a single archive..."
   tar -C "$WORKDIR" -cf "$WORKDIR/gpg-full-backup.tar" \
     public-keys.asc \
     secret-keys.asc \
@@ -52,7 +58,7 @@ do_export() {
     ownertrust.txt \
     revocation-certs
 
-  echo "==> Encrypting with GPG (AES256, SHA512, max S2K iteration count)..."
+  info "Encrypting with GPG (AES256, SHA512, max S2K iteration count)..."
   echo "  You will be prompted for a passphrase — use a strong one."
   gpg --symmetric \
     --cipher-algo AES256 \
@@ -63,21 +69,19 @@ do_export() {
     --output "$outfile" \
     "$WORKDIR/gpg-full-backup.tar"
 
-  echo "==> Verifying: attempting decryption to confirm it works..."
+  info "Verifying: attempting decryption to confirm it works..."
   if gpg --decrypt "$outfile" > "$WORKDIR/verify.tar" 2>/dev/null; then
     if cmp -s "$WORKDIR/gpg-full-backup.tar" "$WORKDIR/verify.tar"; then
-      echo "==> Verification succeeded: backup decrypts correctly."
+      info "Verification succeeded: backup decrypts correctly."
     else
-      echo "!! WARNING: decrypted content does not match original. Investigate before trusting this backup." >&2
-      exit 1
+      die "Decrypted content does not match original. Investigate before trusting this backup."
     fi
   else
-    echo "!! WARNING: decryption test failed." >&2
-    exit 1
+    die "Decryption test failed."
   fi
 
   echo
-  echo "==> Done."
+  info "Done."
   echo "  Encrypted backup: $outfile"
   echo "  Store this file somewhere safe (offline media, encrypted drive)."
   echo "  The S2K iteration count only helps if your passphrase itself"
@@ -88,42 +92,41 @@ do_import() {
   local infile="$1"
 
   if [[ ! -f "$infile" ]]; then
-    echo "!! File not found: $infile" >&2
-    exit 1
+    die "File not found: $infile"
   fi
 
-  echo "==> Decrypting $infile ..."
+  info "Decrypting $infile ..."
   echo "  You will be prompted for the backup's passphrase."
   echo "  Note: this may take a while due to the high S2K iteration count."
   gpg --decrypt "$infile" > "$WORKDIR/gpg-full-backup.tar"
 
-  echo "==> Extracting archive..."
+  info "Extracting archive..."
   tar -C "$WORKDIR" -xf "$WORKDIR/gpg-full-backup.tar"
 
-  echo "==> Importing public keys..."
+  info "Importing public keys..."
   gpg --import "$WORKDIR/public-keys.asc"
 
-  echo "==> Importing secret keys..."
+  info "Importing secret keys..."
   gpg --import "$WORKDIR/secret-keys.asc"
 
   if [[ -s "$WORKDIR/secret-subkeys.asc" ]]; then
-    echo "==> Importing secret subkeys..."
+    info "Importing secret subkeys..."
     gpg --import "$WORKDIR/secret-subkeys.asc" || true
   fi
 
   if [[ -f "$WORKDIR/ownertrust.txt" ]]; then
-    echo "==> Importing owner trust database..."
+    info "Importing owner trust database..."
     gpg --import-ownertrust "$WORKDIR/ownertrust.txt"
   fi
 
   if [[ -d "$WORKDIR/revocation-certs" ]] && [[ -n "$(ls -A "$WORKDIR/revocation-certs" 2>/dev/null)" ]]; then
-    echo "==> Restoring revocation certificates..."
+    info "Restoring revocation certificates..."
     mkdir -p "$HOME/.gnupg/openpgp-revocs.d"
     cp "$WORKDIR"/revocation-certs/*.rev "$HOME/.gnupg/openpgp-revocs.d/" 2>/dev/null || true
   fi
 
   echo
-  echo "==> Done. Keys imported into your GPG keyring."
+  info "Done. Keys imported into your GPG keyring."
   echo "  Run 'gpg --list-secret-keys' to confirm."
 }
 

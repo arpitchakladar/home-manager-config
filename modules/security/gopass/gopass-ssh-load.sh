@@ -28,11 +28,15 @@ set -o pipefail
 export GNUPGHOME="@@GNUPGHOME@@"
 export GOPASS_SSH_KEYS="@@GOPASS_SSH_KEYS@@"
 
+info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn()  { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
+error() { printf '\033[1;31m==> error:\033[0m %s\n' "$*" >&2; }
+die()   { error "$*"; exit 1; }
+
 SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 export SSH_AUTH_SOCK
 if [ -z "$SSH_AUTH_SOCK" ] || [ ! -S "$SSH_AUTH_SOCK" ]; then
-  echo "Error: SSH_AUTH_SOCK is not set or valid." >&2
-  exit 1
+  die "SSH_AUTH_SOCK is not set or valid."
 fi
 
 if ssh-add -l 2>/dev/null | grep -qE "(ED25519|RSA|ECDSA)"; then
@@ -41,8 +45,7 @@ fi
 
 # GOPASS_SSH_KEYS holds a space-separated list of gopass entry names under ssh
 if [ -z "${GOPASS_SSH_KEYS:-}" ]; then
-  echo "Error: GOPASS_SSH_KEYS is not set. Example: GOPASS_SSH_KEYS=\"github gitlab\"" >&2
-  exit 1
+  die "GOPASS_SSH_KEYS is not set. Example: GOPASS_SSH_KEYS=\"github gitlab\""
 fi
 
 # shellcheck disable=SC2086
@@ -63,6 +66,6 @@ for key in "${keys[@]}"; do
     ssh-add "$keyfile" 2>/dev/null
     rm -rf "$tmpdir"
   else
-    echo "Warning: no gopass entry ssh/$key" >&2
+    warn "no gopass entry ssh/$key"
   fi
 done
