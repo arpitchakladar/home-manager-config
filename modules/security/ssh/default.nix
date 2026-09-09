@@ -5,40 +5,69 @@
   pkgs,
   ...
 }:
+let
+  gpgSshKeyLoad = pkgs.writeShellApplication {
+    name = "gpg-ssh-key-load";
+    runtimeInputs = [
+      config.terminal.bash.package
+      config.security.gopass.package
+      config.security.gpg.package
+      config.security.ssh.package
+      pkgs.coreutils
+    ];
+    text =
+      builtins.replaceStrings
+        [
+          "@@GOPASS_SSH_KEY@@"
+          "@@GNUPGHOME@@"
+        ]
+        [
+          config.security.ssh.sshKeyGopassPath
+          config.home.sessionVariables.GNUPGHOME
+        ]
+        (builtins.readFile ./gpg-ssh-key-load.sh);
+  };
+in
 {
   options.security.ssh = {
-    enable = lib.mkEnableOption "Enables ssh.";
+    enable = lib.mkEnableOption "Enables ssh via the gpg-agent.";
     package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      default = config.programs.ssh.package;
+      default = pkgs.openssh;
       description = "The ssh package to use.";
     };
 
-    gopassKeys = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ];
-      description = "SSH keys to load from the gopass store (entries under ssh/).";
+    sshKeyGopassPath = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      description = ''
+        gopass entry holding the private SSH key. The key is loaded into the
+        gpg-agent during home-manager switch so ssh works without a ~/.ssh
+        directory.
+      '';
     };
   };
 
-  config = lib.mkIf config.security.ssh.enable {
-    programs.ssh = {
-      enable = true;
+  config = lib.mkMerge [
+    (lib.mkIf config.security.ssh.enable {
+      home.packages = [ config.security.ssh.package ];
 
-      package = pkgs.openssh;
+      assertions = [
+        {
+          assertion = config.security.gpg.enable;
+          message = ''
+            Enabling `security.ssh` requires `security.gpg` so that
+            gpg-agent can be used as the ssh-agent.
+          '';
+        }
+      ];
+    })
 
-      enableDefaultConfig = false;
-      extraOptionOverrides = {
-        AddKeysToAgent = "yes";
-        ForwardAgent = "yes";
-        ServerAliveInterval = "60";
-        ServerAliveCountMax = "3";
-        VisualHostKey = "yes";
-        HashKnownHosts = "yes";
-      };
-    };
-
-    services.ssh-agent.enable = lib.mkIf config.security.gpg.enable false;
-  };
+    (lib.mkIf (config.security.ssh.enable && config.security.ssh.sshKeyGopassPath != null) {
+      home.activation.gpgSshKeyLoad = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        run ${lib.getExe gpgSshKeyLoad} || true
+      '';
+    })
+  ];
 }
