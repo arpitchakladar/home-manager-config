@@ -1,0 +1,35 @@
+---
+priority: 2
+name: "Website access token"
+prefix: "websites"
+name_from:
+  - "url"
+  - "username"
+  - "token_name"
+welcome: "Creating Website access token"
+attributes:
+  - name: "url"
+    type: "hostname"
+    prompt: "Website URL"
+    min: 1
+    max: 255
+  - name: "username"
+    type: "string"
+    prompt: "Username / account this token belongs to"
+    min: 1
+  - name: "token_name"
+    type: "string"
+    prompt: "Token name (e.g. api-readonly, ci-deploy, personal-access-token)"
+    min: 1
+  - name: "token"
+    type: "password"
+    prompt: "Token value"
+  - name: "scopes"
+    type: "string"
+    prompt: "Scopes/permissions granted (optional)"
+  - name: "expires"
+    type: "string"
+    prompt: "Expiry date, e.g. 2027-01-15 (optional, leave blank if none)"
+  - name: "comment"
+    type: "string"
+    prompt: "Notes (optional)"

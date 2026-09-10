@@ -34,6 +34,9 @@
         };
       };
     };
+    creation-templates = {
+      enable = lib.mkEnableOption "Enables gopass entry creation templates. New entry creation templates for gopass new or gopass create commands.";
+    };
   };
 
   config = lib.mkMerge [
@@ -82,6 +85,16 @@
       home.file.".local/share/icons/hicolor/scalable/apps/gopass.svg" = {
         source = ../../../assets/icons/apps/gopass.svg;
       };
+
+      home.activation.copyCreationTemplatesForGopass =
+        lib.mkIf config.security.gopass.creation-templates.enable
+          (
+            lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create"
+              $DRY_RUN_CMD rm -rf ${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create
+              $DRY_RUN_CMD cp -r $VERBOSE_ARG --no-preserve=mode ${./creation-templates} "${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create"
+            ''
+          );
 
       xdg.desktopEntries."gopass" = {
         name = "gopass";

@@ -1,0 +1,34 @@
+---
+priority: 1
+name: "WiFi network"
+prefix: "wifi"
+name_from:
+  - "location"
+  - "ssid"
+welcome: "Creating WiFi network entry"
+attributes:
+  - name: "location"
+    type: "string"
+    prompt: "Location (e.g. home, work, office, cafe)"
+    min: 1
+    max: 64
+  - name: "ssid"
+    type: "string"
+    prompt: "SSID"
+    min: 1
+    max: 32
+  - name: "username"
+    type: "string"
+    prompt: "Username (leave blank if not Enterprise/802.1X)"
+  - name: "security"
+    type: "string"
+    prompt: "Security (WPA2-Personal, WPA2-Enterprise, WPA3-Personal, WEP, Open)"
+  - name: "eap_method"
+    type: "string"
+    prompt: "EAP-Method (PEAP, TLS, TTLS, PWD) - leave blank unless Enterprise"
+  - name: "phase2_auth"
+    type: "string"
+    prompt: "Phase2-Auth (MSCHAPV2, GTC, etc.) - leave blank unless Enterprise"
+  - name: "password"
+    type: "password"
+    prompt: "Password / PSK for the network"
