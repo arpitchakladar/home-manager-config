@@ -10,6 +10,14 @@
 -- event across both scripts. Here there's one event-stream subscription, 
 -- and one shared windows/workspaces fetch per event, significantly reducing 
 -- the total number of spawned processes and resting children.
+--
+-- The event-stream subscription is wrapped in a reconnect loop: if niri
+-- restarts, sleeps, or its IPC socket otherwise drops, `niri msg -j
+-- event-stream` hits EOF and would normally kill this whole script (which
+-- kills eww's deflisten listener along with it, requiring a manual eww
+-- restart). Instead we detect the EOF, back off briefly, and keep retrying
+-- until niri is reachable again, re-emitting fresh state on every
+-- reconnect so the bar catches up automatically.
 
 local cjson = require("cjson")
 
@@ -208,7 +216,7 @@ local function build_state()
     for idx, w in ipairs(ws_windows) do
       lines[#lines + 1] = string.format("%d. %s: %s", idx, (w.app_id and w.app_id ~= "" and w.app_id) or "unknown", (w.title and w.title ~= "" and w.title) or "(untitled)")
     end
-    
+
     workspaces_result[#workspaces_result + 1] = {
       idx = ws.idx,
       id = ws.id,
@@ -243,12 +251,51 @@ local RELEVANT_EVENTS = {
   WorkspaceUrgencyChanged = true, WorkspaceActiveWindowChanged = true
 }
 
-local proc = io.popen("niri msg -j event-stream")
-emit_state()
-for line in proc:lines() do
-  local ok, obj = pcall(cjson.decode, line)
-  if ok and obj then
-    local key = next(obj)
-    if RELEVANT_EVENTS[key] then emit_state() end
+local function sleep(seconds)
+  os.execute("sleep " .. tostring(seconds))
+end
+
+-- Subscribe to one event-stream session. Returns true if at least one
+-- event line was received (i.e. niri was genuinely up and running for a
+-- while), false if the pipe produced nothing before EOF (niri unreachable
+-- or the socket isn't up yet).
+local function run_event_stream_session()
+  local proc = io.popen("niri msg -j event-stream 2>/dev/null")
+  if not proc then return false end
+
+  local got_any_line = false
+  for line in proc:lines() do
+    got_any_line = true
+    local ok, obj = pcall(cjson.decode, line)
+    if ok and obj then
+      local key = next(obj)
+      if RELEVANT_EVENTS[key] then emit_state() end
+    end
   end
+  proc:close()
+  return got_any_line
+end
+
+emit_state()
+
+local retry_delay = 1
+while true do
+  local got_any_line = run_event_stream_session()
+
+  -- Whether this was niri restarting, waking from sleep, or the socket
+  -- just briefly hiccuping: refresh the bar's view of the world as soon
+  -- as we notice, rather than waiting for the next real event.
+  emit_state()
+
+  if got_any_line then
+    -- We were genuinely connected for a while; go back to fast retries
+    -- if the connection drops again.
+    retry_delay = 1
+  else
+    -- niri isn't reachable yet (asleep / mid-restart) -- back off so we
+    -- don't spawn `niri msg` in a tight loop while waiting for it.
+    retry_delay = math.min(retry_delay * 2, 8)
+  end
+
+  sleep(retry_delay)
 end
