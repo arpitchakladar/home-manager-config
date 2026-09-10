@@ -5,30 +5,6 @@
   pkgs,
   ...
 }:
-let
-  gopassKeys = config.security.ssh.gopassKeys;
-
-  gopassSshLoadScript = pkgs.writeShellApplication {
-    name = "gopass-ssh-load";
-    runtimeInputs = [
-      config.security.gopass.package
-      config.security.gpg.package
-      config.security.ssh.package
-      config.terminal.bash.package
-    ];
-    text =
-      builtins.replaceStrings
-        [
-          "@@GOPASS_SSH_KEYS@@"
-          "@@GNUPGHOME@@"
-        ]
-        [
-          (lib.concatStringsSep " " gopassKeys)
-          config.home.sessionVariables.GNUPGHOME
-        ]
-        (builtins.readFile ./gopass-ssh-load.sh);
-  };
-in
 {
   options.security.gopass = {
     enable = lib.mkEnableOption "Enables gopass.";
@@ -37,15 +13,6 @@ in
       readOnly = true;
       default = config.programs.password-store.package;
       description = "The gopass package to use.";
-    };
-    ssh-agent = {
-      enable = lib.mkEnableOption "gopass-backed SSH keys for git";
-      package = lib.mkOption {
-        type = lib.types.package;
-        readOnly = true;
-        default = gopassSshLoadScript;
-        description = "The gopass-ssh-load script package.";
-      };
     };
     sync = {
       enable = lib.mkEnableOption "Enables git-backed syncing of the gopass data directory.";
@@ -66,6 +33,9 @@ in
           description = "gopass entry path holding the password or token used.";
         };
       };
+    };
+    creation-templates = {
+      enable = lib.mkEnableOption "Enables gopass entry creation templates. New entry creation templates for gopass new or gopass create commands.";
     };
   };
 
@@ -116,6 +86,16 @@ in
         source = ../../../assets/icons/apps/gopass.svg;
       };
 
+      home.activation.copyCreationTemplatesForGopass =
+        lib.mkIf config.security.gopass.creation-templates.enable
+          (
+            lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create"
+              $DRY_RUN_CMD rm -rf ${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create
+              $DRY_RUN_CMD cp -r $VERBOSE_ARG --no-preserve=mode ${./creation-templates} "${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create"
+            ''
+          );
+
       xdg.desktopEntries."gopass" = {
         name = "gopass";
         exec = "${lib.getExe config.terminal.kitty.package} --class gopass -e ${lib.getExe config.security.gopass.package}";
@@ -125,10 +105,6 @@ in
         terminal = false;
         type = "Application";
       };
-    })
-
-    (lib.mkIf config.security.gopass.ssh-agent.enable {
-      home.packages = [ config.security.gopass.ssh-agent.package ];
     })
 
     (lib.mkIf config.security.gopass.sync.enable {

@@ -38,11 +38,8 @@
     };
   };
 
-  # SSH keys to load from gopass (entries under ssh/ in the gopass store)
-  config.security.ssh.gopassKeys = [
-    "github"
-    "gitlab"
-  ];
+  # SSH key to load into the gpg-agent from gopass (entry in the gopass store)
+  config.security.ssh.sshKeyGopassPath = "ssh/hostname/username";
 
   # Gopass - Template for configuring gopass, specially syncing
   config.security.gopass.sync = {

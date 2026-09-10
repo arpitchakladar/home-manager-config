@@ -1,0 +1,36 @@
+---
+priority: 3
+name: "SSH login"
+prefix: "ssh"
+name_from:
+  - "host"
+  - "username"
+welcome: "🔐 Creating SSH login"
+attributes:
+  - name: "host"
+    type: "hostname"
+    prompt: "Host machine name (hostname, IP, or alias)"
+    min: 1
+    max: 255
+  - name: "username"
+    type: "string"
+    prompt: "Username"
+    min: 1
+  - name: "password"
+    type: "password"
+    prompt: "Password (leave blank if using key-only auth)"
+  - name: "port"
+    type: "string"
+    prompt: "SSH port (optional, default 22)"
+  - name: "private_key"
+    type: "password"
+    prompt: "Private key (paste full contents, e.g. -----BEGIN OPENSSH PRIVATE KEY-----...)"
+  - name: "public_key"
+    type: "string"
+    prompt: "Public key (paste full contents, e.g. ssh-ed25519 AAAA...)"
+  - name: "key_passphrase"
+    type: "password"
+    prompt: "Private key passphrase (optional)"
+  - name: "comment"
+    type: "string"
+    prompt: "Notes (optional)"
