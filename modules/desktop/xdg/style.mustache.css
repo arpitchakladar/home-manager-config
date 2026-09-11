@@ -4,29 +4,147 @@
 @define-color theme_text_color #{{base05}};
 @define-color theme_selected_bg_color #{{base0D}};
 @define-color theme_selected_fg_color #{{base00}};
+@define-color theme_unfocused_bg_color #{{base01}};
+@define-color theme_unfocused_fg_color #{{base04}};
+@define-color theme_unfocused_base_color #{{base00}};
+@define-color theme_unfocused_text_color #{{base04}};
+@define-color theme_unfocused_selected_bg_color #{{base0D}};
+@define-color theme_unfocused_selected_fg_color #{{base00}};
+@define-color theme_tooltip_bg_color #{{base00}};
+@define-color theme_tooltip_fg_color #{{base06}};
 @define-color borders #{{base03}};
+@define-color unfocused_borders #{{base02}};
 @define-color accent_color #{{base0D}};
 @define-color warning_color #{{base0A}};
 @define-color error_color #{{base08}};
+@define-color success_color #{{base0B}};
+@define-color placeholder_text_color #{{base03}};
+@define-color insensitive_bg_color #{{base01}};
+@define-color insensitive_fg_color #{{base03}};
 
 window, dialog, .background {
   background-color: @theme_bg_color;
   color: @theme_fg_color;
 }
 
-button, entry, textview, .view, list, row {
+headerbar, titlebar, .titlebar, .headerbar, toolbar, .toolbar, menubar,
+actionbar, .sidebar, .nav-bar {
+  background-color: @theme_unfocused_bg_color;
+  color: @theme_fg_color;
+  border-color: @borders;
+}
+
+menu, .menu, popover, .popover, menupopover {
+  background-color: @theme_unfocused_bg_color;
+  color: @theme_fg_color;
+  border-color: @borders;
+}
+
+button, entry, spinbutton, combobox button, textview, .view, list, row,
+listview, .list, flowbox, treeview, calendar, notebook > stack, scrolledwindow {
   background-color: @theme_base_color;
   color: @theme_text_color;
   border-color: @borders;
   border-radius: 0;
   box-shadow: none;
+  caret-color: @theme_text_color;
 }
 
-button:hover, entry:focus {
-  border-color: @accent_color;
+button:hover, entry:hover, row:hover {
+  border-color: #{{base04}};
 }
 
-selection, row:selected, flowboxchild:selected {
+button:active, button:checked, button:default, entry:focus,
+spinbutton:focus, switch:checked, check:checked, radio:checked {
+  border-color: @theme_selected_bg_color;
+}
+
+button.suggested-action, button.destructive-action, .suggested-action,
+.destructive-action {
+  border-color: @theme_selected_bg_color;
+}
+
+button.destructive-action, .destructive-action {
+  border-color: @error_color;
+}
+
+selection, entry selection, textview selection, row:selected, .selected,
+flowboxchild:selected, menu menuitem:hover, menu menuitem:selected,
+popover row:hover, popover row:selected {
   background-color: @theme_selected_bg_color;
   color: @theme_selected_fg_color;
+}
+
+headerbar button, toolbar button, menubar button {
+  background-color: transparent;
+}
+
+treeview header button {
+  background-color: #{{base01}};
+  color: @theme_text_color;
+  border-color: @borders;
+}
+
+switch, scale trough, progressbar trough, scrollbar slider {
+  background-color: #{{base02}};
+  border-color: @borders;
+}
+
+switch slider, scale slider {
+  background-color: #{{base06}};
+  border-color: #{{base02}};
+}
+
+scale highlight, scale fill, progressbar progress {
+  background-color: @theme_selected_bg_color;
+}
+
+scrollbar {
+  background-color: #{{base01}};
+}
+
+scrollbar slider:hover {
+  background-color: #{{base04}};
+}
+
+notebook tab, notebook > header tabs tab {
+  background-color: #{{base01}};
+  border-color: @borders;
+}
+
+notebook tab:checked, notebook > header tabs tab:checked {
+  background-color: @theme_base_color;
+  border-bottom-color: @theme_selected_bg_color;
+}
+
+separator, paned > separator {
+  background-color: #{{base02}};
+}
+
+tooltip, .tooltip {
+  background-color: @theme_tooltip_bg_color;
+  color: @theme_tooltip_fg_color;
+  border-color: @borders;
+}
+
+statusbar, .statusbar {
+  background-color: @theme_bg_color;
+  color: #{{base04}};
+}
+
+link, .link {
+  color: #{{base0D}};
+}
+
+expander, arrow {
+  color: #{{base04}};
+}
+
+label:disabled, button:disabled {
+  color: @insensitive_fg_color;
+  background-color: @insensitive_bg_color;
+}
+
+.dim-label {
+  color: #{{base04}};
 }
