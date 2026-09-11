@@ -4,6 +4,9 @@
   imports = [
     ./cmp.nix
     ./comment.nix
+    ./dap-ui.nix
+    ./dap-virtual-text.nix
+    ./dap.nix
     ./gitsigns.nix
     ./indent-blankline.nix
     ./lsp.nix
