@@ -28,6 +28,10 @@
         tabstop = 2;
         softtabstop = 2;
         expandtab = true;
+        wrap = true;
+        linebreak = true;
+        breakindent = true;
+        showbreak = "↳";
         list = true;
         laststatus = 3;
         foldlevel = 99;
