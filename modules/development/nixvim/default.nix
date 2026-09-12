@@ -34,6 +34,7 @@
         clipboard = "unnamedplus";
         updatetime = 500;
       };
+      globals.mapleader = " ";
       clipboard.providers.xclip.enable = true;
       extraConfigLuaPre = with config.scheme.withHashtag; ''
         vim.opt.fillchars:append({ eob = " " })
