@@ -89,12 +89,10 @@ local function resolve_icon_path(app_id)
     if not app_info then
       local lc = string.lower(app_id)
       for _, info in ipairs(g_list_to_table(Gio.AppInfo.get_all())) do
-        if info:is_a(DesktopAppInfo) then
-          local wm = info:get_startup_wm_class()
-          if wm and string.lower(wm) == lc then
-            app_info = info
-            break
-          end
+        local ok_wm, wm = pcall(function() return info:get_startup_wm_class() end)
+        if ok_wm and wm and string.lower(wm) == lc then
+          app_info = info
+          break
         end
       end
     end
@@ -127,6 +125,38 @@ local function niri_json(command)
   local ok, decoded = pcall(cjson.decode, out)
   if ok then return decoded end
   return nil
+end
+
+local function sanitize_utf8(s)
+  if type(s) ~= "string" or s == "" then return s end
+  local out = {}
+  local i, n = 1, #s
+  while i <= n do
+    local c = s:byte(i)
+    local len
+    if c < 0x80 then len = 1
+    elseif c >= 0xC2 and c <= 0xDF then len = 2
+    elseif c >= 0xE0 and c <= 0xEF then len = 3
+    elseif c >= 0xF0 and c <= 0xF4 then len = 4
+    else len = 0 end
+
+    local valid = len > 0 and (i + len - 1 <= n)
+    if valid then
+      for k = 1, len - 1 do
+        local cc = s:byte(i + k)
+        if not cc or cc < 0x80 or cc > 0xBF then valid = false break end
+      end
+    end
+
+    if valid then
+      out[#out + 1] = s:sub(i, i + len - 1)
+      i = i + len
+    else
+      out[#out + 1] = "\239\191\189" -- U+FFFD
+      i = i + 1
+    end
+  end
+  return table.concat(out)
 end
 
 local function window_sort_key(w)
@@ -180,8 +210,8 @@ local function build_state()
   for _, w in ipairs(on_active) do
     active_windows_result[#active_windows_result + 1] = {
       id = w.id,
-      title = w.title or "",
-      app_id = w.app_id or "",
+      title = sanitize_utf8(w.title or ""),
+      app_id = sanitize_utf8(w.app_id or ""),
       is_focused = w.is_focused or false,
       icon = resolve_icon_path(w.app_id or ""),
     }
@@ -214,7 +244,9 @@ local function build_state()
 
     local lines = { ws_name }
     for idx, w in ipairs(ws_windows) do
-      lines[#lines + 1] = string.format("%d. %s: %s", idx, (w.app_id and w.app_id ~= "" and w.app_id) or "unknown", (w.title and w.title ~= "" and w.title) or "(untitled)")
+      local w_app_id = sanitize_utf8(w.app_id or "")
+      local w_title = sanitize_utf8(w.title or "")
+      lines[#lines + 1] = string.format("%d. %s: %s", idx, (w_app_id and w_app_id ~= "" and w_app_id) or "unknown", (w_title and w_title ~= "" and w_title) or "(untitled)")
     end
 
     workspaces_result[#workspaces_result + 1] = {
@@ -241,7 +273,12 @@ local function emit_state()
     io.stderr:write(tostring(result) .. "\n")
     return
   end
-  print(cjson.encode(result))
+  local ok2, encoded = pcall(cjson.encode, result)
+  if not ok2 then
+    io.stderr:write(tostring(encoded) .. "\n")
+    return
+  end
+  print(encoded)
   io.stdout:flush()
 end
 
