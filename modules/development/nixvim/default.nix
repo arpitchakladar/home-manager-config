@@ -39,6 +39,7 @@
         updatetime = 500;
         fillchars = "eob: ";
         listchars = "tab:  ,trail:_,lead: ";
+        exrc = true;
       };
       globals.mapleader = " ";
       clipboard.providers.xclip.enable = true;
