@@ -1,4 +1,5 @@
 #compdef usque-warp
+# Zsh completion for the usque-warp command.
 
 _arguments \
   '1: :->cmds' \

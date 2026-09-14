@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Record the screen with wf-recorder into ~/Videos/Recordings,
+# optionally selecting a region to capture with slurp.
+
 OUT_DIR="$HOME/Videos/Recordings"
 mkdir -p "$OUT_DIR"
 

@@ -1,4 +1,5 @@
 #compdef gpg-backup
+# Zsh completion for the gpg-backup command.
 
 _arguments \
   '1: :->cmds' \

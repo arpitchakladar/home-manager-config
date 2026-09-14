@@ -1,5 +1,5 @@
 #!/usr/bin/env luajit
--- patch_native_host: set allowed_origins in a native messaging host manifest.
+-- Set allowed_origins in a native messaging host manifest.
 local dkjson = require("dkjson")
 
 local extension_id = assert(arg[1], "usage: patch_native_host.lua <extension_id> <input> <output>")

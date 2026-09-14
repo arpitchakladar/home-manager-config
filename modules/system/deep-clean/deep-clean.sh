@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Remove old NixOS, home-manager and user profile generations, then run
+# a full garbage collection and store optimisation.
+
 set -euo pipefail
 
 info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Update and switch the home-manager and/or NixOS configurations.
 
 set -euo pipefail
 

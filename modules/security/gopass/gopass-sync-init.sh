@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-
-# gopass-sync-init
-#
 # Prepare the gopass password store directory for git-backed syncing.
 #
 # This runs during home-manager activation. It ensures the store directory

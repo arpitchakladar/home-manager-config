@@ -1,6 +1,6 @@
 #!/usr/bin/env luajit
--- inject_extension_key: strip JSON comments and trailing commas from a
--- manifest, inject the extension's public key, and rewrite it.
+-- Strip JSON comments and trailing commas from a manifest, inject the
+-- extension's public key, and rewrite it.
 local dkjson = require("dkjson")
 
 local manifest_path = assert(arg[1], "usage: inject_extension_key.lua <manifest> <ext_key>")

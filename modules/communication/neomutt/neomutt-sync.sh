@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Sync mail with mbsync and index new messages with notmuch,
+# showing progress via a dialog gauge.
+
 DIALOGRC=$(mktemp)
 NOTMUCH_LOG=$(mktemp)
 TITLE="[󰇮  SYNCING MAIL]"

@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Export all GPG keys and revocation certificates to an encrypted backup
+# file, or decrypt and import them back from one.
+
 set -euo pipefail
 
 info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }

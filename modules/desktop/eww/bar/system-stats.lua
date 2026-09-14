@@ -1,5 +1,5 @@
 #!/usr/bin/env luajit
--- system-stats: emit {cpu, ram, net, sound} as JSON.
+-- Emit {cpu, ram, net, sound} as JSON.
 --
 -- Single-threaded LuaJIT port of the original Python script. Instead of
 -- OS threads, a single supervisor loop schedules the periodic cpu/ram and

@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-#
 # Keeps calcurse's data directory in git, so you can back it up / sync
 # it across machines via a remote (e.g. a private GitHub repo).
 #

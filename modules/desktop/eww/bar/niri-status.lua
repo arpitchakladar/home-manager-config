@@ -1,5 +1,5 @@
 #!/usr/bin/env luajit
--- niri-status: emit {workspaces: [...], active_windows: [...]} as one JSON
+-- Emit {workspaces: [...], active_windows: [...]} as one JSON
 -- object per line, driven by a single niri event-stream subscription.
 --
 -- This replaces the old activate-windows.lua + workspaces.lua pair. Those

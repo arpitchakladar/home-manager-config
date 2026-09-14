@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Manage a Cloudflare WARP (usque) tunnel: connect, disconnect,
+# or report Waybar status.
+
 set -euo pipefail
 
 info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }

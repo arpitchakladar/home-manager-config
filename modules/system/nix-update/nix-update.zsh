@@ -1,4 +1,5 @@
 #compdef nix-update
+# Zsh completion for the nix-update command.
 
 _arguments \
   '1: :->target' \

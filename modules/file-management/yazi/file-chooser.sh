@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# Launch yazi as a file/directory chooser and write the result to an output file.
+
 # $1 toggles multiple selection
 # $2 toggles directory select mode
 # $3 toggles save file mode

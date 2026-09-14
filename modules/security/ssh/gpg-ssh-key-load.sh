@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-
-# gpg-ssh-key-load
-#
 # Load the SSH key stored in gopass into the gpg-agent.
 #
 # SSH keys are served by gpg-agent (enable-ssh-support): the private key at
