@@ -13,7 +13,7 @@
       action = "<nop>";
       options.desc = "Disable leader delay";
     }
-    # pane navigation
+    # window navigation
     {
       key = "<c-h>";
       action = "<c-w>h";
@@ -33,6 +33,27 @@
       key = "<c-l>";
       action = "<c-w>l";
       options.desc = "Move to right window";
+    }
+    # window resizing
+    {
+      key = "<C-=>";
+      action = "<c-w>+";
+      options.desc = "Increase window height";
+    }
+    {
+      key = "<C-->";
+      action = "<c-w>-";
+      options.desc = "Decrease window height";
+    }
+    {
+      key = "<C-.>";
+      action = "<c-w>>";
+      options.desc = "Increase window height";
+    }
+    {
+      key = "<C-,>";
+      action = "<c-w><";
+      options.desc = "Decrease window height";
     }
     # scrolling
     {
