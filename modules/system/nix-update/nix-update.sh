@@ -69,6 +69,8 @@ update_home_manager() {
   info "Staging users/arpit/private.nix..."
   git add users/arpit/private.nix -f
 
+  trap 'git rm --cached users/arpit/private.nix >/dev/null 2>&1 || true' EXIT INT TERM HUP
+
   if [[ "$ONLY_SWITCH" == false ]]; then
     info "Running nix flake update..."
     nix flake update
@@ -82,6 +84,8 @@ update_home_manager() {
   info "Unstaging users/arpit/private.nix..."
   git rm --cached users/arpit/private.nix
 
+  trap - EXIT INT TERM HUP
+
   info "home-manager update complete"
 }
 
@@ -92,6 +96,8 @@ update_nixos() {
 
   info "Staging hardware-configuration.nix..."
   git add hardware-configuration.nix -f
+
+  trap 'git rm --cached hardware-configuration.nix >/dev/null 2>&1 || true' EXIT INT TERM HUP
 
   if [[ "$ONLY_SWITCH" == false ]]; then
     info "Running nix flake update..."
@@ -105,6 +111,8 @@ update_nixos() {
 
   info "Unstaging hardware-configuration.nix..."
   git rm --cached hardware-configuration.nix
+
+  trap - EXIT INT TERM HUP
 
   info "NixOS update complete"
 }
