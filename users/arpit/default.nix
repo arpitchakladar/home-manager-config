@@ -78,7 +78,6 @@
   system.btop.nvidia.enable = true;
   system.btop.amd.enable = true;
   system.deep-clean.enable = true;
-  system.htop.enable = true;
   system.nix-update.enable = true;
   system.systemctl-tui.enable = true;
 
