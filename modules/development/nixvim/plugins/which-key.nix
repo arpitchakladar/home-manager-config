@@ -37,6 +37,10 @@
           __unkeyed-1 = "<leader>c";
           group = "+Comment";
         }
+        {
+          __unkeyed-1 = "<leader>n";
+          group = "+Explorer";
+        }
       ];
     };
   };

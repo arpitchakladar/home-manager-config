@@ -13,6 +13,7 @@
       action = "<nop>";
       options.desc = "Disable leader delay";
     }
+    # pane navigation
     {
       key = "<c-h>";
       action = "<c-w>h";
@@ -33,15 +34,7 @@
       action = "<c-w>l";
       options.desc = "Move to right window";
     }
-    {
-      key = "<c-n>";
-      action = "<cmd>NvimTreeToggle<cr>";
-      mode = [
-        "n"
-        "i"
-      ];
-      options.desc = "Toggle file explorer";
-    }
+    # scrolling
     {
       key = "<c-d>";
       action = "<c-d>zz";

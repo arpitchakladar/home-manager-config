@@ -1,43 +1,57 @@
 # File explorer sidebar
 { config, lib, ... }:
 {
-  config.programs.nixvim.plugins.nvim-tree = lib.mkIf config.development.nixvim.enable {
-    enable = true;
-    settings = {
-      filters = {
-        dotfiles = false;
-        git_clean = false;
-        no_buffer = false;
-        custom = { };
-      };
-      git = {
-        enable = true;
-        ignore = false;
-      };
-      view = {
-        width = 30;
-      };
-      renderer = {
-        indent_markers = {
-          enable = true;
-          inline_arrows = false;
-          icons = {
-            corner = "└";
-            edge = "│";
-            item = "├";
-            bottom = "─";
-            none = " ";
-          };
+  config.programs.nixvim = lib.mkIf config.development.nixvim.enable {
+    plugins.nvim-tree = {
+      enable = true;
+      settings = {
+        filters = {
+          dotfiles = false;
+          git_clean = false;
+          no_buffer = false;
+          custom = { };
         };
-        icons = {
-          show = {
-            folder = true;
-            folder_arrow = false;
-            file = true;
-            git = true;
+        git = {
+          enable = true;
+          ignore = false;
+        };
+        view = {
+          width = 30;
+        };
+        renderer = {
+          indent_markers = {
+            enable = true;
+            inline_arrows = false;
+            icons = {
+              corner = "└";
+              edge = "│";
+              item = "├";
+              bottom = "─";
+              none = " ";
+            };
+          };
+          icons = {
+            show = {
+              folder = true;
+              folder_arrow = false;
+              file = true;
+              git = true;
+            };
           };
         };
       };
     };
+
+    keymaps = [
+      {
+        key = "<leader>nt";
+        action = "<cmd>NvimTreeToggle<cr>";
+        mode = [
+          "n"
+          "i"
+        ];
+        options.desc = "Toggle file explorer";
+      }
+    ];
   };
 }
