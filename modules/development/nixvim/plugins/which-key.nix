@@ -9,7 +9,6 @@
         registers = true;
         spelling = {
           enabled = true;
-          suggestions = 20;
         };
       };
       win = {

@@ -8,7 +8,7 @@
       options.desc = "Move to left window";
     }
     {
-      key = "<c-w>";
+      key = "<c-j>";
       action = "<c-w>j";
       options.desc = "Move to bottom window";
     }
