@@ -4,17 +4,6 @@
   config.programs.nixvim = lib.mkIf config.development.nixvim.enable {
     plugins.dap = {
       enable = true;
-
-      # Example adapter — adjust/add per language you actually debug.
-      # This one assumes you have `netcoredbg`/`codelldb`/etc. available,
-      # swap for whatever debuggers you use.
-      adapters.servers = {
-        # Example: python debugpy adapter
-        # python = {
-        #   command = "${pkgs.python3Packages.debugpy}/bin/python";
-        #   args = [ "-m" "debugpy.adapter" ];
-        # };
-      };
     };
 
     keymaps = [
@@ -72,36 +61,6 @@
         key = "<leader>dr";
         action = "<cmd>lua require('dap').repl.toggle()<CR>";
         options.desc = "Debug: Toggle REPL";
-      }
-      {
-        mode = "n";
-        key = "<leader>dd";
-        action = "<cmd>lua vim.diagnostic.open_float()<CR>";
-        options.desc = "Diagnostics: Line diagnostics float";
-      }
-      {
-        mode = "n";
-        key = "<leader>dx";
-        action = "<cmd>lua vim.diagnostic.close()<CR>";
-        options.desc = "Diagnostics: Close float";
-      }
-      {
-        mode = "n";
-        key = "<leader>dn";
-        action = "<cmd>lua vim.diagnostic.goto_next()<CR>";
-        options.desc = "Diagnostics: Next";
-      }
-      {
-        mode = "n";
-        key = "<leader>dp";
-        action = "<cmd>lua vim.diagnostic.goto_prev()<CR>";
-        options.desc = "Diagnostics: Previous";
-      }
-      {
-        mode = "n";
-        key = "<leader>dq";
-        action = "<cmd>lua vim.diagnostic.setloclist()<CR>";
-        options.desc = "Diagnostics: Load location list";
       }
     ];
 
