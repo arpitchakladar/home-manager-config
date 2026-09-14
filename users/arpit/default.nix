@@ -75,10 +75,11 @@
   # System
   system.brightnessctl.enable = true;
   system.btop.enable = true;
+  system.btop.nvidia.enable = true;
+  system.btop.amd.enable = true;
   system.deep-clean.enable = true;
   system.htop.enable = true;
   system.nix-update.enable = true;
-  system.nvtop.enable = true;
   system.systemctl-tui.enable = true;
 
   # Terminal

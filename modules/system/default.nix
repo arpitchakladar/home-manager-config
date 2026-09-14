@@ -7,7 +7,6 @@
     ./deep-clean
     ./htop
     ./nix-update
-    ./nvtop
     ./systemctl-tui
   ];
 }
