@@ -2,13 +2,25 @@
 { config, lib, ... }:
 {
   config.programs.nixvim.keymaps = lib.mkIf config.development.nixvim.enable [
+    # set the <space> key to nop for normal and visual modes as we are tyring
+    # to use it as our <leader>
+    {
+      mode = [
+        "n"
+        "v"
+      ];
+      key = "<space>";
+      action = "<nop>";
+      options.desc = "Disable leader delay";
+    }
+    # window navigation
     {
       key = "<c-h>";
       action = "<c-w>h";
       options.desc = "Move to left window";
     }
     {
-      key = "<c-w>";
+      key = "<c-j>";
       action = "<c-w>j";
       options.desc = "Move to bottom window";
     }
@@ -22,15 +34,28 @@
       action = "<c-w>l";
       options.desc = "Move to right window";
     }
+    # window resizing
     {
-      key = "<c-n>";
-      action = "<cmd>NvimTreeToggle<cr>";
-      mode = [
-        "n"
-        "i"
-      ];
-      options.desc = "Toggle file explorer";
+      key = "<C-=>";
+      action = "<c-w>+";
+      options.desc = "Increase window height";
     }
+    {
+      key = "<C-->";
+      action = "<c-w>-";
+      options.desc = "Decrease window height";
+    }
+    {
+      key = "<C-.>";
+      action = "<c-w>>";
+      options.desc = "Increase window height";
+    }
+    {
+      key = "<C-,>";
+      action = "<c-w><";
+      options.desc = "Decrease window height";
+    }
+    # scrolling
     {
       key = "<c-d>";
       action = "<c-d>zz";

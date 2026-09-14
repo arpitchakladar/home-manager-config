@@ -6,228 +6,28 @@
     inlayHints = true;
     autoLoad = true;
 
-    keymaps.lspBuf = {
-      K = "hover";
-      gD = "references";
-      gd = "definition";
-      gi = "implementation";
-      gt = "type_definition";
-    };
-
-    servers = {
-      # System and configuration
-      nixd = {
-        enable = true;
-        package = null;
-      }; # Nix
-      bashls = {
-        enable = true;
-        package = null;
-      }; # Bash shell
-      taplo = {
-        enable = true;
-        package = null;
-      }; # TOML
-      yamlls = {
-        enable = true;
-        package = null;
-      }; # YAML
-      jsonls = {
-        enable = true;
-        package = null;
-      }; # JSON
-      marksman = {
-        enable = true;
-        package = null;
-      }; # Markdown
-
-      # Web development
-      html = {
-        enable = true;
-        package = null;
-      }; # HTML
-      cssls = {
-        enable = true;
-        package = null;
-      }; # CSS, SCSS and LESS
-      tailwindcss = {
-        enable = true;
-        package = null;
-      }; # Tailwind CSS
-      vtsls = {
-        # JS and TS fast wrapper for tsserver
-        enable = true;
-        package = null;
-        settings = {
-          # Limits huge generic type hints
-          vtsls.experimental.maxInlayHintLength = 30;
-
-          # TypeScript type inferences
-          typescript.inlayHints = {
-            parameterNames.enabled = "all";
-            parameterTypes.enabled = true;
-            variableTypes.enabled = true;
-            propertyDeclarationTypes.enabled = true;
-            functionLikeReturnTypes.enabled = true;
-            enumMemberValues.enabled = true;
-          };
-
-          # JavaScript type inferences
-          javascript.inlayHints = {
-            parameterNames.enabled = "all";
-            parameterTypes.enabled = true;
-            variableTypes.enabled = true;
-            propertyDeclarationTypes.enabled = true;
-            functionLikeReturnTypes.enabled = true;
-            enumMemberValues.enabled = true;
-          };
-        };
+    keymaps = {
+      lspBuf = {
+        "<leader>lh" = "hover";
+        "<leader>lr" = "references";
+        "<leader>ld" = "definition";
+        "<leader>li" = "implementation";
+        "<leader>lt" = "type_definition";
+        "<leader>lD" = "declaration";
+        "<leader>lR" = "rename";
+        "<leader>la" = "code_action";
+        "<leader>lf" = "format";
+        "<leader>ls" = "signature_help";
+        "<leader>lwa" = "add_workspace_folder";
+        "<leader>lwr" = "remove_workspace_folder";
+        "<leader>lwl" = "list_workspace_folders";
       };
-      eslint = {
-        enable = true;
-        package = null;
-      }; # ESLint diagnostics and formatting
-
-      # Web frameworks
-      volar = {
-        # Vue
-        enable = true;
-        package = null;
-        tslsIntegration = false;
+      diagnostic = {
+        "<leader>le" = "open_float";
+        "<leader>lq" = "setloclist";
+        "[d" = "goto_prev";
+        "]d" = "goto_next";
       };
-      svelte = {
-        enable = true;
-        package = null;
-      }; # Svelte
-      astro = {
-        enable = true;
-        package = null;
-      }; # Astro
-
-      # Scripting and high-level languages
-      basedpyright = {
-        # Python, modern faster fork of Pyright
-        enable = true;
-        package = null;
-        settings.basedpyright.analysis.inlayHints = {
-          variableTypes = true;
-          callArgumentNames = true;
-          functionReturnTypes = true;
-          genericTypes = false; # Opt in since these can get noisy
-        };
-      };
-      ruff = {
-        enable = true;
-        package = null;
-      }; # Python linter and formatter
-      ruby_lsp = {
-        enable = true;
-        package = null;
-      }; # Ruby
-      lua_ls = {
-        # Lua
-        enable = true;
-        package = null;
-        settings.Lua.hint = {
-          enable = true;
-          arrayIndex = "Auto";
-          setType = true;
-          paramName = "All";
-          paramType = true;
-        };
-      };
-      intelephense = {
-        enable = true;
-        package = null;
-      }; # PHP
-      elixirls = {
-        enable = true;
-        package = null;
-      }; # Elixir
-
-      # Systems, compiled and enterprise
-      clangd = {
-        enable = true;
-        package = null;
-      }; # C and C++ with inlay hints on by default
-      rust_analyzer = {
-        # Rust with inlay hints on by default
-        enable = true;
-        package = null;
-        installCargo = false;
-        installRustc = false;
-      };
-      gopls = {
-        # Go
-        enable = true;
-        package = null;
-        settings.gopls.hints = {
-          assignVariableTypes = true;
-          compositeLiteralFields = true;
-          compositeLiteralTypes = true;
-          constantValues = true;
-          functionTypeParameters = true;
-          parameterNames = true;
-          rangeVariableTypes = true;
-        };
-      };
-      zls = {
-        enable = true;
-        package = null;
-      }; # Zig with inlay hints on by default
-      jdtls = {
-        # Java
-        enable = true;
-        package = null;
-        settings.java.inlayHints.parameterNames.enabled = "all";
-      };
-      kotlin_language_server = {
-        enable = true;
-        package = null;
-      }; # Kotlin
-      csharp_ls = {
-        enable = true;
-        package = null;
-      }; # C# without inlay hint support
-      hls = {
-        # Haskell
-        enable = true;
-        package = null;
-        installGhc = false;
-        settings.haskell.plugin."inlay-hints".globalOn = true;
-      };
-      ocamllsp = {
-        enable = true;
-        package = null;
-      }; # OCaml
-
-      # Infrastructure and DevOps
-      dockerls = {
-        enable = true;
-        package = null;
-      }; # Dockerfile
-      docker_compose_language_service = {
-        enable = true;
-        package = null;
-      }; # Docker Compose
-      terraformls = {
-        enable = true;
-        package = null;
-      }; # Terraform and HCL
-
-      # Data and APIs
-      sqlls = {
-        enable = true;
-        package = null;
-      }; # SQL
-      graphql = {
-        enable = true;
-        package = null;
-      }; # GraphQL
-      prismals = {
-        enable = true;
-        package = null;
-      }; # Prisma ORM
     };
   };
 }

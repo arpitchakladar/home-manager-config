@@ -56,16 +56,6 @@
         options.desc = "Document symbols";
       };
 
-      # Git
-      "<leader>gc" = {
-        action = "git_commits";
-        options.desc = "Git commits";
-      };
-      "<leader>gb" = {
-        action = "git_branches";
-        options.desc = "Git branches";
-      };
-
       # Misc
       "<leader>fh" = {
         action = "help_tags";

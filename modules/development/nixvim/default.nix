@@ -28,31 +28,29 @@
         tabstop = 2;
         softtabstop = 2;
         expandtab = true;
+        wrap = true;
+        linebreak = true;
+        breakindent = true;
+        showbreak = "↳";
         list = true;
         laststatus = 3;
         foldlevel = 99;
         clipboard = "unnamedplus";
         updatetime = 500;
+        fillchars = "eob: ";
+        listchars = "tab:  ,trail:_,lead: ";
+        exrc = true;
       };
+      globals.mapleader = " ";
       clipboard.providers.xclip.enable = true;
-      extraConfigLuaPre = with config.scheme.withHashtag; ''
-        vim.opt.fillchars:append({ eob = " " })
-        vim.opt.listchars = { tab = "  ", trail = "_", lead = " " }
-        vim.api.nvim_set_hl(0, "WinSeparator", {
-          fg = "${base01}",
-          bg = "${base00}",
-        })
 
-        vim.api.nvim_create_autocmd({ "FileType" }, {
-          pattern = { "yaml", "yml" },
-          callback = function()
-            vim.opt_local.expandtab = true
-            vim.opt_local.shiftwidth = 2
-            vim.opt_local.softtabstop = 2
-            vim.opt_local.tabstop = 2
-          end,
-        })
-      '';
+      highlight = with config.scheme.withHashtag; {
+        WinSeparator = {
+          fg = base01;
+          bg = base00;
+        };
+      };
+
       performance = {
         byteCompileLua.enable = true;
         combinePlugins.enable = true;
@@ -82,6 +80,14 @@
               vim.diagnostic.open_float(nil, { focus = false })
             end
           '';
+        }
+        {
+          event = [ "FileType" ];
+          pattern = [
+            "yaml"
+            "yml"
+          ];
+          command = "setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2";
         }
       ];
     };
