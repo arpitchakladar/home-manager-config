@@ -18,6 +18,8 @@
     amd.enable = true;
   };
 
+  colors.onedark-dark.enable = true;
+
   # Gaming
   gaming.heroic.enable = true;
   gaming.steam.enable = false;

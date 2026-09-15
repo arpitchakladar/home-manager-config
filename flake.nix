@@ -10,7 +10,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    base16.url = "github:SenchoPens/base16.nix";
     nixvim.url = "github:nix-community/nixvim";
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
@@ -34,7 +33,6 @@
       self,
       nixpkgs,
       home-manager,
-      base16,
       nixvim,
       git-hooks,
       ...
@@ -65,16 +63,13 @@
       homeManagerModules = {
         default =
           {
-            lib,
             ...
           }:
           {
             imports = [
-              base16.homeManagerModule
               nixvim.homeModules.nixvim
               ./modules
             ];
-            scheme = lib.mkDefault ./assets/onedark-dark.yml;
           };
       };
       apps.${system}.updates = {
