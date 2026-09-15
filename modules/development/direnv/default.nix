@@ -18,8 +18,9 @@
   config = lib.mkIf config.development.direnv.enable {
     programs.direnv = {
       enable = true;
-      enableZshIntegration = true;
+      enableZshIntegration = lib.mkIf config.terminal.zsh.enable true;
       enableBashIntegration = true;
+      silent = false;
       nix-direnv = {
         enable = true;
       };
