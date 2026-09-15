@@ -12,8 +12,8 @@
     };
     base16.url = "github:SenchoPens/base16.nix";
     nixvim.url = "github:nix-community/nixvim";
-    devenv = {
-      url = "github:cachix/devenv";
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -22,12 +22,10 @@
     extra-substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
-      "https://devenv.cachix.org"
     ];
     extra-trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
     ];
   };
 
@@ -38,12 +36,12 @@
       home-manager,
       base16,
       nixvim,
-      devenv,
+      git-hooks,
       ...
-    }@inputs:
+    }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs { inherit system; };
       updates = import ./updates {
         inherit pkgs;
         lib = pkgs.lib;
@@ -65,6 +63,20 @@
           ];
           scheme = lib.mkDefault ./assets/onedark-dark.yml;
         };
+      preCommitCheck = git-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          nixfmt.enable = true;
+          forbid-private = {
+            enable = true;
+            name = "Forbid committing private files";
+            entry = "found private file in staging! Do not commit users/arpit/private.nix.";
+            language = "system";
+            files = "users/arpit/private\\.nix$";
+            pass_filenames = false;
+          };
+        };
+      };
     in
     {
       homeManagerModules = {
@@ -75,47 +87,13 @@
         program = "${updates}/bin/updates";
       };
       formatter.${system} = pkgs.nixfmt-tree;
-      devShells.${system}.default = devenv.lib.mkShell {
-        inherit inputs pkgs;
-        modules = [
-          (
-            { ... }:
-            {
-              git-hooks.hooks.nixfmt.enable = true;
-
-              git-hooks.hooks.forbid-private = {
-                enable = true;
-                name = "Forbid committing private files";
-                entry = "found private file in staging! Do not commit users/arpit/private.nix.";
-                language = "fail";
-                files = "users/arpit/private\\.nix$";
-              };
-
-              languages = {
-                lua = {
-                  enable = true;
-                  lsp = {
-                    enable = true;
-                    package = pkgs.lua-language-server;
-                  };
-                };
-                nix = {
-                  enable = true;
-                  lsp = {
-                    enable = true;
-                    package = pkgs.nixd;
-                  };
-                };
-                shell = {
-                  enable = true;
-                  lsp = {
-                    enable = true;
-                    package = pkgs.bash-language-server;
-                  };
-                };
-              };
-            }
-          )
+      checks.${system}.pre-commit-check = preCommitCheck;
+      devShells.${system}.default = pkgs.mkShell {
+        inherit (preCommitCheck) shellHook;
+        buildInputs = preCommitCheck.enabledPackages ++ [
+          pkgs.lua-language-server
+          pkgs.nixd
+          pkgs.bash-language-server
         ];
       };
       homeConfigurations = {
