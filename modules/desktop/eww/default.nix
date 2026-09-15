@@ -51,7 +51,7 @@
                   (toString config.fonts.smallSize)
                   (toString config.fonts.idxSize)
                 ]
-                (builtins.readFile ./eww.mustache.scss);
+                (builtins.readFile ./eww.scss);
           }
         );
     };

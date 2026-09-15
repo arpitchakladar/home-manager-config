@@ -14,39 +14,39 @@
       <key>settings</key>
       <dict>
         <key>background</key>
-        <string>#{{base00}}</string>
+        <string>#@@base00@@</string>
         <key>foreground</key>
-        <string>#{{base05}}</string>
+        <string>#@@base05@@</string>
         <key>caret</key>
-        <string>#{{base05}}</string>
+        <string>#@@base05@@</string>
         <key>invisibles</key>
-        <string>#{{base03}}</string>
+        <string>#@@base03@@</string>
         <key>lineHighlight</key>
-        <string>#{{base01}}</string>
+        <string>#@@base01@@</string>
         <key>selection</key>
-        <string>#{{base02}}</string>
+        <string>#@@base02@@</string>
         <key>selectionBorder</key>
-        <string>#{{base03}}</string>
+        <string>#@@base03@@</string>
         <key>findHighlight</key>
-        <string>#{{base0A}}</string>
+        <string>#@@base0A@@</string>
         <key>findHighlightForeground</key>
-        <string>#{{base00}}</string>
+        <string>#@@base00@@</string>
         <key>activeGuide</key>
-        <string>#{{base03}}</string>
+        <string>#@@base03@@</string>
         <key>bracketsForeground</key>
-        <string>#{{base05}}</string>
+        <string>#@@base05@@</string>
         <key>bracketsOptions</key>
         <string>underline</string>
         <key>bracketContentsForeground</key>
-        <string>#{{base05}}</string>
+        <string>#@@base05@@</string>
         <key>bracketContentsOptions</key>
         <string>underline</string>
         <key>tagsOptions</key>
         <string>stippled_underline</string>
         <key>gutterForeground</key>
-        <string>#{{base03}}</string>
+        <string>#@@base03@@</string>
         <key>gutter</key>
-        <string>#{{base01}}</string>
+        <string>#@@base01@@</string>
       </dict>
     </dict>
 
@@ -59,7 +59,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base03}}</string>
+        <string>#@@base03@@</string>
         <key>fontStyle</key>
         <string>italic</string>
       </dict>
@@ -74,7 +74,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base05}}</string>
+        <string>#@@base05@@</string>
       </dict>
     </dict>
 
@@ -86,7 +86,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0E}}</string>
+        <string>#@@base0E@@</string>
         <key>fontStyle</key>
         <string>italic</string>
       </dict>
@@ -101,7 +101,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0E}}</string>
+        <string>#@@base0E@@</string>
       </dict>
     </dict>
 
@@ -113,7 +113,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0C}}</string>
+        <string>#@@base0C@@</string>
       </dict>
     </dict>
 
@@ -126,7 +126,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0E}}</string>
+        <string>#@@base0E@@</string>
       </dict>
     </dict>
 
@@ -139,7 +139,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base09}}</string>
+        <string>#@@base09@@</string>
       </dict>
     </dict>
 
@@ -151,7 +151,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base09}}</string>
+        <string>#@@base09@@</string>
       </dict>
     </dict>
 
@@ -163,7 +163,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base09}}</string>
+        <string>#@@base09@@</string>
       </dict>
     </dict>
 
@@ -175,7 +175,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0C}}</string>
+        <string>#@@base0C@@</string>
       </dict>
     </dict>
 
@@ -188,7 +188,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0B}}</string>
+        <string>#@@base0B@@</string>
       </dict>
     </dict>
 
@@ -200,7 +200,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0B}}</string>
+        <string>#@@base0B@@</string>
       </dict>
     </dict>
 
@@ -213,7 +213,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0D}}</string>
+        <string>#@@base0D@@</string>
       </dict>
     </dict>
 
@@ -225,7 +225,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0A}}</string>
+        <string>#@@base0A@@</string>
       </dict>
     </dict>
 
@@ -237,7 +237,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0C}}</string>
+        <string>#@@base0C@@</string>
       </dict>
     </dict>
 
@@ -249,7 +249,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base09}}</string>
+        <string>#@@base09@@</string>
       </dict>
     </dict>
 
@@ -262,7 +262,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0D}}</string>
+        <string>#@@base0D@@</string>
       </dict>
     </dict>
 
@@ -274,7 +274,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0A}}</string>
+        <string>#@@base0A@@</string>
       </dict>
     </dict>
 
@@ -286,7 +286,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base08}}</string>
+        <string>#@@base08@@</string>
       </dict>
     </dict>
 
@@ -298,7 +298,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base09}}</string>
+        <string>#@@base09@@</string>
       </dict>
     </dict>
 
@@ -310,7 +310,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0A}}</string>
+        <string>#@@base0A@@</string>
         <key>fontStyle</key>
         <string>italic</string>
       </dict>
@@ -325,7 +325,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base05}}</string>
+        <string>#@@base05@@</string>
       </dict>
     </dict>
 
@@ -337,7 +337,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base05}}</string>
+        <string>#@@base05@@</string>
       </dict>
     </dict>
 
@@ -350,9 +350,9 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base07}}</string>
+        <string>#@@base07@@</string>
         <key>background</key>
-        <string>#{{base08}}</string>
+        <string>#@@base08@@</string>
       </dict>
     </dict>
 
@@ -364,9 +364,9 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base07}}</string>
+        <string>#@@base07@@</string>
         <key>background</key>
-        <string>#{{base0F}}</string>
+        <string>#@@base0F@@</string>
       </dict>
     </dict>
 
@@ -379,7 +379,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0B}}</string>
+        <string>#@@base0B@@</string>
       </dict>
     </dict>
 
@@ -391,7 +391,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base08}}</string>
+        <string>#@@base08@@</string>
       </dict>
     </dict>
 
@@ -403,7 +403,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0E}}</string>
+        <string>#@@base0E@@</string>
       </dict>
     </dict>
 
@@ -416,7 +416,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0D}}</string>
+        <string>#@@base0D@@</string>
         <key>fontStyle</key>
         <string>bold</string>
       </dict>
@@ -430,7 +430,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base09}}</string>
+        <string>#@@base09@@</string>
         <key>fontStyle</key>
         <string>bold</string>
       </dict>
@@ -444,7 +444,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0E}}</string>
+        <string>#@@base0E@@</string>
         <key>fontStyle</key>
         <string>italic</string>
       </dict>
@@ -458,7 +458,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0C}}</string>
+        <string>#@@base0C@@</string>
       </dict>
     </dict>
 
@@ -470,7 +470,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0D}}</string>
+        <string>#@@base0D@@</string>
         <key>fontStyle</key>
         <string>underline</string>
       </dict>
@@ -484,7 +484,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0B}}</string>
+        <string>#@@base0B@@</string>
         <key>fontStyle</key>
         <string>italic</string>
       </dict>
@@ -498,7 +498,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base08}}</string>
+        <string>#@@base08@@</string>
       </dict>
     </dict>
 
@@ -511,7 +511,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base0D}}</string>
+        <string>#@@base0D@@</string>
       </dict>
     </dict>
 
@@ -523,7 +523,7 @@
       <key>settings</key>
       <dict>
         <key>foreground</key>
-        <string>#{{base09}}</string>
+        <string>#@@base09@@</string>
       </dict>
     </dict>
 

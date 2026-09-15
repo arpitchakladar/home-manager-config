@@ -1,26 +1,26 @@
-@define-color theme_bg_color #{{base00}};
-@define-color theme_fg_color #{{base05}};
-@define-color theme_base_color #{{base00}};
-@define-color theme_text_color #{{base05}};
-@define-color theme_selected_bg_color #{{base0D}};
-@define-color theme_selected_fg_color #{{base00}};
-@define-color theme_unfocused_bg_color #{{base01}};
-@define-color theme_unfocused_fg_color #{{base04}};
-@define-color theme_unfocused_base_color #{{base00}};
-@define-color theme_unfocused_text_color #{{base04}};
-@define-color theme_unfocused_selected_bg_color #{{base0D}};
-@define-color theme_unfocused_selected_fg_color #{{base00}};
-@define-color theme_tooltip_bg_color #{{base00}};
-@define-color theme_tooltip_fg_color #{{base06}};
-@define-color borders #{{base03}};
-@define-color unfocused_borders #{{base02}};
-@define-color accent_color #{{base0D}};
-@define-color warning_color #{{base0A}};
-@define-color error_color #{{base08}};
-@define-color success_color #{{base0B}};
-@define-color placeholder_text_color #{{base03}};
-@define-color insensitive_bg_color #{{base01}};
-@define-color insensitive_fg_color #{{base03}};
+@define-color theme_bg_color #@@base00@@;
+@define-color theme_fg_color #@@base05@@;
+@define-color theme_base_color #@@base00@@;
+@define-color theme_text_color #@@base05@@;
+@define-color theme_selected_bg_color #@@base0D@@;
+@define-color theme_selected_fg_color #@@base00@@;
+@define-color theme_unfocused_bg_color #@@base01@@;
+@define-color theme_unfocused_fg_color #@@base04@@;
+@define-color theme_unfocused_base_color #@@base00@@;
+@define-color theme_unfocused_text_color #@@base04@@;
+@define-color theme_unfocused_selected_bg_color #@@base0D@@;
+@define-color theme_unfocused_selected_fg_color #@@base00@@;
+@define-color theme_tooltip_bg_color #@@base00@@;
+@define-color theme_tooltip_fg_color #@@base06@@;
+@define-color borders #@@base03@@;
+@define-color unfocused_borders #@@base02@@;
+@define-color accent_color #@@base0D@@;
+@define-color warning_color #@@base0A@@;
+@define-color error_color #@@base08@@;
+@define-color success_color #@@base0B@@;
+@define-color placeholder_text_color #@@base03@@;
+@define-color insensitive_bg_color #@@base01@@;
+@define-color insensitive_fg_color #@@base03@@;
 
 window, dialog, .background {
   background-color: @theme_bg_color;
@@ -51,7 +51,7 @@ listview, .list, flowbox, treeview, calendar, notebook > stack, scrolledwindow {
 }
 
 button:hover, entry:hover, row:hover {
-  border-color: #{{base04}};
+  border-color: #@@base04@@;
 }
 
 button:active, button:checked, button:default, entry:focus,
@@ -80,19 +80,19 @@ headerbar button, toolbar button, menubar button {
 }
 
 treeview header button {
-  background-color: #{{base01}};
+  background-color: #@@base01@@;
   color: @theme_text_color;
   border-color: @borders;
 }
 
 switch, scale trough, progressbar trough, scrollbar slider {
-  background-color: #{{base02}};
+  background-color: #@@base02@@;
   border-color: @borders;
 }
 
 switch slider, scale slider {
-  background-color: #{{base06}};
-  border-color: #{{base02}};
+  background-color: #@@base06@@;
+  border-color: #@@base02@@;
 }
 
 scale highlight, scale fill, progressbar progress {
@@ -100,15 +100,15 @@ scale highlight, scale fill, progressbar progress {
 }
 
 scrollbar {
-  background-color: #{{base01}};
+  background-color: #@@base01@@;
 }
 
 scrollbar slider:hover {
-  background-color: #{{base04}};
+  background-color: #@@base04@@;
 }
 
 notebook tab, notebook > header tabs tab {
-  background-color: #{{base01}};
+  background-color: #@@base01@@;
   border-color: @borders;
 }
 
@@ -118,7 +118,7 @@ notebook tab:checked, notebook > header tabs tab:checked {
 }
 
 separator, paned > separator {
-  background-color: #{{base02}};
+  background-color: #@@base02@@;
 }
 
 tooltip, .tooltip {
@@ -129,15 +129,15 @@ tooltip, .tooltip {
 
 statusbar, .statusbar {
   background-color: @theme_bg_color;
-  color: #{{base04}};
+  color: #@@base04@@;
 }
 
 link, .link {
-  color: #{{base0D}};
+  color: #@@base0D@@;
 }
 
 expander, arrow {
-  color: #{{base04}};
+  color: #@@base04@@;
 }
 
 label:disabled, button:disabled {
@@ -146,5 +146,5 @@ label:disabled, button:disabled {
 }
 
 .dim-label {
-  color: #{{base04}};
+  color: #@@base04@@;
 }

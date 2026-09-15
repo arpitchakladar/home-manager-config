@@ -27,7 +27,7 @@
       let
         gtkCss = builtins.readFile (
           config.scheme {
-            template = builtins.readFile ./style.mustache.css;
+            template = builtins.readFile ./style.css;
             extension = ".css";
           }
         );
@@ -55,7 +55,7 @@
         gtk3.extraCss = gtkCss;
         gtk4 = {
           # GTK 4/libadwaita does not support loading GTK 3 themes; use the
-          # Base16 CSS above without Home Manager's compatibility workaround.
+          # OneDark Dark CSS above without Home Manager's compatibility workaround.
           theme = null;
           extraCss = gtkCss;
         };

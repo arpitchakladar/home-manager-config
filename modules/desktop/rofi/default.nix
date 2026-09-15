@@ -28,7 +28,7 @@
                 ''"${config.fonts.normal} Bold ${toString config.fonts.size}"''
                 ''"${config.fonts.normal} Bold ${toString config.fonts.idxSize}"''
               ]
-              (builtins.readFile ./theme.mustache.rasi);
+              (builtins.readFile ./theme.rasi);
         in
         "${config.scheme {
           inherit template;

@@ -26,7 +26,7 @@
         base16 = {
           src = pkgs.runCommand "bat-base16-theme" { } ''
             mkdir -p $out
-            cp ${config.scheme { template = ./base16.mustache.tmTheme; }} $out/base16.tmTheme
+            cp ${config.scheme { template = ./base16.tmTheme; }} $out/base16.tmTheme
           '';
           file = "base16.tmTheme";
         };

@@ -2,6 +2,7 @@
 { ... }:
 {
   imports = [
+    ./colors/base16/onedark-dark.nix
     ./communication
     ./desktop
     ./development
