@@ -5,6 +5,7 @@
   imports = [
     ./bruno
     ./delta
+    ./direnv
     ./git
     ./lazygit
     ./nixvim

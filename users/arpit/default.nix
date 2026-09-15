@@ -28,6 +28,7 @@
   # Development
   development.bruno.enable = true;
   development.delta.enable = true;
+  development.direnv.enable = true;
   development.git.enable = true;
   development.git.signing.signByDefault = true;
   development.lazygit.enable = true;
