@@ -48,7 +48,6 @@
         action = "<cmd>NvimTreeToggle<cr>";
         mode = [
           "n"
-          "i"
         ];
         options.desc = "Toggle file explorer";
       }
