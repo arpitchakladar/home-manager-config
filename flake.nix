@@ -46,23 +46,6 @@
         inherit pkgs;
         lib = pkgs.lib;
       };
-      # The module set, bundled with the prerequisites it relies on: the
-      # base16 module (provides `config.scheme`) and the nixvim module
-      # (provides `programs.nixvim`). A default `scheme` is set so it works
-      # out of the box; consumers can override it with their own path.
-      homeManagerModule =
-        {
-          lib,
-          ...
-        }:
-        {
-          imports = [
-            base16.homeManagerModule
-            nixvim.homeModules.nixvim
-            ./modules
-          ];
-          scheme = lib.mkDefault ./assets/onedark-dark.yml;
-        };
       preCommitCheck = git-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
@@ -80,7 +63,19 @@
     in
     {
       homeManagerModules = {
-        default = homeManagerModule;
+        default =
+          {
+            lib,
+            ...
+          }:
+          {
+            imports = [
+              base16.homeManagerModule
+              nixvim.homeModules.nixvim
+              ./modules
+            ];
+            scheme = lib.mkDefault ./assets/onedark-dark.yml;
+          };
       };
       apps.${system}.updates = {
         type = "app";
