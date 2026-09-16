@@ -1,4 +1,4 @@
-# vim: filetype=muttrc
+# vim: filetype=neomuttrc
 #
 # Base16 OneDark Dark terminal colors for neomutt
 # Each column in the index receives a distinct color to keep the UI organized.
@@ -58,19 +58,19 @@ color index_flags     red         default "~A"  #  base08 (Red)
 color index_size      cyan        default "~A"  # 󰈔 base0C (Cyan)
 color index_author    yellow      default "~A"  #  base0A (Yellow)
 color index_subject   white       default "~A"  #  base05 (Standard text for Read messages)
-color index_collapsed yellow      default        #  base0A (Collapsed thread count, %M)
-color index_label     magenta     default        # 󰓹 base0E (Message label, %y %Y)
-color index_tag       cyan        default        #  base0C (Message tags, %G)
-color index_tags      cyan        default        # 󰓼 base0C (Transformed tags, %g %J)
+color index_collapsed yellow      default       #  base0A (Collapsed thread count, %M)
+color index_label     magenta     default       # 󰓹 base0E (Message label, %y %Y)
+color index_tag       cyan        default       #  base0C (Message tags, %G)
+color index_tags      cyan        default       # 󰓼 base0C (Transformed tags, %g %J)
 
 # --- Index Message States ---------------------------------------------
 # By targeting *only* `index_subject`, you preserve your multi-color
 # columns while still easily identifying unread or flagged emails.
-color index_subject blue        default "~U"  #  Unread: Blue (base0D)
-color index_subject blue        default "~N"  # 󰄯 New: Blue (base0D)
-color index_subject red         default "~F"  #  Flagged: Red (base08)
-color index_subject magenta     default "~Q"  # 󰛃 Replied: Magenta (base0E)
-color index_subject black       red     "~D"  #  Deleted
+color index_subject blue        default "~U"    #  Unread: Blue (base0D)
+color index_subject blue        default "~N"    # 󰄯 New: Blue (base0D)
+color index_subject red         default "~F"    #  Flagged: Red (base08)
+color index_subject magenta     default "~Q"    # 󰛃 Replied: Magenta (base0E)
+color index_subject black       red     "~D"    #  Deleted
 
 # This rule now colors the "email (name)" column as it is considered the 'author'
 color index_author  yellow      default "~A"
@@ -120,7 +120,7 @@ color body        blue          default "([a-z][a-z0-9+-]*://[^ ]+)"
 # PGP
 color body        green         default "(Good signature)"  #  verified
 color body        red           default "(BAD signature)"   #  bad
-color body        brightblack   default "^gpg: "             # 
+color body        brightblack   default "^gpg: "
 
 # --- Sidebar (was completely unset despite sidebar.enable = true) -----
 set sidebar_format = " %D%* %?N? %N ?%?F? %F ?"

@@ -3,7 +3,6 @@
 {
   imports = [
     ./swayimg
-    ./grim
     ./pamixer
     ./playerctl
     ./screen-recording

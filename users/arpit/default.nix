@@ -48,7 +48,6 @@
 
   # Media
   media.swayimg.enable = true;
-  media.grim.enable = true;
   media.pamixer.enable = true;
   media.playerctl.enable = true;
   media.slurp.enable = true;
