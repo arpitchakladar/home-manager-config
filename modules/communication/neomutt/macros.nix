@@ -24,7 +24,7 @@
       # Pipe the selected attachment instead of the whole message
       map = [ "attach" ];
       key = "gx";
-      action = "<pipe-entry>${lib.getExe config.web.chawan.package} -o \"title='neomutt'\" <enter>";
+      action = "<pipe-entry>${lib.getExe config.web.chawan.package} -T text/html <enter>";
     }
     {
       # Clear the current limit and show every message again
