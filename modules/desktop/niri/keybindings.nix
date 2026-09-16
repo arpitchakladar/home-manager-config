@@ -69,25 +69,7 @@ in
       _props.repeat = false;
       close-window = { };
     };
-  }
-  // workspaceBinds
-  // (lib.optionalAttrs config.desktop.enable {
-    "Mod+D" = {
-      _props.hotkey-overlay-title = "Run an Application: rofi";
-      spawn = [
-        (lib.getExe config.desktop.rofi.package)
-        "-show"
-        "drun"
-      ];
-    };
-  })
-  // (lib.optionalAttrs config.terminal.kitty.enable {
-    "Mod+Return" = {
-      _props.hotkey-overlay-title = "Open a Terminal: kitty";
-      spawn = [ (lib.getExe config.terminal.kitty.package) ];
-    };
-  })
-  // {
+
     # Column-aware directional navigation.
     "Mod+H".focus-column-left = { };
     "Mod+L".focus-column-right = { };
@@ -114,9 +96,25 @@ in
     "Mod+Ctrl+U".move-column-to-workspace-down = { };
     "Mod+Ctrl+I".move-column-to-workspace-up = { };
     "Mod+W".toggle-column-tabbed-display = { };
-  }
-  // (lib.optionalAttrs config.system.brightnessctl.enable {
-    "XF86MonBrightnessDown" = {
+
+    # Screenshots
+    "Mod+P".screenshot = { };
+    "Mod+Shift+P".screenshot-screen = { };
+
+    # Externel commnads
+    "Mod+D" = {
+      _props.hotkey-overlay-title = "Run an Application: rofi";
+      spawn = [
+        (lib.getExe config.desktop.rofi.package)
+        "-show"
+        "drun"
+      ];
+    };
+    "Mod+Return" = lib.mkIf config.terminal.kitty.enable {
+      _props.hotkey-overlay-title = "Open a Terminal: kitty";
+      spawn = [ (lib.getExe config.terminal.kitty.package) ];
+    };
+    "XF86MonBrightnessDown" = lib.mkIf config.system.brightnessctl.enable {
       _props.allow-when-locked = true;
       spawn = [
         (lib.getExe config.system.brightnessctl.package)
@@ -124,7 +122,7 @@ in
         "5%-"
       ];
     };
-    "XF86MonBrightnessUp" = {
+    "XF86MonBrightnessUp" = lib.mkIf config.system.brightnessctl.enable {
       _props.allow-when-locked = true;
       spawn = [
         (lib.getExe config.system.brightnessctl.package)
@@ -132,9 +130,7 @@ in
         "+5%"
       ];
     };
-  })
-  // (lib.optionalAttrs config.media.pamixer.enable {
-    "XF86AudioLowerVolume" = {
+    "XF86AudioLowerVolume" = lib.mkIf config.media.pamixer.enable {
       _props.allow-when-locked = true;
       spawn = [
         (lib.getExe config.media.pamixer.package)
@@ -142,7 +138,7 @@ in
         "5"
       ];
     };
-    "XF86AudioRaiseVolume" = {
+    "XF86AudioRaiseVolume" = lib.mkIf config.media.pamixer.enable {
       _props.allow-when-locked = true;
       spawn = [
         (lib.getExe config.media.pamixer.package)
@@ -150,29 +146,20 @@ in
         "5"
       ];
     };
-    "XF86AudioMute" = {
+    "XF86AudioMute" = lib.mkIf config.media.pamixer.enable {
       _props.allow-when-locked = true;
       spawn = [
         (lib.getExe config.media.pamixer.package)
         "--toggle-mute"
       ];
     };
-  })
-  // (lib.optionalAttrs config.media.playerctl.enable {
-    "XF86AudioPlay" = {
+    "XF86AudioPlay" = lib.mkIf config.media.playerctl.enable {
       _props.allow-when-locked = true;
       spawn = [
         (lib.getExe config.media.playerctl.package)
         "play-pause"
       ];
     };
-  })
-  // (lib.optionalAttrs (config.media.grim.enable && config.media.slurp.enable) {
-    "Mod+P".spawn-sh = [
-      "${lib.getExe config.media.grim.package} -g \"$(${lib.getExe config.media.slurp.package})\" - | ${lib.getExe' config.desktop.wl-clipboard.package "wl-copy"}"
-    ];
-    "Mod+Shift+P".spawn-sh = [
-      ''mkdir -p "$HOME/Pictures/Screenshots" && ${lib.getExe config.media.grim.package} -g "$(${lib.getExe config.media.slurp.package})" "$HOME/Pictures/Screenshots/screenshot-$(date +%Y%m%d-%H%M%S).png"''
-    ];
-  });
+  }
+  // workspaceBinds;
 }

@@ -62,10 +62,10 @@
   };
 
   config = {
-    fonts.normal = lib.mkDefault "Fira Code Nerd Font";
+    fonts.normal = lib.mkDefault "FiraMono Nerd Font";
 
     home.packages = [
-      pkgs.nerd-fonts.fira-code
+      pkgs.nerd-fonts.fira-mono
     ];
   };
 }
