@@ -1,3 +1,6 @@
+---@diagnostic disable-next-line: undefined-global
+local swayimg = swayimg
+
 -- Panning around the image (HJKL)
 swayimg.viewer.on_key("h", function()
   local pos = swayimg.viewer.get_position()
