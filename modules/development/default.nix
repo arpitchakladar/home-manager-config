@@ -11,6 +11,7 @@
     ./nixvim
     ./opencode
     ./qemu
+    ./ripgrep
     ./vscodium
   ];
 }

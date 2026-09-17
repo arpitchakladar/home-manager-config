@@ -37,6 +37,7 @@
   development.nixvim.enable = true;
   development.opencode.enable = true;
   development.qemu.enable = true;
+  development.ripgrep.enable = true;
   development.vscodium.enable = true;
 
   # File Management
