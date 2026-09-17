@@ -1,5 +1,3 @@
-# vim: filetype=neomuttrc
-#
 # Base16 OneDark Dark terminal colors for neomutt
 # Each column in the index receives a distinct color to keep the UI organized.
 
