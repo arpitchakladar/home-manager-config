@@ -7,6 +7,7 @@
         imports = [
           ./options.nix
           ./flavors/gmail.nix
+          ./sync-channel.nix
         ];
       }
     );
