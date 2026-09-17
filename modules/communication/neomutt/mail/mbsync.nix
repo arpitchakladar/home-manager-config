@@ -1,33 +1,69 @@
+# Mailbox synchronization
 {
   config,
   lib,
   ...
 }@inputs:
 let
-  genValue =
-    v:
-    if lib.isList v then
-      lib.concatStringsSep " " (map genValue v)
-    else if lib.isBool v then
-      lib.hm.booleans.yesNo v
-    else if lib.isInt v then
-      toString v
-    else if lib.isString v then
-      if builtins.match ".* .*" v != null then ''"${lib.escape [ ''"'' ] v}"'' else v
+  mbsyncValue =
+    value:
+    if lib.isList value then
+      lib.concatStringsSep " " (map mbsyncValue value)
+    else if lib.isBool value then
+      lib.hm.booleans.yesNo value
+    else if lib.isInt value then
+      toString value
+    else if lib.isString value then
+      if builtins.match ".* .*" value != null then ''"${lib.escape [ ''"'' ] value}"'' else value
     else
       throw "Unsupported mbsync value";
 
-  genSection = name: attrs: ''
+  mbsyncSection = name: attrs: ''
     ${name}
-    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (n: v: "${n} ${genValue v}") attrs)}
+    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (n: v: "${n} ${mbsyncValue v}") attrs)}
   '';
 
-  genAccount =
-    a:
+  mbsyncAccount =
+    account:
     let
-      mbsyncNames = (import ../lib.nix inputs).mbsyncNamesFromName a.name;
+      mbsyncNames = (import ../lib.nix inputs).mbsyncNamesFromName account.name;
+    in
+    lib.concatStringsSep "\n" [
+      (mbsyncSection "IMAPAccount ${mbsyncNames.base}" (
+        {
+          Host = account.imap.host;
+          User = account.userName;
+          PipelineDepth = 50;
+          TLSType =
+            if !account.imap.tls.enable then
+              "None"
+            else if account.imap.tls.useStartTls then
+              "STARTTLS"
+            else
+              "IMAPS";
+        }
+        // lib.optionalAttrs (account.passwordCommand != null) {
+          PassCmd = toString account.passwordCommand;
+        }
+        // lib.optionalAttrs (account.imap.tls.certificatesFile != null) {
+          CertificateFile = toString account.imap.tls.certificatesFile;
+        }
+        // lib.optionalAttrs (account.imap.port != null) {
+          Port = account.imap.port;
+        }
+      ))
 
-      quick = {
+      (mbsyncSection "IMAPStore ${mbsyncNames.servers.remote}" {
+        Account = mbsyncNames.base;
+      })
+
+      (mbsyncSection "MaildirStore ${mbsyncNames.servers.local}" {
+        Path = "${account.maildir.absPath}/";
+        Inbox = "${account.maildir.absPath}/${account.folders.inbox}";
+        SubFolders = "Verbatim";
+      })
+
+      (mbsyncSection "Channel ${mbsyncNames.channels.quick}" {
         Far = ":${mbsyncNames.servers.remote}:\"INBOX\"";
         Near = ":${mbsyncNames.servers.local}:\"INBOX\"";
         Create = "Near";
@@ -37,71 +73,27 @@ let
           "New"
         ];
         SyncState = "*";
-      };
+      })
 
-      full = {
+      (mbsyncSection "Channel ${mbsyncNames.channels.full}" {
         Far = ":${mbsyncNames.servers.remote}:";
         Near = ":${mbsyncNames.servers.local}:";
-        Patterns = a.mbsync.patterns;
+        Patterns = account.mbsync.patterns;
         Create = "Near";
         Expunge = "Both";
         Sync = "All";
         SyncState = "*";
-      };
-    in
-    genSection "IMAPAccount ${mbsyncNames.base}" (
-      {
-        Host = a.imap.host;
-        User = a.userName;
-        PipelineDepth = 50;
-        TLSType =
-          if !a.imap.tls.enable then
-            "None"
-          else if a.imap.tls.useStartTls then
-            "STARTTLS"
-          else
-            "IMAPS";
-      }
-      // lib.optionalAttrs (a.passwordCommand != null) {
-        PassCmd = toString a.passwordCommand;
-      }
-      // lib.optionalAttrs (a.imap.tls.certificatesFile != null) {
-        CertificateFile = toString a.imap.tls.certificatesFile;
-      }
-      // lib.optionalAttrs (a.imap.port != null) {
-        Port = a.imap.port;
-      }
-    )
+      })
+    ];
 
-    + "\n"
-    + genSection "IMAPStore ${mbsyncNames.servers.remote}" {
-      Account = mbsyncNames.base;
-    }
-
-    + "\n"
-    + genSection "MaildirStore ${mbsyncNames.servers.local}" {
-      Path = "${a.maildir.absPath}/";
-      Inbox = "${a.maildir.absPath}/${a.folders.inbox}";
-      SubFolders = "Verbatim";
-    }
-
-    + "\n"
-    + genSection "Channel ${mbsyncNames.channels.quick}" quick
-
-    + "\n"
-    + genSection "Channel ${mbsyncNames.channels.full}" full
-
-    + "\n";
-
-  accounts = lib.filter (a: a.enable && a.mbsync.enable) (
-    lib.attrValues config.accounts.email.accounts
-  );
-
+  accounts = lib.filter (
+    account: account.enable && account.mbsync.enable
+  ) lib.attrValues config.accounts.email.accounts;
 in
 {
   config = lib.mkIf config.communication.neomutt.enable {
     programs.mbsync.enable = true;
 
-    xdg.configFile."mbsync/.mbsyncrc".text = lib.concatStringsSep "\n" (map genAccount accounts);
+    xdg.configFile."mbsync/.mbsyncrc".text = lib.concatStringsSep "\n" (map mbsyncAccount accounts);
   };
 }
