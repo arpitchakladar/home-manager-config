@@ -21,7 +21,6 @@
         "[Gmail]/Drafts"
         "[Gmail]/Sent Mail"
         "[Gmail]/Spam"
-        "[Gmail]/Trash"
       ];
       extraConfig.channel = {
         Sync = lib.mkDefault "All";
