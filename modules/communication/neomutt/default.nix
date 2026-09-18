@@ -20,6 +20,25 @@ let
     ];
     text = builtins.readFile ./neomutt-sync.sh;
   };
+
+  neomuttSyncCompletion =
+    pkgs.runCommand "neomutt-sync-completion"
+      {
+        nativeBuildInputs = [ pkgs.installShellFiles ];
+      }
+      ''
+        mkdir -p $out/share/zsh/site-functions
+        installShellCompletion --zsh --name _neomutt-sync ${pkgs.writeText "neomutt-sync.zsh" (builtins.readFile ./neomutt-sync.zsh)}
+      '';
+
+  neomuttSync = pkgs.symlinkJoin {
+    name = "nix-update";
+    paths = [
+      neomuttSyncScript
+      neomuttSyncCompletion
+    ];
+    meta = neomuttSyncScript.meta or { };
+  };
 in
 {
   imports = [
@@ -74,7 +93,7 @@ in
         name = "neomutt-wrapped";
         paths = [
           pkgs.neomutt
-          neomuttSyncScript
+          neomuttSync
         ];
         nativeBuildInputs = [ pkgs.makeWrapper ];
         postBuild = ''
