@@ -27,7 +27,7 @@ let
         installShellCompletion --zsh --name _nix-update ${pkgs.writeText "nix-update.zsh" (builtins.readFile ./nix-update.zsh)}
       '';
 
-  nixUpdateScriptPkg = pkgs.symlinkJoin {
+  nixUpdate = pkgs.symlinkJoin {
     name = "nix-update";
     paths = [
       nixUpdateScript
@@ -43,7 +43,7 @@ in
     package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      default = nixUpdateScriptPkg;
+      default = nixUpdate;
       description = "The nix-update script package.";
     };
   };
