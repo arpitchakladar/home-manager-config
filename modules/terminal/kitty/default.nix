@@ -37,8 +37,7 @@
         scrollbar_indicator_opacity = "0.5";
         dynamic_background_opacity = false;
         enable_audio_bell = false;
-        allow_remote_control = "yes";
-        listen_on = "unix:/tmp/kitty";
+        allow_remote_control = "no";
         shell = lib.mkIf config.terminal.zsh.enable (lib.getExe config.terminal.zsh.package);
       };
     };
