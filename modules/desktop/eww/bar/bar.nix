@@ -63,12 +63,10 @@
           name = "eww-system-stats";
           path = ./system-stats.lua;
           description = "Emit {cpu, ram, net} as JSON.";
-          luaPackages = (
-            ps: [
-              ps.lua-cjson
-              ps.luaposix
-            ]
-          );
+          luaPackages = ps: [
+            ps.lua-cjson
+            ps.luaposix
+          ];
           deps = [
             pkgs.iw
             pkgs.iproute2
@@ -82,12 +80,10 @@
           name = "niri-status";
           path = ./niri-status.lua;
           description = "Emit workspace and active window information list.";
-          luaPackages = (
-            ps: [
-              ps.lgi
-              ps.lua-cjson
-            ]
-          );
+          luaPackages = ps: [
+            ps.lgi
+            ps.lua-cjson
+          ];
           deps = [ config.desktop.niri.package ];
           gobjectIntrospection = true;
         };

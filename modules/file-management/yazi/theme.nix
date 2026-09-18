@@ -1,7 +1,16 @@
-{ config, lib, ... }:
+# Yazi theme derived from the shared base16 color scheme
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+in
 {
   config = lib.mkIf config.file-management.yazi.enable {
-    programs.yazi.theme = with config.scheme.withHashtag; {
+    programs.yazi.theme = with base16Colors.colorsWithHashPrefix; {
       manager = {
         cwd = {
           fg = base0D;

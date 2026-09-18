@@ -1,8 +1,13 @@
+# ElKowar's Wacky Widgets — desktop widgets and bar
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+in
 {
   imports = [
     ./bar/bar.nix
@@ -22,38 +27,35 @@
       enable = true;
       systemd = {
         enable = true;
-        # Nothing ever activates this, so home-manager's eww.service unit
-        # exists but is never auto-started by the session. Rely on eww-bar.service
-        # manually starts eww service.
+        # Nothing auto-starts home-manager's eww.service unit; the eww-bar
+        # service below starts the daemon on demand.
         target = "eww-daemon-manual.target";
       };
       scssConfig =
         let
-          baseSize = config.fonts.size;
+          themedStyleSheet =
+            builtins.replaceStrings
+              [
+                "@@font-family@@"
+                "@@font-size@@"
+                "@@font-size-icon@@"
+                "@@font-size-label@@"
+                "@@font-size-small@@"
+                "@@font-size-idx@@"
+              ]
+              [
+                config.fonts.normal
+                (toString config.fonts.size)
+                (toString config.fonts.iconSize)
+                (toString config.fonts.labelSize)
+                (toString config.fonts.smallSize)
+                (toString config.fonts.idxSize)
+              ]
+              (builtins.readFile ./eww.scss);
         in
-        builtins.readFile (
-          config.scheme {
-            template =
-              builtins.replaceStrings
-                [
-                  "@@font-family@@"
-                  "@@font-size@@"
-                  "@@font-size-icon@@"
-                  "@@font-size-label@@"
-                  "@@font-size-small@@"
-                  "@@font-size-idx@@"
-                ]
-                [
-                  config.fonts.normal
-                  (toString baseSize)
-                  (toString config.fonts.iconSize)
-                  (toString config.fonts.labelSize)
-                  (toString config.fonts.smallSize)
-                  (toString config.fonts.idxSize)
-                ]
-                (builtins.readFile ./eww.scss);
-          }
-        );
+        builtins.readFile (base16Colors {
+          templateFileOrContent = themedStyleSheet;
+        });
     };
 
     systemd.user.services.eww-bar = {

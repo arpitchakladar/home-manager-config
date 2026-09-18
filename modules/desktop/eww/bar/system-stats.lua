@@ -4,6 +4,7 @@
 -- Single-threaded LuaJIT port of the original Python script. Instead of
 -- OS threads, a single supervisor loop schedules the periodic cpu/ram and
 -- sound refreshes and polls an inotifywait child for link-state changes.
+
 local cjson = require("cjson")
 local posix = require("posix")
 local unistd = require("posix.unistd")
@@ -23,13 +24,13 @@ end
 local net_last_time = nil
 local net_last_bytes = {}
 
--- ------------------------------------------------ time
+-- TIME
 local function mono_sec()
   local g = gettimeofday()
   return g.tv_sec + g.tv_usec / 1e6
 end
 
--- ------------------------------------------------ process helpers
+-- PROCESS HELPERS
 local function sh(cmd)
   local h = io.popen(cmd)
   if not h then
@@ -40,7 +41,7 @@ local function sh(cmd)
   return out
 end
 
--- ------------------------------------------------ formatting
+-- FORMATTING
 local function format_rate(bytes_per_sec)
   if bytes_per_sec == nil or bytes_per_sec < 0 then
     return "0B"
@@ -77,7 +78,7 @@ local function format_bytes(kib)
   return string.format("%.1f%s", val, unit)
 end
 
--- ------------------------------------------------ /proc readers
+-- /proc READERS
 local function read_cpu_times()
   local times = {}
   local f = io.open("/proc/stat")
@@ -192,7 +193,7 @@ local function get_ram_speed_mhz()
   return mx
 end
 
--- ------------------------------------------------ network helpers
+-- NETWORK HELPERS
 local function get_all_default_ifaces()
   local out = sh("ip -o route show default 2>/dev/null")
   if not out then
@@ -305,7 +306,7 @@ local function get_iface_io_bytes(iface)
   return rx, tx
 end
 
--- ------------------------------------------------ tooltips
+-- TOOLTIPS
 local function build_cpu_tooltip(overall_pct, per_core_list, freq_mhz, load_avg)
   local lines = { string.format("CPU: %d%%", overall_pct) }
   if freq_mhz ~= nil then
@@ -337,7 +338,7 @@ local function build_ram_tooltip(ram_pct, used, total, available, swap_pct, swap
   return table.concat(lines, "\n")
 end
 
--- ------------------------------------------------ state collectors
+-- STATE COLLECTORS
 -- get_all_default_ifaces (`ip route`), get_iface_ip (`ip addr`), and the
 -- wifi branch of get_speed_mbps (`iw dev link`) each spawn a subprocess.
 -- Those three rarely change second-to-second, so they're only re-probed
@@ -530,7 +531,7 @@ local function get_sound_state()
   }
 end
 
--- ------------------------------------------------ battery
+-- BATTERY
 local function find_battery_path()
   local handle = io.popen("ls /sys/class/power_supply/ 2>/dev/null")
   if not handle then
@@ -608,7 +609,7 @@ end
 
 local battery_path = find_battery_path()
 
--- ------------------------------------------------ state + emit
+-- state + emit
 local state = {
   cpu = {
     percent = 0,
@@ -657,7 +658,7 @@ local CPU_INTERVAL = 2.0
 local SOUND_INTERVAL = 1.0
 local INOTIFY_RETRY_INTERVAL = 30.0 -- backoff between (re)spawn attempts
 
--- ------------------------------------------------ inotifywait child
+-- inotifywait child
 -- Returns pid, read_fd on success, or nil, nil if the fork/exec setup
 -- itself failed outright (pipe/fork syscall failure, not inotifywait
 -- failing later).
@@ -694,7 +695,7 @@ local function spawn_inotify()
   return pid, r
 end
 
--- ------------------------------------------------ main loop
+-- MAIN LOOP
 local function main()
   local ram_speed_mhz = get_ram_speed_mhz()
 
@@ -878,7 +879,7 @@ local function main()
           -- Empty read on a "ready" fd means the write end closed, i.e.
           -- the inotifywait child exited (crashed, watched path missing,
           -- binary not found, etc). Reap it, drop the fd, and don't
-          -- touch it again until the next backed-off retry -- this is
+          -- touch it again until the next backed-off retry; this is
           -- the fix for the tight busy-loop: without this branch, poll()
           -- would report this dead fd as "ready" forever, on every
           -- single iteration, with an effectively-zero timeout.

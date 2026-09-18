@@ -1,4 +1,7 @@
-# Provide options/configurations for other modules to use base16 colorschemes
+# Shared base16 color scheme helpers. Not a module — pass the module arguments
+# to it (`import <path> { inherit config lib pkgs; }`) to get
+# `colorsWithHashPrefix` and a functor that renders a color template into a Nix
+# store file.
 {
   config,
   lib,
@@ -6,52 +9,40 @@
   ...
 }:
 let
-  schemeFiles = {
+  availableColorSchemeFiles = {
     "onedark-dark" = ./onedark-dark.nix;
   };
 
-  schemeFile =
-    schemeFiles.${config.colors.base16} or (throw "Unknown color scheme: ${config.colors.base16}");
+  selectedColorSchemeFile =
+    availableColorSchemeFiles.${config.colors.base16}
+      or (throw "Unknown color scheme: ${config.colors.base16}");
 
-  colors = import schemeFile { };
+  selectedColorScheme = import selectedColorSchemeFile { };
+  selectedColorSchemeColorNames = builtins.attrNames selectedColorScheme;
 
-  withHashtag = lib.mapAttrs (_: v: "#${v}") colors;
-  colorNames = builtins.attrNames colors;
-
-  processTemplate =
-    template:
+  renderColorSchemeTemplate =
+    templateFileOrContent:
     let
-      content = if builtins.typeOf template == "path" then builtins.readFile template else template;
-      replaced = builtins.replaceStrings (map (name: "@@${name}@@") colorNames) (map (
-        name: colors.${name}
-      ) colorNames) content;
+      templateContent =
+        if builtins.typeOf templateFileOrContent == "path" then
+          builtins.readFile templateFileOrContent
+        else
+          templateFileOrContent;
     in
-    replaced;
+    builtins.replaceStrings (map (colorName: "@@${colorName}@@") selectedColorSchemeColorNames) (map (
+      colorName: selectedColorScheme.${colorName}
+    ) selectedColorSchemeColorNames) templateContent;
 in
 {
-  options = {
-    colors.base16 = lib.mkOption {
-      type = lib.types.str;
-      default = "onedark-dark";
-      description = "Base16 color scheme to use";
-    };
+  colorsWithHashPrefix = lib.mapAttrs (_colorName: colorValue: "#${colorValue}") selectedColorScheme;
 
-    scheme = lib.mkOption {
-      type = lib.types.unspecified;
-      description = "Color scheme providing withHashtag and template function";
-    };
-  };
-
-  config = {
-    scheme = {
-      inherit withHashtag;
-      __functor =
-        self:
-        {
-          template,
-          extension ? "",
-        }:
-        pkgs.writeText "themed${extension}" (processTemplate template);
-    };
-  };
+  __functor =
+    _self:
+    {
+      templateFileOrContent,
+      fileExtension ? "",
+    }:
+    pkgs.writeText "color-scheme-themed${fileExtension}" (
+      renderColorSchemeTemplate templateFileOrContent
+    );
 }

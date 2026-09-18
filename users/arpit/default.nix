@@ -11,14 +11,15 @@
   home.homeDirectory = "/home/${config.home.username}";
   home.stateVersion = "25.05";
 
+  # Configuration wide colorscheme to use
+  colors.base16 = "onedark-dark";
+
   # Desktop environment
   desktop.enable = true;
   desktop.hardware.gpu = {
     nvidia.enable = true;
     amd.enable = true;
   };
-
-  colors.onedark-dark.enable = true;
 
   # Gaming
   gaming.heroic.enable = true;

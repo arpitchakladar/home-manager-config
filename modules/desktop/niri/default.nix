@@ -1,9 +1,13 @@
+# Niri scrollable-tiling Wayland compositor and desktop essentials
 {
   config,
   lib,
   pkgs,
   ...
 }:
+let
+  base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+in
 {
   imports = [ ./keybindings.nix ];
 
@@ -64,7 +68,7 @@
       x11.enable = true;
     };
 
-    wayland.windowManager.niri.settings = {
+    wayland.windowManager.niri.settings = with base16Colors.colorsWithHashPrefix; {
       hotkey-overlay = {
         skip-at-startup = { };
       };
@@ -94,8 +98,8 @@
         background-color = "transparent";
         focus-ring = {
           width = 1;
-          active-color = config.scheme.withHashtag.base07;
-          inactive-color = config.scheme.withHashtag.base03;
+          active-color = base07;
+          inactive-color = base03;
         };
         border.off = { };
         shadow.off = { };

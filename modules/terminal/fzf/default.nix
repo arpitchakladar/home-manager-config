@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+in
 {
   imports = [ ./assertions.nix ];
 
@@ -39,7 +43,7 @@
           "--margin='1,2'"
         ];
 
-        colors = with config.scheme.withHashtag; {
+        colors = with base16Colors.colorsWithHashPrefix; {
           fg = base05;
           bg = "-1";
           hl = base0D;

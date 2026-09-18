@@ -5,8 +5,6 @@
   ...
 }:
 let
-  cfg = config.web.chromium;
-
   extLib = import ./lib.nix {
     inherit lib pkgs config;
   };

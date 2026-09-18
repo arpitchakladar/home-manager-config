@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+in
 {
   config = lib.mkIf config.desktop.enable {
     dconf.enable = true;
@@ -25,12 +28,10 @@
 
     gtk =
       let
-        gtkCss = builtins.readFile (
-          config.scheme {
-            template = builtins.readFile ./style.css;
-            extension = ".css";
-          }
-        );
+        gtkColorSchemeCss = builtins.readFile (base16Colors {
+          templateFileOrContent = builtins.readFile ./style.css;
+          fileExtension = ".css";
+        });
       in
       {
         enable = true;
@@ -52,12 +53,12 @@
           size = 20;
         };
         colorScheme = "dark";
-        gtk3.extraCss = gtkCss;
+        gtk3.extraCss = gtkColorSchemeCss;
         gtk4 = {
           # GTK 4/libadwaita does not support loading GTK 3 themes; use the
-          # OneDark Dark CSS above without Home Manager's compatibility workaround.
+          # themed CSS above without Home Manager's compatibility workaround.
           theme = null;
-          extraCss = gtkCss;
+          extraCss = gtkColorSchemeCss;
         };
       };
   };

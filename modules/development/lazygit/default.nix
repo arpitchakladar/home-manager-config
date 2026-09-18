@@ -1,5 +1,13 @@
 # A simple terminal UI for git commands
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+in
 {
   imports = [
     ./assertions.nix
@@ -35,7 +43,7 @@
       enableBashIntegration = false;
       enableZshIntegration = config.terminal.zsh.enable;
       settings = {
-        gui = with config.scheme.withHashtag; {
+        gui = with base16Colors.colorsWithHashPrefix; {
           theme = {
             lightTheme = false;
             activeBorderColor = [

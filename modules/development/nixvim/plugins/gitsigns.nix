@@ -1,5 +1,13 @@
 # Git integration: signs, blame, diffs and hunk operations
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  base16Colors = import ../../../colors/base16 { inherit config lib pkgs; };
+in
 {
   config.programs.nixvim = lib.mkIf config.development.nixvim.enable {
     plugins.gitsigns = {
@@ -91,7 +99,7 @@
       };
     };
 
-    highlight = with config.scheme.withHashtag; {
+    highlight = with base16Colors.colorsWithHashPrefix; {
       GitSignsAdd.fg = base0B;
       GitSignsChange.fg = base0A;
       GitSignsDelete.fg = base08;

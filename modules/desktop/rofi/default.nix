@@ -1,8 +1,13 @@
+# Application launcher and dmenu replacement
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+in
 {
   options.desktop.rofi = {
     package = lib.mkOption {
@@ -18,7 +23,7 @@
       enable = true;
       theme =
         let
-          template =
+          fontExpandedThemeTemplate =
             builtins.replaceStrings
               [
                 "@@rofi-font@@"
@@ -30,9 +35,9 @@
               ]
               (builtins.readFile ./theme.rasi);
         in
-        "${config.scheme {
-          inherit template;
-          extension = ".rasi";
+        "${base16Colors {
+          templateFileOrContent = fontExpandedThemeTemplate;
+          fileExtension = ".rasi";
         }}";
       extraConfig = {
         modi = "drun";

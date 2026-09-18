@@ -3,8 +3,10 @@
   config,
   lib,
   ...
-}@inputs:
+}:
 let
+  mbsyncNamesFromName = (import ../lib.nix { inherit lib; }).mbsyncNamesFromName;
+
   mbsyncValue =
     value:
     if lib.isList value then
@@ -26,7 +28,7 @@ let
   mbsyncAccount =
     account:
     let
-      mbsyncNames = (import ../lib.nix inputs).mbsyncNamesFromName account.name;
+      mbsyncNames = mbsyncNamesFromName account.name;
     in
     lib.concatStringsSep "\n" [
       (mbsyncSection "IMAPAccount ${mbsyncNames.base}" (
@@ -86,9 +88,9 @@ let
       })
     ];
 
-  accounts = lib.filter (
-    account: account.enable && account.mbsync.enable
-  ) lib.attrValues config.accounts.email.accounts;
+  accounts = lib.filter (account: account.enable && account.mbsync.enable) (
+    lib.attrValues config.accounts.email.accounts
+  );
 in
 {
   config = lib.mkIf config.communication.neomutt.enable {

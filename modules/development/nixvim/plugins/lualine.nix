@@ -1,11 +1,19 @@
 # Statusline configuration
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  base16Colors = import ../../../colors/base16 { inherit config lib pkgs; };
+in
 {
   config.programs.nixvim.plugins.lualine = lib.mkIf config.development.nixvim.enable {
     enable = true;
     settings = {
       options = {
-        theme = with config.scheme.withHashtag; {
+        theme = with base16Colors.colorsWithHashPrefix; {
           normal = {
             a = {
               fg = base00;

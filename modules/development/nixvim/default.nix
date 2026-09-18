@@ -1,5 +1,13 @@
 # Neovim configured through Nix
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+in
 {
   imports = [
     ./colorscheme.nix
@@ -44,7 +52,7 @@
       globals.mapleader = " ";
       clipboard.providers.xclip.enable = true;
 
-      highlight = with config.scheme.withHashtag; {
+      highlight = with base16Colors.colorsWithHashPrefix; {
         WinSeparator = {
           fg = base01;
           bg = base00;

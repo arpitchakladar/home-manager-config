@@ -3,70 +3,76 @@
 -- extension's public key, and rewrite it.
 local dkjson = require("dkjson")
 
-local manifest_path = assert(arg[1], "usage: inject_extension_key.lua <manifest> <ext_key>")
-local ext_key = assert(arg[2], "usage: inject_extension_key.lua <manifest> <ext_key>")
+local manifest_path = assert(arg[1], "usage: inject_extension_key.lua <manifest> <extension_key>")
+local extension_key = assert(arg[2], "usage: inject_extension_key.lua <manifest> <extension_key>")
 
-local f = assert(io.open(manifest_path, "r"))
-local content = f:read("*a")
-f:close()
+local manifest_file = assert(io.open(manifest_path, "r"))
+local manifest_content = manifest_file:read("*a")
+manifest_file:close()
 
 -- Hand-rolled scanner that removes // and /* */ comments and mid-JSON
 -- trailing commas while respecting string literals (including escapes).
-local sb = {}
-local i, n = 1, #content
-local in_string = false
+local sanitized_chunks = {}
+local character_position = 1
+local content_length = #manifest_content
+local inside_string_literal = false
 
 local function trim_trailing_comma()
-  while #sb > 0 and (sb[#sb] == " " or sb[#sb] == "\t" or sb[#sb] == "\n" or sb[#sb] == "\r") do
-    sb[#sb] = nil
+  while #sanitized_chunks > 0 do
+    local last_chunk = sanitized_chunks[#sanitized_chunks]
+    if last_chunk ~= " " and last_chunk ~= "\t" and last_chunk ~= "\n" and last_chunk ~= "\r" then
+      break
+    end
+    sanitized_chunks[#sanitized_chunks] = nil
   end
-  if #sb > 0 and sb[#sb] == "," then
-    sb[#sb] = nil
+  if #sanitized_chunks > 0 and sanitized_chunks[#sanitized_chunks] == "," then
+    sanitized_chunks[#sanitized_chunks] = nil
   end
 end
 
-while i <= n do
-  local c = content:sub(i, i)
-  if in_string then
-    sb[#sb + 1] = c
-    if c == "\\" and i < n then
-      sb[#sb + 1] = content:sub(i + 1, i + 1)
-      i = i + 2
+while character_position <= content_length do
+  local current_character = manifest_content:sub(character_position, character_position)
+  if inside_string_literal then
+    sanitized_chunks[#sanitized_chunks + 1] = current_character
+    if current_character == "\\" and character_position < content_length then
+      -- Preserve escaped characters verbatim so escape sequences are not split.
+      sanitized_chunks[#sanitized_chunks + 1] = manifest_content:sub(character_position + 1, character_position + 1)
+      character_position = character_position + 2
     else
-      if c == '"' then
-        in_string = false
+      if current_character == '"' then
+        inside_string_literal = false
       end
-      i = i + 1
+      character_position = character_position + 1
     end
   else
-    local two = content:sub(i, i + 1)
-    if c == '"' then
-      in_string = true
-      sb[#sb + 1] = c
-      i = i + 1
-    elseif two == "//" then
-      local nl = content:find("\n", i) or (n + 1)
-      i = nl
-    elseif two == "/*" then
-      local close = content:find("%*/", i + 2)
-      if not close then
+    local character_pair = manifest_content:sub(character_position, character_position + 1)
+    if current_character == '"' then
+      inside_string_literal = true
+      sanitized_chunks[#sanitized_chunks + 1] = current_character
+      character_position = character_position + 1
+    elseif character_pair == "//" then
+      local line_end_position = manifest_content:find("\n", character_position) or (content_length + 1)
+      character_position = line_end_position
+    elseif character_pair == "/*" then
+      local comment_end_position = manifest_content:find("%*/", character_position + 2)
+      if not comment_end_position then
         break
       end
-      i = close + 2
-    elseif c == "]" or c == "}" then
+      character_position = comment_end_position + 2
+    elseif current_character == "]" or current_character == "}" then
       trim_trailing_comma()
-      sb[#sb + 1] = c
-      i = i + 1
+      sanitized_chunks[#sanitized_chunks + 1] = current_character
+      character_position = character_position + 1
     else
-      sb[#sb + 1] = c
-      i = i + 1
+      sanitized_chunks[#sanitized_chunks + 1] = current_character
+      character_position = character_position + 1
     end
   end
 end
 
-local data = dkjson.decode(table.concat(sb))
-data.key = ext_key
+local manifest_data = dkjson.decode(table.concat(sanitized_chunks))
+manifest_data.key = extension_key
 
-f = assert(io.open(manifest_path, "w"))
-f:write(dkjson.encode(data, { indent = true }))
-f:close()
+manifest_file = assert(io.open(manifest_path, "w"))
+manifest_file:write(dkjson.encode(manifest_data, { indent = true }))
+manifest_file:close()

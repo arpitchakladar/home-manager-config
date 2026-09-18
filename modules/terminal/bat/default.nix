@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+in
 {
   options.terminal.bat = {
     enable = lib.mkEnableOption "Enables bat.";
@@ -26,7 +29,7 @@
         base16 = {
           src = pkgs.runCommand "bat-base16-theme" { } ''
             mkdir -p $out
-            cp ${config.scheme { template = ./base16.tmTheme; }} $out/base16.tmTheme
+            cp ${base16Colors { templateFileOrContent = ./base16.tmTheme; }} $out/base16.tmTheme
           '';
           file = "base16.tmTheme";
         };

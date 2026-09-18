@@ -29,61 +29,122 @@
     (system-widget)))
 
 (defwidget workspaces-widget [workspaces]
-  (box :orientation "v" :space-evenly false :spacing 4 :halign "fill" :class "workspaces"
+  (box :orientation "v"
+       :space-evenly false
+       :spacing 4
+       :halign "fill"
+       :class "workspaces"
     (for ws in workspaces
       (eventbox :onclick "niri msg action focus-workspace ${ws.idx}"
-                :cursor "pointer" :halign "fill"
+                :cursor "pointer"
+                :halign "fill"
                 :tooltip "${ws.tooltip}"
-        (box :class "workspace-button ${ws.is_active ? 'active' : ''}" :halign "fill"
+        (box :class "workspace-button ${ws.is_active ? 'active' : ''}"
+             :halign "fill"
           (overlay :halign "fill"
             (image :class "workspace-icon"
                    :path "${ws.icon}"
-                   :image-width 20 :image-height 20)
-            (label :class "workspace-idx" :text "${ws.idx}" :halign "end" :valign "end")))))))
+                   :image-width 20
+                   :image-height 20)
+            (label :class "workspace-idx"
+                   :text "${ws.idx}"
+                   :halign "end"
+                   :valign "end")))))))
 
 (defwidget windows-widget [windows]
-  (box :orientation "v" :space-evenly false :spacing 4 :halign "center" :class "windows" :vexpand true
+  (box :orientation "v"
+       :space-evenly false
+       :spacing 4
+       :halign "center"
+       :class "windows"
+       :vexpand true
     (for w in windows
       (eventbox :onclick "niri msg action focus-window --id ${w.id}"
                 :cursor "pointer"
                 :halign "fill"
                 :tooltip "${w.app_id}: ${w.title != '' ? ' ' : ''}${w.title}"
-        (box :halign "fill" :class "window-button ${w.is_focused ? 'focused' : ''}"
-          (image :class "window-icon" :path "${w.icon}" :image-width 20 :image-height 20))))))
+        (box :halign "fill"
+             :class "window-button ${w.is_focused ? 'focused' : ''}"
+          (image :class "window-icon"
+                 :path "${w.icon}"
+                 :image-width 20
+                 :image-height 20))))))
 
 (defwidget system-widget []
-  (box :orientation "v" :space-evenly false :spacing 6 :halign "fill" :class "system"
-    (box :orientation "v" :class "system-item" :halign "fill" :space-evenly false :spacing 4
+  (box :orientation "v"
+       :space-evenly false
+       :spacing 6
+       :halign "fill"
+       :class "system"
+    (box :orientation "v"
+         :class "system-item"
+         :halign "fill"
+         :space-evenly false
+         :spacing 4
          :tooltip "${system_stats.net.tooltip}"
       (image :class "system-icon"
              :path "${system_stats.net.status == 'down' ? '@@icon-offline@@' : system_stats.net.routes[0].type == 'wifi' ? '@@icon-wifi@@' : system_stats.net.routes[0].type == 'ethernet' ? '@@icon-ethernet@@' : system_stats.net.routes[0].type == 'tun' ? '@@icon-proxy@@' : '@@icon-offline@@'}"
-             :image-width 24 :image-height 24)
+             :image-width 24
+             :image-height 24)
       (label :class "system-label small"
              :text "${system_stats.net.status == 'down' ? '-' : system_stats.net.routes[0].tx}")
       (label :class "system-label small"
              :text "${system_stats.net.status == 'down' ? '-' : system_stats.net.routes[0].rx}"))
-    (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
+    (box :orientation "v"
+         :class "system-item"
+         :space-evenly false
+         :spacing 4
          :tooltip "${system_stats.cpu.tooltip}"
-      (image :class "system-icon" :path "@@icon-cpu@@" :image-width 24 :image-height 24)
+      (image :class "system-icon"
+             :path "@@icon-cpu@@"
+             :image-width 24
+             :image-height 24)
       (label :class "system-label" :text "${system_stats.cpu.percent}%"))
-    (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
+    (box :orientation "v"
+         :class "system-item"
+         :space-evenly false
+         :spacing 4
          :tooltip "${system_stats.ram.tooltip}"
-      (image :class "system-icon" :path "@@icon-ram@@" :image-width 24 :image-height 24)
+      (image :class "system-icon"
+             :path "@@icon-ram@@"
+             :image-width 24
+             :image-height 24)
       (label :class "system-label" :text "${system_stats.ram.percent}%"))
-    (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
+    (box :orientation "v"
+         :class "system-item"
+         :space-evenly false
+         :spacing 4
          :tooltip "${system_stats.battery.tooltip}"
-      (image :class "system-icon" :path "@@icon-battery@@" :image-width 24 :image-height 24)
-      (label :class "system-label" :text "${system_stats.battery.present ? (system_stats.battery.percent + '%') : '-'}"))
+      (image :class "system-icon"
+             :path "@@icon-battery@@"
+             :image-width 24
+             :image-height 24)
+      (label :class "system-label"
+             :text "${system_stats.battery.present ? (system_stats.battery.percent + '%') : '-'}"))
     (eventbox :onclick "pamixer --toggle-mute"
               :onscroll "bash -c '[ \"{}\" = \"up\" ] && pamixer --increase 5 --unmute || pamixer --decrease 5'"
-              :cursor "pointer" :halign "fill"
-      (box :orientation "v" :space-evenly false :spacing 4 :class "system-item"
+              :cursor "pointer"
+              :halign "fill"
+      (box :orientation "v"
+           :space-evenly false
+           :spacing 4
+           :class "system-item"
            :tooltip "${system_stats.sound.tooltip}"
-        (image :class "system-icon" :path "@@icon-audio@@" :image-width 24 :image-height 24)
-        (label :class "system-label" :text "${system_stats.sound.mute ? '-' : (system_stats.sound.percent + '%')}")))
-    (box :orientation "v" :class "system-item" :space-evenly false :spacing 4
+        (image :class "system-icon"
+               :path "@@icon-audio@@"
+               :image-width 24
+               :image-height 24)
+        (label :class "system-label"
+               :text "${system_stats.sound.mute ? '-' : (system_stats.sound.percent + '%')}")))
+    (box :orientation "v"
+         :class "system-item"
+         :space-evenly false
+         :spacing 4
          :tooltip "${full_date} ${time} (${date})"
-      (image :class "system-icon" :path "@@icon-calendar@@" :image-width 24 :image-height 24)
+      (image :class "system-icon"
+             :path "@@icon-calendar@@"
+             :image-width 24
+             :image-height 24)
       (label :class "system-label small" :text time)
       (label :class "system-label small" :text ampm)
       (label :class "system-label small" :text date))))

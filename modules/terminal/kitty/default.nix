@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+in
 {
   options.terminal.kitty = {
     enable = lib.mkEnableOption "Enables kitty.";
@@ -41,7 +45,7 @@
         map ctrl+shift+u scroll_page_up
         map ctrl+shift+d scroll_page_down
       '';
-      settings = with config.scheme.withHashtag; {
+      settings = with base16Colors.colorsWithHashPrefix; {
         window_padding_width = 10;
         font_size = config.fonts.size;
         font_family = config.fonts.normal;
