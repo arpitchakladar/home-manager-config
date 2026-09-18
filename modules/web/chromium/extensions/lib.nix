@@ -23,7 +23,7 @@
         config.file-management.ouch.package
         # TODO: Switch to using cjson. As we are already using it for other
         # scripts like eww
-        (pkgs.luajit.withPackages (ps: [ ps.dkjson ]))
+        (pkgs.luajit.withPackages (ps: [ ps.lua-cjson ]))
       ];
       dontUnpack = true;
 

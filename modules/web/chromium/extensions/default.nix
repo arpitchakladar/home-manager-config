@@ -9,8 +9,6 @@ let
     inherit lib pkgs config;
   };
 
-  mkExtension = path: import path { inherit lib pkgs extLib; };
-
   extensionSubmodule = lib.types.submodule {
     options = {
       pname = lib.mkOption {
@@ -48,13 +46,12 @@ in
     '';
   };
 
-  # Readonly options get their actual value assigned here in this module
   config.web.chromium.extensions = {
-    aria2Explorer = mkExtension ./aria2-explorer;
-    browserpass = mkExtension ./browserpass;
-    darkreader = mkExtension ./darkreader;
-    searxngHome = mkExtension ./searxng-home;
-    ublockOrigin = mkExtension ./ublock-origin;
-    vimium = mkExtension ./vimium;
+    aria2Explorer = import ./aria2-explorer { inherit lib pkgs extLib; };
+    browserpass = import ./browserpass { inherit lib pkgs extLib; };
+    darkreader = import ./darkreader { inherit lib pkgs extLib; };
+    searxngHome = import ./searxng-home { inherit lib pkgs extLib; };
+    ublockOrigin = import ./ublock-origin { inherit lib pkgs extLib; };
+    vimium = import ./vimium { inherit lib pkgs extLib; };
   };
 }
