@@ -79,14 +79,9 @@ in
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/mailto" = "neomutt.desktop";
     };
-    xdg.configFile."neomutt/mailcap".text = ''
-      text/html; ${lib.getExe config.web.chawan.package} '%s'; nametemplate=%s.html
-      image/*; xdg-open '%s' &
-      application/pdf; xdg-open '%s'; nametemplate=%s.pdf
-      video/*; xdg-open '%s' &
-      audio/*; xdg-open '%s' &
-      application/*; xdg-open '%s' &
-    '';
+    xdg.configFile."neomutt/mailcap".text =
+      builtins.replaceStrings [ "@@HTML_VIEWER@@" ] [ (lib.getExe config.web.chawan.package) ]
+        (builtins.readFile ./mailcap);
     programs.neomutt = {
       enable = true;
       package = pkgs.symlinkJoin {
@@ -107,16 +102,9 @@ in
       vimKeys = false;
       unmailboxes = true;
       checkStatsInterval = 20;
-      extraConfig = ''
-        # Read messages in Neovim.  `-` makes Neovim read the message from
-        # stdin and -R prevents accidental edits to message content.
-        set pager = "${lib.getExe config.development.nixvim.package} -R -n +'setlocal nolist | silent! 1,2g/^$/delete _ | nohlsearch | setlocal nomodified nomodifiable' -"
-        # Return directly to the index when Neovim exits and do not prepend
-        # NeoMutt’s pager status line to the message passed to Neovim.
-        set noprompt_after
-        set pager_format = ""
-      ''
-      + builtins.readFile ./.neomuttrc;
+      extraConfig =
+        builtins.replaceStrings [ "@@PAGER@@" ] [ (lib.getExe config.development.nixvim.package) ]
+          (builtins.readFile ./.neomuttrc);
     };
   };
 }

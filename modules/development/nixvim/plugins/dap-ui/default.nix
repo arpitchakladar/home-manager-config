@@ -21,5 +21,8 @@
         options.desc = "Debug: Eval Expression Under Cursor";
       }
     ];
+
+    # Auto open/close dap-ui with the debug session lifecycle
+    extraConfigLua = builtins.readFile ./dap-ui.lua;
   };
 }

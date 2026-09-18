@@ -43,20 +43,7 @@
       settings = {
         buffer = {
           images = true;
-          user-style = ''
-            html, body, div, section, article, main, header, footer, nav, aside, table, tr, td, th, ul, ol, li, span, p, pre, code {
-              background-color: black !important;
-              color: white !important;
-            }
-            a, a:link { color: #6bb6ff !important; }
-            a:visited { color: #d19aff !important; }
-            @media (prefers-color-scheme: light) {
-              html, body, div, section, article, main, header, footer, nav, aside, table, tr, td, th, ul, ol, li, span, p, pre, code {
-                background-color: black !important;
-                color: white !important;
-              }
-            }
-          '';
+          user-style = builtins.readFile ./user-style.css;
         };
         display = {
           image-mode = "auto";

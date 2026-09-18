@@ -6,7 +6,7 @@
   ...
 }:
 let
-  base16Colors = import ../../../colors/base16 { inherit config lib pkgs; };
+  base16Colors = import ../../../../colors/base16 { inherit config lib pkgs; };
 in
 {
   config.programs.nixvim.plugins.lualine = lib.mkIf config.development.nixvim.enable {

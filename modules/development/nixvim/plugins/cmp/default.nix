@@ -16,15 +16,7 @@
         "<C-u>" = "cmp.mapping.scroll_docs(-4)"; # scroll docs up
         "<C-d>" = "cmp.mapping.scroll_docs(4)"; # scroll docs down
 
-        "<Escape>" = ''
-          cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.abort()
-            else
-              fallback()
-            end
-          end, { "i" })
-        '';
+        "<Escape>" = builtins.readFile ./escape.lua;
       };
       sources = [
         { name = "nvim_lsp"; }

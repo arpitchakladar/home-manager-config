@@ -9,8 +9,8 @@
     type = lib.types.attrsOf (
       lib.types.submodule {
         imports = [
+          ./flavors/gmail
           ./options.nix
-          ./flavors/gmail.nix
           ./sync-channel.nix
         ];
       }

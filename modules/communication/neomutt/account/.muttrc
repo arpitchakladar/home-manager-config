@@ -1,0 +1,2 @@
+macro index,pager gs "<enter-command>set my_wait_key=$wait_key wait_key=no<enter><sync-mailbox><shell-escape>neomutt-sync @@QUICK_CHANNEL@@<enter><sync-mailbox><enter-command>set wait_key=$my_wait_key<enter>"
+macro index,pager gS "<enter-command>set my_wait_key=$wait_key wait_key=no<enter><sync-mailbox><shell-escape>neomutt-sync @@FULL_CHANNEL@@<enter><sync-mailbox><enter-command>set wait_key=$my_wait_key<enter>"

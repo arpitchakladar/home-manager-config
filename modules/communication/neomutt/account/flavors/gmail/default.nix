@@ -30,10 +30,7 @@
       };
     };
 
-    neomutt.extraConfig = lib.mkBefore ''
-      mailboxes =Inbox ="[Gmail]/Drafts" ="[Gmail]/Sent Mail" ="[Gmail]/Spam" ="[Gmail]/Trash"
-      unset record
-    '';
+    neomutt.extraConfig = lib.mkBefore (builtins.readFile ./.muttrc);
 
     notmuch.neomutt.virtualMailboxes = lib.mkDefault [
       {

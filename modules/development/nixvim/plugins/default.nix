@@ -2,21 +2,21 @@
 { ... }:
 {
   imports = [
-    ./cmp.nix
-    ./comment.nix
-    ./dap-ui.nix
-    ./dap-virtual-text.nix
-    ./dap.nix
-    ./gitsigns.nix
-    ./indent-blankline.nix
-    ./lsp.nix
-    ./lualine.nix
-    ./luasnip.nix
-    ./noice.nix
-    ./nvim-tree.nix
-    ./telescope.nix
-    ./treesitter.nix
-    ./web-devicons.nix
-    ./which-key.nix
+    ./cmp
+    ./comment
+    ./dap-ui
+    ./dap-virtual-text
+    ./dap
+    ./gitsigns
+    ./indent-blankline
+    ./lsp
+    ./lualine
+    ./luasnip
+    ./noice
+    ./nvim-tree
+    ./telescope
+    ./treesitter
+    ./web-devicons
+    ./which-key
   ];
 }

@@ -78,26 +78,6 @@ in
           };
         };
       };
-
-      autoCmd = [
-        {
-          event = [ "CursorHold" ];
-          pattern = "*";
-          callback.__raw = ''
-            function()
-              vim.diagnostic.open_float(nil, { focus = false })
-            end
-          '';
-        }
-        {
-          event = [ "FileType" ];
-          pattern = [
-            "yaml"
-            "yml"
-          ];
-          command = "setlocal expandtab shiftwidth=2 softtabstop=2 tabstop=2";
-        }
-      ];
     };
   };
 }
