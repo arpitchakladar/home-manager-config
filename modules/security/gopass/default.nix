@@ -6,6 +6,8 @@
   ...
 }:
 {
+  imports = [ ./assertions.nix ];
+
   options.security.gopass = {
     enable = lib.mkEnableOption "Enables gopass.";
     package = lib.mkOption {

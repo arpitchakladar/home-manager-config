@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    ./assertions.nix
     ./browserpass.nix
     ./extensions
   ];

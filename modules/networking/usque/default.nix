@@ -35,6 +35,8 @@ let
   };
 in
 {
+  imports = [ ./assertions.nix ];
+
   options.networking.usque = {
     enable = lib.mkEnableOption "Enables usque.";
     package = lib.mkOption {

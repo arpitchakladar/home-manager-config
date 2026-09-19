@@ -9,7 +9,10 @@ let
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
 in
 {
-  imports = [ ./keybindings.nix ];
+  imports = [
+    ./keybindings.nix
+    ./assertions.nix
+  ];
 
   options.desktop = {
     niri.package = lib.mkOption {

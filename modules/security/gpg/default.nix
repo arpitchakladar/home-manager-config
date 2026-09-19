@@ -38,6 +38,8 @@ let
   };
 in
 {
+  imports = [ ./assertions.nix ];
+
   options.security.gpg = {
     enable = lib.mkEnableOption "Enables gpg.";
 

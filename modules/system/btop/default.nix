@@ -6,6 +6,8 @@
   ...
 }:
 {
+  imports = [ ./assertions.nix ];
+
   options.system.btop = {
     enable = lib.mkEnableOption "Enables btop.";
     nvidia.enable = lib.mkEnableOption "Build btop with NVIDIA GPU monitoring support (CUDA).";

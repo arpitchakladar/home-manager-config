@@ -41,6 +41,8 @@ let
   };
 in
 {
+  imports = [ ./assertions.nix ];
+
   options.office.calcurse = {
     enable = lib.mkEnableOption "Enables calcurse.";
     package = lib.mkOption {
