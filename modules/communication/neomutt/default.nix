@@ -60,51 +60,55 @@ in
     };
   };
 
-  config = lib.mkIf config.communication.neomutt.enable {
-    accounts.email.maildirBasePath = "${config.home.homeDirectory}/.local/share/mail";
-    home.sessionVariables.MAILDIR = config.accounts.email.maildirBasePath;
+  config = lib.mkMerge [
+    (lib.mkIf config.communication.neomutt.enable {
+      accounts.email.maildirBasePath = "${config.home.homeDirectory}/.local/share/mail";
+      home.sessionVariables.MAILDIR = config.accounts.email.maildirBasePath;
 
-    xdg.desktopEntries."neomutt" = {
-      name = "NeoMutt";
-      exec = "${lib.getExe config.terminal.kitty.package} --class neomutt -e ${lib.getExe config.programs.neomutt.package}";
-      icon = "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
-      categories = [
-        "Network"
-        "Email"
-      ];
-      comment = "Terminal email client";
-      terminal = false;
-      type = "Application";
-    };
-    xdg.mimeApps.defaultApplications = {
-      "x-scheme-handler/mailto" = "neomutt.desktop";
-    };
-    xdg.configFile."neomutt/mailcap".text =
-      builtins.replaceStrings [ "@@HTML_VIEWER@@" ] [ (lib.getExe config.web.chawan.package) ]
-        (builtins.readFile ./mailcap);
-    programs.neomutt = {
-      enable = true;
-      package = pkgs.symlinkJoin {
-        name = "neomutt-wrapped";
-        paths = [
-          pkgs.neomutt
-          neomuttSync
-        ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/neomutt \
-            --prefix PATH : ${config.home.profileDirectory}/bin:${lib.makeBinPath [ pkgs.urlscan ]}
-        '';
-        meta.mainProgram = "neomutt";
+      xdg.configFile."neomutt/mailcap".text =
+        builtins.replaceStrings [ "@@HTML_VIEWER@@" ] [ (lib.getExe config.web.chawan.package) ]
+          (builtins.readFile ./mailcap);
+      programs.neomutt = {
+        enable = true;
+        package = pkgs.symlinkJoin {
+          name = "neomutt-wrapped";
+          paths = [
+            pkgs.neomutt
+            neomuttSync
+          ];
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          postBuild = ''
+            wrapProgram $out/bin/neomutt \
+              --prefix PATH : ${config.home.profileDirectory}/bin:${lib.makeBinPath [ pkgs.urlscan ]}
+          '';
+          meta.mainProgram = "neomutt";
+        };
+        sidebar.enable = true;
+        sort = "reverse-threads";
+        vimKeys = false;
+        unmailboxes = true;
+        checkStatsInterval = 20;
+        extraConfig =
+          builtins.replaceStrings [ "@@PAGER@@" ] [ (lib.getExe config.development.nixvim.package) ]
+            (builtins.readFile ./.neomuttrc);
       };
-      sidebar.enable = true;
-      sort = "reverse-threads";
-      vimKeys = false;
-      unmailboxes = true;
-      checkStatsInterval = 20;
-      extraConfig =
-        builtins.replaceStrings [ "@@PAGER@@" ] [ (lib.getExe config.development.nixvim.package) ]
-          (builtins.readFile ./.neomuttrc);
-    };
-  };
+    })
+    (lib.mkIf (config.communication.neomutt.enable && config.terminal.kitty.enable) {
+      xdg.desktopEntries."neomutt" = {
+        name = "NeoMutt";
+        exec = "${lib.getExe config.terminal.kitty.package} --class neomutt -e ${lib.getExe config.programs.neomutt.package}";
+        icon = "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
+        categories = [
+          "Network"
+          "Email"
+        ];
+        comment = "Terminal email client";
+        terminal = false;
+        type = "Application";
+      };
+      xdg.mimeApps.defaultApplications = {
+        "x-scheme-handler/mailto" = "neomutt.desktop";
+      };
+    })
+  ];
 }

@@ -60,6 +60,11 @@ in
         source = config.lib.file.mkOutOfStoreSymlink "${config.file-management.yazi.package}/share/pixmaps/yazi.png";
       };
 
+      home.sessionVariables = {
+        TERMCMD = lib.mkIf config.terminal.kitty.enable "${lib.getExe config.terminal.kitty.package} --class file-explorer --title 'Yazi'";
+      };
+    })
+    (lib.mkIf (config.file-management.yazi.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."yazi" = {
         name = "Yazi";
         exec = "${lib.getExe config.terminal.kitty.package} --class yazi -e ${lib.getExe config.file-management.yazi.package}";
@@ -77,10 +82,6 @@ in
         "application/x-tar" = "yazi.desktop";
         "application/x-7z-compressed" = "yazi.desktop";
         "application/x-rar-compressed" = "yazi.desktop";
-      };
-
-      home.sessionVariables = {
-        TERMCMD = lib.mkIf config.terminal.kitty.enable "${lib.getExe config.terminal.kitty.package} --class file-explorer --title 'Yazi'";
       };
     })
     (lib.mkIf config.file-management.yazi.file-chooser.enable {

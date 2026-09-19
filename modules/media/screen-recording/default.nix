@@ -47,22 +47,25 @@ in
     };
   };
 
-  config = lib.mkIf config.media.screen-recording.enable {
-    home.packages = [ scriptPkg ];
+  config = lib.mkMerge [
+    (lib.mkIf config.media.screen-recording.enable {
+      home.packages = [ scriptPkg ];
 
-    assertions = import ./assertions.nix { inherit config lib; };
+      assertions = import ./assertions.nix { inherit config lib; };
 
-    home.file.".local/share/icons/hicolor/scalable/apps/obs.svg" = {
-      source = ../../../assets/icons/apps/obs.svg;
-    };
-
-    xdg.desktopEntries.screen-recording = {
-      name = "Screen Recording";
-      exec = "${lib.getExe config.terminal.kitty.package} --class screen-recording -e ${lib.getExe scriptPkg}";
-      icon = "obs";
-      categories = [ "Utility" ];
-      terminal = false;
-      type = "Application";
-    };
-  };
+      home.file.".local/share/icons/hicolor/scalable/apps/obs.svg" = {
+        source = ../../../assets/icons/apps/obs.svg;
+      };
+    })
+    (lib.mkIf (config.media.screen-recording.enable && config.terminal.kitty.enable) {
+      xdg.desktopEntries.screen-recording = {
+        name = "Screen Recording";
+        exec = "${lib.getExe config.terminal.kitty.package} --class screen-recording -e ${lib.getExe scriptPkg}";
+        icon = "obs";
+        categories = [ "Utility" ];
+        terminal = false;
+        type = "Application";
+      };
+    })
+  ];
 }

@@ -95,7 +95,8 @@
               $DRY_RUN_CMD cp -r $VERBOSE_ARG --no-preserve=mode ${./creation-templates} "${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create"
             ''
           );
-
+    })
+    (lib.mkIf (config.security.gopass.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."gopass" = {
         name = "gopass";
         exec = "${lib.getExe config.terminal.kitty.package} --class gopass -e ${lib.getExe config.security.gopass.package}";
@@ -106,7 +107,6 @@
         type = "Application";
       };
     })
-
     (lib.mkIf config.security.gopass.sync.enable {
       home.activation.gopassSyncInit =
         let

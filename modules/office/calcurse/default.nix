@@ -71,69 +71,68 @@ in
     };
   };
 
-  config = lib.mkIf config.office.calcurse.enable (
-    lib.mkMerge [
-      {
-        home.file.".local/share/icons/hicolor/scalable/apps/calcurse.svg" = {
-          source = ../../../assets/icons/apps/calcurse.svg;
-        };
+  config = lib.mkMerge [
+    (lib.mkIf config.office.calcurse.enable {
+      home.file.".local/share/icons/hicolor/scalable/apps/calcurse.svg" = {
+        source = ../../../assets/icons/apps/calcurse.svg;
+      };
 
-        xdg.desktopEntries."calcurse" = {
-          name = "calcurse";
-          exec = "${lib.getExe config.terminal.kitty.package} --class calcurse -e ${lib.getExe config.office.calcurse.package}";
-          icon = "calcurse";
-          categories = [
-            "Office"
-            "Calendar"
-          ];
-          comment = "Text-based calendar and scheduling application";
-          terminal = false;
-          type = "Application";
-        };
-
-        home.packages = [ config.office.calcurse.package ];
-        xdg.configFile."calcurse/conf" = {
-          source = ./conf;
-          force = true;
-        };
-        xdg.configFile."calcurse/keys" = {
-          source = ./keys;
-          force = true;
-        };
-      }
-      (lib.mkIf config.office.calcurse.sync.enable {
-        xdg.configFile."calcurse/hooks/pre-load" = {
-          source = ./hooks/pre-load;
-          executable = true;
-          force = true;
-        };
-        xdg.configFile."calcurse/hooks/post-save" = {
-          source = ./hooks/post-save;
-          executable = true;
-          force = true;
-        };
-
-        programs.git.includes = lib.mkIf config.development.git.enable [
-          {
-            condition = "gitdir:${config.xdg.dataHome}/calcurse/";
-            contents = {
-              user = {
-                name = "Calcurse of ${config.home.username}";
-                email = "${config.home.username}@calcurse.localhost";
-              };
-              commit.gpgSign = false;
-              tag.gpgSign = false;
-            }
-            // lib.optionalAttrs (config.office.calcurse.sync.credential.passwordGopassPath != null) {
-              credential.helper = "!f() { echo username=${lib.escapeShellArg config.office.calcurse.sync.credential.username}; echo password=\"$(${lib.getExe config.security.gopass.package} show -o ${lib.escapeShellArg config.office.calcurse.sync.credential.passwordGopassPath})\"; }; f";
-            };
-          }
+      home.packages = [ config.office.calcurse.package ];
+      xdg.configFile."calcurse/conf" = {
+        source = ./conf;
+        force = true;
+      };
+      xdg.configFile."calcurse/keys" = {
+        source = ./keys;
+        force = true;
+      };
+    })
+    (lib.mkIf (config.office.calcurse.enable && config.terminal.kitty.enable) {
+      xdg.desktopEntries."calcurse" = {
+        name = "calcurse";
+        exec = "${lib.getExe config.terminal.kitty.package} --class calcurse -e ${lib.getExe config.office.calcurse.package}";
+        icon = "calcurse";
+        categories = [
+          "Office"
+          "Calendar"
         ];
+        comment = "Text-based calendar and scheduling application";
+        terminal = false;
+        type = "Application";
+      };
+    })
+    (lib.mkIf config.office.calcurse.sync.enable {
+      xdg.configFile."calcurse/hooks/pre-load" = {
+        source = ./hooks/pre-load;
+        executable = true;
+        force = true;
+      };
+      xdg.configFile."calcurse/hooks/post-save" = {
+        source = ./hooks/post-save;
+        executable = true;
+        force = true;
+      };
 
-        home.activation.calcurseSyncInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          run ${config.office.calcurse.package}/bin/calcurse-sync init || true
-        '';
-      })
-    ]
-  );
+      programs.git.includes = lib.mkIf config.development.git.enable [
+        {
+          condition = "gitdir:${config.xdg.dataHome}/calcurse/";
+          contents = {
+            user = {
+              name = "Calcurse of ${config.home.username}";
+              email = "${config.home.username}@calcurse.localhost";
+            };
+            commit.gpgSign = false;
+            tag.gpgSign = false;
+          }
+          // lib.optionalAttrs (config.office.calcurse.sync.credential.passwordGopassPath != null) {
+            credential.helper = "!f() { echo username=${lib.escapeShellArg config.office.calcurse.sync.credential.username}; echo password=\"$(${lib.getExe config.security.gopass.package} show -o ${lib.escapeShellArg config.office.calcurse.sync.credential.passwordGopassPath})\"; }; f";
+          };
+        }
+      ];
+
+      home.activation.calcurseSyncInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        run ${config.office.calcurse.package}/bin/calcurse-sync init || true
+      '';
+    })
+  ];
 }

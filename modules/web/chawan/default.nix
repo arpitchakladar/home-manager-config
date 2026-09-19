@@ -24,41 +24,45 @@
     };
   };
 
-  config = lib.mkIf config.web.chawan.enable {
-    home.file.".local/share/icons/hicolor/scalable/apps/internet-web-browser.svg" = {
-      source = ../../../assets/icons/apps/internet-web-browser.svg;
-    };
+  config = lib.mkMerge [
+    (lib.mkIf config.web.chawan.enable {
+      home.file.".local/share/icons/hicolor/scalable/apps/internet-web-browser.svg" = {
+        source = ../../../assets/icons/apps/internet-web-browser.svg;
+      };
 
-    xdg.desktopEntries."chawan" = {
-      name = "Chawan";
-      exec = "${lib.getExe config.terminal.kitty.package} --class chawan -e ${lib.getExe config.web.chawan.package} ${config.web.chawan.homeUrl}";
-      icon = "internet-web-browser";
-      categories = [ "Network" ];
-      comment = "Text-based web browser";
-      terminal = false;
-      type = "Application";
-    };
-    programs.chawan = {
-      enable = true;
-      settings = {
-        buffer = {
-          images = true;
-          user-style = builtins.readFile ./user-style.css;
-        };
-        display = {
-          image-mode = "auto";
-          set-title = false;
-        };
-        network = {
-          allow-http-from-file = true;
-        };
-        page = {
-          o = ''() => pager.extern('xdg-open "$CHA_HOVER_URL"', {env: {CHA_HOVER_URL: pager.hoverLink}})'';
+      programs.chawan = {
+        enable = true;
+        settings = {
+          buffer = {
+            images = true;
+            user-style = builtins.readFile ./user-style.css;
+          };
+          display = {
+            image-mode = "auto";
+            set-title = false;
+          };
+          network = {
+            allow-http-from-file = true;
+          };
+          page = {
+            o = ''() => pager.extern('xdg-open "$CHA_HOVER_URL"', {env: {CHA_HOVER_URL: pager.hoverLink}})'';
+          };
         };
       };
-    };
-    home.packages = [
-      config.web.chawan.package
-    ];
-  };
+      home.packages = [
+        config.web.chawan.package
+      ];
+    })
+    (lib.mkIf (config.web.chawan.enable && config.terminal.kitty.enable) {
+      xdg.desktopEntries."chawan" = {
+        name = "Chawan";
+        exec = "${lib.getExe config.terminal.kitty.package} --class chawan -e ${lib.getExe config.web.chawan.package} ${config.web.chawan.homeUrl}";
+        icon = "internet-web-browser";
+        categories = [ "Network" ];
+        comment = "Text-based web browser";
+        terminal = false;
+        type = "Application";
+      };
+    })
+  ];
 }
