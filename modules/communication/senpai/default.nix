@@ -53,5 +53,23 @@
         ];
       };
     };
+
+    xdg.desktopEntries."senpai" = {
+      name = "Senpai";
+      exec = "${lib.getExe config.terminal.kitty.package} --class senpai -e ${lib.getExe config.communication.senpai.package}";
+      icon = "senpai";
+      categories = [
+        "Network"
+        "Chat"
+      ];
+      comment = "Senpai TUI IRC Client";
+      terminal = false;
+      type = "Application";
+    };
+
+    xdg.mimeApps.defaultApplications = {
+      "x-scheme-handler/irc" = "senpai.desktop";
+      "x-scheme-handler/ircs" = "senpai.desktop";
+    };
   };
 }
