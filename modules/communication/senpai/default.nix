@@ -54,7 +54,7 @@
       };
     };
 
-    xdg.desktopEntries."senpai" = {
+    xdg.desktopEntries."senpai" = lib.mkIf config.terminal.kitty.enable {
       name = "Senpai";
       exec = "${lib.getExe config.terminal.kitty.package} --class senpai -e ${lib.getExe config.communication.senpai.package}";
       icon = "senpai";
