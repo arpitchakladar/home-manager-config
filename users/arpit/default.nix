@@ -27,6 +27,7 @@
 
   # Communication
   communication.neomutt.enable = true;
+  communication.senpai.enable = true;
 
   # Development
   development.bruno.enable = true;

@@ -1,7 +1,8 @@
-# Email client modules
+# Communication modules
 { ... }:
 {
   imports = [
     ./neomutt
+    ./senpai
   ];
 }
