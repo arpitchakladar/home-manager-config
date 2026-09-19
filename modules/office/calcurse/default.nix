@@ -125,7 +125,7 @@ in
               tag.gpgSign = false;
             }
             // lib.optionalAttrs (config.office.calcurse.sync.credential.passwordGopassPath != null) {
-              credential.helper = "!f() { echo username=${lib.escapeShellArg config.office.calcurse.sync.credential.username}; echo password=\"$(${config.security.gopass.package}/bin/gopass show -o ${lib.escapeShellArg config.office.calcurse.sync.credential.passwordGopassPath})\"; }; f";
+              credential.helper = "!f() { echo username=${lib.escapeShellArg config.office.calcurse.sync.credential.username}; echo password=\"$(${lib.getExe config.security.gopass.package} show -o ${lib.escapeShellArg config.office.calcurse.sync.credential.passwordGopassPath})\"; }; f";
             };
           }
         ];

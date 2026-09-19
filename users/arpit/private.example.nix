@@ -28,6 +28,17 @@
     };
   };
 
+  # Senpai - Template for configuring senpai IRC client
+  config.communication.senpai = {
+    server = {
+      address = "irc.example.com";
+    };
+    identity = {
+      nickname = "example";
+      passwordGopassSecret = "irc/user@irc.example.com";
+    };
+  };
+
   # Git - Template for configuring git identity and signing
   config.development.git = {
     username = "Your Name";
