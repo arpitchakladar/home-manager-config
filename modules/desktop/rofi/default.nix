@@ -39,7 +39,7 @@ in
           templateFileOrContent = fontExpandedThemeTemplate;
           fileExtension = ".rasi";
         }}";
-      extraConfig = {
+      settings = {
         modi = "drun";
         show-icons = true;
         drun-display-format = "{name}";

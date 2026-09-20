@@ -9,7 +9,7 @@ let
 in
 {
   config.programs.neomutt.binds = lib.mkIf config.communication.neomutt.enable [
-    # Index ------------------------------------------------------------------
+    # Index
     (bind [ "index" ] "$" "noop")
     (bind [ "index" ] "g" "noop")
     (bind [ "index" ] "d" "noop")
@@ -60,7 +60,7 @@ in
     (bind [ "index" ] "u" "undelete-message")
     (bind [ "index" ] "U" "undelete-thread")
 
-    # Pager ------------------------------------------------------------------
+    # Pager
     # Messages open in Neovim via $pager.  These bindings remain useful for
     # NeoMutt's internal pager, e.g. when it is used by a mailcap viewer.
     (bind [ "pager" ] "g" "noop")
@@ -98,7 +98,7 @@ in
     (bind [ "pager" ] "dd" "delete-message")
     (bind [ "pager" ] "u" "undelete-message")
 
-    # Attachment menu --------------------------------------------------------
+    # Attachment menu
     (bind [ "attach" ] "g" "noop")
     (bind [ "attach" ] "d" "noop")
     (bind [ "attach" ] ":" "noop")
@@ -118,7 +118,7 @@ in
     (bind [ "attach" ] "dd" "delete-entry")
     (bind [ "attach" ] "u" "undelete-entry")
 
-    # Mailbox browser --------------------------------------------------------
+    # Mailbox browser
     (bind [ "browser" ] "g" "noop")
     (bind [ "browser" ] ":" "noop")
     (bind [ "browser" ] "q" "noop")
@@ -132,7 +132,7 @@ in
     (bind [ "browser" ] "\\Cd" "half-down")
     (bind [ "browser" ] "\\Cu" "half-up")
 
-    # Compose menu -----------------------------------------------------------
+    # Compose menu
     (bind [ "compose" ] "g" "noop")
     (bind [ "compose" ] ":" "noop")
     (bind [ "compose" ] "q" "noop")

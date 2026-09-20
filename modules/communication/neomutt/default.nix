@@ -37,7 +37,7 @@ let
       neomuttSyncScript
       neomuttSyncCompletion
     ];
-    meta = neomuttSyncScript.meta or { };
+    meta = neomuttSyncScript.meta;
   };
 in
 {
@@ -88,9 +88,9 @@ in
         vimKeys = false;
         unmailboxes = true;
         checkStatsInterval = 20;
-        extraConfig =
-          builtins.replaceStrings [ "@@PAGER@@" ] [ (lib.getExe config.development.nixvim.package) ]
-            (builtins.readFile ./.neomuttrc);
+        extraConfig = builtins.replaceStrings [ "@@PAGER@@" ] [ (lib.getExe config.web.chawan.package) ] (
+          builtins.readFile ./.neomuttrc
+        );
       };
     })
     (lib.mkIf (config.communication.neomutt.enable && config.terminal.kitty.enable) {
