@@ -20,11 +20,17 @@ swayimg.viewer.on_key("l", function()
 end)
 
 -- File switching
-swayimg.viewer.on_key("n", function() swayimg.viewer.open("next") end)
-swayimg.viewer.on_key("p", function() swayimg.viewer.open("prev") end)
+swayimg.viewer.on_key("n", function()
+  swayimg.viewer.open("next")
+end)
+swayimg.viewer.on_key("p", function()
+  swayimg.viewer.open("prev")
+end)
 
 -- Zoom controls
-swayimg.viewer.on_key("equal", function() swayimg.viewer.reset() end)
+swayimg.viewer.on_key("equal", function()
+  swayimg.viewer.reset()
+end)
 swayimg.viewer.on_key("plus", function()
   swayimg.viewer.scale = swayimg.viewer.scale + 0.1
 end)
@@ -33,5 +39,9 @@ swayimg.viewer.on_key("minus", function()
 end)
 
 -- Actions
-swayimg.viewer.on_key("q", function() swayimg.exit() end)
-swayimg.viewer.on_key("f", function() swayimg.fullscreen = not swayimg.fullscreen end)
+swayimg.viewer.on_key("q", function()
+  swayimg.exit()
+end)
+swayimg.viewer.on_key("f", function()
+  swayimg.fullscreen = not swayimg.fullscreen
+end)

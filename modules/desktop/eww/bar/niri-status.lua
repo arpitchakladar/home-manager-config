@@ -6,9 +6,9 @@
 -- ran as two separate long-lived processes, each independently subscribed
 -- to niri's event-stream and, on every relevant event, independently
 -- re-fetched both `niri msg -j windows` and `niri msg -j workspaces` via a
--- shelled-out io.popen. Combined that was up to 8 process spawns per single 
--- event across both scripts. Here there's one event-stream subscription, 
--- and one shared windows/workspaces fetch per event, significantly reducing 
+-- shelled-out io.popen. Combined that was up to 8 process spawns per single
+-- event across both scripts. Here there's one event-stream subscription,
+-- and one shared windows/workspaces fetch per event, significantly reducing
 -- the total number of spawned processes and resting children.
 --
 -- The event-stream subscription is wrapped in a reconnect loop: if niri
@@ -26,17 +26,33 @@ local DesktopAppInfo = nil
 do
   local lgi_ok, lgi = pcall(require, "lgi")
   if lgi_ok then
-    local gio_ok, gio = pcall(function() return lgi.Gio end)
-    if gio_ok then Gio = gio end
+    local gio_ok, gio = pcall(function()
+      return lgi.Gio
+    end)
+    if gio_ok then
+      Gio = gio
+    end
 
-    local giounix_ok, giounix = pcall(function() return lgi.GioUnix end)
-    if giounix_ok then GioUnix = giounix end
+    local giounix_ok, giounix = pcall(function()
+      return lgi.GioUnix
+    end)
+    if giounix_ok then
+      GioUnix = giounix
+    end
 
-    local gtk_ok, gtk = pcall(function() return lgi.Gtk end)
-    if gtk_ok then Gtk = gtk end
+    local gtk_ok, gtk = pcall(function()
+      return lgi.Gtk
+    end)
+    if gtk_ok then
+      Gtk = gtk
+    end
 
-    local gdk_ok, gdk = pcall(function() return lgi.Gdk end)
-    if gdk_ok then Gdk = gdk end
+    local gdk_ok, gdk = pcall(function()
+      return lgi.Gdk
+    end)
+    if gdk_ok then
+      Gdk = gdk
+    end
 
     DesktopAppInfo = (GioUnix and GioUnix.DesktopAppInfo) or (Gio and Gio.DesktopAppInfo)
 
@@ -60,8 +76,12 @@ end
 local icon_cache = {}
 
 local function g_list_to_table(gl)
-  if gl == nil then return {} end
-  if type(gl) == "table" then return gl end
+  if gl == nil then
+    return {}
+  end
+  if type(gl) == "table" then
+    return gl
+  end
   local t = {}
   local cur = gl
   while cur do
@@ -72,24 +92,32 @@ local function g_list_to_table(gl)
 end
 
 local function resolve_icon_path(app_id)
-  if not app_id or app_id == "" then return "" end
-  if icon_cache[app_id] then return icon_cache[app_id] end
+  if not app_id or app_id == "" then
+    return ""
+  end
+  if icon_cache[app_id] then
+    return icon_cache[app_id]
+  end
 
   local icon_path = ""
   if DesktopAppInfo and Gtk and icon_theme then
     local function try_desktop_app_info(desktop_id)
       local ok, info = pcall(DesktopAppInfo.new, desktop_id)
-      if ok and info then return info end
+      if ok and info then
+        return info
+      end
       return nil
     end
 
     local app_info = try_desktop_app_info(app_id .. ".desktop")
-                  or try_desktop_app_info(string.lower(app_id) .. ".desktop")
+      or try_desktop_app_info(string.lower(app_id) .. ".desktop")
 
     if not app_info then
       local lc = string.lower(app_id)
       for _, info in ipairs(g_list_to_table(Gio.AppInfo.get_all())) do
-        local ok_wm, wm = pcall(function() return info:get_startup_wm_class() end)
+        local ok_wm, wm = pcall(function()
+          return info:get_startup_wm_class()
+        end)
         if ok_wm and wm and string.lower(wm) == lc then
           app_info = info
           break
@@ -119,32 +147,47 @@ end
 -- Safely run niri msg without crashing due to luaposix version changes
 local function niri_json(command)
   local f = io.popen("niri msg -j " .. command .. " 2>/dev/null")
-  if not f then return nil end
+  if not f then
+    return nil
+  end
   local out = f:read("*a")
   f:close()
   local ok, decoded = pcall(cjson.decode, out)
-  if ok then return decoded end
+  if ok then
+    return decoded
+  end
   return nil
 end
 
 local function sanitize_utf8(s)
-  if type(s) ~= "string" or s == "" then return s end
+  if type(s) ~= "string" or s == "" then
+    return s
+  end
   local out = {}
   local i, n = 1, #s
   while i <= n do
     local c = s:byte(i)
     local len
-    if c < 0x80 then len = 1
-    elseif c >= 0xC2 and c <= 0xDF then len = 2
-    elseif c >= 0xE0 and c <= 0xEF then len = 3
-    elseif c >= 0xF0 and c <= 0xF4 then len = 4
-    else len = 0 end
+    if c < 0x80 then
+      len = 1
+    elseif c >= 0xC2 and c <= 0xDF then
+      len = 2
+    elseif c >= 0xE0 and c <= 0xEF then
+      len = 3
+    elseif c >= 0xF0 and c <= 0xF4 then
+      len = 4
+    else
+      len = 0
+    end
 
     local valid = len > 0 and (i + len - 1 <= n)
     if valid then
       for k = 1, len - 1 do
         local cc = s:byte(i + k)
-        if not cc or cc < 0x80 or cc > 0xBF then valid = false break end
+        if not cc or cc < 0x80 or cc > 0xBF then
+          valid = false
+          break
+        end
       end
     end
 
@@ -162,16 +205,24 @@ end
 local function window_sort_key(w)
   local layout = w.layout or {}
   local pos = layout.pos_in_scrolling_layout
-  if pos then return { 0, pos[1], pos[2] } end
+  if pos then
+    return { 0, pos[1], pos[2] }
+  end
   return { 1, w.id, 0 }
 end
 
 local function lt(a, b)
   for k = 1, math.max(#a, #b) do
     local x, y = a[k], b[k]
-    if y == nil then return false end
-    if x == nil then return true end
-    if x ~= y then return x < y end
+    if y == nil then
+      return false
+    end
+    if x == nil then
+      return true
+    end
+    if x ~= y then
+      return x < y
+    end
   end
   return false
 end
@@ -217,20 +268,25 @@ local function build_state()
     }
   end
   -- Enforce JSON Array even if empty
-  if #active_windows_result == 0 then active_windows_result = empty_array end
+  if #active_windows_result == 0 then
+    active_windows_result = empty_array
+  end
 
   local ws_list = {}
   for _, ws in ipairs(workspaces_raw) do
     ws_list[#ws_list + 1] = ws
   end
-  table.sort(ws_list, function(a, b) return a.idx < b.idx end)
+  table.sort(ws_list, function(a, b)
+    return a.idx < b.idx
+  end)
 
   local workspaces_result = {}
   for _, ws in ipairs(ws_list) do
     local active_win = windows_by_id[ws.active_window_id]
     local app_id = (active_win and active_win.app_id) or ""
 
-    local ws_name = (type(ws.name) == "string" and ws.name ~= "userdata: NULL" and ws.name) or ("Workspace " .. tostring(ws.idx))
+    local ws_name = (type(ws.name) == "string" and ws.name ~= "userdata: NULL" and ws.name)
+      or ("Workspace " .. tostring(ws.idx))
 
     local ws_windows = {}
     for _, w in ipairs(windows_raw) do
@@ -246,7 +302,12 @@ local function build_state()
     for idx, w in ipairs(ws_windows) do
       local w_app_id = sanitize_utf8(w.app_id or "")
       local w_title = sanitize_utf8(w.title or "")
-      lines[#lines + 1] = string.format("%d. %s: %s", idx, (w_app_id and w_app_id ~= "" and w_app_id) or "unknown", (w_title and w_title ~= "" and w_title) or "(untitled)")
+      lines[#lines + 1] = string.format(
+        "%d. %s: %s",
+        idx,
+        (w_app_id and w_app_id ~= "" and w_app_id) or "unknown",
+        (w_title and w_title ~= "" and w_title) or "(untitled)"
+      )
     end
 
     workspaces_result[#workspaces_result + 1] = {
@@ -258,7 +319,9 @@ local function build_state()
     }
   end
   -- Enforce JSON Array even if empty
-  if #workspaces_result == 0 then workspaces_result = empty_array end
+  if #workspaces_result == 0 then
+    workspaces_result = empty_array
+  end
 
   -- Output as a ROOT JSON OBJECT
   return {
@@ -283,9 +346,14 @@ local function emit_state()
 end
 
 local RELEVANT_EVENTS = {
-  WindowOpenedOrChanged = true, WindowClosed = true, WindowFocusChanged = true,
-  WorkspaceActivated = true, WorkspacesChanged = true, WindowsChanged = true,
-  WorkspaceUrgencyChanged = true, WorkspaceActiveWindowChanged = true
+  WindowOpenedOrChanged = true,
+  WindowClosed = true,
+  WindowFocusChanged = true,
+  WorkspaceActivated = true,
+  WorkspacesChanged = true,
+  WindowsChanged = true,
+  WorkspaceUrgencyChanged = true,
+  WorkspaceActiveWindowChanged = true,
 }
 
 local function sleep(seconds)
@@ -298,7 +366,9 @@ end
 -- or the socket isn't up yet).
 local function run_event_stream_session()
   local proc = io.popen("niri msg -j event-stream 2>/dev/null")
-  if not proc then return false end
+  if not proc then
+    return false
+  end
 
   local got_any_line = false
   for line in proc:lines() do
@@ -306,7 +376,9 @@ local function run_event_stream_session()
     local ok, obj = pcall(cjson.decode, line)
     if ok and obj then
       local key = next(obj)
-      if RELEVANT_EVENTS[key] then emit_state() end
+      if RELEVANT_EVENTS[key] then
+        emit_state()
+      end
     end
   end
   proc:close()

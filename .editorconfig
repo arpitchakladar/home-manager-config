@@ -5,7 +5,11 @@ root = true
 indent_style = space
 indent_size = 2
 
-[*.sh]
+[*.{sh,zsh}]
+indent_style = space
+indent_size = 2
+
+[*.lua]
 indent_style = space
 indent_size = 2
 

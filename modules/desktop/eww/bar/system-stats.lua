@@ -313,12 +313,7 @@ local function build_cpu_tooltip(overall_pct, per_core_list, freq_mhz, load_avg)
     lines[#lines + 1] = string.format("Freq: %d MHz", freq_mhz)
   end
   if load_avg ~= nil then
-    lines[#lines + 1] = string.format(
-      "Load: %.2f %.2f %.2f",
-      load_avg[1],
-      load_avg[2],
-      load_avg[3]
-    )
+    lines[#lines + 1] = string.format("Load: %.2f %.2f %.2f", load_avg[1], load_avg[2], load_avg[3])
   end
   for i, pct in ipairs(per_core_list) do
     lines[#lines + 1] = string.format("Core %d: %d%%", i - 1, pct)
@@ -682,10 +677,7 @@ local function spawn_inotify()
     end
     posix.close(r)
     posix.close(w)
-    local ok, err = posix.execp(
-      "inotifywait",
-      { "inotifywait", "-m", "-e", "modify", "/run/systemd/netif/state" }
-    )
+    local ok, err = posix.execp("inotifywait", { "inotifywait", "-m", "-e", "modify", "/run/systemd/netif/state" })
     if not ok then
       io.stderr:write("inotifywait: " .. tostring(err) .. "\n")
       os.exit(1)

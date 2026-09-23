@@ -4,15 +4,18 @@
 
 set -euo pipefail
 
-info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
-warn()  { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
+info() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
 error() { printf '\033[1;31m==> error:\033[0m %s\n' "$*" >&2; }
-die()   { error "$*"; exit 1; }
+die() {
+  error "$*"
+  exit 1
+}
 
 WORKDIR="$(mktemp -d)"
 
 cleanup() {
-  if [[ -d "$WORKDIR" ]]; then
+  if [[ -d $WORKDIR ]]; then
     find "$WORKDIR" -type f -exec shred -u -z {} \; 2>/dev/null || true
     rm -rf "$WORKDIR"
   fi
@@ -31,21 +34,21 @@ usage() {
 do_export() {
   local outfile="$1"
 
-  if [[ -e "$outfile" ]]; then
+  if [[ -e $outfile ]]; then
     die "Refusing to overwrite existing file: $outfile"
   fi
 
   info "Exporting public keys..."
-  gpg --export --armor > "$WORKDIR/public-keys.asc"
+  gpg --export --armor >"$WORKDIR/public-keys.asc"
 
   info "Exporting secret keys..."
-  gpg --export-secret-keys --armor > "$WORKDIR/secret-keys.asc"
+  gpg --export-secret-keys --armor >"$WORKDIR/secret-keys.asc"
 
   info "Exporting secret subkeys (if any)..."
-  gpg --export-secret-subkeys --armor > "$WORKDIR/secret-subkeys.asc" || true
+  gpg --export-secret-subkeys --armor >"$WORKDIR/secret-subkeys.asc" || true
 
   info "Exporting owner trust database..."
-  gpg --export-ownertrust > "$WORKDIR/ownertrust.txt"
+  gpg --export-ownertrust >"$WORKDIR/ownertrust.txt"
 
   info "Exporting revocation certificates..."
   mkdir -p "$WORKDIR/revocation-certs"
@@ -73,7 +76,7 @@ do_export() {
     "$WORKDIR/gpg-full-backup.tar"
 
   info "Verifying: attempting decryption to confirm it works..."
-  if gpg --decrypt "$outfile" > "$WORKDIR/verify.tar" 2>/dev/null; then
+  if gpg --decrypt "$outfile" >"$WORKDIR/verify.tar" 2>/dev/null; then
     if cmp -s "$WORKDIR/gpg-full-backup.tar" "$WORKDIR/verify.tar"; then
       info "Verification succeeded: backup decrypts correctly."
     else
@@ -94,14 +97,14 @@ do_export() {
 do_import() {
   local infile="$1"
 
-  if [[ ! -f "$infile" ]]; then
+  if [[ ! -f $infile ]]; then
     die "File not found: $infile"
   fi
 
   info "Decrypting $infile ..."
   echo "  You will be prompted for the backup's passphrase."
   echo "  Note: this may take a while due to the high S2K iteration count."
-  gpg --decrypt "$infile" > "$WORKDIR/gpg-full-backup.tar"
+  gpg --decrypt "$infile" >"$WORKDIR/gpg-full-backup.tar"
 
   info "Extracting archive..."
   tar -C "$WORKDIR" -xf "$WORKDIR/gpg-full-backup.tar"
@@ -143,13 +146,13 @@ command="$1"
 filename="$2"
 
 case "$command" in
-  export)
-    do_export "$filename"
-    ;;
-  import)
-    do_import "$filename"
-    ;;
-  *)
-    usage
-    ;;
+export)
+  do_export "$filename"
+  ;;
+import)
+  do_import "$filename"
+  ;;
+*)
+  usage
+  ;;
 esac

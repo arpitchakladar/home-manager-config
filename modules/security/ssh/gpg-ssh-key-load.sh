@@ -15,10 +15,13 @@ export GNUPGHOME="@@GNUPGHOME@@"
 
 GOPASS_SSH_KEY="@@GOPASS_SSH_KEY@@"
 
-info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
-warn()  { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
+info() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
 error() { printf '\033[1;31m==> error:\033[0m %s\n' "$*" >&2; }
-die()   { error "$*"; exit 1; }
+die() {
+  error "$*"
+  exit 1
+}
 
 usage() {
   cat <<EOF
@@ -34,15 +37,15 @@ EOF
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --help | -h)
-      usage
-      exit 0
-      ;;
-    *)
-      error "Unknown option: $1"
-      usage
-      exit 1
-      ;;
+  --help | -h)
+    usage
+    exit 0
+    ;;
+  *)
+    error "Unknown option: $1"
+    usage
+    exit 1
+    ;;
   esac
 done
 
@@ -60,14 +63,14 @@ if ssh-add -l 2>/dev/null | grep -qE "(ED25519|RSA|ECDSA)"; then
   exit 0
 fi
 
-if ! gopass show -o "$GOPASS_SSH_KEY" > /dev/null 2>&1; then
+if ! gopass show -o "$GOPASS_SSH_KEY" >/dev/null 2>&1; then
   die "no gopass entry $GOPASS_SSH_KEY"
 fi
 
 tmpdir=$(mktemp -d)
 trap 'rm -rf "$tmpdir"' EXIT
 keyfile="$tmpdir/key"
-gopass show -o "$GOPASS_SSH_KEY" > "$keyfile" 2>/dev/null
+gopass show -o "$GOPASS_SSH_KEY" >"$keyfile" 2>/dev/null
 chmod 600 "$keyfile"
 
 passphrase=$(gopass show -o "$GOPASS_SSH_KEY/passphrase" 2>/dev/null || true)

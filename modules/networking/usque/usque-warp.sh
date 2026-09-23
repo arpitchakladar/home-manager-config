@@ -4,10 +4,13 @@
 
 set -euo pipefail
 
-info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
-warn()  { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
+info() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
 error() { printf '\033[1;31m==> error:\033[0m %s\n' "$*" >&2; }
-die()   { error "$*"; exit 1; }
+die() {
+  error "$*"
+  exit 1
+}
 
 CONFIG_DIR="$HOME/.cache/usque"
 CONFIG="$CONFIG_DIR/config.json"
@@ -22,7 +25,7 @@ list_tun_ifaces() {
 }
 
 detect_iface() {
-  if [[ -f "$IFACE_FILE" ]]; then
+  if [[ -f $IFACE_FILE ]]; then
     cat "$IFACE_FILE"
     return
   fi
@@ -30,10 +33,10 @@ detect_iface() {
 }
 
 is_running() {
-  [[ -f "$PID_FILE" ]] || return 1
+  [[ -f $PID_FILE ]] || return 1
   local pid
   pid=$(cat "$PID_FILE" 2>/dev/null || true)
-  [[ -n "$pid" ]] || return 1
+  [[ -n $pid ]] || return 1
   sudo kill -0 "$pid" 2>/dev/null
 }
 
@@ -42,7 +45,7 @@ ensure_config() {
   mkdir -p "$CONFIG_DIR"
   info "Registering Cloudflare WARP account..."
   usque -c "$CONFIG" register < <(yes)
-  if [[ ! -f "$CONFIG" ]]; then
+  if [[ ! -f $CONFIG ]]; then
     die "Failed to create config file: $CONFIG"
   fi
   info "Config created successfully."
@@ -60,7 +63,7 @@ remove_tun_default_routes() {
 connect() {
   sudo -v
   ensure_config
-  if [[ -f "$PID_FILE" ]]; then
+  if [[ -f $PID_FILE ]]; then
     OLD_PID=$(cat "$PID_FILE")
     if sudo kill -0 "$OLD_PID" 2>/dev/null; then
       die "usque-warp is already running (PID $OLD_PID)"
@@ -72,10 +75,10 @@ connect() {
 
   info "Saving current default route..."
   DEFAULT_ROUTE=$(ip route show default | grep -vE 'dev tun[0-9]+' | head -n1)
-  if [[ -z "$DEFAULT_ROUTE" ]]; then
+  if [[ -z $DEFAULT_ROUTE ]]; then
     die "Could not determine current default route"
   fi
-  echo "$DEFAULT_ROUTE" > "$STATE_FILE"
+  echo "$DEFAULT_ROUTE" >"$STATE_FILE"
 
   info "Recording pre-existing tun interfaces..."
   BEFORE_IFACES=$(list_tun_ifaces)
@@ -92,12 +95,12 @@ connect() {
   MASQUE_IP=""
   for _ in {1..30}; do
     MASQUE_IP=$(grep -oP 'MASQUE connection to \K[0-9.]+(?=:443)' "$LOG_FILE" 2>/dev/null || true)
-    if [[ -n "$MASQUE_IP" ]]; then
+    if [[ -n $MASQUE_IP ]]; then
       break
     fi
     sleep 1
   done
-  if [[ -z "$MASQUE_IP" ]]; then
+  if [[ -z $MASQUE_IP ]]; then
     error "Failed to detect MASQUE endpoint"
     sudo kill "$(cat "$PID_FILE")" 2>/dev/null || true
     rm -f "$PID_FILE"
@@ -109,24 +112,24 @@ connect() {
   for _ in {1..30}; do
     AFTER_IFACES=$(list_tun_ifaces)
     TUN_DEV=$(comm -13 <(echo "$BEFORE_IFACES" | sort) <(echo "$AFTER_IFACES" | sort) | head -n1)
-    [[ -n "$TUN_DEV" ]] && break
+    [[ -n $TUN_DEV ]] && break
     sleep 1
   done
-  if [[ -z "$TUN_DEV" ]]; then
+  if [[ -z $TUN_DEV ]]; then
     error "Failed to detect usque interface"
     sudo kill "$(cat "$PID_FILE")" 2>/dev/null || true
     rm -f "$PID_FILE"
     exit 1
   fi
-  echo "$TUN_DEV" > "$IFACE_FILE"
+  echo "$TUN_DEV" >"$IFACE_FILE"
   info "Detected interface: $TUN_DEV"
 
   GATEWAY=$(echo "$DEFAULT_ROUTE" | awk '{for(i=1;i<=NF;i++) if($i=="via") print $(i+1)}')
   INTERFACE=$(echo "$DEFAULT_ROUTE" | awk '{for(i=1;i<=NF;i++) if($i=="dev") print $(i+1)}')
-  if [[ -z "$GATEWAY" || -z "$INTERFACE" ]]; then
+  if [[ -z $GATEWAY || -z $INTERFACE ]]; then
     die "Cannot determine gateway/interface"
   fi
-  echo "MASQUE_IP=$MASQUE_IP GATEWAY=$GATEWAY INTERFACE=$INTERFACE" >> "$STATE_FILE"
+  echo "MASQUE_IP=$MASQUE_IP GATEWAY=$GATEWAY INTERFACE=$INTERFACE" >>"$STATE_FILE"
 
   info "Allowing MASQUE endpoint outside tunnel..."
   sudo ip route replace \
@@ -146,7 +149,7 @@ disconnect() {
   sudo -v
   info "Disconnecting..."
   local dev
-  if [[ -f "$IFACE_FILE" ]]; then
+  if [[ -f $IFACE_FILE ]]; then
     dev=$(cat "$IFACE_FILE")
   else
     dev=$(list_tun_ifaces | head -n1)
@@ -155,7 +158,7 @@ disconnect() {
   # Kill usque FIRST so the kernel tears down tun0 (and every route
   # bound to it) as a single atomic operation, instead of us racing
   # it by pulling routes out from under a device that's still up.
-  if [[ -f "$PID_FILE" ]]; then
+  if [[ -f $PID_FILE ]]; then
     PID=$(cat "$PID_FILE")
     if sudo kill -0 "$PID" 2>/dev/null; then
       info "Stopping usque..."
@@ -174,7 +177,7 @@ disconnect() {
 
   # Give the kernel a moment to tear the tunnel device down; only touch
   # routes manually if it is not disappearing on its own.
-  if [[ -n "${dev:-}" ]]; then
+  if [[ -n ${dev:-} ]]; then
     info "Waiting for tunnel interface to go down..."
     for _ in {1..25}; do
       list_tun_ifaces | grep -qx "$dev" || break
@@ -187,9 +190,9 @@ disconnect() {
     fi
   fi
 
-  if [[ -f "$STATE_FILE" ]]; then
+  if [[ -f $STATE_FILE ]]; then
     MASQUE_IP=$(grep -oP 'MASQUE_IP=\K[0-9.]+' "$STATE_FILE" || true)
-    if [[ -n "$MASQUE_IP" ]]; then
+    if [[ -n $MASQUE_IP ]]; then
       info "Removing MASQUE route: $MASQUE_IP"
       sudo ip route del "$MASQUE_IP" 2>/dev/null || true
     fi
@@ -197,10 +200,10 @@ disconnect() {
     # Explicitly restore the pre-connect default route rather than
     # assuming it's still intact. 'replace' is idempotent.
     ORIGINAL_DEFAULT=$(head -n1 "$STATE_FILE")
-    if [[ "$ORIGINAL_DEFAULT" == default* ]]; then
+    if [[ $ORIGINAL_DEFAULT == default* ]]; then
       info "Restoring original default route..."
-      sudo ip route replace "$ORIGINAL_DEFAULT" \
-        || warn "could not restore original default route"
+      sudo ip route replace "$ORIGINAL_DEFAULT" ||
+        warn "could not restore original default route"
     fi
 
     rm -f "$STATE_FILE"
@@ -215,11 +218,11 @@ status() {
   iface=$(detect_iface)
   is_running && running=true
 
-  if [[ -n "$iface" && "$running" == true ]]; then
+  if [[ -n $iface && $running == true ]]; then
     printf '{"text":"%s","tooltip":"WARP connected via %s","class":"connected"}\n' "$iface" "$iface"
-  elif [[ -n "$iface" ]]; then
+  elif [[ -n $iface ]]; then
     printf '{"text":"%s","tooltip":"Interface %s up, but usque-warp process not tracked","class":"connected"}\n' "$iface" "$iface"
-  elif [[ "$running" == true ]]; then
+  elif [[ $running == true ]]; then
     printf '{"text":"connecting","tooltip":"usque starting...","class":"connecting"}\n'
   else
     printf '{"text":"","tooltip":"WARP disconnected","class":"disconnected"}\n'
@@ -227,22 +230,22 @@ status() {
 }
 
 case "${1:-}" in
-  connect)
-    connect
-    ;;
-  disconnect)
-    disconnect
-    ;;
-  status)
-    status
-    ;;
-  *)
-    echo "Usage: $0 <connect|disconnect|status>"
-    echo ""
-    echo "Commands:"
-    echo "  connect       Start the WARP tunnel"
-    echo "  disconnect    Stop the WARP tunnel and restore routes"
-    echo "  status        Print Waybar status JSON"
-    exit 1
-    ;;
+connect)
+  connect
+  ;;
+disconnect)
+  disconnect
+  ;;
+status)
+  status
+  ;;
+*)
+  echo "Usage: $0 <connect|disconnect|status>"
+  echo ""
+  echo "Commands:"
+  echo "  connect       Start the WARP tunnel"
+  echo "  disconnect    Stop the WARP tunnel and restore routes"
+  echo "  status        Print Waybar status JSON"
+  exit 1
+  ;;
 esac

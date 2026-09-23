@@ -15,8 +15,8 @@ out="$5"
 
 # Pick directory vs single/multiple file
 if [ "$directory" = "1" ]; then
-    # Outputs the final working directory path on exit
-    exec yazi "$path" --cwd-file="$out"
+  # Outputs the final working directory path on exit
+  exec yazi "$path" --cwd-file="$out"
 else
   # Writes all selected file paths to the output file on exit
   exec yazi "$path" --chooser-file="$out"

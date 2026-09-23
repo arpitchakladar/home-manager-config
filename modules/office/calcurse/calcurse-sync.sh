@@ -24,16 +24,19 @@ set -euo pipefail
 
 DATA_DIR="${CALCURSE_DATA_DIR:-${XDG_DATA_HOME:-$HOME/.local/share}/calcurse}"
 BRANCH="master"
-SYNC_TIMEOUT="8"   # seconds before a network op gives up
+SYNC_TIMEOUT="8" # seconds before a network op gives up
 
-info()  { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
-warn()  { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
+info() { printf '\033[1;34m==>\033[0m %s\n' "$*"; }
+warn() { printf '\033[1;33m==> warning:\033[0m %s\n' "$*" >&2; }
 error() { printf '\033[1;31m==> error:\033[0m %s\n' "$*" >&2; }
-die()   { error "$*"; exit 1; }
+die() {
+  error "$*"
+  exit 1
+}
 
 require_git() {
-  command -v git >/dev/null 2>&1 \
-    || die "git is not installed or not on PATH. Install it and try again."
+  command -v git >/dev/null 2>&1 ||
+    die "git is not installed or not on PATH. Install it and try again."
 }
 
 require_data_dir() {
@@ -69,10 +72,10 @@ readable_timestamp() {
 
   day=$(date +%-d)
   case "$day" in
-    1|21|31) suffix="st" ;;
-    2|22)    suffix="nd" ;;
-    3|23)    suffix="rd" ;;
-    *)       suffix="th" ;;
+  1 | 21 | 31) suffix="st" ;;
+  2 | 22) suffix="nd" ;;
+  3 | 23) suffix="rd" ;;
+  *) suffix="th" ;;
   esac
 
   month_year=$(date +"%B, %Y")
@@ -94,7 +97,7 @@ do_init() {
 
   # calcurse sometimes drops lock/swap files in here; keep them out of git
   if [ ! -e "$DATA_DIR/.gitignore" ]; then
-    cat > "$DATA_DIR/.gitignore" <<'EOF'
+    cat >"$DATA_DIR/.gitignore" <<'EOF'
 *.lock
 *.swp
 EOF
@@ -236,7 +239,7 @@ cmd_pull() {
     status=$?
     if [ "$status" -eq 124 ]; then
       warn "Pull timed out after ${SYNC_TIMEOUT}s — continuing with local data."
-      warn "Set \$CALCURSE_SYNC_TIMEOUT to a higher value if your connection"
+      warn 'Set $CALCURSE_SYNC_TIMEOUT to a higher value if your connection'
       warn "is just slow, not down."
       return 0
     fi
@@ -265,13 +268,13 @@ main() {
   shift || true
 
   case "$sub" in
-    init)   cmd_init "$@" ;;
-    sync)   cmd_sync "$@" ;;
-    pull)   cmd_pull "$@" ;;
-    status) cmd_status "$@" ;;
-    remote) cmd_remote "$@" ;;
-    help|-h|--help) cmd_help ;;
-    *) die "unknown command: $sub (try 'calcurse-sync help')" ;;
+  init) cmd_init "$@" ;;
+  sync) cmd_sync "$@" ;;
+  pull) cmd_pull "$@" ;;
+  status) cmd_status "$@" ;;
+  remote) cmd_remote "$@" ;;
+  help | -h | --help) cmd_help ;;
+  *) die "unknown command: $sub (try 'calcurse-sync help')" ;;
   esac
 }
 

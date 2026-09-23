@@ -1,7 +1,7 @@
 # Wrappers for nix-shell and nix develop that auto-start $SHELL
 nix-shell() {
   for arg in "$@"; do
-    if [[ "$arg" == "--run" || "$arg" == "--command" ]]; then
+    if [[ $arg == "--run" || $arg == "--command" ]]; then
       command nix-shell "$@"
       return
     fi
@@ -11,11 +11,11 @@ nix-shell() {
 }
 
 nix() {
-  if [[ "$1" == "develop" ]]; then
+  if [[ $1 == "develop" ]]; then
     local args=("${@:2}")
 
     for arg in "${args[@]}"; do
-      if [[ "$arg" == "-c" || "$arg" == "--command" ]]; then
+      if [[ $arg == "-c" || $arg == "--command" ]]; then
         command nix "$@"
         return
       fi

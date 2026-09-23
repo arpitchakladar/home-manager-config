@@ -25,7 +25,7 @@ fi
 
 CHANNEL="$1"
 
-cat <<'EOF' > "$DIALOGRC"
+cat <<'EOF' >"$DIALOGRC"
 use_shadow = ON
 use_colors = ON
 screen_color = (WHITE,BLACK,OFF)
@@ -48,7 +48,7 @@ EOF
 (
   printf "XXX\n0\nSyncing: %s...\nXXX\n" "$CHANNEL"
 
-  mbsync -c "$MBSYNCRC" "$CHANNEL" > "$MBSYNC_LOG" 2>&1 &
+  mbsync -c "$MBSYNCRC" "$CHANNEL" >"$MBSYNC_LOG" 2>&1 &
   PID=$!
 
   # Keep the gauge alive while mbsync runs.
@@ -60,19 +60,19 @@ EOF
   wait "$PID"
   MBSYNC_STATUS=$?
 
-  if (( MBSYNC_STATUS != 0 )); then
+  if ((MBSYNC_STATUS != 0)); then
     printf "XXX\n100\nSync failed: %s\nXXX\n" "$CHANNEL"
     exit "$MBSYNC_STATUS"
   fi
 
   printf "XXX\n90\nIndexing new mail with notmuch...\nXXX\n"
 
-  notmuch new --quiet > "$NOTMUCH_LOG" 2>&1
+  notmuch new --quiet >"$NOTMUCH_LOG" 2>&1
   NOTMUCH_STATUS=$?
 
   printf "XXX\n100\nDone.\nXXX\n"
 
-  if (( NOTMUCH_STATUS != 0 )); then
+  if ((NOTMUCH_STATUS != 0)); then
     exit "$NOTMUCH_STATUS"
   fi
 ) | dialog --title "$TITLE" --gauge "Initializing..." 8 80 0
@@ -80,16 +80,16 @@ EOF
 STATUS=${PIPESTATUS[0]}
 
 MBSYNC_OUT=$(
-  tr '\n' ' ' < "$MBSYNC_LOG" |
-  sed 's/  */ /g'
+  tr '\n' ' ' <"$MBSYNC_LOG" |
+    sed 's/  */ /g'
 )
 
 NOTMUCH_OUT=$(
-  tr '\n' ' ' < "$NOTMUCH_LOG" |
-  sed 's/  */ /g'
+  tr '\n' ' ' <"$NOTMUCH_LOG" |
+    sed 's/  */ /g'
 )
 
-if (( STATUS == 0 )); then
+if ((STATUS == 0)); then
   dialog \
     --title "$TITLE" \
     --msgbox "Done!\n\nChannel: $CHANNEL\n\nmbsync: ${MBSYNC_OUT:-OK}\n\nnotmuch: ${NOTMUCH_OUT:-OK}" \

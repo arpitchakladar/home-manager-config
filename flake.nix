@@ -60,6 +60,13 @@
             indent_size = 2;
           };
         };
+        settings.formatter.stylua.excludes = [
+          # Anonymous function fragments embedded into nixvim options via
+          # builtins.readFile are not complete Lua chunks, so stylua cannot
+          # parse them.
+          "modules/development/nixvim/plugins/gitsigns/on-attach.lua"
+          "modules/development/nixvim/plugins/lsp/open-diagnostic-float.lua"
+        ];
       };
 
       preCommitCheck = git-hooks.lib.${system}.run {
