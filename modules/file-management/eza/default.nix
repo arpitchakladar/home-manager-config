@@ -1,5 +1,13 @@
 # Modern ls replacement with icons and colors
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.file-management.eza;
+in
 {
   options.file-management.eza = {
     enable = lib.mkEnableOption "Enables eza.";
@@ -12,7 +20,7 @@
     };
   };
 
-  config = lib.mkIf config.file-management.eza.enable {
+  config = lib.mkIf cfg.enable {
     programs.eza = {
       enable = true;
       icons = "always";

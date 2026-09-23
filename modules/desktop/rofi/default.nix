@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = config.desktop.rofi;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
 in
 {
@@ -31,7 +32,7 @@ in
               ]
               [
                 ''"${config.fonts.normal} Bold ${toString config.fonts.size}"''
-                ''"${config.fonts.normal} Bold ${toString config.fonts.idxSize}"''
+                ''"${config.fonts.normal} Bold ${toString config.fonts.idx-size}"''
               ]
               (builtins.readFile ./theme.rasi);
         in

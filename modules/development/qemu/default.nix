@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.development.qemu;
+in
 {
   options.development.qemu = {
     enable = lib.mkEnableOption "Enables qemu.";
@@ -23,7 +26,7 @@
     };
   };
 
-  config = lib.mkIf config.development.qemu.enable {
-    home.packages = [ config.development.qemu.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }

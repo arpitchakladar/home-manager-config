@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.system.brightnessctl;
+in
 {
   options.system.brightnessctl = {
     enable = lib.mkEnableOption "Enables brightnessctl.";
@@ -16,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.system.brightnessctl.enable {
-    home.packages = [ config.system.brightnessctl.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }

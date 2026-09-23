@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.media.slurp;
+in
 {
   options.media.slurp = {
     enable = lib.mkEnableOption "Enables slurp.";
@@ -16,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.media.slurp.enable {
-    home.packages = [ config.media.slurp.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }

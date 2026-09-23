@@ -1,10 +1,13 @@
 # Game store
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.gaming.steam;
+in
 {
   options.gaming.steam = {
     enable = lib.mkEnableOption "Enables steam.";
@@ -15,7 +18,7 @@
     };
   };
 
-  config = lib.mkIf config.gaming.steam.enable {
-    home.packages = [ config.gaming.steam.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }

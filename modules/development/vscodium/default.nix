@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.development.vscodium;
+in
 {
   options.development.vscodium = {
     enable = lib.mkEnableOption "Enables vscodium.";
@@ -16,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.development.vscodium.enable {
+  config = lib.mkIf cfg.enable {
     programs.vscodium = {
       enable = true;
       package = pkgs.vscodium;

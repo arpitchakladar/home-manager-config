@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.development.opencode;
+in
 {
   options.development.opencode = {
     enable = lib.mkEnableOption "Enables opencode.";
@@ -17,7 +20,7 @@
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.development.opencode.enable {
+    (lib.mkIf cfg.enable {
       home.file.".local/share/icons/hicolor/scalable/apps/opencode.svg" = {
         source = ../../../assets/icons/apps/opencode.svg;
       };
@@ -27,10 +30,10 @@
         package = pkgs.opencode;
       };
     })
-    (lib.mkIf (config.development.opencode.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."opencode" = {
         name = "opencode";
-        exec = "${lib.getExe config.terminal.kitty.package} --class opencode -e ${lib.getExe config.development.opencode.package}";
+        exec = "${lib.getExe config.terminal.kitty.package} --class opencode -e ${lib.getExe cfg.package}";
         icon = "opencode";
         categories = [ "Development" ];
         comment = "AI-powered coding assistant";

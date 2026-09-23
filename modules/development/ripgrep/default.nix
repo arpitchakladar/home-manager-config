@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.development.ripgrep;
+in
 {
   options.development.ripgrep = {
     enable = lib.mkEnableOption "Enables ripgrep.";
@@ -15,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.development.ripgrep.enable {
+  config = lib.mkIf cfg.enable {
     programs.ripgrep = {
       enable = true;
     };

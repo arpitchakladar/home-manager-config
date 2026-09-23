@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.desktop.swayidle;
+in
 {
   options.desktop.swayidle = {
     enable = lib.mkEnableOption "Enables swayidle.";
@@ -16,10 +19,10 @@
     };
   };
 
-  config = lib.mkIf config.desktop.swayidle.enable {
+  config = lib.mkIf cfg.enable {
     services.swayidle = {
       enable = true;
-      package = config.desktop.swayidle.package;
+      package = cfg.package;
       systemdTargets = [ "graphical-session.target" ];
       timeouts = [
         {

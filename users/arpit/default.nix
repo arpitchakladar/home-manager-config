@@ -36,7 +36,7 @@
   development.delta.enable = true;
   development.direnv.enable = true;
   development.git.enable = true;
-  development.git.signing.signByDefault = true;
+  development.git.signing.sign-by-default = true;
   development.lazygit.enable = true;
   development.nixvim.enable = true;
   development.opencode.enable = true;
@@ -101,7 +101,7 @@
   web.aria2.enable = true;
   web.chawan.enable = true;
   web.chromium.enable = true;
-  web.chromium.useOpenGL = false;
+  web.chromium.use-opengl = false;
 
   programs.home-manager.enable = true;
 }

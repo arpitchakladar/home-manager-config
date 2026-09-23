@@ -6,11 +6,13 @@
   ...
 }:
 let
+  cfg = config.file-management.yazi;
+
   yaziFileChooserScript = pkgs.writeShellApplication {
     name = "yazi-file-chooser";
     runtimeInputs = [
       config.terminal.bash.package
-      config.file-management.yazi.package
+      cfg.package
       config.terminal.kitty.package
     ];
     text = builtins.readFile ./file-chooser.sh;
@@ -32,19 +34,25 @@ in
       description = "The yazi package to use. Defaults to the wrapped finalPackage from programs.yazi.";
     };
 
-    file-chooser = {
-      enable = lib.mkEnableOption "Enables the yazi-file-chooser script.";
-      package = lib.mkOption {
-        type = lib.types.package;
-        readOnly = true;
-        default = yaziFileChooserScript;
-        description = "The yazi-file-chooser script package.";
+    file-chooser = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          enable = lib.mkEnableOption "Enables the yazi-file-chooser script.";
+          package = lib.mkOption {
+            type = lib.types.package;
+            readOnly = true;
+            default = yaziFileChooserScript;
+            description = "The yazi-file-chooser script package.";
+          };
+        };
       };
+      default = { };
+      description = "File chooser integration configuration.";
     };
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.file-management.yazi.enable {
+    (lib.mkIf cfg.enable {
       programs.yazi = {
         enable = true;
         shellWrapperName = "yy";
@@ -57,17 +65,17 @@ in
       };
 
       home.file.".local/share/icons/hicolor/scalable/apps/yazi.png" = {
-        source = config.lib.file.mkOutOfStoreSymlink "${config.file-management.yazi.package}/share/pixmaps/yazi.png";
+        source = config.lib.file.mkOutOfStoreSymlink "${cfg.package}/share/pixmaps/yazi.png";
       };
 
       home.sessionVariables = {
         TERMCMD = lib.mkIf config.terminal.kitty.enable "${lib.getExe config.terminal.kitty.package} --class file-explorer --title 'Yazi'";
       };
     })
-    (lib.mkIf (config.file-management.yazi.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."yazi" = {
         name = "Yazi";
-        exec = "${lib.getExe config.terminal.kitty.package} --class yazi -e ${lib.getExe config.file-management.yazi.package}";
+        exec = "${lib.getExe config.terminal.kitty.package} --class yazi -e ${lib.getExe cfg.package}";
         icon = "yazi";
         categories = [ "Utility" ];
         comment = "Terminal file manager";
@@ -84,9 +92,9 @@ in
         "application/x-rar-compressed" = "yazi.desktop";
       };
     })
-    (lib.mkIf config.file-management.yazi.file-chooser.enable {
+    (lib.mkIf cfg.file-chooser.enable {
       home.file.".config/xdg-desktop-portal-termfilechooser/config" = {
-        source = lib.getExe config.file-management.yazi.file-chooser.package;
+        source = lib.getExe cfg.file-chooser.package;
       };
     })
   ];

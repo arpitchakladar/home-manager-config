@@ -13,8 +13,9 @@
     }
     {
       assertion =
-        config.communication.senpai.identity.passwordGopassSecret == null || config.security.gopass.enable;
-      message = "communication.senpai.identity.passwordGopassSecret requires security.gopass.enable.";
+        config.communication.senpai.identity.password-gopass-secret == null
+        || config.security.gopass.enable;
+      message = "communication.senpai.identity.password-gopass-secret requires security.gopass.enable.";
     }
   ];
 }

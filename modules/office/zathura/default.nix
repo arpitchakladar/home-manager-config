@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.office.zathura;
+in
 {
   options.office.zathura = {
     enable = lib.mkEnableOption "Enables zathura.";
@@ -15,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.office.zathura.enable {
+  config = lib.mkIf cfg.enable {
     programs.zathura = {
       enable = true;
     };

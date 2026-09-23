@@ -1,15 +1,17 @@
 # Open-source reimplementation of the Cloudflare WARP client's MASQUE protocol
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
 let
+  cfg = config.networking.usque;
+
   usqueWarpScript = pkgs.writeShellApplication {
     name = "usque-warp";
     runtimeInputs = [
-      config.networking.usque.package
+      cfg.package
       config.terminal.bash.package
     ];
     text = builtins.readFile ./usque-warp.sh;
@@ -45,23 +47,29 @@ in
       description = "The usque package to use.";
     };
 
-    warp = {
-      enable = lib.mkEnableOption "Enables the usque-warp script.";
-      package = lib.mkOption {
-        type = lib.types.package;
-        readOnly = true;
-        default = usqueWarpScriptPkg;
-        description = "The usque-warp script package.";
+    warp = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          enable = lib.mkEnableOption "Enables the usque-warp script.";
+          package = lib.mkOption {
+            type = lib.types.package;
+            readOnly = true;
+            default = usqueWarpScriptPkg;
+            description = "The usque-warp script package.";
+          };
+        };
       };
+      default = { };
+      description = "WARP script configuration.";
     };
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.networking.usque.enable {
-      home.packages = [ config.networking.usque.package ];
+    (lib.mkIf cfg.enable {
+      home.packages = [ cfg.package ];
     })
-    (lib.mkIf config.networking.usque.warp.enable {
-      home.packages = [ config.networking.usque.warp.package ];
+    (lib.mkIf cfg.warp.enable {
+      home.packages = [ cfg.warp.package ];
     })
   ];
 }

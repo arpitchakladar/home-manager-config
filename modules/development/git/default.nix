@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.development.git;
+in
 {
   imports = [
     ./assertions.nix
@@ -30,29 +34,35 @@
       description = "Git email.";
     };
 
-    signing = {
-      key = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "GPG key ID used for signing commits.";
-      };
+    signing = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          key = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            description = "GPG key ID used for signing commits.";
+          };
 
-      signByDefault = lib.mkEnableOption "Sign commits by default.";
+          sign-by-default = lib.mkEnableOption "Sign commits by default.";
+        };
+      };
+      default = { };
+      description = "Git commit signing configuration.";
     };
   };
 
-  config = lib.mkIf config.development.git.enable {
+  config = lib.mkIf cfg.enable {
     programs.git = {
       enable = true;
       signing = {
-        key = config.development.git.signing.key;
-        signByDefault = config.development.git.signing.signByDefault;
+        key = cfg.signing.key;
+        signByDefault = cfg.signing.sign-by-default;
       };
       settings = lib.mkMerge [
         {
           user = {
-            name = config.development.git.username;
-            email = config.development.git.email;
+            name = cfg.username;
+            email = cfg.email;
           };
           core = {
             askPass = "";

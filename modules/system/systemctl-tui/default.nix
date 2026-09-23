@@ -1,10 +1,13 @@
 # TUI for systemctl
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.system.systemctl-tui;
+in
 {
   options.system.systemctl-tui = {
     enable = lib.mkEnableOption "Enables systemctl-tui.";
@@ -17,17 +20,17 @@
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.system.systemctl-tui.enable {
+    (lib.mkIf cfg.enable {
       home.file.".local/share/icons/hicolor/scalable/apps/systemd.svg" = {
         source = ../../../assets/icons/apps/systemd.svg;
       };
 
-      home.packages = [ config.system.systemctl-tui.package ];
+      home.packages = [ cfg.package ];
     })
-    (lib.mkIf (config.system.systemctl-tui.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."systemctl-tui" = {
         name = "systemctl-tui";
-        exec = "${lib.getExe config.terminal.kitty.package} --class systemctl-tui -e ${lib.getExe config.system.systemctl-tui.package}";
+        exec = "${lib.getExe config.terminal.kitty.package} --class systemctl-tui -e ${lib.getExe cfg.package}";
         icon = "systemd";
         categories = [ "System" ];
         comment = "TUI for systemctl";

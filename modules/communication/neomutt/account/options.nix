@@ -6,7 +6,7 @@
       default = true;
     };
 
-    realName = lib.mkOption {
+    real-name = lib.mkOption {
       type = lib.types.str;
       description = "Name displayed when sending mails.";
     };
@@ -16,13 +16,13 @@
       description = "Email address of this account.";
     };
 
-    userName = lib.mkOption {
+    username = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
       default = null;
       description = "Server username. Defaults to address if null.";
     };
 
-    passwordGopassSecret = lib.mkOption {
+    password-gopass-secret = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
       default = null;
       description = "Gopass secret path (e.g. mail/user@gmail.com). Constructs passwordCommand automatically.";
@@ -81,7 +81,7 @@
     };
 
     neomutt = {
-      mailboxType = lib.mkOption {
+      mailbox-type = lib.mkOption {
         type = lib.types.enum [
           "maildir"
           "imap"
@@ -178,7 +178,7 @@
 
     notmuch = {
       neomutt = {
-        virtualMailboxes = lib.mkOption {
+        virtual-mailboxes = lib.mkOption {
           type = lib.types.listOf (
             lib.types.submodule {
               options = {
@@ -237,7 +237,7 @@
           description = "Enable TLS.";
         };
 
-        useStartTls = lib.mkOption {
+        use-start-tls = lib.mkOption {
           type = lib.types.bool;
           default = false;
           description = "Use STARTTLS.";
@@ -265,7 +265,7 @@
           description = "Enable TLS.";
         };
 
-        useStartTls = lib.mkOption {
+        use-start-tls = lib.mkOption {
           type = lib.types.bool;
           default = false;
           description = "Use STARTTLS.";
@@ -280,13 +280,13 @@
         description = "GPG key to use.";
       };
 
-      signByDefault = lib.mkOption {
+      sign-by-default = lib.mkOption {
         type = lib.types.bool;
         default = false;
         description = "Sign messages by default.";
       };
 
-      encryptByDefault = lib.mkOption {
+      encrypt-by-default = lib.mkOption {
         type = lib.types.bool;
         default = false;
         description = "Encrypt messages by default.";
@@ -306,7 +306,7 @@
         description = "Command that generates a signature.";
       };
 
-      showSignature = lib.mkOption {
+      show-signature = lib.mkOption {
         type = lib.types.nullOr (
           lib.types.enum [
             "append"

@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.media.vlc;
+in
 {
   options.media.vlc = {
     enable = lib.mkEnableOption "Enables vlc.";
@@ -16,8 +19,8 @@
     };
   };
 
-  config = lib.mkIf config.media.vlc.enable {
-    home.packages = [ config.media.vlc.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
 
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/vlc" = "vlc.desktop";

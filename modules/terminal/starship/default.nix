@@ -1,5 +1,15 @@
 # Minimal, blazing-fast shell prompt
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.terminal.starship;
+
+  mkSegment = content: ''[┄\[](red)[${content}]($style)[\]](red)'';
+in
 {
   options.terminal.starship = {
     enable = lib.mkEnableOption "Enables starship.";
@@ -11,63 +21,59 @@
     };
   };
 
-  config = lib.mkIf config.terminal.starship.enable {
+  config = lib.mkIf cfg.enable {
     programs.starship = {
       enable = true;
       enableZshIntegration = config.terminal.zsh.enable;
-      settings =
-        let
-          mkSegment = content: ''[┄\[](red)[${content}]($style)[\]](red)'';
-        in
-        {
-          add_newline = true;
+      settings = {
+        add_newline = true;
 
-          format = ''''\n[╭─\[](red)$username[@](red)$hostname[\]](red)$directory$git_branch$git_status$nix_shell''\n[╰─](red)$status$character ''\n'';
+        format = ''''\n[╭─\[](red)$username[@](red)$hostname[\]](red)$directory$git_branch$git_status$nix_shell''\n[╰─](red)$status$character ''\n'';
 
-          character.format = "[](red)";
+        character.format = "[](red)";
 
-          username = {
-            style_user = "blue";
-            style_root = "red bold";
-            format = "[$user]($style)";
-            show_always = true;
-          };
-
-          hostname = {
-            ssh_only = false;
-            style = "green";
-            format = "[$hostname]($style)";
-          };
-
-          directory = {
-            style = "purple";
-            truncate_to_repo = false;
-            format = mkSegment "$path";
-          };
-
-          git_branch = {
-            style = "bold yellow";
-            format = ''[┄\[](red)[$symbol$branch(:$remote_branch)]($style)'';
-          };
-
-          git_status = {
-            style = "cyan";
-            format = ''( [$all_status$ahead_behind]($style))[\]](red)'';
-          };
-
-          nix_shell = {
-            format = mkSegment "$symbol $state( \($name\))";
-            symbol = "󱄅";
-            impure_msg = "󰻌";
-            pure_msg = "󰕥";
-          };
-
-          status = {
-            disabled = false;
-            format = "${mkSegment "$symbol $status"}[┄─](red)";
-            style = "white";
-          };
+        username = {
+          style_user = "blue";
+          style_root = "red bold";
+          format = "[$user]($style)";
+          show_always = true;
         };
+
+        hostname = {
+          ssh_only = false;
+          style = "green";
+          format = "[$hostname]($style)";
+        };
+
+        directory = {
+          style = "purple";
+          truncate_to_repo = false;
+          format = mkSegment "$path";
+        };
+
+        git_branch = {
+          style = "bold yellow";
+          format = ''[┄\[](red)[$symbol$branch(:$remote_branch)]($style)'';
+        };
+
+        git_status = {
+          style = "cyan";
+          format = ''( [$all_status$ahead_behind]($style))[\]](red)'';
+        };
+
+        nix_shell = {
+          format = mkSegment "$symbol $state( \($name\))";
+          symbol = "󱄅";
+          impure_msg = "󰻌";
+          pure_msg = "󰕥";
+        };
+
+        status = {
+          disabled = false;
+          format = "${mkSegment "$symbol $status"}[┄─](red)";
+          style = "white";
+        };
+      };
     };
   };
 }

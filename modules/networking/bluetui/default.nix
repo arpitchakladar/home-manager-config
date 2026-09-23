@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.networking.bluetui;
+in
 {
   imports = [
     ./assertions.nix
@@ -20,14 +23,14 @@
     };
   };
 
-  config = lib.mkIf config.networking.bluetui.enable {
+  config = lib.mkIf cfg.enable {
     home.file.".local/share/icons/hicolor/scalable/apps/bluetooth.svg" = {
       source = ../../../assets/icons/apps/bluetooth.svg;
     };
 
     xdg.desktopEntries."bluetui" = {
       name = "bluetui";
-      exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.networking.bluetui.package}";
+      exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe cfg.package}";
       icon = "bluetooth";
       categories = [ "Network" ];
       comment = "Bluetooth TUI client";
@@ -35,7 +38,7 @@
       type = "Application";
     };
     home.packages = [
-      config.networking.bluetui.package
+      cfg.package
     ];
   };
 }

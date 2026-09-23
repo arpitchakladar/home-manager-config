@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.security.gopass;
+in
 {
   imports = [ ./assertions.nix ];
 
@@ -16,33 +19,51 @@
       default = config.programs.password-store.package;
       description = "The gopass package to use.";
     };
-    sync = {
-      enable = lib.mkEnableOption "Enables git-backed syncing of the gopass data directory.";
-      remote = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "Git remote URL for the gopass data directory. Use an https:// URL if 'credential' is configured.";
-      };
-      credential = {
-        username = lib.mkOption {
-          type = lib.types.nullOr lib.types.str;
-          default = null;
-          description = "Username for HTTPS git authentication against the gopass remote.";
+    sync = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          enable = lib.mkEnableOption "Enables git-backed syncing of the gopass data directory.";
+          remote = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            description = "Git remote URL for the gopass data directory. Use an https:// URL if 'credential' is configured.";
+          };
+          credential = lib.mkOption {
+            type = lib.types.submodule {
+              options = {
+                username = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = "Username for HTTPS git authentication against the gopass remote.";
+                };
+                password-gopass-secret = lib.mkOption {
+                  type = lib.types.nullOr lib.types.str;
+                  default = null;
+                  description = "gopass entry path holding the password or token used.";
+                };
+              };
+            };
+            default = { };
+            description = "Credentials for HTTPS git authentication.";
+          };
         };
-        passwordGopassPath = lib.mkOption {
-          type = lib.types.nullOr lib.types.str;
-          default = null;
-          description = "gopass entry path holding the password or token used.";
-        };
       };
+      default = { };
+      description = "Git-backed syncing configuration.";
     };
-    creation-templates = {
-      enable = lib.mkEnableOption "Enables gopass entry creation templates. New entry creation templates for gopass new or gopass create commands.";
+    creation-templates = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          enable = lib.mkEnableOption "Enables gopass entry creation templates. New entry creation templates for gopass new or gopass create commands.";
+        };
+      };
+      default = { };
+      description = "Creation templates configuration.";
     };
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.security.gopass.enable {
+    (lib.mkIf cfg.enable {
       programs.password-store = {
         enable = true;
         package = pkgs.gopass.override { passAlias = true; };
@@ -68,15 +89,9 @@
               gpgSign = false;
             };
           }
-          //
-            lib.optionalAttrs
-              (
-                config.security.gopass.sync.enable
-                && config.security.gopass.sync.credential.passwordGopassPath != null
-              )
-              {
-                credential.helper = "!f() { echo username=${lib.escapeShellArg config.security.gopass.sync.credential.username}; echo password=\"$(${config.security.gopass.package}/bin/gopass show -o ${lib.escapeShellArg config.security.gopass.sync.credential.passwordGopassPath})\"; }; f";
-              };
+          // lib.optionalAttrs (cfg.sync.enable && cfg.sync.credential.password-gopass-secret != null) {
+            credential.helper = "!f() { echo username=${lib.escapeShellArg cfg.sync.credential.username}; echo password=\"$(${lib.getExe cfg.package} show -o ${lib.escapeShellArg cfg.sync.credential.password-gopass-secret})\"; }; f";
+          };
         }
       ];
 
@@ -88,20 +103,18 @@
         source = ../../../assets/icons/apps/gopass.svg;
       };
 
-      home.activation.copyCreationTemplatesForGopass =
-        lib.mkIf config.security.gopass.creation-templates.enable
-          (
-            lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create"
-              $DRY_RUN_CMD rm -rf ${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create
-              $DRY_RUN_CMD cp -r $VERBOSE_ARG --no-preserve=mode ${./creation-templates} "${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create"
-            ''
-          );
+      home.activation.copyCreationTemplatesForGopass = lib.mkIf cfg.creation-templates.enable (
+        lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create"
+          $DRY_RUN_CMD rm -rf ${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create
+          $DRY_RUN_CMD cp -r $VERBOSE_ARG --no-preserve=mode ${./creation-templates} "${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create"
+        ''
+      );
     })
-    (lib.mkIf (config.security.gopass.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."gopass" = {
         name = "gopass";
-        exec = "${lib.getExe config.terminal.kitty.package} --class gopass -e ${lib.getExe config.security.gopass.package}";
+        exec = "${lib.getExe config.terminal.kitty.package} --class gopass -e ${lib.getExe cfg.package}";
         icon = "gopass";
         comment = "Standard Unix password manager (Go implementation)";
         categories = [ "Utility" ];
@@ -109,7 +122,7 @@
         type = "Application";
       };
     })
-    (lib.mkIf config.security.gopass.sync.enable {
+    (lib.mkIf cfg.sync.enable {
       home.activation.gopassSyncInit =
         let
           gopassSyncInit = pkgs.writeShellApplication {
@@ -121,7 +134,7 @@
             text =
               builtins.replaceStrings
                 [ "@@PASSWORD_STORE_DIR@@" "@@REMOTE_REPO_URL@@" ]
-                [ config.programs.password-store.settings.PASSWORD_STORE_DIR config.security.gopass.sync.remote ]
+                [ config.programs.password-store.settings.PASSWORD_STORE_DIR cfg.sync.remote ]
                 (builtins.readFile ./gopass-sync-init.sh);
           };
         in

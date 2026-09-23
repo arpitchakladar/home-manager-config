@@ -3,8 +3,8 @@
 {
   assertions = [
     {
-      assertion = !config.web.chromium.useOpenGL || config.web.chromium.enable;
-      message = "web.chromium.useOpenGL requires web.chromium.enable.";
+      assertion = !config.web.chromium.use-opengl || config.web.chromium.enable;
+      message = "web.chromium.use-opengl requires web.chromium.enable.";
     }
   ];
 }

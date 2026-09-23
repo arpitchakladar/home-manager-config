@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = config.desktop.eww;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
 in
 {
@@ -46,10 +47,10 @@ in
               [
                 config.fonts.normal
                 (toString config.fonts.size)
-                (toString config.fonts.iconSize)
-                (toString config.fonts.labelSize)
-                (toString config.fonts.smallSize)
-                (toString config.fonts.idxSize)
+                (toString config.fonts.icon-size)
+                (toString config.fonts.label-size)
+                (toString config.fonts.small-size)
+                (toString config.fonts.idx-size)
               ]
               (builtins.readFile ./eww.scss);
         in
@@ -67,9 +68,9 @@ in
       Service = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = "${lib.getExe config.desktop.eww.package} open bar";
-        ExecReload = "${lib.getExe config.desktop.eww.package} reload && ${lib.getExe config.desktop.eww.package} open bar";
-        ExecStop = "${lib.getExe config.desktop.eww.package} kill";
+        ExecStart = "${lib.getExe cfg.package} open bar";
+        ExecReload = "${lib.getExe cfg.package} reload && ${lib.getExe cfg.package} open bar";
+        ExecStop = "${lib.getExe cfg.package} kill";
         Restart = "on-failure";
       };
       Install.WantedBy = [ "graphical-session.target" ];

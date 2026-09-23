@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.communication.senpai;
+in
 {
   imports = [ ./assertions.nix ];
 
@@ -17,48 +20,60 @@
       description = "The senpai package to use.";
     };
 
-    server = {
-      address = lib.mkOption {
-        type = lib.types.str;
-        description = "IRC server address (host[:port]). Supports irc://, ircs://, irc+insecure:// URLs.";
+    server = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          address = lib.mkOption {
+            type = lib.types.str;
+            description = "IRC server address (host[:port]). Supports irc://, ircs://, irc+insecure:// URLs.";
+          };
+        };
       };
+      default = { };
+      description = "IRC server configuration.";
     };
 
-    identity = {
-      nickname = lib.mkOption {
-        type = lib.types.str;
-        description = "Your IRC nickname (no spaces or colons).";
-      };
+    identity = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          nickname = lib.mkOption {
+            type = lib.types.str;
+            description = "Your IRC nickname (no spaces or colons).";
+          };
 
-      passwordGopassSecret = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "Gopass secret path for SASL password (e.g. irc/user@server). Constructs password-cmd automatically.";
+          password-gopass-secret = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            description = "Gopass secret path for SASL password (e.g. irc/user@server). Constructs password-cmd automatically.";
+          };
+        };
       };
+      default = { };
+      description = "Identity configuration.";
     };
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.communication.senpai.enable {
+    (lib.mkIf cfg.enable {
       programs.senpai = {
         enable = true;
-        package = config.communication.senpai.package;
+        package = cfg.package;
         config = {
-          address = config.communication.senpai.server.address;
-          nickname = config.communication.senpai.identity.nickname;
-          password-cmd = lib.mkIf (config.communication.senpai.identity.passwordGopassSecret != null) [
+          address = cfg.server.address;
+          nickname = cfg.identity.nickname;
+          password-cmd = lib.mkIf (cfg.identity.password-gopass-secret != null) [
             (lib.getExe config.security.gopass.package)
             "show"
             "-o"
-            config.communication.senpai.identity.passwordGopassSecret
+            cfg.identity.password-gopass-secret
           ];
         };
       };
     })
-    (lib.mkIf (config.communication.senpai.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."senpai" = {
         name = "Senpai";
-        exec = "${lib.getExe config.terminal.kitty.package} --class senpai -e ${lib.getExe config.communication.senpai.package}";
+        exec = "${lib.getExe config.terminal.kitty.package} --class senpai -e ${lib.getExe cfg.package}";
         icon = "senpai";
         categories = [
           "Network"

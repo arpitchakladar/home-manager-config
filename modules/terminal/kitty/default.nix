@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.terminal.kitty;
+in
 {
   imports = [
     ./colors.nix
@@ -20,7 +24,7 @@
     };
   };
 
-  config = lib.mkIf config.terminal.kitty.enable {
+  config = lib.mkIf cfg.enable {
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/terminal" = "kitty.desktop";
     };

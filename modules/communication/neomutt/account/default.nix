@@ -21,17 +21,19 @@
 
   config = lib.mkIf config.communication.neomutt.enable {
     accounts.email.accounts = lib.mapAttrs (accountName: accountInformation: {
-      inherit (accountInformation) realName address primary;
+      inherit (accountInformation) address primary;
+
+      realName = accountInformation.real-name;
 
       userName =
-        if accountInformation.userName != null then
-          accountInformation.userName
+        if accountInformation.username != null then
+          accountInformation.username
         else
           accountInformation.address;
 
       passwordCommand =
-        if accountInformation.passwordGopassSecret != null then
-          "${lib.getExe config.security.gopass.package} -o ${accountInformation.passwordGopassSecret}"
+        if accountInformation.password-gopass-secret != null then
+          "${lib.getExe config.security.gopass.package} -o ${accountInformation.password-gopass-secret}"
         else
           null;
 
@@ -50,7 +52,7 @@
 
       neomutt = {
         enable = true;
-        mailboxType = accountInformation.neomutt.mailboxType;
+        mailboxType = accountInformation.neomutt.mailbox-type;
         extraConfig = accountInformation.neomutt.extraConfig;
       };
 
@@ -71,7 +73,7 @@
         enable = true;
         neomutt = {
           enable = true;
-          virtualMailboxes = accountInformation.notmuch.neomutt.virtualMailboxes;
+          virtualMailboxes = accountInformation.notmuch.neomutt.virtual-mailboxes;
         };
       };
 
@@ -80,7 +82,7 @@
         port = accountInformation.imap.port;
         tls = {
           enable = accountInformation.imap.tls.enable;
-          useStartTls = accountInformation.imap.tls.useStartTls;
+          useStartTls = accountInformation.imap.tls.use-start-tls;
         };
       };
 
@@ -89,14 +91,14 @@
         port = accountInformation.smtp.port;
         tls = {
           enable = accountInformation.smtp.tls.enable;
-          useStartTls = accountInformation.smtp.tls.useStartTls;
+          useStartTls = accountInformation.smtp.tls.use-start-tls;
         };
       };
 
       gpg = lib.optionalAttrs (accountInformation.gpg.key != null) {
         key = accountInformation.gpg.key;
-        signByDefault = accountInformation.gpg.signByDefault;
-        encryptByDefault = accountInformation.gpg.encryptByDefault;
+        signByDefault = accountInformation.gpg.sign-by-default;
+        encryptByDefault = accountInformation.gpg.encrypt-by-default;
       };
 
       signature =
@@ -105,7 +107,7 @@
           {
             text = accountInformation.signature.text;
             command = accountInformation.signature.command;
-            showSignature = accountInformation.signature.showSignature;
+            showSignature = accountInformation.signature.show-signature;
           };
     }) (lib.filterAttrs (n: a: a.enable) config.communication.neomutt.accounts);
   };

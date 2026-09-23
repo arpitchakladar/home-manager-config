@@ -6,6 +6,8 @@
   ...
 }:
 let
+  cfg = config.communication.neomutt;
+
   neomuttSyncScript = pkgs.writeShellApplication {
     name = "neomutt-sync";
     runtimeInputs = [
@@ -61,13 +63,15 @@ in
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.communication.neomutt.enable {
+    (lib.mkIf cfg.enable {
       accounts.email.maildirBasePath = "${config.home.homeDirectory}/.local/share/mail";
       home.sessionVariables.MAILDIR = config.accounts.email.maildirBasePath;
 
       xdg.configFile."neomutt/mailcap".text =
         builtins.replaceStrings [ "@@HTML_VIEWER@@" ] [ (lib.getExe config.web.chawan.package) ]
           (builtins.readFile ./mailcap);
+      home.file.".local/share/icons/hicolor/scalable/apps/neomutt.svg".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
       programs.neomutt = {
         enable = true;
         package = pkgs.symlinkJoin {
@@ -93,11 +97,11 @@ in
         );
       };
     })
-    (lib.mkIf (config.communication.neomutt.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."neomutt" = {
         name = "NeoMutt";
         exec = "${lib.getExe config.terminal.kitty.package} --class neomutt -e ${lib.getExe config.programs.neomutt.package}";
-        icon = "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
+        icon = "neomutt";
         categories = [
           "Network"
           "Email"

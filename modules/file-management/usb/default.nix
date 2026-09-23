@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.file-management.usb;
+in
 {
   options.file-management.usb = {
     enable = lib.mkEnableOption "Enables USB device mounting tools.";
@@ -22,7 +25,7 @@
     };
   };
 
-  config = lib.mkIf config.file-management.usb.enable {
-    home.packages = [ config.file-management.usb.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }
