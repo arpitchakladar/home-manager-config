@@ -34,10 +34,13 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [ cfg.package ];
 
+    home.file.".local/share/icons/hicolor/scalable/apps/com.heroicgameslauncher.hgl.svg".source =
+      config.lib.file.mkOutOfStoreSymlink "${pkgs.heroic}/share/icons/hicolor/scalable/apps/com.heroicgameslauncher.hgl.svg";
+
     xdg.desktopEntries."heroic" = {
       name = "Heroic Games Launcher";
       exec = "${lib.getExe' cfg.package "heroic"} %u";
-      icon = "${pkgs.heroic}/share/icons/hicolor/scalable/apps/com.heroicgameslauncher.hgl.svg";
+      icon = "com.heroicgameslauncher.hgl";
       comment = "An Open Source Launcher for GOG, Epic Games and Amazon Games";
       categories = [ "Game" ];
       mimeType = [ "x-scheme-handler/heroic" ];

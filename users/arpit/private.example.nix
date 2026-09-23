@@ -22,7 +22,7 @@
       '';
       gpg = {
         key = "YOUR_GPG_KEY_ID";
-        sign-by-default = true;
+        sign-by-default = false;
         encrypt-by-default = false; # set true only if you also want auto-encrypt
       };
     };

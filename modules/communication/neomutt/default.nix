@@ -70,6 +70,8 @@ in
       xdg.configFile."neomutt/mailcap".text =
         builtins.replaceStrings [ "@@HTML_VIEWER@@" ] [ (lib.getExe config.web.chawan.package) ]
           (builtins.readFile ./mailcap);
+      home.file.".local/share/icons/hicolor/scalable/apps/neomutt.svg".source =
+        config.lib.file.mkOutOfStoreSymlink "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
       programs.neomutt = {
         enable = true;
         package = pkgs.symlinkJoin {
@@ -99,7 +101,7 @@ in
       xdg.desktopEntries."neomutt" = {
         name = "NeoMutt";
         exec = "${lib.getExe config.terminal.kitty.package} --class neomutt -e ${lib.getExe config.programs.neomutt.package}";
-        icon = "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
+        icon = "neomutt";
         categories = [
           "Network"
           "Email"

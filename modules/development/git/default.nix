@@ -56,7 +56,7 @@ in
       enable = true;
       signing = {
         key = cfg.signing.key;
-        sign-by-default = cfg.signing.sign-by-default;
+        signByDefault = cfg.signing.sign-by-default;
       };
       settings = lib.mkMerge [
         {
