@@ -83,30 +83,3 @@ window#eww-bar {
 .workspace-button.active .workspace-idx {
   opacity: 1;
 }
-
-scroll {
-  min-height: 0;
-}
-
-scroll > box {
-  min-height: 0;
-}
-
-scrollbar {
-  background: transparent;
-}
-
-scrollbar slider {
-  background: #@@base03@@;
-  border-radius: 4px;
-  min-width: 6px;
-  min-height: 20px;
-}
-
-scrollbar slider:hover {
-  background: #@@base05@@;
-}
-
-scrollbar trough {
-  background: transparent;
-}

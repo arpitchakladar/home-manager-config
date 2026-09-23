@@ -30,56 +30,50 @@
        :class "bar-container"
        :vexpand true
     (workspaces-widget :workspaces "${niri_status.workspaces}")
-    (box :vexpand true
-      (windows-widget :windows "${niri_status.active_windows}"))
+    (windows-widget :windows "${niri_status.active_windows}")
     (system-widget)))
 
 (defwidget workspaces-widget [workspaces]
-  (scroll :hscroll false
-          :vscroll true
-          :height 250
-    (box :orientation "v"
-         :space-evenly false
-         :spacing 4
-         :halign "fill"
-         :class "workspaces"
-      (for ws in workspaces
-        (eventbox :onclick "niri msg action focus-workspace ${ws.idx}"
-                  :cursor "pointer"
-                  :halign "fill"
-                  :tooltip "${ws.tooltip}"
-          (box :class "workspace-button ${ws.is_active ? 'active' : ''}"
-               :halign "fill"
-            (overlay :halign "fill"
-              (image :class "workspace-icon"
-                     :path "${ws.icon}"
-                     :image-width 20
-                     :image-height 20)
-              (label :class "workspace-idx"
-                     :text "${ws.idx}"
-                     :halign "end"
-                     :valign "end"))))))))
+  (box :orientation "v"
+       :space-evenly false
+       :spacing 4
+       :halign "fill"
+       :class "workspaces"
+    (for ws in workspaces
+      (eventbox :onclick "niri msg action focus-workspace ${ws.idx}"
+                :cursor "pointer"
+                :halign "fill"
+                :tooltip "${ws.tooltip}"
+        (box :class "workspace-button ${ws.is_active ? 'active' : ''}"
+             :halign "fill"
+          (overlay :halign "fill"
+            (image :class "workspace-icon"
+                   :path "${ws.icon}"
+                   :image-width 20
+                   :image-height 20)
+            (label :class "workspace-idx"
+                   :text "${ws.idx}"
+                   :halign "end"
+                   :valign "end")))))))
 
 (defwidget windows-widget [windows]
-  (scroll :hscroll false
-          :vscroll true
-          :vexpand true
-    (box :orientation "v"
-         :space-evenly false
-         :spacing 4
-         :halign "center"
-         :class "windows"
-      (for w in windows
-        (eventbox :onclick "niri msg action focus-window --id ${w.id}"
-                  :cursor "pointer"
-                  :halign "fill"
-                  :tooltip "${w.app_id}: ${w.title != '' ? ' ' : ''}${w.title}"
-          (box :halign "fill"
-               :class "window-button ${w.is_focused ? 'focused' : ''}"
-            (image :class "window-icon"
-                   :path "${w.icon}"
-                   :image-width 20
-                   :image-height 20)))))))
+  (box :orientation "v"
+       :space-evenly false
+       :spacing 4
+       :halign "center"
+       :class "windows"
+       :vexpand true
+    (for w in windows
+      (eventbox :onclick "niri msg action focus-window --id ${w.id}"
+                :cursor "pointer"
+                :halign "fill"
+                :tooltip "${w.app_id}: ${w.title != '' ? ' ' : ''}${w.title}"
+        (box :halign "fill"
+             :class "window-button ${w.is_focused ? 'focused' : ''}"
+          (image :class "window-icon"
+                 :path "${w.icon}"
+                 :image-width 20
+                 :image-height 20))))))
 
 (defwidget system-widget []
   (box :orientation "v"
