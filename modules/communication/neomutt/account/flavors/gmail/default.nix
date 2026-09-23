@@ -32,7 +32,7 @@
 
     neomutt.extraConfig = lib.mkBefore (builtins.readFile ./.muttrc);
 
-    notmuch.neomutt.virtualMailboxes = lib.mkDefault [
+    notmuch.neomutt.virtual-mailboxes = lib.mkDefault [
       {
         name = "All Mail";
         query = "folder:${name}/Inbox or folder:\"${name}/[Gmail]/Sent Mail\"";

@@ -5,12 +5,12 @@
     {
       assertion =
         !config.communication.neomutt.enable
-        || !lib.any (account: account.enable && account.passwordGopassSecret != null) (
+        || !lib.any (account: account.enable && account.password-gopass-secret != null) (
           lib.attrValues config.communication.neomutt.accounts
         )
         || config.security.gopass.enable;
       message = ''
-        An enabled communication.neomutt account uses passwordGopassSecret but security.gopass.enable is not set.
+        An enabled communication.neomutt account uses password-gopass-secret but security.gopass.enable is not set.
         Enable security.gopass to provide the account password command.
       '';
     }

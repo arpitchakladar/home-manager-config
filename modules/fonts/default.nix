@@ -1,7 +1,7 @@
 # Font configuration
 {
-  lib,
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -30,31 +30,31 @@
       default = 18;
     };
 
-    uiSize = lib.mkOption {
+    ui-size = lib.mkOption {
       type = lib.types.int;
       description = "Default desktop UI (GTK) font size.";
       default = 11;
     };
 
-    iconSize = lib.mkOption {
+    icon-size = lib.mkOption {
       type = lib.types.int;
       description = "Font size for icons (base size + 6).";
       default = 24;
     };
 
-    labelSize = lib.mkOption {
+    label-size = lib.mkOption {
       type = lib.types.int;
       description = "Font size for labels (base size - 2).";
       default = 16;
     };
 
-    smallSize = lib.mkOption {
+    small-size = lib.mkOption {
       type = lib.types.int;
       description = "Font size for small text (base size - 6).";
       default = 12;
     };
 
-    idxSize = lib.mkOption {
+    idx-size = lib.mkOption {
       type = lib.types.int;
       description = "Font size for index numbers (base size - 4).";
       default = 14;

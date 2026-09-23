@@ -6,10 +6,11 @@
   ...
 }:
 let
+  cfg = config.desktop;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
 in
 {
-  config = lib.mkIf config.desktop.enable {
+  config = lib.mkIf cfg.enable {
     dconf.enable = true;
 
     xdg.portal = {
@@ -37,7 +38,7 @@ in
         enable = true;
         font = {
           name = config.fonts.normal;
-          size = config.fonts.uiSize;
+          size = config.fonts.ui-size;
         };
         theme = {
           name = "Adwaita-dark";

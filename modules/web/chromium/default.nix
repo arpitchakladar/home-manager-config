@@ -4,6 +4,10 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.web.chromium;
+  extensionDirs = lib.concatStringsSep "," (lib.mapAttrsToList (_: ext: ext.drv) cfg.extensions);
+in
 {
   imports = [
     ./assertions.nix
@@ -20,32 +24,26 @@
       defaultText = lib.literalExpression "config.programs.chromium.finalPackage";
       description = "Package to use for chromium. Defaults to the wrapped finalPackage from programs.chromium.";
     };
-    useOpenGL = lib.mkEnableOption ''
+    use-opengl = lib.mkEnableOption ''
       Use OpenGL APIs for graphics acceleration
     '';
   };
 
-  config = lib.mkIf config.web.chromium.enable {
+  config = lib.mkIf cfg.enable {
     programs.chromium = {
       enable = true;
       package = pkgs.ungoogled-chromium;
-      commandLineArgs =
-        let
-          extensionDirs = lib.concatStringsSep "," (
-            lib.mapAttrsToList (_: ext: ext.drv) config.web.chromium.extensions
-          );
-        in
-        [
-          "--force-dark-mode"
-          "--force-device-scale-factor=1.15"
-          # Don't use the gnome password store
-          "--password-store=basic"
-          "--load-extension=${extensionDirs}"
-        ]
-        ++ lib.optionals config.web.chromium.useOpenGL [
-          "--use-angle=opengl"
-          "--use-cmd-decoder=passthrough"
-        ];
+      commandLineArgs = [
+        "--force-dark-mode"
+        "--force-device-scale-factor=1.15"
+        # Don't use the gnome password store
+        "--password-store=basic"
+        "--load-extension=${extensionDirs}"
+      ]
+      ++ lib.optionals cfg.use-opengl [
+        "--use-angle=opengl"
+        "--use-cmd-decoder=passthrough"
+      ];
     };
 
     xdg.mimeApps.defaultApplications = {
@@ -94,10 +92,10 @@
         credentials_enable_autosignin = false;
         extensions = {
           pinned_extensions = [
-            config.web.chromium.extensions.browserpass.id
-            config.web.chromium.extensions.darkreader.id
-            config.web.chromium.extensions.ublockOrigin.id
-            config.web.chromium.extensions.vimium.id
+            cfg.extensions.browserpass.id
+            cfg.extensions.darkreader.id
+            cfg.extensions.ublockOrigin.id
+            cfg.extensions.vimium.id
           ];
           theme = {
             id = "";

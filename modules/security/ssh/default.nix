@@ -6,13 +6,15 @@
   ...
 }:
 let
+  cfg = config.security.ssh;
+
   gpgSshKeyLoad = pkgs.writeShellApplication {
     name = "gpg-ssh-key-load";
     runtimeInputs = [
       config.terminal.bash.package
       config.security.gopass.package
       config.security.gpg.package
-      config.security.ssh.package
+      cfg.package
       pkgs.coreutils
     ];
     text =
@@ -22,7 +24,7 @@ let
           "@@GNUPGHOME@@"
         ]
         [
-          config.security.ssh.sshKeyGopassPath
+          cfg.ssh-key-gopass-secret
           config.home.sessionVariables.GNUPGHOME
         ]
         (builtins.readFile ./gpg-ssh-key-load.sh);
@@ -38,7 +40,7 @@ in
       description = "The ssh package to use.";
     };
 
-    sshKeyGopassPath = lib.mkOption {
+    ssh-key-gopass-secret = lib.mkOption {
       type = lib.types.nullOr lib.types.str;
       default = null;
       description = ''
@@ -50,8 +52,8 @@ in
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.security.ssh.enable {
-      home.packages = [ config.security.ssh.package ];
+    (lib.mkIf cfg.enable {
+      home.packages = [ cfg.package ];
 
       assertions = [
         {
@@ -64,7 +66,7 @@ in
       ];
     })
 
-    (lib.mkIf (config.security.ssh.enable && config.security.ssh.sshKeyGopassPath != null) {
+    (lib.mkIf (cfg.enable && cfg.ssh-key-gopass-secret != null) {
       home.activation.gpgSshKeyLoad = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         run ${lib.getExe gpgSshKeyLoad} || true
       '';

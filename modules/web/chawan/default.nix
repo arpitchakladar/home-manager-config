@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.web.chawan;
+in
 {
   imports = [
     ./assertions.nix
@@ -17,7 +21,7 @@
       default = config.programs.chawan.package;
       description = "Package to use for chawan.";
     };
-    homeUrl = lib.mkOption {
+    home-url = lib.mkOption {
       type = lib.types.str;
       default = "https://searx.space";
       description = "The first page to open when chawan is launched.";
@@ -25,7 +29,7 @@
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.web.chawan.enable {
+    (lib.mkIf cfg.enable {
       home.file.".local/share/icons/hicolor/scalable/apps/internet-web-browser.svg" = {
         source = ../../../assets/icons/apps/internet-web-browser.svg;
       };
@@ -50,13 +54,13 @@
         };
       };
       home.packages = [
-        config.web.chawan.package
+        cfg.package
       ];
     })
-    (lib.mkIf (config.web.chawan.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."chawan" = {
         name = "Chawan";
-        exec = "${lib.getExe config.terminal.kitty.package} --class chawan -e ${lib.getExe config.web.chawan.package} ${config.web.chawan.homeUrl}";
+        exec = "${lib.getExe config.terminal.kitty.package} --class chawan -e ${lib.getExe cfg.package} ${cfg.home-url}";
         icon = "internet-web-browser";
         categories = [ "Network" ];
         comment = "Text-based web browser";
