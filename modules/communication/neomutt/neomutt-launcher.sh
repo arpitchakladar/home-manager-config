@@ -9,5 +9,4 @@ stop_service() {
 }
 trap stop_service EXIT
 
-export PATH="@@PROFILE_BIN@@:$PATH"
-neomutt "$@"
+"@@NEOMUTT_BIN@@" "$@"

@@ -42,16 +42,22 @@ let
   };
 
   neomuttLauncher = pkgs.writeShellApplication {
-    name = "neomutt";
+    name = "neomutt-launcher";
     runtimeInputs = [
       pkgs.systemd
       pkgs.procps
       pkgs.neomutt
       pkgs.urlscan
     ];
-    text = builtins.replaceStrings [ "@@PROFILE_BIN@@" ] [ "${config.home.profileDirectory}/bin" ] (
-      builtins.readFile ./neomutt-launcher.sh
-    );
+    text =
+      builtins.replaceStrings
+        [
+          "@@NEOMUTT_BIN@@"
+        ]
+        [
+          (lib.getExe pkgs.neomutt)
+        ]
+        (builtins.readFile ./neomutt-launcher.sh);
   };
 
   neomuttSyncCompletion =
@@ -113,7 +119,7 @@ in
             pkgs.neomutt
             neomuttSync
           ];
-          meta.mainProgram = "neomutt";
+          meta.mainProgram = "neomutt-launcher";
         };
         sidebar.enable = true;
         sort = "reverse-threads";
