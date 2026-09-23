@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.development.delta;
+in
 {
   options.development.delta = {
     enable = lib.mkEnableOption "Enables delta.";
@@ -15,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.development.delta.enable {
+  config = lib.mkIf cfg.enable {
     programs.delta = {
       enable = true;
       options = {

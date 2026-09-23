@@ -1,10 +1,13 @@
 # CLI tool for compressing and decompressing various formats
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.file-management.ouch;
+in
 {
   options.file-management.ouch = {
     enable = lib.mkEnableOption "Enables ouch.";
@@ -18,7 +21,7 @@
     };
   };
 
-  config = lib.mkIf config.file-management.ouch.enable {
-    home.packages = [ config.file-management.ouch.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }

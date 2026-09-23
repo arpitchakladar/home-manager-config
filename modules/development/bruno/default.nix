@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.development.bruno;
+in
 {
   options.development.bruno = {
     enable = lib.mkEnableOption "Enables bruno.";
@@ -16,8 +19,8 @@
     };
   };
 
-  config = lib.mkIf config.development.bruno.enable {
-    home.packages = [ config.development.bruno.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
 
     xdg.mimeApps.defaultApplications = {
       "x-scheme-handler/bruno" = "bruno.desktop";

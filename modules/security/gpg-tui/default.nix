@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.security.gpg-tui;
+in
 {
   options.security.gpg-tui = {
     enable = lib.mkEnableOption "Enables gpg-tui.";
@@ -17,17 +20,17 @@
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.security.gpg-tui.enable {
+    (lib.mkIf cfg.enable {
       home.file.".local/share/icons/hicolor/scalable/apps/gpg.svg" = {
         source = ../../../assets/icons/apps/gpg.svg;
       };
 
-      home.packages = [ config.security.gpg-tui.package ];
+      home.packages = [ cfg.package ];
     })
-    (lib.mkIf (config.security.gpg-tui.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."gpg-tui" = {
         name = "gpg-tui";
-        exec = "${lib.getExe config.terminal.kitty.package} --class gpg-tui -e ${lib.getExe config.security.gpg-tui.package}";
+        exec = "${lib.getExe config.terminal.kitty.package} --class gpg-tui -e ${lib.getExe cfg.package}";
         icon = "gpg";
         categories = [ "Security" ];
         comment = "Terminal UI for GnuPG";

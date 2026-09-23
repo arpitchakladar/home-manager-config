@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = config.development.nixvim;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
 in
 {
@@ -25,7 +26,7 @@ in
     };
   };
 
-  config = lib.mkIf config.development.nixvim.enable {
+  config = lib.mkIf cfg.enable {
     programs.nixvim = {
       enable = true;
       defaultEditor = true;

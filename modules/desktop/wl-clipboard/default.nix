@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.desktop.wl-clipboard;
+in
 {
   options.desktop.wl-clipboard = {
     package = lib.mkOption {
@@ -16,6 +19,6 @@
   };
 
   config = lib.mkIf config.desktop.enable {
-    home.packages = [ config.desktop.wl-clipboard.package ];
+    home.packages = [ cfg.package ];
   };
 }

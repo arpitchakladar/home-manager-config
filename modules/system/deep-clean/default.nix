@@ -6,6 +6,8 @@
   ...
 }:
 let
+  cfg = config.system.deep-clean;
+
   deepCleanScript = pkgs.writeShellApplication {
     name = "deep-clean";
     runtimeInputs = [ config.terminal.bash.package ];
@@ -24,7 +26,7 @@ in
     };
   };
 
-  config = lib.mkIf config.system.deep-clean.enable {
-    home.packages = [ config.system.deep-clean.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }

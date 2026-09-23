@@ -6,6 +6,8 @@
   ...
 }:
 let
+  cfg = config.security.gpg;
+
   gpgBackupScript = pkgs.writeShellApplication {
     name = "gpg-backup";
     runtimeInputs = [
@@ -51,19 +53,25 @@ in
       description = "The gpg package to use.";
     };
 
-    backup = {
-      enable = lib.mkEnableOption "Enable the gpg-backup script";
-      package = lib.mkOption {
-        type = lib.types.package;
-        readOnly = true;
-        default = gpgBackupScriptPkg;
-        description = "The package for the gpg-backup script";
+    backup = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          enable = lib.mkEnableOption "Enable the gpg-backup script";
+          package = lib.mkOption {
+            type = lib.types.package;
+            readOnly = true;
+            default = gpgBackupScriptPkg;
+            description = "The package for the gpg-backup script";
+          };
+        };
       };
+      default = { };
+      description = "GPG backup script configuration.";
     };
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.security.gpg.enable {
+    (lib.mkIf cfg.enable {
       programs.gpg = {
         enable = true;
         homedir = "${config.xdg.dataHome}/gnupg";
@@ -82,8 +90,8 @@ in
         pinentry.package = pkgs.pinentry-rofi;
       };
     })
-    (lib.mkIf config.security.gpg.backup.enable {
-      home.packages = [ config.security.gpg.backup.package ];
+    (lib.mkIf cfg.backup.enable {
+      home.packages = [ cfg.backup.package ];
     })
   ];
 }

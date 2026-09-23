@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.media.swayimg;
+in
 {
   options.media.swayimg = {
     enable = lib.mkEnableOption "Enables swayimg.";
@@ -15,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.media.swayimg.enable {
+  config = lib.mkIf cfg.enable {
     programs.swayimg = {
       enable = true;
       initLua = builtins.readFile ./init.lua;

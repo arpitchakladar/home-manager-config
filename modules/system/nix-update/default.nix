@@ -6,6 +6,8 @@
   ...
 }:
 let
+  cfg = config.system.nix-update;
+
   nixUpdateScript = pkgs.writeShellApplication {
     name = "nix-update";
     runtimeInputs = [
@@ -48,7 +50,7 @@ in
     };
   };
 
-  config = lib.mkIf config.system.nix-update.enable {
-    home.packages = [ config.system.nix-update.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }

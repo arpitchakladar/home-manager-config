@@ -1,5 +1,13 @@
 # Terminal pager
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  cfg = config.terminal.less;
+in
 {
   options.terminal.less = {
     enable = lib.mkEnableOption "Enables less.";
@@ -11,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.terminal.less.enable {
+  config = lib.mkIf cfg.enable {
     programs.less = {
       enable = true;
       options = [

@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.desktop.mako;
+in
 {
   imports = [ ./colors.nix ];
 
@@ -18,7 +21,7 @@
     };
   };
 
-  config = lib.mkIf config.desktop.mako.enable {
+  config = lib.mkIf cfg.enable {
     services.mako = {
       enable = true;
       settings = {

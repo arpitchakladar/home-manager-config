@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.networking.impala;
+in
 {
   imports = [
     ./assertions.nix
@@ -20,14 +23,14 @@
     };
   };
 
-  config = lib.mkIf config.networking.impala.enable {
+  config = lib.mkIf cfg.enable {
     home.file.".local/share/icons/hicolor/scalable/apps/network-wireless.svg" = {
       source = ../../../assets/icons/apps/network-wireless.svg;
     };
 
     xdg.desktopEntries."impala" = {
       name = "impala";
-      exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe config.networking.impala.package}";
+      exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe cfg.package}";
       icon = "network-wireless";
       categories = [ "Network" ];
       comment = "TUI for managing wifi on Linux";
@@ -35,7 +38,7 @@
       type = "Application";
     };
     home.packages = [
-      config.networking.impala.package
+      cfg.package
     ];
 
     xdg.mimeApps.defaultApplications = {

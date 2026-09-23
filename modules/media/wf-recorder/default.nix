@@ -1,10 +1,13 @@
 # Screen recording utility for wlroots Wayland compositors
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.media.wf-recorder;
+in
 {
   options.media.wf-recorder = {
     enable = lib.mkEnableOption "Enables wf-recorder.";
@@ -16,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.media.wf-recorder.enable {
-    home.packages = [ config.media.wf-recorder.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }

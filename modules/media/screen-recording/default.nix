@@ -6,6 +6,8 @@
   ...
 }:
 let
+  cfg = config.media.screen-recording;
+
   screenRecordingScript = pkgs.writeShellApplication {
     name = "screen-recording";
     runtimeInputs = [
@@ -48,7 +50,7 @@ in
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.media.screen-recording.enable {
+    (lib.mkIf cfg.enable {
       home.packages = [ scriptPkg ];
 
       assertions = import ./assertions.nix { inherit config lib; };
@@ -57,7 +59,7 @@ in
         source = ../../../assets/icons/apps/obs.svg;
       };
     })
-    (lib.mkIf (config.media.screen-recording.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries.screen-recording = {
         name = "Screen Recording";
         exec = "${lib.getExe config.terminal.kitty.package} --class screen-recording -e ${lib.getExe scriptPkg}";

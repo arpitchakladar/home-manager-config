@@ -1,39 +1,58 @@
 # Cross-platform graphical process and system monitor
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.system.btop;
+in
 {
   imports = [ ./assertions.nix ];
 
   options.system.btop = {
     enable = lib.mkEnableOption "Enables btop.";
-    nvidia.enable = lib.mkEnableOption "Build btop with NVIDIA GPU monitoring support (CUDA).";
-    amd.enable = lib.mkEnableOption "Build btop with AMD GPU monitoring support (ROCm).";
+    nvidia = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          enable = lib.mkEnableOption "Build btop with NVIDIA GPU monitoring support (CUDA).";
+        };
+      };
+      default = { };
+      description = "NVIDIA GPU monitoring configuration.";
+    };
+    amd = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          enable = lib.mkEnableOption "Build btop with AMD GPU monitoring support (ROCm).";
+        };
+      };
+      default = { };
+      description = "AMD GPU monitoring configuration.";
+    };
     package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
       default = pkgs.btop.override {
-        cudaSupport = config.system.btop.nvidia.enable;
-        rocmSupport = config.system.btop.amd.enable;
+        cudaSupport = cfg.nvidia.enable;
+        rocmSupport = cfg.amd.enable;
       };
       description = "The btop package to use.";
     };
   };
 
   config = lib.mkMerge [
-    (lib.mkIf config.system.btop.enable {
+    (lib.mkIf cfg.enable {
       programs.btop = {
         enable = true;
-        package = config.system.btop.package;
+        package = cfg.package;
       };
     })
-    (lib.mkIf (config.system.btop.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."btop" = {
         name = "btop++";
-        exec = "${lib.getExe config.terminal.kitty.package} --class btop -e ${lib.getExe config.system.btop.package}";
+        exec = "${lib.getExe config.terminal.kitty.package} --class btop -e ${lib.getExe cfg.package}";
         icon = "btop";
         categories = [
           "System"

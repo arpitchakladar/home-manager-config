@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.terminal.tmux;
+in
 {
   options.terminal.tmux = {
     enable = lib.mkEnableOption "Enables tmux.";
@@ -15,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.terminal.tmux.enable {
+  config = lib.mkIf cfg.enable {
     programs.tmux = {
       enable = true;
     };

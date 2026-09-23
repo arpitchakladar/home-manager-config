@@ -1,9 +1,13 @@
 # Command line download manager
 {
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.web.aria2;
+in
 {
   options.web.aria2 = {
     enable = lib.mkEnableOption "Enables aria2.";
@@ -15,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.web.aria2.enable {
+  config = lib.mkIf cfg.enable {
     programs.aria2 = {
       enable = true;
       settings = {

@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = config.terminal.bat;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
 in
 {
@@ -19,7 +20,7 @@ in
     };
   };
 
-  config = lib.mkIf config.terminal.bat.enable {
+  config = lib.mkIf cfg.enable {
     programs.bat = {
       enable = true;
       config = {

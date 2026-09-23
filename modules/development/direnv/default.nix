@@ -2,8 +2,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.development.direnv;
+in
 {
   options.development.direnv = {
     enable = lib.mkEnableOption "Enables direnv.";
@@ -15,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.development.direnv.enable {
+  config = lib.mkIf cfg.enable {
     programs.direnv = {
       enable = true;
       enableZshIntegration = lib.mkIf config.terminal.zsh.enable true;

@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = config.desktop;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
 in
 {
@@ -15,19 +16,43 @@ in
   ];
 
   options.desktop = {
-    niri.package = lib.mkOption {
-      type = lib.types.package;
-      readOnly = true;
-      default = config.wayland.windowManager.niri.package;
-      description = "The niri package to use.";
+    niri = lib.mkOption {
+      type = lib.types.submodule {
+        options = {
+          package = lib.mkOption {
+            type = lib.types.package;
+            readOnly = true;
+            default = config.wayland.windowManager.niri.package;
+            description = "The niri package to use.";
+          };
+        };
+      };
+      default = { };
+      description = "Niri window manager configuration.";
     };
     hardware.gpu = {
-      nvidia.enable = lib.mkEnableOption "Nvidia GPU Wayland optimizations";
-      amd.enable = lib.mkEnableOption "AMD GPU Wayland optimizations";
+      nvidia = lib.mkOption {
+        type = lib.types.submodule {
+          options = {
+            enable = lib.mkEnableOption "Nvidia GPU Wayland optimizations";
+          };
+        };
+        default = { };
+        description = "NVIDIA GPU configuration.";
+      };
+      amd = lib.mkOption {
+        type = lib.types.submodule {
+          options = {
+            enable = lib.mkEnableOption "AMD GPU Wayland optimizations";
+          };
+        };
+        default = { };
+        description = "AMD GPU configuration.";
+      };
     };
   };
 
-  config = lib.mkIf config.desktop.enable {
+  config = lib.mkIf cfg.enable {
     home.sessionVariables = lib.mkMerge [
       {
         NIXOS_OZONE_WL = "1";
@@ -38,7 +63,7 @@ in
         QT_SCALE_FACTOR = "1";
       }
 
-      (lib.mkIf config.desktop.hardware.gpu.nvidia.enable {
+      (lib.mkIf cfg.hardware.gpu.nvidia.enable {
         LIBVA_DRIVER_NAME = "nvidia";
         __GLX_VENDOR_LIBRARY_NAME = "nvidia";
         GBM_BACKEND = "nvidia-drm";
@@ -46,7 +71,7 @@ in
         __GL_VRR_ALLOWED = "0";
       })
 
-      (lib.mkIf config.desktop.hardware.gpu.amd.enable {
+      (lib.mkIf cfg.hardware.gpu.amd.enable {
         AMD_VULKAN_ICD = "RADV";
         MESA_VK_DEVICE_SELECT = "1002:";
       })

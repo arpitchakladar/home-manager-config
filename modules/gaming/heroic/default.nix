@@ -1,10 +1,13 @@
 # Epic, GOG and Amazon game launcher
 {
   config,
-  pkgs,
   lib,
+  pkgs,
   ...
 }:
+let
+  cfg = config.gaming.heroic;
+in
 {
   options.gaming.heroic = {
     enable = lib.mkEnableOption "Enables Heroic Games Launcher.";
@@ -28,12 +31,12 @@
     };
   };
 
-  config = lib.mkIf config.gaming.heroic.enable {
-    home.packages = [ config.gaming.heroic.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
 
     xdg.desktopEntries."heroic" = {
       name = "Heroic Games Launcher";
-      exec = "${lib.getExe' config.gaming.heroic.package "heroic"} %u";
+      exec = "${lib.getExe' cfg.package "heroic"} %u";
       icon = "${pkgs.heroic}/share/icons/hicolor/scalable/apps/com.heroicgameslauncher.hgl.svg";
       comment = "An Open Source Launcher for GOG, Epic Games and Amazon Games";
       categories = [ "Game" ];

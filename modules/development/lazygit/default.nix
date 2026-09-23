@@ -6,6 +6,7 @@
   ...
 }:
 let
+  cfg = config.development.lazygit;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
 in
 {
@@ -22,7 +23,7 @@ in
     };
   };
   config = lib.mkMerge [
-    (lib.mkIf config.development.lazygit.enable {
+    (lib.mkIf cfg.enable {
       programs.lazygit = {
         enable = true;
         enableBashIntegration = false;
@@ -66,9 +67,9 @@ in
             commitHashLength = 4;
             showBranchCommitHash = true;
             showDivergenceFromBaseBranch = "arrowAndNumber";
-            autoFetch = false;
           };
           git = {
+            autoFetch = false;
             overrideGpg = config.security.gpg.enable;
             diffRenderers = lib.mkIf config.development.delta.enable [
               {
@@ -85,10 +86,10 @@ in
         source = ../../../assets/icons/apps/git.svg;
       };
     })
-    (lib.mkIf (config.development.lazygit.enable && config.terminal.kitty.enable) {
+    (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."lazygit" = {
         name = "lazygit";
-        exec = "${lib.getExe config.terminal.kitty.package} --class lazygit -e ${lib.getExe config.development.lazygit.package}";
+        exec = "${lib.getExe config.terminal.kitty.package} --class lazygit -e ${lib.getExe cfg.package}";
         icon = "git";
         categories = [ "Development" ];
         comment = "A simple terminal UI for git commands";
