@@ -12,6 +12,7 @@
     ./niri
     ./eww
     ./mako
+    ./swayidle
   ];
 
   options.desktop = {
