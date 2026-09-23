@@ -35,7 +35,7 @@ in
     home.packages = [ cfg.package ];
 
     home.file.".local/share/icons/hicolor/scalable/apps/com.heroicgameslauncher.hgl.svg".source =
-      config.lib.file.mkOutOfStoreSymlink "${pkgs.heroic}/share/icons/hicolor/scalable/apps/com.heroicgameslauncher.hgl.svg";
+      "${pkgs.heroic}/share/icons/hicolor/scalable/apps/com.heroicgameslauncher.hgl.svg";
 
     xdg.desktopEntries."heroic" = {
       name = "Heroic Games Launcher";

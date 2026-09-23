@@ -41,24 +41,18 @@ let
     text = builtins.readFile ./neomutt-sync-daemon.sh;
   };
 
-  neomuttLauncher = pkgs.writeShellScriptBin "neomutt" (
-    builtins.replaceStrings
-      [
-        "@@SYSTEMCTL@@"
-        "@@PGREP@@"
-        "@@NEOMUTT@@"
-        "@@PROFILE_BIN@@"
-        "@@URLSCAN_BIN@@"
-      ]
-      [
-        (lib.getExe' pkgs.systemd "systemctl")
-        (lib.getExe' pkgs.procps "pgrep")
-        (lib.getExe pkgs.neomutt)
-        "${config.home.profileDirectory}/bin"
-        (lib.makeBinPath [ pkgs.urlscan ])
-      ]
-      (builtins.readFile ./neomutt-launcher.sh)
-  );
+  neomuttLauncher = pkgs.writeShellApplication {
+    name = "neomutt";
+    runtimeInputs = [
+      pkgs.systemd
+      pkgs.procps
+      pkgs.neomutt
+      pkgs.urlscan
+    ];
+    text = builtins.replaceStrings [ "@@PROFILE_BIN@@" ] [ "${config.home.profileDirectory}/bin" ] (
+      builtins.readFile ./neomutt-launcher.sh
+    );
+  };
 
   neomuttSyncCompletion =
     pkgs.runCommand "neomutt-sync-completion"
@@ -108,7 +102,7 @@ in
         builtins.replaceStrings [ "@@HTML_VIEWER@@" ] [ (lib.getExe config.web.chawan.package) ]
           (builtins.readFile ./mailcap);
       home.file.".local/share/icons/hicolor/scalable/apps/neomutt.svg".source =
-        config.lib.file.mkOutOfStoreSymlink "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
+        "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
 
       programs.neomutt = {
         enable = true;
@@ -116,6 +110,7 @@ in
           name = "neomutt-wrapped";
           paths = [
             neomuttLauncher
+            pkgs.neomutt
             neomuttSync
           ];
           meta.mainProgram = "neomutt";
