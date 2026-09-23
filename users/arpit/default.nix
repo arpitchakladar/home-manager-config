@@ -21,6 +21,7 @@
     amd.enable = true;
   };
   desktop.mako.enable = true;
+  desktop.swayidle.enable = true;
 
   # Gaming
   gaming.heroic.enable = true;
