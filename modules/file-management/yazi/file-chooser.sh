@@ -18,6 +18,6 @@ if [ "$directory" = "1" ]; then
     # Outputs the final working directory path on exit
     exec yazi "$path" --cwd-file="$out"
 else
-    # Writes all selected file paths to the output file on exit
-    exec yazi "$path" --chooser-file="$out"
+  # Writes all selected file paths to the output file on exit
+  exec yazi "$path" --chooser-file="$out"
 fi

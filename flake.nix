@@ -15,6 +15,10 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   nixConfig = {
@@ -35,6 +39,7 @@
       home-manager,
       nixvim,
       git-hooks,
+      treefmt-nix,
       ...
     }:
     let
@@ -44,10 +49,26 @@
         inherit pkgs;
         lib = pkgs.lib;
       };
+
+      treefmtEval = treefmt-nix.lib.evalModule pkgs {
+        projectRootFile = "flake.nix";
+        programs = {
+          nixfmt.enable = true;
+          stylua.enable = true;
+          shfmt = {
+            enable = true;
+            indent_size = 2;
+          };
+        };
+      };
+
       preCommitCheck = git-hooks.lib.${system}.run {
         src = ./.;
         hooks = {
-          nixfmt.enable = true;
+          treefmt = {
+            enable = true;
+            package = treefmtEval.config.build.wrapper;
+          };
           forbid-private = {
             enable = true;
             name = "Forbid committing private files";
@@ -76,8 +97,11 @@
         type = "app";
         program = "${updates}/bin/updates";
       };
-      formatter.${system} = pkgs.nixfmt-tree;
-      checks.${system}.pre-commit-check = preCommitCheck;
+      formatter.${system} = treefmtEval.config.build.wrapper;
+      checks.${system} = {
+        pre-commit-check = preCommitCheck;
+        formatting = treefmtEval.config.build.check self;
+      };
       devShells.${system}.default = pkgs.mkShell {
         inherit (preCommitCheck) shellHook;
         buildInputs = preCommitCheck.enabledPackages ++ [
