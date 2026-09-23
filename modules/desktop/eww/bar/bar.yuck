@@ -1,3 +1,8 @@
+;; This file defines the right-side status bar for the Niri Wayland compositor.
+;; It displays workspaces, active windows, and system statistics (CPU, RAM, network,
+;; battery, audio, date/time). The bar is anchored to the top-right of the monitor
+;; with a width of 60px and spans the full height.
+
 (defpoll time :interval "10s" "date '+%I:%M'")
 (defpoll ampm :interval "10s" "date '+%p'")
 (defpoll date :interval "60s" "date '+%d/%m'")
@@ -32,7 +37,7 @@
 (defwidget workspaces-widget [workspaces]
   (scroll :hscroll false
           :vscroll true
-          :height 200
+          :height 250
     (box :orientation "v"
          :space-evenly false
          :spacing 4

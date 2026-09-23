@@ -14,7 +14,8 @@
         name = "usb-tools";
         paths = [
           pkgs.udisks
-          pkgs.simple-mtpfs
+          pkgs.libmtp
+          pkgs.glib
         ];
       };
       description = "Bundle of USB/MTP device mounting tools.";
