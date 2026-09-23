@@ -65,7 +65,7 @@ in
       };
 
       home.file.".local/share/icons/hicolor/scalable/apps/yazi.png" = {
-        source = lib.file.mkOutOfStoreSymlink "${cfg.package}/share/pixmaps/yazi.png";
+        source = config.lib.file.mkOutOfStoreSymlink "${cfg.package}/share/pixmaps/yazi.png";
       };
 
       home.sessionVariables = {

@@ -149,9 +149,9 @@ in
         }
       ];
 
-      home.activation.calcurseSyncInit = lib.hm.dag.entryAfter [ "writeBoundary" ] (
-        pkgs.writeText "calcurse-sync-init.sh" ("run " + cfg.package + "/bin/calcurse-sync init || true")
-      );
+      home.activation.calcurseSyncInit = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        run ${lib.getExe cfg.package} init || true
+      '';
     })
   ];
 }

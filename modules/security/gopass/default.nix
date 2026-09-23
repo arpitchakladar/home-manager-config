@@ -90,7 +90,7 @@ in
             };
           }
           // lib.optionalAttrs (cfg.sync.enable && cfg.sync.credential.password-gopass-secret != null) {
-            credential.helper = "!f() { echo username=${lib.escapeShellArg cfg.sync.credential.username}; echo password=\"$(${cfg.package}/bin/gopass show -o ${lib.escapeShellArg cfg.sync.credential.password-gopass-secret})\"; }; f";
+            credential.helper = "!f() { echo username=${lib.escapeShellArg cfg.sync.credential.username}; echo password=\"$(${lib.getExe cfg.package} show -o ${lib.escapeShellArg cfg.sync.credential.password-gopass-secret})\"; }; f";
           };
         }
       ];
