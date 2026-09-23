@@ -8,6 +8,12 @@
 let
   cfg = config.communication.neomutt;
 
+  mbsyncNamesFromName = (import ./lib.nix { inherit lib; }).mbsyncNamesFromName;
+
+  fullSyncChannels = lib.mapAttrsToList (name: account: (mbsyncNamesFromName name).channels.full) (
+    lib.filterAttrs (name: account: account.enable) config.communication.neomutt.accounts
+  );
+
   neomuttSyncScript = pkgs.writeShellApplication {
     name = "neomutt-sync";
     runtimeInputs = [
@@ -22,6 +28,37 @@ let
     ];
     text = builtins.readFile ./neomutt-sync.sh;
   };
+
+  neomuttSyncDaemon = pkgs.writeShellApplication {
+    name = "neomutt-sync-daemon";
+    runtimeInputs = [
+      config.terminal.bash.package
+      pkgs.coreutils
+      pkgs.procps
+      config.programs.mbsync.package
+      config.programs.notmuch.package
+    ];
+    text = builtins.readFile ./neomutt-sync-daemon.sh;
+  };
+
+  neomuttLauncher = pkgs.writeShellScriptBin "neomutt" (
+    builtins.replaceStrings
+      [
+        "@@SYSTEMCTL@@"
+        "@@PGREP@@"
+        "@@NEOMUTT@@"
+        "@@PROFILE_BIN@@"
+        "@@URLSCAN_BIN@@"
+      ]
+      [
+        (lib.getExe' pkgs.systemd "systemctl")
+        (lib.getExe' pkgs.procps "pgrep")
+        (lib.getExe pkgs.neomutt)
+        "${config.home.profileDirectory}/bin"
+        (lib.makeBinPath [ pkgs.urlscan ])
+      ]
+      (builtins.readFile ./neomutt-launcher.sh)
+  );
 
   neomuttSyncCompletion =
     pkgs.runCommand "neomutt-sync-completion"
@@ -72,19 +109,15 @@ in
           (builtins.readFile ./mailcap);
       home.file.".local/share/icons/hicolor/scalable/apps/neomutt.svg".source =
         config.lib.file.mkOutOfStoreSymlink "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
+
       programs.neomutt = {
         enable = true;
         package = pkgs.symlinkJoin {
           name = "neomutt-wrapped";
           paths = [
-            pkgs.neomutt
+            neomuttLauncher
             neomuttSync
           ];
-          nativeBuildInputs = [ pkgs.makeWrapper ];
-          postBuild = ''
-            wrapProgram $out/bin/neomutt \
-              --prefix PATH : ${config.home.profileDirectory}/bin:${lib.makeBinPath [ pkgs.urlscan ]}
-          '';
           meta.mainProgram = "neomutt";
         };
         sidebar.enable = true;
@@ -95,6 +128,16 @@ in
         extraConfig = builtins.replaceStrings [ "@@PAGER@@" ] [ (lib.getExe config.web.chawan.package) ] (
           builtins.readFile ./.neomuttrc
         );
+      };
+
+      systemd.user.services.neomutt-sync = {
+        Unit = {
+          Description = "Full mail sync while neomutt is running";
+        };
+        Service = {
+          Type = "simple";
+          ExecStart = "${lib.getExe neomuttSyncDaemon} ${lib.concatStringsSep " " fullSyncChannels}";
+        };
       };
     })
     (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
