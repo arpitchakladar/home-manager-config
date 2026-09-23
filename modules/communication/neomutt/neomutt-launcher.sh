@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
-# Wrapped neomutt: keeps the neomutt-sync systemd daemon alive for the
-# lifetime of a neomutt session.
+# Starts the neomutt-sync daemon before starting neomutt
 set -uo pipefail
 
 systemctl --user start neomutt-sync.service || true
-stop_service() {
-  pgrep -x neomutt >/dev/null || systemctl --user stop neomutt-sync.service || true
-}
-trap stop_service EXIT
 
 "@@NEOMUTT_BIN@@" "$@"

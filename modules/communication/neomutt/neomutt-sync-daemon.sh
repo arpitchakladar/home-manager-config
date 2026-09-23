@@ -28,12 +28,15 @@ sync_once() {
 
 while true; do
   sync_once "$@"
-  sleep "$INTERVAL"
 
   # Safety net: the launcher stops this service when neomutt exits; if that
   # didn't happen (hard kill), bail out once neomutt is gone.
-  if ! pgrep -x neomutt >/dev/null; then
+  if ! pgrep -x neomutt-launche >/dev/null; then
     echo "neomutt is not running; stopping sync daemon" >&2
     exit 0
   fi
+
+  # Sleep after syncing and trying to exit, this makes sure that it runs once
+  # after all neomutt instances closes
+  sleep "$INTERVAL"
 done
