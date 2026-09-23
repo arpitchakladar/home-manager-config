@@ -15,7 +15,7 @@ appearance.todoview=show-completed
 appearance.headingpos=right-justified
 
 # Daemon
-daemon.enable=no
+daemon.enable=yes
 daemon.log=no
 
 # Format
@@ -38,5 +38,5 @@ general.systemevents=yes
 
 # Notification
 notification.warning=300
-notification.command=printf '\a'
+notification.command=notify-send -a calcurse -i "@@CALCURSE_ICON@@" -u critical "Calcurse" "$(calcurse -n | tail -1 | cut -d ' ' -f5-)"
 notification.notifyall=flagged-only

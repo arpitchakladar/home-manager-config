@@ -8,11 +8,12 @@
 let
   calcurseSync = pkgs.writeShellScriptBin "calcurse-sync" (builtins.readFile ./calcurse-sync.sh);
 
-  calcursePackage = pkgs.symlinkJoin {
+  calcurse = pkgs.symlinkJoin {
     name = "calcurse-wrapped";
     paths = [
       config.terminal.bash.package
       pkgs.calcurse
+      pkgs.libnotify
     ]
     ++ lib.optionals config.development.nixvim.enable [ config.development.nixvim.package ]
     ++ lib.optionals config.office.calcurse.sync.enable [ calcurseSync ];
@@ -48,7 +49,7 @@ in
     package = lib.mkOption {
       type = lib.types.package;
       readOnly = true;
-      default = calcursePackage;
+      default = calcurse;
       description = "The calcurse package to use.";
     };
     sync = {
@@ -81,7 +82,9 @@ in
 
       home.packages = [ config.office.calcurse.package ];
       xdg.configFile."calcurse/conf" = {
-        source = ./conf;
+        text =
+          builtins.replaceStrings [ "@@CALCURSE_ICON@@" ] [ "${../../../assets/icons/apps/calcurse.svg}" ]
+            (builtins.readFile ./conf);
         force = true;
       };
       xdg.configFile."calcurse/keys" = {
