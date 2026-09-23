@@ -11,6 +11,7 @@
     ./xdg
     ./niri
     ./eww
+    ./mako
   ];
 
   options.desktop = {
