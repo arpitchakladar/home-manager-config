@@ -30,7 +30,7 @@
       };
     };
 
-    neomutt.extraConfig = lib.mkBefore (builtins.readFile ./.muttrc);
+    neomutt.extraConfig = lib.mkBefore (builtins.readFile ./.neomuttrc);
 
     notmuch.neomutt.virtual-mailboxes = lib.mkDefault [
       {

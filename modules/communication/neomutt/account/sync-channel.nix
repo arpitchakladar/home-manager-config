@@ -20,6 +20,6 @@ in
           mbsyncNames.channels.quick
           mbsyncNames.channels.full
         ]
-        (builtins.readFile ./.muttrc);
+        (builtins.readFile ./.neomuttrc);
   };
 }
