@@ -20,6 +20,7 @@
     nvidia.enable = true;
     amd.enable = true;
   };
+  desktop.mako.enable = true;
 
   # Gaming
   gaming.heroic.enable = true;
