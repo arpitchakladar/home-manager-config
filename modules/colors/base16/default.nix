@@ -9,13 +9,13 @@
   ...
 }:
 let
+  cfg = config.colors;
   availableColorSchemeFiles = {
     "onedark-dark" = ./onedark-dark.nix;
   };
 
   selectedColorSchemeFile =
-    availableColorSchemeFiles.${config.colors.base16}
-      or (throw "Unknown color scheme: ${config.colors.base16}");
+    availableColorSchemeFiles.${cfg.base16} or (throw "Unknown color scheme: ${cfg.base16}");
 
   selectedColorScheme = import selectedColorSchemeFile { };
   selectedColorSchemeColorNames = builtins.attrNames selectedColorScheme;

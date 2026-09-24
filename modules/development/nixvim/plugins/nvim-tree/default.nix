@@ -1,7 +1,10 @@
 # File explorer sidebar
 { config, lib, ... }:
+let
+  cfg = config.development.nixvim;
+in
 {
-  config.programs.nixvim = lib.mkIf config.development.nixvim.enable {
+  config.programs.nixvim = lib.mkIf cfg.enable {
     plugins.nvim-tree = {
       enable = true;
       settings = {

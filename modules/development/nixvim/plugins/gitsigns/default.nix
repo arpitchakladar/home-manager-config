@@ -6,10 +6,11 @@
   ...
 }:
 let
+  cfg = config.development.nixvim;
   base16Colors = import ../../../../colors/base16 { inherit config lib pkgs; };
 in
 {
-  config.programs.nixvim = lib.mkIf config.development.nixvim.enable {
+  config.programs.nixvim = lib.mkIf cfg.enable {
     plugins.gitsigns = {
       enable = true;
 

@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.fonts;
+in
 {
   options.fonts = {
     normal = lib.mkOption {
@@ -15,13 +18,13 @@
     bold = lib.mkOption {
       type = lib.types.str;
       description = "Default bold font name.";
-      default = config.fonts.normal;
+      default = cfg.normal;
     };
 
     italic = lib.mkOption {
       type = lib.types.str;
       description = "Default italic font name.";
-      default = config.fonts.normal;
+      default = cfg.normal;
     };
 
     size = lib.mkOption {

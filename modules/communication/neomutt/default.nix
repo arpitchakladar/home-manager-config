@@ -11,7 +11,7 @@ let
   mbsyncNamesFromName = (import ./lib.nix { inherit lib; }).mbsyncNamesFromName;
 
   fullSyncChannels = lib.mapAttrsToList (name: account: (mbsyncNamesFromName name).channels.full) (
-    lib.filterAttrs (name: account: account.enable) config.communication.neomutt.accounts
+    lib.filterAttrs (name: account: account.enable) cfg.accounts
   );
 
   neomuttSyncScript = pkgs.writeShellApplication {

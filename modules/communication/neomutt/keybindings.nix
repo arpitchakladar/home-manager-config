@@ -2,13 +2,14 @@
 { config, lib, ... }:
 
 let
+  cfg = config.communication.neomutt;
   bind = keyMap: key: action: {
     map = keyMap;
     inherit key action;
   };
 in
 {
-  config.programs.neomutt.binds = lib.mkIf config.communication.neomutt.enable [
+  config.programs.neomutt.binds = lib.mkIf cfg.enable [
     # Index
     (bind [ "index" ] "$" "noop")
     (bind [ "index" ] "g" "noop")

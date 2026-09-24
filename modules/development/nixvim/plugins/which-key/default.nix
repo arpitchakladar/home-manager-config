@@ -1,7 +1,10 @@
 # Popup for keybindings
 { config, lib, ... }:
+let
+  cfg = config.development.nixvim;
+in
 {
-  config.programs.nixvim.plugins.which-key = lib.mkIf config.development.nixvim.enable {
+  config.programs.nixvim.plugins.which-key = lib.mkIf cfg.enable {
     enable = true;
     settings = {
       plugins = {

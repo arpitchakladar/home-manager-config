@@ -1,12 +1,15 @@
 # Validates the neomutt account configurations
 { config, lib, ... }:
+let
+  cfg = config.communication.neomutt;
+in
 {
   config.assertions = [
     {
       assertion =
-        !config.communication.neomutt.enable
+        !cfg.enable
         || !lib.any (account: account.enable && account.password-gopass-secret != null) (
-          lib.attrValues config.communication.neomutt.accounts
+          lib.attrValues cfg.accounts
         )
         || config.security.gopass.enable;
       message = ''
@@ -16,10 +19,8 @@
     }
     {
       assertion =
-        !config.communication.neomutt.enable
-        || !lib.any (account: account.enable && account.gpg.key != null) (
-          lib.attrValues config.communication.neomutt.accounts
-        )
+        !cfg.enable
+        || !lib.any (account: account.enable && account.gpg.key != null) (lib.attrValues cfg.accounts)
         || config.security.gpg.enable;
       message = ''
         An enabled communication.neomutt account specifies a GPG key but security.gpg.enable is not set.

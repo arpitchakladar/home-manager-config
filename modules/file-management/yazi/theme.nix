@@ -6,10 +6,11 @@
   ...
 }:
 let
+  cfg = config.file-management.yazi;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
 in
 {
-  config = lib.mkIf config.file-management.yazi.enable {
+  config = lib.mkIf cfg.enable {
     programs.yazi.theme = with base16Colors.colorsWithHashPrefix; {
       manager = {
         cwd = {

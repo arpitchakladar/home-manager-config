@@ -5,6 +5,8 @@
   ...
 }:
 let
+  cfg = config.communication.neomutt;
+
   mbsyncNamesFromName = (import ../lib.nix { inherit lib; }).mbsyncNamesFromName;
 
   mbsyncValue =
@@ -93,7 +95,7 @@ let
   );
 in
 {
-  config = lib.mkIf config.communication.neomutt.enable {
+  config = lib.mkIf cfg.enable {
     programs.mbsync.enable = true;
 
     xdg.configFile."mbsync/.mbsyncrc".text = lib.concatStringsSep "\n" (map mbsyncAccount accounts);

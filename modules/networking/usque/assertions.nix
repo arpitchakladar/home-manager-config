@@ -1,9 +1,12 @@
 # Validates usque sub-options require the main module to be enabled
 { config, ... }:
+let
+  cfg = config.networking.usque;
+in
 {
   assertions = [
     {
-      assertion = !config.networking.usque.warp.enable || config.networking.usque.enable;
+      assertion = !cfg.warp.enable || cfg.enable;
       message = "networking.usque.warp.enable requires networking.usque.enable.";
     }
   ];

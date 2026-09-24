@@ -1,7 +1,10 @@
 # Keyboard shortcut configuration for nixvim
 { config, lib, ... }:
+let
+  cfg = config.development.nixvim;
+in
 {
-  config.programs.nixvim.keymaps = lib.mkIf config.development.nixvim.enable [
+  config.programs.nixvim.keymaps = lib.mkIf cfg.enable [
     # set the <space> key to nop for normal and visual modes as we are tyring
     # to use it as our <leader>
     {

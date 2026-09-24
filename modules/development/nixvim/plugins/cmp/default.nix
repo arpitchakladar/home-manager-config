@@ -1,7 +1,10 @@
 # Completion plugin for auto-completion
 { config, lib, ... }:
+let
+  cfg = config.development.nixvim;
+in
 {
-  config.programs.nixvim.plugins.cmp = lib.mkIf config.development.nixvim.enable {
+  config.programs.nixvim.plugins.cmp = lib.mkIf cfg.enable {
     enable = true;
     autoEnableSources = true;
     settings = {

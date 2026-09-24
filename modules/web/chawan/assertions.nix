@@ -1,9 +1,12 @@
 # Validates kitty is enabled for chawan desktop entry
 { config, ... }:
+let
+  cfg = config.web.chawan;
+in
 {
   assertions = [
     {
-      assertion = !config.web.chawan.enable || config.terminal.kitty.enable;
+      assertion = !cfg.enable || config.terminal.kitty.enable;
       message = ''
         web.chawan is enabled but terminal.kitty.enable is not.
         chawan's desktop entry requires kitty as the terminal launcher. Please enable terminal.kitty.

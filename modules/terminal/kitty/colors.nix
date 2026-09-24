@@ -5,8 +5,11 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.terminal.kitty;
+in
 {
-  config.programs.kitty.settings = lib.mkIf config.terminal.kitty.enable (
+  config.programs.kitty.settings = lib.mkIf cfg.enable (
     let
       base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
     in

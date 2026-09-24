@@ -1,7 +1,10 @@
 # neomutt macros for sync, URL extraction, flag legend, and quit
 { config, lib, ... }:
+let
+  cfg = config.communication.neomutt;
+in
 {
-  config.programs.neomutt.macros = lib.mkIf config.communication.neomutt.enable [
+  config.programs.neomutt.macros = lib.mkIf cfg.enable [
     {
       map = [
         "index"

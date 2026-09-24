@@ -1,9 +1,12 @@
 # LazyGit only makes sense when Git is enabled
 { config, ... }:
+let
+  cfg = config.development.lazygit;
+in
 {
   assertions = [
     {
-      assertion = !config.development.lazygit.enable || config.development.git.enable;
+      assertion = !cfg.enable || config.development.git.enable;
       message = "development.lazygit.enable requires development.git.enable.";
     }
   ];

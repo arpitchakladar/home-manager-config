@@ -1,7 +1,10 @@
 # Comment toggling plugin
 { config, lib, ... }:
+let
+  cfg = config.development.nixvim;
+in
 {
-  config.programs.nixvim.plugins.comment = lib.mkIf config.development.nixvim.enable {
+  config.programs.nixvim.plugins.comment = lib.mkIf cfg.enable {
     enable = true;
     settings = {
       toggler = {

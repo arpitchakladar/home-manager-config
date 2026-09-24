@@ -1,7 +1,10 @@
 # Visual indentation guides
 { config, lib, ... }:
+let
+  cfg = config.development.nixvim;
+in
 {
-  config.programs.nixvim.plugins.indent-blankline = lib.mkIf config.development.nixvim.enable {
+  config.programs.nixvim.plugins.indent-blankline = lib.mkIf cfg.enable {
     enable = true;
     settings = {
       indent = {

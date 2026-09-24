@@ -5,6 +5,9 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.media.pamixer;
+in
 {
   options.media.pamixer = {
     enable = lib.mkEnableOption "Enables pamixer.";
@@ -16,7 +19,7 @@
     };
   };
 
-  config = lib.mkIf config.media.pamixer.enable {
-    home.packages = [ config.media.pamixer.package ];
+  config = lib.mkIf cfg.enable {
+    home.packages = [ cfg.package ];
   };
 }

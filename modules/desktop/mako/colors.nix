@@ -5,8 +5,11 @@
   pkgs,
   ...
 }:
+let
+  cfg = config.desktop.mako;
+in
 {
-  config.services.mako.settings = lib.mkIf config.desktop.mako.enable (
+  config.services.mako.settings = lib.mkIf cfg.enable (
     let
       base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
     in

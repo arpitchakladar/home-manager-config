@@ -1,7 +1,10 @@
 # Fuzzy finder
 { config, lib, ... }:
+let
+  cfg = config.development.nixvim;
+in
 {
-  config.programs.nixvim.plugins.telescope = lib.mkIf config.development.nixvim.enable {
+  config.programs.nixvim.plugins.telescope = lib.mkIf cfg.enable {
     enable = true;
     extensions = {
       fzf-native.enable = true; # Faster fuzzy sorting

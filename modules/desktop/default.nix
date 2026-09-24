@@ -4,6 +4,9 @@
   config,
   ...
 }:
+let
+  cfg = config.desktop;
+in
 {
   imports = [
     ./rofi
@@ -19,7 +22,7 @@
     enable = lib.mkEnableOption "Enables graphical interface.";
   };
 
-  config = lib.mkIf config.desktop.enable {
+  config = lib.mkIf cfg.enable {
     xdg.enable = true;
   };
 }

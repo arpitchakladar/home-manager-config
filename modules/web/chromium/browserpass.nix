@@ -5,6 +5,8 @@
   ...
 }:
 let
+  cfg = config.web.chromium;
+
   # Extension ID computed from the pinned extensionKey
   patchedHost =
     pkgs.runCommand "com.github.browserpass.native.json"
@@ -15,13 +17,13 @@ let
       }
       ''
         luajit ${./patch_native_host.lua} \
-          ${config.web.chromium.extensions.browserpass.id} \
+          ${cfg.extensions.browserpass.id} \
           ${config.programs.browserpass.package}/lib/browserpass/hosts/chromium/com.github.browserpass.native.json \
           $out
       '';
 in
 {
-  config = lib.mkIf (config.web.chromium.enable && config.security.gopass.enable) {
+  config = lib.mkIf (cfg.enable && config.security.gopass.enable) {
     programs.browserpass = {
       enable = true;
       browsers = [ "chromium" ];

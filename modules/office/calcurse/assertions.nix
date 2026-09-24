@@ -1,9 +1,12 @@
 # Validates calcurse sub-options require the main module to be enabled
 { config, ... }:
+let
+  cfg = config.office.calcurse;
+in
 {
   assertions = [
     {
-      assertion = !config.office.calcurse.sync.enable || config.office.calcurse.enable;
+      assertion = !cfg.sync.enable || cfg.enable;
       message = "office.calcurse.sync.enable requires office.calcurse.enable.";
     }
   ];

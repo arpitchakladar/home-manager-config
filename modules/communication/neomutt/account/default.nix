@@ -1,5 +1,8 @@
 # Converts neomutt account options into home-manager email config
 { config, lib, ... }:
+let
+  cfg = config.communication.neomutt;
+in
 {
   imports = [
     ./assertions.nix
@@ -19,7 +22,7 @@
     description = "Specification of email accounts.";
   };
 
-  config = lib.mkIf config.communication.neomutt.enable {
+  config = lib.mkIf cfg.enable {
     accounts.email.accounts = lib.mapAttrs (accountName: accountInformation: {
       inherit (accountInformation) address primary;
 
@@ -109,6 +112,6 @@
             command = accountInformation.signature.command;
             showSignature = accountInformation.signature.show-signature;
           };
-    }) (lib.filterAttrs (n: a: a.enable) config.communication.neomutt.accounts);
+    }) (lib.filterAttrs (n: a: a.enable) cfg.accounts);
   };
 }
