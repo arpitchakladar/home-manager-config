@@ -1,4 +1,4 @@
-# Application launcher and dmenu replacement
+# Application launcher, dmenu replacement and action menu
 {
   config,
   lib,
@@ -8,6 +8,30 @@
 let
   cfg = config.desktop.rofi;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+
+  actionOptionsString = lib.concatMapStringsSep "\\n" (
+    action: action.name + lib.optionalString (action.icon != null) "\\0icon\\x1f${action.icon}"
+  ) cfg.action.actions;
+
+  actionCasesString = lib.concatStringsSep "\n" (
+    map (action: "    \"${action.name}\") ${action.command} ;;") cfg.action.actions
+  );
+
+  actionScript = pkgs.writeShellApplication {
+    name = "rofi-action";
+    runtimeInputs = [
+      config.terminal.bash.package
+      cfg.package
+    ];
+    text =
+      builtins.replaceStrings
+        [
+          "@@OPTIONS@@"
+          ''"@@CASES@@") : ;;''
+        ]
+        [ actionOptionsString actionCasesString ]
+        (builtins.readFile ./rofi-action.sh);
+  };
 in
 {
   options.desktop.rofi = {
@@ -16,6 +40,39 @@ in
       readOnly = true;
       default = config.programs.rofi.finalPackage;
       description = "The rofi package to use.";
+    };
+
+    action = {
+      actions = lib.mkOption {
+        type = lib.types.listOf (
+          lib.types.submodule {
+            options = {
+              name = lib.mkOption {
+                type = lib.types.str;
+                description = "Name shown in the menu.";
+              };
+              command = lib.mkOption {
+                type = lib.types.str;
+                description = "Shell command to run when the entry is selected.";
+              };
+              icon = lib.mkOption {
+                type = lib.types.nullOr lib.types.str;
+                default = null;
+                description = "Icon name shown next to the entry.";
+              };
+            };
+          }
+        );
+        default = [ ];
+        description = "Actions shown by the rofi-action menu.";
+      };
+
+      package = lib.mkOption {
+        type = lib.types.package;
+        readOnly = true;
+        default = actionScript;
+        description = "The rofi-action script package.";
+      };
     };
   };
 
@@ -47,5 +104,7 @@ in
         sort = true;
       };
     };
+
+    home.packages = lib.mkIf (cfg.action.actions != [ ]) [ cfg.action.package ];
   };
 }

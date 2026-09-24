@@ -110,6 +110,12 @@ in
         "drun"
       ];
     };
+    "Mod+Shift+E" = {
+      _props.hotkey-overlay-title = "Run an Action: rofi";
+      spawn = [
+        (lib.getExe config.desktop.rofi.action.package)
+      ];
+    };
     "Mod+Return" = lib.mkIf config.terminal.kitty.enable {
       _props.hotkey-overlay-title = "Open a Terminal: kitty";
       spawn = [ (lib.getExe config.terminal.kitty.package) ];
