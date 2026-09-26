@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.communication.senpai;
+  icons = config.desktop.icons.apps;
 in
 {
   imports = [ ./assertions.nix ];
@@ -74,7 +75,7 @@ in
       xdg.desktopEntries."senpai" = {
         name = "Senpai";
         exec = "${lib.getExe config.terminal.kitty.package} --class senpai -e ${lib.getExe cfg.package}";
-        icon = "senpai";
+        icon = icons.senpai;
         categories = [
           "Network"
           "Chat"

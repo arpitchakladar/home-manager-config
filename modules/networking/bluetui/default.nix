@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.networking.bluetui;
+  icons = config.desktop.icons.apps;
 in
 {
   imports = [
@@ -27,7 +28,7 @@ in
     xdg.desktopEntries."bluetui" = {
       name = "bluetui";
       exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe cfg.package}";
-      icon = "bluetooth-active-symbolic";
+      icon = icons.bluetui;
       categories = [ "Network" ];
       comment = "Bluetooth TUI client";
       terminal = false;

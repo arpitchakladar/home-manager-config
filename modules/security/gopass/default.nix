@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.security.gopass;
+  icons = config.desktop.icons.apps;
 in
 {
   imports = [ ./assertions.nix ];
@@ -111,7 +112,7 @@ in
       xdg.desktopEntries."gopass" = {
         name = "gopass";
         exec = "${lib.getExe config.terminal.kitty.package} --class gopass -e ${lib.getExe cfg.package}";
-        icon = "password-manager";
+        icon = icons.gopass;
         comment = "Standard Unix password manager (Go implementation)";
         categories = [ "Utility" ];
         terminal = false;

@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.web.chawan;
+  icons = config.desktop.icons.apps;
 in
 {
   imports = [
@@ -57,7 +58,7 @@ in
       xdg.desktopEntries."chawan" = {
         name = "Chawan";
         exec = "${lib.getExe config.terminal.kitty.package} --class chawan -e ${lib.getExe cfg.package} ${cfg.home-url}";
-        icon = "internet-web-browser";
+        icon = icons.browser;
         categories = [ "Network" ];
         comment = "Text-based web browser";
         terminal = false;

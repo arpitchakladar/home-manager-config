@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.system.systemctl-tui;
+  icons = config.desktop.icons.apps;
 in
 {
   options.system.systemctl-tui = {
@@ -27,7 +28,7 @@ in
       xdg.desktopEntries."systemctl-tui" = {
         name = "systemctl-tui";
         exec = "${lib.getExe config.terminal.kitty.package} --class systemctl-tui -e ${lib.getExe cfg.package}";
-        icon = "preferences-system";
+        icon = icons.systemctl;
         categories = [ "System" ];
         comment = "TUI for systemctl";
         terminal = false;

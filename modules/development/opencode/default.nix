@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.development.opencode;
+  icons = config.desktop.icons.apps;
 in
 {
   options.development.opencode = {
@@ -30,7 +31,7 @@ in
       xdg.desktopEntries."opencode" = {
         name = "opencode";
         exec = "${lib.getExe config.terminal.kitty.package} --class opencode -e ${lib.getExe cfg.package}";
-        icon = "visualstudiocode";
+        icon = icons.opencode;
         categories = [ "Development" ];
         comment = "AI-powered coding assistant";
         terminal = false;

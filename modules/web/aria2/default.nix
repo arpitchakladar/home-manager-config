@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.web.aria2;
+  icons = config.desktop.icons.apps;
 in
 {
   options.web.aria2 = {
@@ -33,12 +34,12 @@ in
         {
           name = "aria2 Start";
           command = "systemctl --user start aria2";
-          icon = "folder-download";
+          icon = icons.aria2;
         }
         {
           name = "aria2 Stop";
           command = "systemctl --user stop aria2";
-          icon = "folder-download";
+          icon = icons.aria2;
         }
       ];
     })

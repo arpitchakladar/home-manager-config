@@ -153,7 +153,7 @@ in
       {
         name = "Poweroff Monitors";
         command = "${lib.getExe cfg.niri.package} msg action power-off-monitors";
-        icon = "network-vpn-symbolic";
+        icon = config.desktop.icons.apps.niriPowerOffMonitors;
       }
     ];
   };

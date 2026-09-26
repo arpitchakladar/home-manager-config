@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.communication.neomutt;
+  icons = config.desktop.icons.apps;
 
   mbsyncNamesFromName = (import ./lib.nix { inherit lib; }).mbsyncNamesFromName;
 
@@ -143,7 +144,7 @@ in
       xdg.desktopEntries."neomutt" = {
         name = "NeoMutt";
         exec = "${lib.getExe config.terminal.kitty.package} --class neomutt -e ${lib.getExe config.programs.neomutt.package}";
-        icon = "neomutt";
+        icon = icons.neomutt;
         categories = [
           "Network"
           "Email"

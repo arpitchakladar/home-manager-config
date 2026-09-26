@@ -8,6 +8,7 @@
 let
   cfg = config.development.lazygit;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+  icons = config.desktop.icons.apps;
 in
 {
   imports = [
@@ -77,8 +78,8 @@ in
                 command = "delta --paging=never {{diffArgs}}";
               }
             ];
+            update.method = "never";
           };
-          update.method = "never";
         };
       };
     })
@@ -86,7 +87,7 @@ in
       xdg.desktopEntries."lazygit" = {
         name = "lazygit";
         exec = "${lib.getExe config.terminal.kitty.package} --class lazygit -e ${lib.getExe cfg.package}";
-        icon = "git";
+        icon = icons.git;
         categories = [ "Development" ];
         comment = "A simple terminal UI for git commands";
         terminal = false;

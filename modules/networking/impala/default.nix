@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.networking.impala;
+  icons = config.desktop.icons.apps;
 in
 {
   imports = [
@@ -27,7 +28,7 @@ in
     xdg.desktopEntries."impala" = {
       name = "impala";
       exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe cfg.package}";
-      icon = "network-wireless-signal-excellent-symbolic";
+      icon = icons.impala;
       categories = [ "Network" ];
       comment = "TUI for managing wifi on Linux";
       terminal = false;

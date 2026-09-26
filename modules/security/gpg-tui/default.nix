@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.security.gpg-tui;
+  icons = config.desktop.icons.apps;
 in
 {
   options.security.gpg-tui = {
@@ -27,7 +28,7 @@ in
       xdg.desktopEntries."gpg-tui" = {
         name = "gpg-tui";
         exec = "${lib.getExe config.terminal.kitty.package} --class gpg-tui -e ${lib.getExe cfg.package}";
-        icon = "gpg";
+        icon = icons.gpg;
         categories = [ "Security" ];
         comment = "Terminal UI for GnuPG";
         terminal = false;

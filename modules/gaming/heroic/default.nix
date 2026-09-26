@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.gaming.heroic;
+  icons = config.desktop.icons.apps;
 in
 {
   options.gaming.heroic = {
@@ -40,7 +41,7 @@ in
     xdg.desktopEntries."heroic" = {
       name = "Heroic Games Launcher";
       exec = "${lib.getExe' cfg.package "heroic"} %u";
-      icon = "com.heroicgameslauncher.hgl";
+      icon = icons.heroic;
       comment = "An Open Source Launcher for GOG, Epic Games and Amazon Games";
       categories = [ "Game" ];
       mimeType = [ "x-scheme-handler/heroic" ];
