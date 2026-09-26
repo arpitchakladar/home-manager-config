@@ -9,6 +9,7 @@ let
 in
 {
   imports = [
+    ./icons
     ./rofi
     ./wl-clipboard
     ./xdg

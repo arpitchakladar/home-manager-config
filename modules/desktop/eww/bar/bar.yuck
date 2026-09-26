@@ -88,7 +88,7 @@
          :spacing 4
          :tooltip "${system_stats.net.tooltip}"
       (image :class "system-icon"
-             :path "${system_stats.net.status == 'down' ? '@@icon-offline@@' : system_stats.net.routes[0].type == 'wifi' ? '@@icon-wifi@@' : system_stats.net.routes[0].type == 'ethernet' ? '@@icon-ethernet@@' : system_stats.net.routes[0].type == 'tun' ? '@@icon-proxy@@' : '@@icon-offline@@'}"
+             :icon "${system_stats.net.status == 'down' ? 'network-offline' : system_stats.net.routes[0].type == 'wifi' ? 'network-wireless' : system_stats.net.routes[0].type == 'ethernet' ? 'network-wired' : system_stats.net.routes[0].type == 'tun' ? 'network-vpn' : 'network-offline'}"
              :image-width 24
              :image-height 24)
       (label :class "system-label small"
@@ -101,7 +101,7 @@
          :spacing 4
          :tooltip "${system_stats.cpu.tooltip}"
       (image :class "system-icon"
-             :path "@@icon-cpu@@"
+             :icon "cpu"
              :image-width 24
              :image-height 24)
       (label :class "system-label" :text "${system_stats.cpu.percent}%"))
@@ -111,7 +111,7 @@
          :spacing 4
          :tooltip "${system_stats.ram.tooltip}"
       (image :class "system-icon"
-             :path "@@icon-ram@@"
+             :icon "drive-harddisk"
              :image-width 24
              :image-height 24)
       (label :class "system-label" :text "${system_stats.ram.percent}%"))
@@ -121,7 +121,7 @@
          :spacing 4
          :tooltip "${system_stats.battery.tooltip}"
       (image :class "system-icon"
-             :path "@@icon-battery@@"
+             :icon "battery"
              :image-width 24
              :image-height 24)
       (label :class "system-label"
@@ -135,19 +135,19 @@
            :spacing 4
            :class "system-item"
            :tooltip "${system_stats.sound.tooltip}"
-        (image :class "system-icon"
-               :path "@@icon-audio@@"
-               :image-width 24
-               :image-height 24)
-        (label :class "system-label"
-               :text "${system_stats.sound.mute ? '-' : (system_stats.sound.percent + '%')}")))
+       (image :class "system-icon"
+              :icon "audio-volume-high"
+              :image-width 24
+              :image-height 24)
+       (label :class "system-label"
+              :text "${system_stats.sound.mute ? '-' : (system_stats.sound.percent + '%')}")))
     (box :orientation "v"
          :class "system-item"
          :space-evenly false
          :spacing 4
          :tooltip "${full_date} ${time} (${date})"
       (image :class "system-icon"
-             :path "@@icon-calendar@@"
+             :icon "calendar"
              :image-width 24
              :image-height 24)
       (label :class "system-label small" :text time)

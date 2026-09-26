@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.development.opencode;
+  icons = config.desktop.icons.apps;
 in
 {
   options.development.opencode = {
@@ -21,10 +22,6 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
-      home.file.".local/share/icons/hicolor/scalable/apps/opencode.svg" = {
-        source = ../../../assets/icons/apps/opencode.svg;
-      };
-
       programs.opencode = {
         enable = true;
         package = pkgs.opencode;
@@ -34,7 +31,7 @@ in
       xdg.desktopEntries."opencode" = {
         name = "opencode";
         exec = "${lib.getExe config.terminal.kitty.package} --class opencode -e ${lib.getExe cfg.package}";
-        icon = "opencode";
+        icon = icons.opencode;
         categories = [ "Development" ];
         comment = "AI-powered coding assistant";
         terminal = false;

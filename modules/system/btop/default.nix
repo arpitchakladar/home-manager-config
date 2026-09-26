@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.system.btop;
+  icons = config.desktop.icons.apps;
 in
 {
   imports = [ ./assertions.nix ];
@@ -53,7 +54,7 @@ in
       xdg.desktopEntries."btop" = {
         name = "btop++";
         exec = "${lib.getExe config.terminal.kitty.package} --class btop -e ${lib.getExe cfg.package}";
-        icon = "btop";
+        icon = icons.btop;
         categories = [
           "System"
           "Monitor"

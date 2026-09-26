@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.networking.usque;
+  icons = config.desktop.icons.apps;
 
   usqueWarpScript = pkgs.writeShellApplication {
     name = "usque-warp";
@@ -76,12 +77,12 @@ in
         {
           name = "WARP Connect";
           command = "${lib.getExe cfg.warp.package} connect";
-          icon = "network-vpn-symbolic";
+          icon = icons.usqueVpn;
         }
         {
           name = "WARP Disconnect";
           command = "${lib.getExe cfg.warp.package} disconnect";
-          icon = "network-vpn-disconnected-symbolic";
+          icon = icons.usqueVpnDisconnected;
         }
       ];
     })

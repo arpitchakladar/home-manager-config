@@ -45,12 +45,12 @@ in
           package = pkgs.gnome-themes-extra;
         };
         iconTheme = {
-          name = "Adwaita";
-          package = pkgs.adwaita-icon-theme;
+          name = "Tela";
+          package = pkgs.tela-icon-theme;
         };
         cursorTheme = {
-          name = "Adwaita";
-          package = pkgs.adwaita-icon-theme;
+          name = "Vimix-cursors";
+          package = pkgs.vimix-cursors;
           size = 20;
         };
         colorScheme = "dark";

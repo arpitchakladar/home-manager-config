@@ -90,8 +90,8 @@ in
 
     home.pointerCursor = {
       enable = true;
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
+      package = pkgs.vimix-cursors;
+      name = "Vimix-cursors";
       size = 20;
       gtk.enable = true;
       x11.enable = true;
@@ -153,7 +153,7 @@ in
       {
         name = "Poweroff Monitors";
         command = "${lib.getExe cfg.niri.package} msg action power-off-monitors";
-        icon = "network-vpn-symbolic";
+        icon = config.desktop.icons.apps.niriPowerOffMonitors;
       }
     ];
   };

@@ -6,6 +6,7 @@
 }:
 let
   cfg = config.web.aria2;
+  icons = config.desktop.icons.apps;
 in
 {
   options.web.aria2 = {
@@ -31,14 +32,14 @@ in
     (lib.mkIf (cfg.enable && config.desktop.enable) {
       desktop.rofi.action.actions = [
         {
-          name = "aria2 Start";
+          name = "aria2 Service Start";
           command = "systemctl --user start aria2";
-          icon = "folder-download";
+          icon = icons.aria2Start;
         }
         {
-          name = "aria2 Stop";
+          name = "aria2 Service Stop";
           command = "systemctl --user stop aria2";
-          icon = "folder-download";
+          icon = icons.aria2Stop;
         }
       ];
     })

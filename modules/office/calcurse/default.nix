@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.office.calcurse;
+  icons = config.desktop.icons.apps;
 
   calcurseSync = pkgs.writeShellScriptBin "calcurse-sync" (builtins.readFile ./calcurse-sync.sh);
 
@@ -92,9 +93,9 @@ in
     (lib.mkIf cfg.enable {
       home.packages = [ cfg.package ];
       xdg.configFile."calcurse/conf" = {
-        text =
-          builtins.replaceStrings [ "@@CALCURSE_ICON@@" ] [ "${../../../assets/icons/apps/calcurse.svg}" ]
-            (builtins.readFile ./conf);
+        text = builtins.replaceStrings [ "@@CALCURSE_ICON@@" ] [ icons.calcurse ] (
+          builtins.readFile ./conf
+        );
         force = true;
       };
       xdg.configFile."calcurse/keys" = {
@@ -106,7 +107,7 @@ in
       xdg.desktopEntries."calcurse" = {
         name = "calcurse";
         exec = "${lib.getExe config.terminal.kitty.package} --class calcurse -e ${lib.getExe cfg.package}";
-        icon = "org.gnome.Calendar-symbolic";
+        icon = icons.calcurse;
         categories = [
           "Office"
           "Calendar"

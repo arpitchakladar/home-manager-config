@@ -8,6 +8,7 @@
 let
   cfg = config.development.lazygit;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
+  icons = config.desktop.icons.apps;
 in
 {
   imports = [
@@ -77,20 +78,16 @@ in
                 command = "delta --paging=never {{diffArgs}}";
               }
             ];
+            update.method = "never";
           };
-          update.method = "never";
         };
-      };
-
-      home.file.".local/share/icons/hicolor/scalable/apps/git.svg" = {
-        source = ../../../assets/icons/apps/git.svg;
       };
     })
     (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."lazygit" = {
         name = "lazygit";
         exec = "${lib.getExe config.terminal.kitty.package} --class lazygit -e ${lib.getExe cfg.package}";
-        icon = "git";
+        icon = icons.git;
         categories = [ "Development" ];
         comment = "A simple terminal UI for git commands";
         terminal = false;
