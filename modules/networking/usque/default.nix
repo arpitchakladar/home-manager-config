@@ -71,5 +71,19 @@ in
     (lib.mkIf cfg.warp.enable {
       home.packages = [ cfg.warp.package ];
     })
+    (lib.mkIf (cfg.warp.enable && config.desktop.enable) {
+      desktop.rofi.action.actions = [
+        {
+          name = "WARP Connect";
+          command = "${lib.getExe cfg.warp.package} connect";
+          icon = "network-vpn-symbolic";
+        }
+        {
+          name = "WARP Disconnect";
+          command = "${lib.getExe cfg.warp.package} disconnect";
+          icon = "network-vpn-disconnected-symbolic";
+        }
+      ];
+    })
   ];
 }

@@ -8,30 +8,6 @@
 let
   cfg = config.desktop.rofi;
   base16Colors = import ../../colors/base16 { inherit config lib pkgs; };
-
-  actionOptionsString = lib.concatMapStringsSep "\\n" (
-    action: action.name + lib.optionalString (action.icon != null) "\\0icon\\x1f${action.icon}"
-  ) cfg.action.actions;
-
-  actionCasesString = lib.concatStringsSep "\n" (
-    map (action: "    \"${action.name}\") ${action.command} ;;") cfg.action.actions
-  );
-
-  actionScript = pkgs.writeShellApplication {
-    name = "rofi-action";
-    runtimeInputs = [
-      config.terminal.bash.package
-      cfg.package
-    ];
-    text =
-      builtins.replaceStrings
-        [
-          "@@OPTIONS@@"
-          ''"@@CASES@@") : ;;''
-        ]
-        [ actionOptionsString actionCasesString ]
-        (builtins.readFile ./rofi-action.sh);
-  };
 in
 {
   options.desktop.rofi = {
@@ -70,7 +46,6 @@ in
       package = lib.mkOption {
         type = lib.types.package;
         readOnly = true;
-        default = actionScript;
         description = "The rofi-action script package.";
       };
     };
@@ -106,5 +81,30 @@ in
     };
 
     home.packages = lib.mkIf (cfg.action.actions != [ ]) [ cfg.action.package ];
+
+    desktop.rofi.action.package = pkgs.writeShellApplication {
+      name = "rofi-action";
+      runtimeInputs = [
+        config.terminal.bash.package
+        cfg.package
+      ];
+      text =
+        let
+          actions = cfg.action.actions;
+          optionsString = lib.concatMapStringsSep "\\n" (
+            action: action.name + lib.optionalString (action.icon != null) "\\0icon\\x1f${action.icon}"
+          ) actions;
+          casesString = lib.concatStringsSep "\n" (
+            map (action: "    \"${action.name}\") ${action.command} ;;") actions
+          );
+        in
+        builtins.replaceStrings
+          [
+            "@@OPTIONS@@"
+            ''"@@CASES@@") : ;;''
+          ]
+          [ optionsString casesString ]
+          (builtins.readFile ./rofi-action.sh);
+    };
   };
 }

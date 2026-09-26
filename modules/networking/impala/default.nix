@@ -24,14 +24,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.file.".local/share/icons/hicolor/scalable/apps/network-wireless.svg" = {
-      source = ../../../assets/icons/apps/network-wireless.svg;
-    };
-
     xdg.desktopEntries."impala" = {
       name = "impala";
       exec = "${lib.getExe config.terminal.kitty.package} -e ${lib.getExe cfg.package}";
-      icon = "network-wireless";
+      icon = "network-wireless-signal-excellent-symbolic";
       categories = [ "Network" ];
       comment = "TUI for managing wifi on Linux";
       terminal = false;

@@ -80,8 +80,9 @@ in
     wayland.windowManager.niri = {
       enable = true;
       systemd.enable = true;
-      # Let Niri register its recommended GNOME portal implementation.
-      portalPackage = pkgs.xdg-desktop-portal-gnome;
+      # Don't let Niri register its own portal. We will use xdg.portal for the
+      # configuration of portal
+      portalPackage = null;
     };
 
     # For setting the desktop wallpaper
@@ -147,5 +148,13 @@ in
         "fill"
       ];
     };
+
+    desktop.rofi.action.actions = [
+      {
+        name = "Poweroff Monitors";
+        command = "${lib.getExe cfg.niri.package} msg action power-off-monitors";
+        icon = "network-vpn-symbolic";
+      }
+    ];
   };
 }

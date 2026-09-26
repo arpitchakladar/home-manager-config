@@ -90,10 +90,6 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
-      home.file.".local/share/icons/hicolor/scalable/apps/calcurse.svg" = {
-        source = ../../../assets/icons/apps/calcurse.svg;
-      };
-
       home.packages = [ cfg.package ];
       xdg.configFile."calcurse/conf" = {
         text =
@@ -110,7 +106,7 @@ in
       xdg.desktopEntries."calcurse" = {
         name = "calcurse";
         exec = "${lib.getExe config.terminal.kitty.package} --class calcurse -e ${lib.getExe cfg.package}";
-        icon = "calcurse";
+        icon = "org.gnome.Calendar-symbolic";
         categories = [
           "Office"
           "Calendar"

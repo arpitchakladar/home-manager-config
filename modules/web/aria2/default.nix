@@ -2,7 +2,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -19,13 +18,29 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    programs.aria2 = {
-      enable = true;
-      settings = {
-        dir = "${config.home.homeDirectory}/Downloads";
+  config = lib.mkMerge [
+    (lib.mkIf cfg.enable {
+      programs.aria2 = {
+        enable = true;
+        settings = {
+          dir = "${config.home.homeDirectory}/Downloads";
+        };
+        systemd.enable = true;
       };
-      systemd.enable = true;
-    };
-  };
+    })
+    (lib.mkIf (cfg.enable && config.desktop.enable) {
+      desktop.rofi.action.actions = [
+        {
+          name = "aria2 Start";
+          command = "systemctl --user start aria2";
+          icon = "folder-download";
+        }
+        {
+          name = "aria2 Stop";
+          command = "systemctl --user stop aria2";
+          icon = "folder-download";
+        }
+      ];
+    })
+  ];
 }

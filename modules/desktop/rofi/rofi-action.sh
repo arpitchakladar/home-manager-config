@@ -8,6 +8,5 @@ options="@@OPTIONS@@"
 chosen=$(echo -e "$options" | rofi -dmenu -i -p "Action:")
 
 case "$chosen" in
-# replacing "@@CASES@@") : ;; instead of @@CASES@@ for linter/formatter
 "@@CASES@@") : ;;
 esac
