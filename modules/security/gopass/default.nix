@@ -99,10 +99,6 @@ in
         PASSWORD_STORE_DIR = config.programs.password-store.settings.PASSWORD_STORE_DIR;
       };
 
-      home.file.".local/share/icons/hicolor/scalable/apps/gopass.svg" = {
-        source = ../../../assets/icons/apps/gopass.svg;
-      };
-
       home.activation.copyCreationTemplatesForGopass = lib.mkIf cfg.creation-templates.enable (
         lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           $DRY_RUN_CMD mkdir -p $VERBOSE_ARG "${config.programs.password-store.settings.PASSWORD_STORE_DIR}/.gopass/create"
@@ -115,7 +111,7 @@ in
       xdg.desktopEntries."gopass" = {
         name = "gopass";
         exec = "${lib.getExe config.terminal.kitty.package} --class gopass -e ${lib.getExe cfg.package}";
-        icon = "gopass";
+        icon = "password-manager";
         comment = "Standard Unix password manager (Go implementation)";
         categories = [ "Utility" ];
         terminal = false;

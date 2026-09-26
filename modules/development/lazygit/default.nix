@@ -81,10 +81,6 @@ in
           update.method = "never";
         };
       };
-
-      home.file.".local/share/icons/hicolor/scalable/apps/git.svg" = {
-        source = ../../../assets/icons/apps/git.svg;
-      };
     })
     (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."lazygit" = {

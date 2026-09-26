@@ -107,8 +107,6 @@ in
       xdg.configFile."neomutt/mailcap".text =
         builtins.replaceStrings [ "@@HTML_VIEWER@@" ] [ (lib.getExe config.web.chawan.package) ]
           (builtins.readFile ./mailcap);
-      home.file.".local/share/icons/hicolor/scalable/apps/neomutt.svg".source =
-        "${config.programs.neomutt.package}/share/neomutt/logo/neomutt.svg";
 
       programs.neomutt = {
         enable = true;

@@ -21,10 +21,6 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
-      home.file.".local/share/icons/hicolor/scalable/apps/gpg.svg" = {
-        source = ../../../assets/icons/apps/gpg.svg;
-      };
-
       home.packages = [ cfg.package ];
     })
     (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {

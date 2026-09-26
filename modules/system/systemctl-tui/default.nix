@@ -21,17 +21,13 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
-      home.file.".local/share/icons/hicolor/scalable/apps/systemd.svg" = {
-        source = ../../../assets/icons/apps/systemd.svg;
-      };
-
       home.packages = [ cfg.package ];
     })
     (lib.mkIf (cfg.enable && config.terminal.kitty.enable) {
       xdg.desktopEntries."systemctl-tui" = {
         name = "systemctl-tui";
         exec = "${lib.getExe config.terminal.kitty.package} --class systemctl-tui -e ${lib.getExe cfg.package}";
-        icon = "systemd";
+        icon = "preferences-system";
         categories = [ "System" ];
         comment = "TUI for systemctl";
         terminal = false;

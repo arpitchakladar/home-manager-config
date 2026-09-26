@@ -30,10 +30,6 @@ in
 
   config = lib.mkMerge [
     (lib.mkIf cfg.enable {
-      home.file.".local/share/icons/hicolor/scalable/apps/internet-web-browser.svg" = {
-        source = ../../../assets/icons/apps/internet-web-browser.svg;
-      };
-
       programs.chawan = {
         enable = true;
         settings = {

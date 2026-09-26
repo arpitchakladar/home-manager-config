@@ -92,9 +92,7 @@ in
     (lib.mkIf cfg.enable {
       home.packages = [ cfg.package ];
       xdg.configFile."calcurse/conf" = {
-        text =
-          builtins.replaceStrings [ "@@CALCURSE_ICON@@" ] [ "${../../../assets/icons/apps/calcurse.svg}" ]
-            (builtins.readFile ./conf);
+        text = builtins.replaceStrings [ "@@CALCURSE_ICON@@" ] [ "calendar" ] (builtins.readFile ./conf);
         force = true;
       };
       xdg.configFile."calcurse/keys" = {
@@ -106,7 +104,7 @@ in
       xdg.desktopEntries."calcurse" = {
         name = "calcurse";
         exec = "${lib.getExe config.terminal.kitty.package} --class calcurse -e ${lib.getExe cfg.package}";
-        icon = "org.gnome.Calendar-symbolic";
+        icon = "calendar";
         categories = [
           "Office"
           "Calendar"

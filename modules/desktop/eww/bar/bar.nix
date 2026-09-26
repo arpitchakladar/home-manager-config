@@ -92,28 +92,10 @@
         [
           "@@niri-status-script@@"
           "@@system-stats-script@@"
-          "@@icon-offline@@"
-          "@@icon-wifi@@"
-          "@@icon-ethernet@@"
-          "@@icon-proxy@@"
-          "@@icon-cpu@@"
-          "@@icon-ram@@"
-          "@@icon-audio@@"
-          "@@icon-calendar@@"
-          "@@icon-battery@@"
         ]
         [
           (lib.getExe niri-status)
           (lib.getExe system-stats)
-          "${../../../../assets/icons/bar/offline.svg}"
-          "${../../../../assets/icons/bar/wifi.svg}"
-          "${../../../../assets/icons/bar/ethernet.svg}"
-          "${../../../../assets/icons/bar/proxy.svg}"
-          "${../../../../assets/icons/bar/cpu.svg}"
-          "${../../../../assets/icons/bar/ram.svg}"
-          "${../../../../assets/icons/bar/audio.svg}"
-          "${../../../../assets/icons/bar/calendar.svg}"
-          "${../../../../assets/icons/bar/battery.svg}"
         ]
         (builtins.readFile ./bar.yuck);
   };
