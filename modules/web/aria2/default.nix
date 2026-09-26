@@ -2,6 +2,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -28,6 +29,9 @@ in
         };
         systemd.enable = true;
       };
+
+      # Disable auto-start by removing Install.WantedBy
+      systemd.user.services.aria2.Install.WantedBy = lib.mkForce [ ];
     })
     (lib.mkIf (cfg.enable && config.desktop.enable) {
       desktop.rofi.action.actions = [
