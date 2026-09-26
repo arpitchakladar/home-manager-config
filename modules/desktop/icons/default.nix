@@ -95,6 +95,16 @@ in
         default = "folder-download";
         description = "Icon for aria2 download manager";
       };
+      aria2Start = lib.mkOption {
+        type = lib.types.str;
+        default = "media-playback-start-symbolic";
+        description = "Icon for aria2 start action";
+      };
+      aria2Stop = lib.mkOption {
+        type = lib.types.str;
+        default = "media-playback-stop-symbolic";
+        description = "Icon for aria2 stop action";
+      };
       yazi = lib.mkOption {
         type = lib.types.str;
         default = "yazi";
@@ -171,6 +181,8 @@ in
         usqueVpn = "network-vpn-symbolic";
         usqueVpnDisconnected = "network-vpn-disconnected-symbolic";
         aria2 = "folder-download";
+        aria2Start = "media-playback-start-symbolic";
+        aria2Stop = "media-playback-stop-symbolic";
         yazi = "yazi";
       };
 
